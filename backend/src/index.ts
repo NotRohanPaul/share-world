@@ -21,6 +21,6 @@ app.use("*",(_req,res)=>{
 
 void connectDB().then(() => {
     app.listen(PORT, () => {
-        console.log(`Online http://localhost:${PORT}`);
+        console.log(`Listening: http://localhost:${PORT}`);
     });
 });
