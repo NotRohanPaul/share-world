@@ -1,0 +1,33 @@
+{
+  "v": 6,
+  "name": "File-Share",
+  "folders": [],
+  "requests": [
+    {
+      "v": "11",
+      "name": "Home",
+      "method": "GET",
+      "endpoint": "http://localhost:5000",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": null,
+        "body": null
+      },
+      "requestVariables": [],
+      "responses": {}
+    }
+  ],
+  "auth": {
+    "authType": "none",
+    "authActive": true
+  },
+  "headers": [],
+  "_ref_id": "coll_m9kvfo01_533211fd-d0ca-44e4-8f8b-d66643c0af54"
+}
