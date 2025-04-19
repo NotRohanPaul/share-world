@@ -8,3 +8,7 @@ node_modules/
 
 # Build output directories
 dist/
+
+
+# VS Code
+.vscode/
