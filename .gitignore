@@ -11,3 +11,7 @@ node_modules/
 .vscode/
 
 
+# Draw.io Backup Files
+*.bkp
+
+

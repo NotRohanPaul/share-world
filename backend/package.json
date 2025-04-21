@@ -1,5 +1,5 @@
 {
-  "name": "file-sharing-with-auth",
+  "name": "share-world",
   "version": "1.0.0",
   "description": "Basic File Sharing with Authentication",
   "main": "dist/index.js",
