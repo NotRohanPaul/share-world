@@ -1,0 +1,12 @@
+{
+  "id": "dx8z9ox8vnm",
+  "v": 1,
+  "name": "share world env",
+  "variables": [
+    {
+      "key": "host",
+      "value": "localhost:5000",
+      "secret": false
+    }
+  ]
+}

@@ -6,7 +6,7 @@ const authRouteHandler = Router();
 
 authRouteHandler.post("/login", loginController);
 authRouteHandler.get("/logout", async () => {
-    await new Promise(() => { });
+    await new Promise((res) => res(0));
     throw new Error();
 });
 

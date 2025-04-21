@@ -1,5 +1,5 @@
 import type { RequestHandler } from "express";
-import { UserModel } from "src/models/users.model";
+// import { UserModel } from "src/models/users.model";
 // import { emailSchema, passwordSchema } from "src/schemas/authSchemas";
 // import { AppError } from "src/utils/appError";
 
@@ -21,7 +21,7 @@ export const loginController: RequestHandler<
     //     // appError(err);
     // }
 
-    if ((await UserModel.exists({ name: "Test" }))?._id !== undefined) return void res.sendStatus(500);
+   /*  if ((await UserModel.exists({ name: "Test" }))?._id !== undefined) return void res.sendStatus(500);
 
     const testUser = new UserModel({
         name: "Test",
@@ -29,6 +29,7 @@ export const loginController: RequestHandler<
         password: "Test",
     });
 
-    await testUser.save();
+    await testUser.save(); */
+    await new Promise((res)=>res(0))
     res.sendStatus(200);
 };

@@ -1,26 +1,21 @@
 import express from "express";
 import { connectDB } from "./configs/connectDB";
 import { PORT } from "./constants/env";
-import { authRouteHandler } from "./routes/authRouteHandler";
-import { HTTP_STATUS_CODES } from "./constants/errorCodes";
+import { errorHandler } from "./middleware/errorHandler";
+import { unknownHandler } from "./middleware/unknownHandler";
+import { routesHandler } from "./routes/routes";
 
-const app = express();
+export const app = express();
 
 app.get("/", (_req, res) => {
-    res.send("Hello");
+    res.send("Welcome to Share World");
 });
 
-//auth Routes
-app.use("/api/auth", authRouteHandler);
+app.use("/api", routesHandler);
 
-//error Middleware
-app.use()
+app.use(errorHandler);
 
-//Unknown Rotes
-app.use((_req, res) => {
-    res.sendStatus(HTTP_STATUS_CODES.NOT_FOUND);
-});
-
+app.use(unknownHandler);
 
 void connectDB().then(() => {
     app.listen(PORT, () => {
