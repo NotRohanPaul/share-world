@@ -47,6 +47,9 @@
   - `start-mongo.ps1`
   - `tsconfig.json`
 
+- `docs/`
+  - `tree.md`
+
 - `frontend/`
   - `.gitignore`
 
@@ -55,5 +58,4 @@
 
 - `.gitignore`
 - `LICENSE`
-- `Readme.md`
-- `tree.md`
+- `README.md`
