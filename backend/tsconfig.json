@@ -6,8 +6,20 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "src/*": [
+      "@src/*": [
         "src/*"
+      ],
+      "@controllers/*": [
+        "src/controllers/*"
+      ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
+      "@models/*": [
+        "src/models/*"
+      ],
+      "@schemas/*": [
+        "src/schemas/*"
       ],
     },
     "esModuleInterop": true,

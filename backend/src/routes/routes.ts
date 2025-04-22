@@ -1,13 +1,11 @@
 import { Router } from "express";
-import { authRouteHandler } from "./authRouteHandler";
-import { fileUploadRouteHandler } from "./fileUploadRouteHandler";
+import { authRouteHandler } from "./auth-route-handler";
+import { fileUploadRouteHandler } from "./file-upload-router-handler";
 
 const routesHandler = Router();
 
-//auth 
 routesHandler.use("/auth", authRouteHandler);
 
-//file upload 
 routesHandler.use("/upload-files", fileUploadRouteHandler);
 
 

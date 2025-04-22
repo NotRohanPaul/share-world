@@ -1,5 +1,5 @@
 import type { ErrorRequestHandler } from "express";
-import { HTTP_STATUS_CODES } from "src/constants/errorCodes";
+import { HTTP_STATUS_CODES } from "@constants/error-codes";
 
 export const errorHandler: ErrorRequestHandler = (err, _req, res, next) => {
     if (res.headersSent) {
