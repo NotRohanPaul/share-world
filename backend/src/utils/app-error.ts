@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+/* import assert from "node:assert/strict";
 
 export class AppError extends Error {
     type: string;
@@ -26,3 +26,4 @@ export const appError = (
         throw new AppError(err, message, code);
     }
 };
+ */
