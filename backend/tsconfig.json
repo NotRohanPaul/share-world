@@ -21,6 +21,9 @@
       "@schemas/*": [
         "src/schemas/*"
       ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
     },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

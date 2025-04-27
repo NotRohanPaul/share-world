@@ -9,8 +9,8 @@
     "cpy-pkg": "if exist dist copy package.json dist",
     "lint": "eslint ./src --ext .ts",
     "build:prod": "npm run lint && npm run clean && tsc && tsc-alias && npm run cpy-pkg",
-    "mongo:server-admin": "mongod -f \"C:\\Program Files\\MongoDB\\Server\\8.0\\bin\\mongod.cfg\"",
-    "mongo:server-noadmin": "powershell -ExecutionPolicy Bypass -File ./start-mongo.ps1",
+    "mongo-server:vscode-admin": "mongod -f \"C:/Program Files/MongoDB/Server/8.0/bin/mongod.cfg\"",
+    "mongo-server:vscode-noadmin": "powershell -ExecutionPolicy Bypass -File ./start-mongo.ps1",
     "start:dev": "npm run lint && nodemon --exec tsx --env-file=.env ./src/index.ts",
     "start:prod": "node --env-file=.env.prod ./dist/index.js"
   },

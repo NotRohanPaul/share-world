@@ -1,4 +1,4 @@
-import { createPasswordHash } from "@src/utils/bcrypt";
+import { createPasswordHash } from "@src/utils/bcrypt-utils";
 import mongoose from "mongoose";
 
 

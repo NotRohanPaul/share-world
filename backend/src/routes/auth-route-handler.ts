@@ -1,9 +1,10 @@
-import { Router } from "express";
 import {
     loginController,
     logoutController,
     signupController
 } from "@controllers/auth-controllers";
+import { refreshController } from "@src/controllers/auth-controllers/refresh-controller";
+import { Router } from "express";
 
 
 const authRouteHandler = Router();
@@ -11,6 +12,7 @@ const authRouteHandler = Router();
 authRouteHandler.post("/signup", signupController);
 authRouteHandler.post("/login", loginController);
 authRouteHandler.get("/logout", logoutController);
+authRouteHandler.get("/refresh-token", refreshController);
 
 
 

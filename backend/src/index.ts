@@ -6,8 +6,9 @@ import { unknownHandler } from "./middleware/unknown-handler";
 import { routesHandler } from "./routes/routes";
 
 export const app = express();
-app.use(express.json())
 
+app.disable('x-powered-by');
+app.use(express.json());
 
 app.get("/", (_req, res) => {
     res.send("Welcome to Share World");
