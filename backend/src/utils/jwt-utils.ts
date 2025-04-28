@@ -21,3 +21,15 @@ export const attachAccessAndRefreshTokenCookie = (res: Response, payload: Record
     });
     return res;
 };
+
+export const attachNewAccessToken = (res: Response, payload: Record<string, unknown>): Response => {
+    const accessToken = jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' });
+    res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: NODE_ENV !== "DEVELOPMENT",
+        sameSite: "strict",
+        maxAge: 15 * 60 * 1000,
+    });
+
+    return res;
+};

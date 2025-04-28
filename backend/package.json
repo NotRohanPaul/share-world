@@ -1,9 +1,10 @@
 {
-  "name": "share-world",
+  "name": "share-world-backend",
   "version": "1.0.0",
   "description": "Basic File Sharing with Authentication",
   "main": "dist/index.js",
   "type": "module",
+  "private": true,
   "scripts": {
     "clean": "if exist dist rmdir /s /q dist",
     "cpy-pkg": "if exist dist copy package.json dist",

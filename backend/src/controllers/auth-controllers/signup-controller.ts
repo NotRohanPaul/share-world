@@ -41,7 +41,6 @@ export const signupController: RequestHandler = async (req, res) => {
             userId: newUser._id,
             email: newUser.email
         };
-        console.log(payload);
         attachAccessAndRefreshTokenCookie(res, payload);
         return void res
             .status(HTTP_STATUS_CODES.CREATED)

@@ -2,7 +2,11 @@ const getEnv = (key: string, defaultValue?: string): string => {
     if (process.env[key] !== undefined)
         return process.env[key];
 
-    return defaultValue ?? "";
+    if (defaultValue !== undefined) {
+        return defaultValue;
+    }
+
+    throw new Error("Environment variables not present.");
 };
 
 export const PORT = Number(getEnv("PORT", "5000"));
