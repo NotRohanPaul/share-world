@@ -1,5 +1,7 @@
 {
     "name": "share-world",
     "private": true,
+    "author": "RP",
+    "license": "MIT",
     "scripts": {}
 }

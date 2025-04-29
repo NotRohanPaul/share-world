@@ -1,8 +1,7 @@
 {
   "name": "share-world-backend",
   "version": "1.0.0",
-  "description": "Basic File Sharing with Authentication",
-  "main": "dist/index.js",
+  "description": "Basic File Sharing with Authentication Backend",
   "type": "module",
   "private": true,
   "scripts": {
@@ -16,7 +15,7 @@
     "start:prod": "node --env-file=.env.prod ./dist/index.js"
   },
   "author": "RP",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "express": "^5.1.0",

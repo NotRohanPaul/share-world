@@ -1,0 +1,11 @@
+{
+  "name": "share-world-frontend",
+  "version": "1.0.0",
+  "description": "Basic File Sharing with Authentication Frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "RP",
+  "license": "MIT"
+}
