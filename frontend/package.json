@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Basic File Sharing with Authentication Frontend",
-   "author": "RP",
+  "author": "RP",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
@@ -13,14 +13,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router": "^7.5.3",
     "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
-    "@types/react": "^19.0.10",
+    "@tailwindcss/vite": "^4.1.5",
+    "@types/react": "^19.1.2",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.22.0",
@@ -29,6 +30,7 @@
     "globals": "^16.0.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
-    "vite": "^6.3.1"
+    "vite": "^6.3.1",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }
