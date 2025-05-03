@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-    --breakpoint-xs: 30rem; // equals 480px
+    --breakpoint-xs: 30rem;
+    /* equals 480px */
 }
 
 @layer base {

@@ -71,7 +71,7 @@ export const AuthPage = () => {
         <article className="h-[100dvh] grid place-content-center gap-4">
             <header className="justify-self-center">
                 <Link to={"/"}>
-                    <img className="w-50 h-20 max-sm:w-30 max-sm:h-12" src={ShareWorldIcon} alt="Share World" />
+                    <img className="w-45 h-auto max-sm:w-30 max-sm:h-12" src={ShareWorldIcon} alt="Share World" />
                 </Link>
             </header>
             <main className="w-[450px] max-sm:w-[350px] flex flex-col gap-4 p-1">

@@ -1,15 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router";
-import {LandingPage} from "./pages/landing-page";
-import {AuthPage} from "./pages/auth-page";
+import { AppProviders } from "./providers";
+import { AppRouter } from "./routes/app-router";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/auth" element={<AuthPage />} />
-      </Routes>
-    </BrowserRouter>
+    <AppProviders>
+      <AppRouter />
+    </AppProviders>
   );
 }
 
