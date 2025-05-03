@@ -68,14 +68,14 @@ export const AuthPage = () => {
     };
 
     return (
-        <article className="w-full h-screen grid place-content-center gap-4">
+        <article className="h-[100dvh] grid place-content-center gap-4">
             <header className="justify-self-center">
                 <Link to={"/"}>
-                    <img className="w-50 h-20" src={ShareWorldIcon} alt="Share World" />
+                    <img className="w-50 h-20 max-sm:w-30 max-sm:h-12" src={ShareWorldIcon} alt="Share World" />
                 </Link>
             </header>
-            <main className="flex flex-col gap-4">
-                <header className="self-center text-3xl p-1 rounded-full border-2 border-gray-500 overflow-hidden [&>button]:w-[150px] [&>button]:p-3">
+            <main className="w-[450px] max-sm:w-[350px] flex flex-col gap-4 p-1">
+                <header className="self-center text-2xl p-0.5 rounded-full border-2 border-gray-500 overflow-hidden max-sm:text-xl  [&>button]:w-[150px] [&>button]:p-3 max-sm:[&>button]:p-1 max-sm:[&>button]:w-[100px]">
                     <button
                         className={`rounded-l-full ${authType === "login" ? "bg-blue-500 text-white" : "hover:bg-blue-200"}`}
                         onClick={() => setAuthType("login")}
@@ -87,7 +87,7 @@ export const AuthPage = () => {
                         children="SignUp"
                     />
                 </header>
-                <main className="text-xl border-2 border-gray-500 rounded-lg">
+                <main className="text-xl max-sm:text-base border-2 border-gray-500 rounded-lg">
                     <form
                         className={"flex flex-col gap-2 p-4 c-auth-form"}
                         onSubmit={handleSubmit}
@@ -101,7 +101,7 @@ export const AuthPage = () => {
                 </main>
                 <div className="h-1 [background-image:repeating-linear-gradient(90deg,transparent_0_3%,gray_3%_7%)] " />
                 <footer className="self-center">
-                    <button className="p-3 text-white font-semibold bg-blue-500 rounded-sm">
+                    <button className="p-3 max-sm:p-2 max-sm:text-sm text-white font-semibold bg-blue-500 rounded-sm">
                         {authType === "signup" ?
                             "SignUp with Google" :
                             "Login with Google"}

@@ -1,25 +1,34 @@
 @import "tailwindcss";
 
-body {
-    background-color: aliceblue;
-    color: #000033;
+@theme {
+    --breakpoint-xs: 30rem; // equals 480px
 }
 
-button {
-    cursor: pointer;
+@layer base {
+    body {
+        background-color: aliceblue;
+        color: #000033;
+    }
 
-    &:focus-visible {
-        outline: none;
-        box-shadow: inset 0 0 0 2px black;
+    button {
+        user-select: none;
+        cursor: pointer;
+
+        &:focus-visible {
+            outline: none;
+            box-shadow: inset 0 0 0 2px black;
+        }
     }
 }
 
-.c-auth-form {
-    input {
-        @apply w-[350px] outline-1 p-2 outline-gray-500 rounded-sm focus:outline-2 focus:outline-blue-500;
-    }
+@layer components {
+    .c-auth-form {
+        input {
+            @apply outline-1 p-2 outline-gray-500 rounded-sm focus:outline-2 focus:outline-blue-500;
+        }
 
-    button[type="submit"] {
-        @apply self-center font-semibold mt-2 py-2 px-4 rounded-full text-white bg-blue-500 hover:bg-white hover:text-blue-500 hover:outline-2 hover:outline-blue-500 transition-colors duration-300;
+        button[type="submit"] {
+            @apply self-center font-semibold mt-2 py-2 px-4 rounded-full text-white bg-blue-500 hover:bg-white hover:text-blue-500 hover:outline-2 hover:outline-blue-500 transition-colors duration-300;
+        }
     }
 }
