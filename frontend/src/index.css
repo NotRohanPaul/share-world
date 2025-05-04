@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+    --feature-grid: repeat(3, 150px);
     --breakpoint-xs: 30rem;
     /* equals 480px */
 }
@@ -23,7 +24,11 @@
 }
 
 @layer components {
-    .c-auth-form {
+    .primary-btn {
+        @apply rounded-full text-white bg-blue-500 hover:bg-white hover:text-blue-500 hover:outline-2 hover:outline-blue-500 transition-colors duration-300;
+    }
+
+    .auth-form {
         input {
             @apply outline-1 p-2 outline-gray-500 rounded-sm focus:outline-2 focus:outline-blue-500;
         }
@@ -32,4 +37,14 @@
             @apply self-center font-semibold mt-2 py-2 px-4 rounded-full text-white bg-blue-500 hover:bg-white hover:text-blue-500 hover:outline-2 hover:outline-blue-500 transition-colors duration-300;
         }
     }
+
+    .features-container {
+        @apply grid grid-cols-(--feature-grid) grid-rows-[100px] gap-3 justify-self-center;
+
+        div {
+            @apply w-full h-full grid place-content-center text-xl text-center outline outline-blue-500 p-2 text-blue-500;
+        }
+    }
+
+
 }

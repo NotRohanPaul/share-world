@@ -1,0 +1,3 @@
+
+
+export type AuthVariantType = "login" | "signup";

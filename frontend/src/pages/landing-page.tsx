@@ -3,18 +3,16 @@ import { Link } from "react-router";
 
 export const LandingPage = () => {
     return (
-        <article className="grid grid-rows-[auto_1fr_1fr]">
+        <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
             <header className="h-15 flex justify-between items-center p-1 bg-blue-500">
-                <Link to={"/"} className="bg-white rounded-full overflow-hidden">
+                <Link to={"/"}>
                     <img
-                        className=""
+                        className="w-10 h-auto aspect-square object-center object-contain p-1 bg-white rounded-full"
                         src={ShareWorldIcon}
                         alt="Share World"
-                        width={50}
-                        height={20}
                     />
                 </Link>
-                <nav className="">
+                <nav className="font-semibold text-white">
                     <div className="flex gap-2">
                         <Link
                             to={"/auth"}
@@ -27,13 +25,18 @@ export const LandingPage = () => {
                     </div>
                 </nav>
             </header>
-            <main className="text-center">
-                <h1 className="text-2xl">Share Files directly using Peer to Peer without sending it to ther sever.</h1>
+            <main className="grid place-content-center gap-5">
+                <h1 className="w-[80%] justify-self-center text-4xl text-center font-bold">
+                    Share Files directly using Peer to Peer without sending it to their sever.
+                </h1>
+                <div className="features-container">
+                    <div>File Transfer</div>
+                    <div>Direct Message</div>
+                    <div>Video/Audio Call</div>
+                </div>
             </main>
-            <footer className="h-10 bg-blue-500">
-                <i className="inline-block text-center align-middle  text-white">
-                    @Copyright Share World
-                </i>
+            <footer className="h-10 grid place-content-center text-center bg-blue-500 text-white">
+                @Copyright Share World
             </footer>
         </article>
     );
