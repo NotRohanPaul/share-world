@@ -37,7 +37,7 @@
       - `app-error.ts`
     - `index.ts`
   - `.env`
-  - `.env.prod`
+  - `.env.production`
   - `.gitignore`
   - `.nvmrc`
   - `.test.env`

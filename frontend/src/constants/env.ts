@@ -10,4 +10,4 @@ const getEnv = (key: string, defaultValue?: string): string => {
 };
 
 export const API_URL = getEnv("VITE_API_URL", "/");
-export const APP_ENV = getEnv("APP_ENV", 'PRODUCTION');
+export const APP_ENV = import.meta.env.MODE;

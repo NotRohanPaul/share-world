@@ -7,10 +7,10 @@
   "author": "RP",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "vite --mode development",
+    "build": "eslint . && tsc -b && vite build --mode production",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview --mode production"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.75.1",
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@tailwindcss/vite": "^4.1.5",
+    "@types/node": "^22.15.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",

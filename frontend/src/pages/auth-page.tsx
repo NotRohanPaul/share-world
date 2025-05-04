@@ -61,9 +61,10 @@ export const AuthPage = () => {
         const target = e.target as HTMLFormElement;
         console.dir(target);
         if (target.value === "login") {
+            return;
 
         } else if (target.value === "signup") {
-
+            return;
         }
     };
 

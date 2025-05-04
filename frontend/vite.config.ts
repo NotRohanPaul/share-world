@@ -10,7 +10,14 @@ export default defineConfig({
     react(),
     tailwindcss(),
     tsconfigPaths(),
-    viteCompression({ filter: /\.(js|mjs|json|css|html)$/i }),
+    viteCompression(),
     htmlMinifier()
   ],
+  define: {
+    ...(process.env.NODE_ENV === 'production'
+      ? {
+        '__REACT_DEVTOOLS_GLOBAL_HOOK__': { isDisabled: true },
+      }
+      : {}),
+  },
 });
