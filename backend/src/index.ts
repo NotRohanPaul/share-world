@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.use(express.static(path.join(path.dirname(fileURLToPath(import.meta.url)), 'public')));
 
-app.use("/api", routesHandler);
+app.use("/api/v1", routesHandler);
 
 app.get('*', (_req, res) => {
     res.set('Cache-Control', 'no-store');
