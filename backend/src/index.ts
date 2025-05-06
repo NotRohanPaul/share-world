@@ -11,7 +11,9 @@ import helmet from "helmet";
 export const app = express();
 
 app.disable('x-powered-by');
-app.use(helmet());
+app.use(helmet({
+    xFrameOptions: { action: "sameorigin" },
+}));
 app.use(express.json());
 
 app.use(express.static(path.join(path.dirname(fileURLToPath(import.meta.url)), 'public')));

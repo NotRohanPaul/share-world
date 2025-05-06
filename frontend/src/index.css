@@ -25,7 +25,7 @@
 
 @layer components {
     .primary-btn {
-        @apply rounded-full text-white bg-blue-500 hover:bg-white hover:text-blue-500 hover:outline-2 hover:outline-blue-500 transition-colors duration-300;
+        @apply rounded-full text-white bg-blue-500 hover:bg-white hover:text-blue-500 hover:outline-2 hover:outline-blue-500 active:outline-offset-2 transition-colors duration-300;
     }
 
     .auth-form {
@@ -34,7 +34,11 @@
         }
 
         button[type="submit"] {
-            @apply self-center font-semibold mt-2 py-2 px-4 rounded-full text-white bg-blue-500 hover:bg-white hover:text-blue-500 hover:outline-2 hover:outline-blue-500 transition-colors duration-300;
+            @apply self-center font-semibold mt-2 py-2 px-4 rounded-full text-white bg-blue-500 hover:bg-white hover:text-blue-500 hover:outline-2 hover:outline-blue-500 active:outline-offset-2 transition-colors duration-300;
+        }
+
+        .input-error {
+            @apply text-orange-700
         }
     }
 

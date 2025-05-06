@@ -16,9 +16,9 @@ const passwordSchema = z
 
 const nameSchema = z
     .string()
-    .min(2, { message: "Name must be at least 2 characters" })
-    .max(255, { message: "Name must be at most 255 characters" })
-    .regex(/^[A-Za-z]+$/, { message: "Name must contain only alphabets" });
+    .min(3, "Name must be at least 3 characters long")
+    .max(50, "Name must not exceed 50 characters")
+    .regex(/^[A-Za-z\s]+$/, "Name must contain only letters and spaces");
 
 
 export const userSchema = {

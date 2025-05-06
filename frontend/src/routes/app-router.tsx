@@ -1,21 +1,27 @@
 import { AuthPage } from "@src/pages/auth-page";
+import { ErrorPage } from "@src/pages/error-page";
 import { LandingPage } from "@src/pages/landing-page";
 import { NotFoundPage } from "@src/pages/not-found";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <LandingPage />
+        errorElement: <ErrorPage />,
+        children: [
+            {
+                path: "/",
+                element: <LandingPage />,
+            },
+            {
+                path: "auth",
+                element: <AuthPage />
+            },
+            {
+                path: "*",
+                element: <NotFoundPage />
+            }
+        ]
     },
-    {
-        path: "/auth",
-        element: <AuthPage />
-    },
-    {
-        path: "*",
-        element: <NotFoundPage />
-    }
 ]);
 
 export const AppRouter = () => {
