@@ -1,3 +1,4 @@
+import { AppIcons } from "@src/assets";
 import { loginSchema } from "@src/schemas/authSchemas";
 import { useState, type ChangeEvent } from "react";
 
@@ -9,7 +10,7 @@ export const LoginForm = () => {
     });
 
     const [emailError, setEmailError] = useState<string>("");
-
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const handleChange = (
         e: ChangeEvent<HTMLInputElement>,
@@ -55,15 +56,30 @@ export const LoginForm = () => {
             {emailError !== '' ? <p className="input-error">{emailError}</p> : null}
 
             <label htmlFor="loginPassword">Password</label>
-            <input
-                type="password"
-                name="password"
-                id="loginPassword"
-                autoComplete="current-password"
-                value={loginFormData.password}
-                onChange={handleChange}
-            />
+            <div className="relative">
+                <input
+                    className="w-full pr-8"
+                    type={isPasswordVisible ? "text" : "password"}
+                    name="password"
+                    id="loginPassword"
+                    autoComplete="current-password"
+                    value={loginFormData.password}
+                    onChange={handleChange}
+                />
 
+                <button
+                    className="password-visibility-btn"
+                    title={isPasswordVisible ? "Hide Password" : "Show Password"}
+                    aria-label="Toggle password visibility"
+                    onClick={() => setIsPasswordVisible(prev => !prev)}
+                >
+                    {isPasswordVisible ?
+                        <AppIcons.EyeOff />
+                        :
+                        <AppIcons.EyeIcon />
+                    }
+                </button>
+            </div>
             <button
                 value="forgot"
                 className="self-start text-sm text-gray-800 bg-none hover:underline"

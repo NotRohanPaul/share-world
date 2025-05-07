@@ -38,7 +38,7 @@
         }
 
         .input-error {
-            @apply text-orange-700
+            @apply text-base text-orange-700
         }
     }
 
@@ -50,5 +50,12 @@
         }
     }
 
+    .password-visibility-btn {
+        @apply w-6 h-6 absolute right-1 top-1/2 -translate-y-1/2;
+
+        svg {
+            @apply w-full h-full;
+        }
+    }
 
 }

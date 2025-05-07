@@ -1,3 +1,4 @@
+import { AppIcons } from "@src/assets";
 import { singupInputSchema } from "@src/schemas/authSchemas";
 import { useState, type ChangeEvent } from "react";
 
@@ -16,6 +17,9 @@ export const SignupForm = () => {
         password: '',
         confirmPassword: '',
     });
+
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
 
     const handleChange = (
         e: ChangeEvent<HTMLInputElement>,
@@ -90,27 +94,58 @@ export const SignupForm = () => {
             <label htmlFor="signupPassword">
                 Password
             </label>
-            <input
-                type="password"
-                name="password"
-                id="signupPassword"
-                autoComplete="off"
-                value={signupFormData.password}
-                onChange={handleChange}
-            />
+            <div className="relative">
+                <input
+                    className="w-full pr-8"
+                    type={isPasswordVisible ? "text" : "password"}
+                    name="password"
+                    id="signupPassword"
+                    autoComplete="off"
+                    value={signupFormData.password}
+                    onChange={handleChange}
+                />
+
+                <button
+                    className="password-visibility-btn"
+                    title={isPasswordVisible ? "Hide Password" : "Show Password"}
+                    aria-label="Toggle password visibility"
+                    onClick={() => setIsPasswordVisible(prev => !prev)}
+                >
+                    {isPasswordVisible ?
+                        <AppIcons.EyeOff />
+                        :
+                        <AppIcons.EyeIcon />
+                    }
+                </button>
+            </div>
             {inputErrors.password !== '' ? <p className="input-error">{inputErrors.password}</p> : null}
 
             <label htmlFor="signupConfirmPassword">
                 Confirm Password
             </label>
-            <input
-                type="password"
-                name="confirmPassword"
-                id="signupConfirmPassword"
-                autoComplete="off"
-                value={signupFormData.confirmPassword}
-                onChange={handleChange}
-            />
+            <div className="relative">
+                <input
+                    className="w-full pr-8"
+                    type={isPasswordVisible ? "text" : "password"}
+                    name="confirmPassword"
+                    id="signupConfirmPassword"
+                    autoComplete="off"
+                    value={signupFormData.confirmPassword}
+                    onChange={handleChange}
+                />
+                <button
+                    className="password-visibility-btn"
+                    title={isPasswordVisible ? "Hide Password" : "Show Password"}
+                    aria-label="Toggle password visibility"
+                    onClick={() => setIsPasswordVisible(prev => !prev)}
+                >
+                    {isPasswordVisible ?
+                        <AppIcons.EyeOff />
+                        :
+                        <AppIcons.EyeIcon />
+                    }
+                </button>
+            </div>
             {inputErrors.confirmPassword !== '' ? <p className="input-error">{inputErrors.confirmPassword}</p> : null}
 
             <button

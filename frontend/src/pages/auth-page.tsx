@@ -1,4 +1,4 @@
-import ShareWorldIcon from "@src/assets/share-world.png";
+import { AppImages } from "@src/assets";
 import { AuthForm } from "@src/components/auth/auth-form";
 import type { AuthVariantType } from "@src/components/auth/types";
 import { useState } from "react";
@@ -12,7 +12,7 @@ export const AuthPage = () => {
         <article className="h-[100dvh] grid place-content-center gap-4">
             <header className="justify-self-center">
                 <Link to={"/"}>
-                    <img className="w-40 h-auto max-sm:w-30 max-sm:h-12" src={ShareWorldIcon} alt="Share World" />
+                    <AppImages.ShareWorld className="w-40 h-auto max-sm:w-30 max-sm:h-12" />
                 </Link>
             </header>
             <main className="w-[450px] max-sm:w-[350px] flex flex-col gap-4 p-1">
