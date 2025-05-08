@@ -12,7 +12,7 @@ export const AuthPage = () => {
         <article className="h-[100dvh] grid place-content-center gap-4">
             <header className="justify-self-center">
                 <Link to={"/"}>
-                    <AppImages.ShareWorld className="w-40 h-auto max-sm:w-30 max-sm:h-12" />
+                    <AppImages.ShareWorld width={200} height="auto" className="w-40 h-auto max-sm:w-30 max-sm:h-12" />
                 </Link>
             </header>
             <main className="w-[450px] max-sm:w-[350px] flex flex-col gap-4 p-1">

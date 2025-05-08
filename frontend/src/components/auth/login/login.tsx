@@ -74,9 +74,9 @@ export const LoginForm = () => {
                     onClick={() => setIsPasswordVisible(prev => !prev)}
                 >
                     {isPasswordVisible ?
-                        <AppIcons.EyeOff />
+                        <AppIcons.EyeOff width={10} height={10} />
                         :
-                        <AppIcons.EyeIcon />
+                        <AppIcons.EyeIcon width={10} height={10} />
                     }
                 </button>
             </div>

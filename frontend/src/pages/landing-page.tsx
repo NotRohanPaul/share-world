@@ -7,7 +7,7 @@ export const LandingPage = () => {
         <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
             <header className="h-15 flex justify-between items-center p-1 bg-blue-500">
                 <Link to={"/"}>
-                    <AppImages.ShareWorld className="w-10 h-auto aspect-square object-center object-contain p-1 bg-white rounded-full"
+                    <AppImages.ShareWorld width={50} height="auto" className="w-10 h-auto aspect-square object-center object-contain p-1 bg-white rounded-full"
                     />
                 </Link>
                 <nav className="font-semibold text-white">

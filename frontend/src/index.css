@@ -2,8 +2,8 @@
 
 @theme {
     --feature-grid: repeat(3, 150px);
-    --breakpoint-xs: 30rem;
     /* equals 480px */
+    --breakpoint-xs: 30rem;
 }
 
 @layer base {
