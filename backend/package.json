@@ -11,13 +11,14 @@
     "build:prod": "npm run lint && npm run clean && tsc && tsc-alias && npm run cpy-pkg",
     "mongo-svr:vsc-admin": "mongod -f \"C:/Program Files/MongoDB/Server/8.0/bin/mongod.cfg\"",
     "mongo-svr:vsc-noadmin": "powershell -ExecutionPolicy Bypass -File ./start-mongo.ps1",
-    "start:dev": "npm run lint && nodemon --exec tsx --env-file=.env ./src/index.ts",
+    "start:dev": "npm run lint && nodemon --exec tsx --env-file=.env.development ./src/index.ts",
     "start:prod": "node --env-file=.env.production ./dist/index.js"
   },
   "author": "RP",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.18",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.1",

@@ -5,6 +5,7 @@ import viteCompression from 'vite-plugin-compression';
 import htmlMinifier from 'vite-plugin-html-minifier';
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from 'vite-tsconfig-paths';
+import strip from '@rollup/plugin-strip';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -26,10 +27,19 @@ export default defineConfig({
     htmlMinifier()
   ],
   define: {
-    ...(process.env.NODE_ENV === 'production'
+    ...(process.env.NODE_ENV !== 'development'
       ? {
         '__REACT_DEVTOOLS_GLOBAL_HOOK__': { isDisabled: true },
       }
       : {}),
   },
+  build: {
+    rollupOptions: {
+      plugins: [
+        strip({
+          include: '**/*.(ts|tsx|js|jsx|ejs|mjs)'
+        })
+      ]
+    }
+  }
 });

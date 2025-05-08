@@ -1,14 +1,18 @@
 import { AppIcons } from "@src/assets";
+import { loginHandler } from "@src/axios/handlers/auth-handler";
 import { loginSchema } from "@src/schemas/authSchemas";
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, type MouseEventHandler } from "react";
+import { useNavigate } from "react-router";
 
 
 export const LoginForm = () => {
+    let navigate = useNavigate();
     const [loginFormData, setLoginFormData] = useState({
         email: '',
         password: ''
     });
 
+    // const [formError, setFormError] = useState<string>("");
     const [emailError, setEmailError] = useState<string>("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -38,6 +42,13 @@ export const LoginForm = () => {
                 return '';
             });
         }
+    };
+
+    const handleClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
+        const target = e.target as HTMLButtonElement;
+        if (e.isTrusted === false || target.tagName !== "BUTTON") return;
+        await loginHandler(loginFormData);
+        navigate("/user");
     };
 
 
@@ -90,6 +101,7 @@ export const LoginForm = () => {
             <button
                 type="submit"
                 value={"login"}
+                onClick={handleClick}
             >
                 Login
             </button>

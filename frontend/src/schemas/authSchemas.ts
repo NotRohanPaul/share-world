@@ -32,7 +32,7 @@ const passwordSchema = z
 export const loginSchema = z
     .object({
         email: emailSchema,
-        password: passwordSchema
+        password: z.string()
     })
     .strict();
 
