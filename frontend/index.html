@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" sizes="144x144" href="public/share-world-144x144.png" />
+  <link rel="icon" type="image/png" sizes="144x144" href="share-world-144x144.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light dark" />
   <meta name="description" content="A site that provides peer to peer file sharing" />
@@ -21,9 +21,9 @@
   <meta name="twitter:title" content="Share World">
   <meta name="twitter:description" content="A site that provides peer to peer file sharing">
   <meta name="twitter:image" content="https://yourdomain.com/twitter-image.png">
-  <link rel="manifest" href="public/manifest.json">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#ffffff">
-  <link rel="apple-touch-icon" href="public/share-world-192x192.png">
+  <link rel="apple-touch-icon" href="share-world-192x192.png">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
@@ -39,48 +39,17 @@
   </noscript>
   <div id="root">
     <style>
-      div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
+      h1 {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
       }
-
-      h1 {
-        width: max-content;
-        color: oklch(62.3% 0.214 259.815);
-      }
-
-      svg {
-        position: relative;
-        bottom: -0.3rem;
-      }
     </style>
 
-    <div>
-      <h1>
-        Share World
-      </h1>
-      <svg viewBox="0 0 200 200" width="50" height="50">
-        <rect fill="oklch(62.3% 0.214 259.815)" width="30" height="30" x="25" y="85">
-          <animate attributeName="opacity" calcMode="spline" dur="2" values="1;0;1;" keySplines=".5 0 .5 1;.5 0 .5 1"
-            repeatCount="indefinite" begin="-.4"></animate>
-        </rect>
-        <rect fill="oklch(62.3% 0.214 259.815)" width="30" height="30" x="85" y="85">
-          <animate attributeName="opacity" calcMode="spline" dur="2" values="1;0;1;" keySplines=".5 0 .5 1;.5 0 .5 1"
-            repeatCount="indefinite" begin="-.2"></animate>
-        </rect>
-        <rect fill="oklch(62.3% 0.214 259.815)" width="30" height="30" x="145" y="85">
-          <animate attributeName="opacity" calcMode="spline" dur="2" values="1;0;1;" keySplines=".5 0 .5 1;.5 0 .5 1"
-            repeatCount="indefinite" begin="0"></animate>
-        </rect>
-      </svg>
-
-    </div>
+    <h1>
+      Share World...
+    </h1>
   </div>
   <script type="module" async src="/src/main.tsx"></script>
 </body>
