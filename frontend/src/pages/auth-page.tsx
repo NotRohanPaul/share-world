@@ -2,13 +2,17 @@ import { AppImages } from "@src/assets";
 import { AuthForm } from "@src/components/auth/auth-form";
 import type { AuthVariantType } from "@src/components/auth/types";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router";
 
 
 export const AuthPage = () => {
     const [authType, setAuthType] = useState<AuthVariantType>("login");
 
-    return (
+    return (<>
+        <Helmet>
+            <title>Login/Signup</title>
+        </Helmet>
         <article className="h-[100dvh] grid place-content-center gap-4">
             <header className="justify-self-center">
                 <Link to={"/"}>
@@ -41,5 +45,7 @@ export const AuthPage = () => {
                 </footer>
             </main>
         </article>
+    </>
+
     );
 };

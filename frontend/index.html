@@ -4,26 +4,25 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" sizes="144x144" href="share-world-144x144.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="color-scheme" content="light dark" />
   <meta name="description" content="A site that provides peer to peer file sharing" />
-  <meta name="keywords" content="file sharing, peer to peer, P2P, share files, secure file transfer">
-  <meta name="author" content="Share World">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Share World">
-  <meta property="og:description" content="A site that provides peer to peer file sharing">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yourdomain.com">
-  <meta property="og:image" content="https://yourdomain.com/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Share World">
-  <meta name="twitter:description" content="A site that provides peer to peer file sharing">
-  <meta name="twitter:image" content="https://yourdomain.com/twitter-image.png">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#ffffff">
-  <link rel="apple-touch-icon" href="share-world-192x192.png">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="keywords" content="file sharing, peer to peer, P2P, share files, secure file transfer" />
+  <meta name="author" content="Share World" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:title" content="Share World" />
+  <meta property="og:description" content="A site that provides peer to peer file sharing" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="share-world-1200x630.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Share World" />
+  <meta name="twitter:description" content="A site that provides peer to peer file sharing" />
+  <meta name="twitter:image" content="share-world-1200x630.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="share-world-192x192.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
@@ -37,17 +36,34 @@
   </noscript>
   <div id="root">
     <style>
-      h1 {
+      div {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
       }
-    </style>
 
-    <h1>
-      Share World...
-    </h1>
+      h1 {
+        text-wrap-mode: nowrap;
+        font-size: 1rem;
+        animation: pan 1s infinite alternate;
+      }
+
+      @keyframes pan {
+        from {
+          transform: scale(1);
+        }
+
+        to {
+          transform: scale(1.5);
+        }
+      }
+    </style>
+    <div>
+      <h1>
+        Share World
+      </h1>
+    </div>
   </div>
   <script type="module" async src="/src/main.tsx"></script>
 </body>
