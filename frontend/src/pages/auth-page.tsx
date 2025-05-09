@@ -2,7 +2,7 @@ import { AppImages } from "@src/assets";
 import { AuthForm } from "@src/components/auth/auth-form";
 import type { AuthVariantType } from "@src/components/auth/types";
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router";
 
 
@@ -10,7 +10,7 @@ export const AuthPage = () => {
     const [authType, setAuthType] = useState<AuthVariantType>("login");
 
     return (<>
-        <Helmet>
+        <Helmet prioritizeSeoTags={true}>
             <title>Login/Signup</title>
         </Helmet>
         <article className="h-[100dvh] grid place-content-center gap-4">
