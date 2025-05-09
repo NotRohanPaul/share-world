@@ -149,7 +149,8 @@ export const SignupForm = () => {
             {inputErrors.confirmPassword !== '' ? <p className="input-error">{inputErrors.confirmPassword}</p> : null}
 
             <button
-                type="submit"
+                type="button"
+                className="submit"
                 value={"signup"}
             >
                 SignUp

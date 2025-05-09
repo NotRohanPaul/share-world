@@ -22,12 +22,12 @@ export const AuthPage = () => {
             <main className="w-[450px] max-sm:w-[350px] flex flex-col gap-4 p-1">
                 <header className="self-center text-2xl p-0.5 rounded-full border-2 border-gray-500 overflow-hidden max-sm:text-xl  [&>button]:w-[150px] [&>button]:p-3 max-sm:[&>button]:p-1 max-sm:[&>button]:w-[100px]">
                     <button
-                        className={`rounded-l-full ${authType === "login" ? "bg-blue-500 text-white" : "hover:bg-blue-200"}`}
+                        className={`rounded-l-full ${authType === "login" ? "bg-primary text-white" : "hover:bg-blue-200"}`}
                         onClick={() => setAuthType("login")}
                         children="Login"
                     />
                     <button
-                        className={`rounded-r-full ${authType === "signup" ? "bg-blue-500 text-white" : "hover:bg-blue-200"}`}
+                        className={`rounded-r-full ${authType === "signup" ? "bg-primary text-white" : "hover:bg-blue-200"}`}
                         onClick={() => setAuthType("signup")}
                         children="SignUp"
                     />
@@ -37,7 +37,7 @@ export const AuthPage = () => {
                 </main>
                 <div className="h-1 [background-image:repeating-linear-gradient(90deg,transparent_0_3%,gray_3%_7%)] " />
                 <footer className="self-center">
-                    <button className="p-3 max-sm:p-2 max-sm:text-sm text-white font-semibold bg-blue-500 rounded-sm">
+                    <button className="p-3 max-sm:p-2 max-sm:text-sm text-white font-semibold bg-primary rounded-sm">
                         {authType === "signup" ?
                             "SignUp with Google" :
                             "Login with Google"}

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+    --color-primary: theme(colors.blue.600);
     --feature-grid: repeat(3, 150px);
     /* equals 480px */
     --breakpoint-xs: 30rem;
@@ -25,16 +26,16 @@
 
 @layer components {
     .primary-btn {
-        @apply rounded-full text-white bg-blue-500 hover:bg-white hover:text-blue-500 hover:outline-2 hover:outline-blue-500 active:outline-offset-2 transition-colors duration-300;
+        @apply rounded-full text-white bg-primary hover:bg-white hover:text-primary hover:outline-2 hover:outline-primary active:outline-offset-2 transition-colors duration-300;
     }
 
     .auth-form {
         input {
-            @apply outline-1 p-2 outline-gray-500 rounded-sm focus:outline-2 focus:outline-blue-500;
+            @apply outline-1 p-2 outline-gray-500 rounded-sm focus:outline-2 focus:outline-primary;
         }
 
-        button[type="submit"] {
-            @apply self-center font-semibold mt-2 py-2 px-4 rounded-full text-white bg-blue-500 hover:bg-white hover:text-blue-500 hover:outline-2 hover:outline-blue-500 active:outline-offset-2 transition-colors duration-300;
+        button.submit {
+            @apply self-center font-semibold mt-2 py-2 px-4 rounded-full text-white bg-primary hover:bg-white hover:text-primary hover:outline-2 hover:outline-primary active:outline-offset-2 transition-colors duration-300;
         }
 
         .input-error {
@@ -46,7 +47,7 @@
         @apply grid grid-cols-(--feature-grid) grid-rows-[100px] gap-3 justify-self-center;
 
         div {
-            @apply w-full h-full grid place-content-center text-xl text-center outline outline-blue-500 p-2 text-blue-500;
+            @apply w-full h-full grid place-content-center text-xl text-center outline outline-primary p-2 text-primary;
         }
     }
 

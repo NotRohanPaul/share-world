@@ -12,7 +12,7 @@ export const LoginForm = () => {
         password: ''
     });
 
-    // const [formError, setFormError] = useState<string>("");
+    const [formError, setFormError] = useState<string>("");
     const [emailError, setEmailError] = useState<string>("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -47,8 +47,15 @@ export const LoginForm = () => {
     const handleClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
         const target = e.target as HTMLButtonElement;
         if (e.isTrusted === false || target.tagName !== "BUTTON") return;
-        await loginHandler(loginFormData);
-        navigate("/user");
+        const response = await loginHandler(loginFormData);
+        if (response.status === 200) {
+            navigate("/user");
+        } else if (response.status === 400) {
+            setFormError("Invalid Username or Password.");
+        } else {
+            setFormError("Server Error.");
+        }
+
     };
 
 
@@ -82,6 +89,7 @@ export const LoginForm = () => {
                     className="password-visibility-btn"
                     title={isPasswordVisible ? "Hide Password" : "Show Password"}
                     aria-label="Toggle password visibility"
+                    type="button"
                     onClick={() => setIsPasswordVisible(prev => !prev)}
                 >
                     {isPasswordVisible ?
@@ -99,12 +107,14 @@ export const LoginForm = () => {
             </button>
 
             <button
-                type="submit"
+                type="button"
+                className="submit"
                 value={"login"}
                 onClick={handleClick}
             >
                 Login
             </button>
+            {formError === '' ? null : <p className="input-error">{formError}</p>}
         </>
     );
 };

@@ -5,7 +5,7 @@ export const LandingPage = () => {
 
     return (
         <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
-            <header className="h-15 flex justify-between items-center p-1 bg-blue-500">
+            <header className="h-15 flex justify-between items-center p-1 bg-primary">
                 <Link to={"/"}>
                     <AppImages.ShareWorld width={50} height="auto" className="w-10 h-auto aspect-square object-center object-contain p-1 bg-white rounded-full"
                     />
@@ -33,7 +33,7 @@ export const LandingPage = () => {
                     <div>Video/Audio Call</div>
                 </div>
             </main>
-            <footer className="h-10 grid place-content-center text-center bg-blue-500 text-white">
+            <footer className="h-10 grid place-content-center text-center bg-primary text-white">
                 @Copyright Share World
             </footer>
         </article>

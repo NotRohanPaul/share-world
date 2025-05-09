@@ -15,7 +15,7 @@
               "v": "11",
               "name": "logout",
               "method": "GET",
-              "endpoint": "http://<<host>>/api/auth/logout",
+              "endpoint": "http://<<host>>/api/v1/auth/logout",
               "params": [],
               "headers": [],
               "preRequestScript": "",
@@ -35,7 +35,7 @@
               "v": "11",
               "name": "login",
               "method": "POST",
-              "endpoint": "http://<<host>>/api/auth/login",
+              "endpoint": "http://<<host>>/api/v1/auth/login",
               "params": [],
               "headers": [],
               "preRequestScript": "",
@@ -46,7 +46,7 @@
               },
               "body": {
                 "contentType": "application/json",
-                "body": "{\n  \"email\": \"test3@test.com\",\n  \"password\": \"12345678\"\n}"
+                "body": "{\n  \"email\": \"test1@test.com\",\n  \"password\": \"12345678\"\n}\n"
               },
               "requestVariables": [],
               "responses": {}
@@ -55,7 +55,7 @@
               "v": "11",
               "name": "signup",
               "method": "POST",
-              "endpoint": "http://<<host>>/api/auth/signup",
+              "endpoint": "http://<<host>>/api/v1/auth/signup",
               "params": [],
               "headers": [],
               "preRequestScript": "",
@@ -94,7 +94,7 @@
       "v": "11",
       "name": "root",
       "method": "GET",
-      "endpoint": "http://<<host>>/",
+      "endpoint": "http://<<host>>/api/v1/",
       "params": [],
       "headers": [],
       "preRequestScript": "",

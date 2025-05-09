@@ -4,21 +4,13 @@ import { authEndpoints } from "../endpoints";
 
 
 export const loginHandler = async (data: LoginSchemaType) => {
-  try {
-    console.log(data);
-    const res = await axiosInstance.post(authEndpoints.login, data);
-    return res.data;
-  } catch (err) {
-    console.error(err);
-  }
+  console.log(data);
+  const res = await axiosInstance.post(authEndpoints.login, data);
+  return res;
 };
 
 
 export const logoutHandler = async () => {
-  try {
-    const res = await axiosInstance.get(authEndpoints.logout);
-    return res.data;
-  } catch (err) {
-    console.error(err);
-  }
+  const res = await axiosInstance.get(authEndpoints.logout);
+  return res.data;
 };
