@@ -1,6 +1,13 @@
 {
     "short_name": "ShareWorld",
     "name": "Share World",
+    "description": "Peer to Peer File Sharing",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "lang": "en",
+    "scope": "/",
     "icons": [
         {
             "src": "share-world-192x192.png",
@@ -12,9 +19,5 @@
             "sizes": "512x512",
             "type": "image/png"
         }
-    ],
-    "start_url": ".",
-    "background_color": "#ffffff",
-    "display": "standalone",
-    "theme_color": "#000000"
+    ]
 }
