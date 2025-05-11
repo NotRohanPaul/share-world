@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 
 
 export const LoginForm = () => {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const [loginFormData, setLoginFormData] = useState({
         email: '',
         password: ''
