@@ -17,7 +17,7 @@ export const LoginForm = () => {
         email: '',
         password: ''
     });
-    const [formError, setFormError] = useState("");
+    const [loginError, setLoginError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const inputRefs = useRef<{
@@ -29,15 +29,20 @@ export const LoginForm = () => {
     });
 
     const formLoginHandler = async () => {
-        const response = await loginHandler(loginFormData);
-        if (response.status === 200) {
-            navigate("/user");
-        } else if (response.status === 400) {
-            setFormError("Invalid Username or Password.");
-        } else {
-            setFormError("Server Error.");
+        try {
+            const response = await loginHandler(loginFormData);
+            console.log(response);
+            if (response.status === 200) {
+                navigate("/user");
+            } else if (response.status === 400) {
+                setLoginError("Invalid Username or Password.");
+            } else {
+                setLoginError("Server Error.");
+            }
         }
-
+        catch {
+            setLoginError("Network Error.");
+        }
     };
 
     const handleInputChange = (
@@ -68,9 +73,12 @@ export const LoginForm = () => {
         }
     };
 
-    const handleLoginClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    const handleLoginClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         const target = e.target as HTMLButtonElement;
         if (e.isTrusted === false || target.tagName !== "BUTTON") return;
+        if (loginFormData.password === "" || loginFormData.email === "" || emailError !== "") return;
+
+        setLoginError("");
         formLoginHandler();
     };
 
@@ -106,6 +114,7 @@ export const LoginForm = () => {
 
     return (
         <>
+            {loginError === '' ? null : <p className="input-error text-center">{loginError}</p>}
             <label htmlFor="loginEmail">Email</label>
             <input
                 type="email"
@@ -163,7 +172,7 @@ export const LoginForm = () => {
             >
                 Login
             </button>
-            {formError === '' ? null : <p className="input-error">{formError}</p>}
+
         </>
     );
 };
