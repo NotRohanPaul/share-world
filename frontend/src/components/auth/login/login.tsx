@@ -1,7 +1,13 @@
 import { AppIcons } from "@src/assets";
 import { loginHandler } from "@src/axios/handlers/auth-handler";
 import { loginSchema } from "@src/schemas/authSchemas";
-import { useState, type ChangeEvent, type MouseEventHandler } from "react";
+import {
+    useRef,
+    useState,
+    type ChangeEvent,
+    type KeyboardEventHandler,
+    type MouseEventHandler
+} from "react";
 import { useNavigate } from "react-router";
 
 
@@ -11,12 +17,30 @@ export const LoginForm = () => {
         email: '',
         password: ''
     });
-
-    const [formError, setFormError] = useState<string>("");
-    const [emailError, setEmailError] = useState<string>("");
+    const [formError, setFormError] = useState("");
+    const [emailError, setEmailError] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const inputRefs = useRef<{
+        emailRef: HTMLInputElement | null,
+        passwordRef: HTMLInputElement | null,
+    }>({
+        emailRef: null,
+        passwordRef: null,
+    });
 
-    const handleChange = (
+    const formLoginHandler = async () => {
+        const response = await loginHandler(loginFormData);
+        if (response.status === 200) {
+            navigate("/user");
+        } else if (response.status === 400) {
+            setFormError("Invalid Username or Password.");
+        } else {
+            setFormError("Server Error.");
+        }
+
+    };
+
+    const handleInputChange = (
         e: ChangeEvent<HTMLInputElement>,
     ) => {
         if (e.isTrusted === false || e.target.tagName !== "INPUT") return;
@@ -44,18 +68,39 @@ export const LoginForm = () => {
         }
     };
 
-    const handleClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    const handleLoginClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
         const target = e.target as HTMLButtonElement;
         if (e.isTrusted === false || target.tagName !== "BUTTON") return;
-        const response = await loginHandler(loginFormData);
-        if (response.status === 200) {
-            navigate("/user");
-        } else if (response.status === 400) {
-            setFormError("Invalid Username or Password.");
-        } else {
-            setFormError("Server Error.");
-        }
+        formLoginHandler();
+    };
 
+    const handleEnter: KeyboardEventHandler<HTMLInputElement> = (e) => {
+        if (e.key !== "Enter" || e.isTrusted === false) return;
+        const target = e.target as HTMLInputElement;
+        if (target.tagName !== "INPUT") return;
+
+        if (target.name === "email") {
+            if (target.value === "") return;
+            inputRefs.current.passwordRef?.focus();
+        }
+        if (target.name === "password") {
+            if (target.value === "") return;
+            formLoginHandler();
+        }
+    };
+
+    const handleEyeClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+        if (e.isTrusted === false || e.currentTarget.tagName !== "BUTTON") return;
+        e.stopPropagation();
+        setIsPasswordVisible(prev => !prev);
+        setTimeout(() => {
+            const input = inputRefs.current.passwordRef;
+            if (input) {
+                input.focus();
+                const len = input.value.length;
+                input.setSelectionRange(len, len);
+            }
+        }, 0);
     };
 
 
@@ -69,7 +114,9 @@ export const LoginForm = () => {
                 autoComplete="email"
                 placeholder="hello@example.com"
                 value={loginFormData.email}
-                onChange={handleChange}
+                onChange={handleInputChange}
+                onKeyDown={handleEnter}
+                ref={(elem) => { inputRefs.current.emailRef = elem; }}
             />
             {emailError !== '' ? <p className="input-error">{emailError}</p> : null}
 
@@ -82,7 +129,9 @@ export const LoginForm = () => {
                     id="loginPassword"
                     autoComplete="current-password"
                     value={loginFormData.password}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
+                    onKeyDown={handleEnter}
+                    ref={(elem) => { inputRefs.current.passwordRef = elem; }}
                 />
 
                 <button
@@ -90,7 +139,7 @@ export const LoginForm = () => {
                     title={isPasswordVisible ? "Hide Password" : "Show Password"}
                     aria-label="Toggle password visibility"
                     type="button"
-                    onClick={() => setIsPasswordVisible(prev => !prev)}
+                    onClick={handleEyeClick}
                 >
                     {isPasswordVisible ?
                         <AppIcons.EyeOff width={10} height={10} />
@@ -110,7 +159,7 @@ export const LoginForm = () => {
                 type="button"
                 className="submit"
                 value={"login"}
-                onClick={handleClick}
+                onClick={handleLoginClick}
             >
                 Login
             </button>
