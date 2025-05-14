@@ -27,7 +27,11 @@ const router = createBrowserRouter([
                 element: <AuthPage />
             },
             {
-                path: appRoutes.signup,
+                path: appRoutes.logout,
+                element: <AuthPage />
+            },
+            {
+                path: appRoutes.user,
                 element: <UserPage />
             },
             {

@@ -39,7 +39,7 @@ export const SignupForm = () => {
         try {
             const response = await signupHandler(signupFormData);
             console.log(response);
-            if (response.status === 200) {
+            if (response.status === 201) {
                 navigate(appRoutes.user);
             } else if (response.status === 400) {
                 setSignupError("Invalid Username or Password.");
@@ -55,7 +55,6 @@ export const SignupForm = () => {
     const handleInputChange = (
         e: ChangeEvent<HTMLInputElement>,
     ) => {
-        console.log(e);
         if (e.isTrusted === false || e.target.tagName !== "INPUT") return;
         let { name, value } = e.target as HTMLInputElement;
         if (name === "confirm-password")
@@ -110,13 +109,15 @@ export const SignupForm = () => {
         const target = e.target as HTMLInputElement;
         if (target.tagName !== "INPUT") return;
         if (target.value === "") return;
-
+        console.log("hello");
         switch (target.name) {
             case "name": {
+                console.log(target.name);
                 inputRefs.current.emailRef?.focus();
                 return;
             }
             case "email": {
+                console.log(target.name);
                 inputRefs.current.passwordRef?.focus();
                 return;
             }
@@ -133,6 +134,7 @@ export const SignupForm = () => {
     };
 
     const handleEyeClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+        console.log("hello");
         if (e.isTrusted === false || e.currentTarget.tagName !== "BUTTON") return;
         e.stopPropagation();
         const btnName = e.currentTarget.name;
@@ -188,7 +190,7 @@ export const SignupForm = () => {
             />
             {inputErrors.email !== '' ? <p className="input-error">{inputErrors.email}</p> : null}
 
-            <label htmlFor="signup-assword">
+            <label htmlFor="signup-password">
                 Password
             </label>
             <div className="relative">
@@ -207,8 +209,8 @@ export const SignupForm = () => {
                 <button
                     className="password-visibility-btn"
                     title={isPasswordVisible ? "Hide Password" : "Show Password"}
-                    aria-label="Toggle password visibility"
-                    name="password-eye-btn"
+                    // aria-label="Toggle password visibility"
+                    // name="password-eye-btn"
                     onClick={handleEyeClick}
                 >
                     {isPasswordVisible ?
