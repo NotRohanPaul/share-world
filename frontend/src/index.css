@@ -34,7 +34,7 @@
             @apply outline-1 p-2 outline-gray-500 rounded-sm focus:outline-2 focus:outline-primary;
         }
 
-        button.submit {
+        .submit-btn {
             @apply self-center font-semibold mt-2 py-2 px-4 rounded-full text-white bg-primary hover:bg-white hover:text-primary hover:outline-2 hover:outline-primary active:outline-offset-2 transition-colors duration-300;
         }
 

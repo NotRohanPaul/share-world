@@ -5,20 +5,29 @@ import { NotFoundPage } from "@src/pages/not-found";
 import { UserPage } from "@src/pages/user-page";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
+export const appRoutes = {
+    home: "/",
+    login: "/login",
+    logout: "/logout",
+    signup: "/signup",
+    contact: "/contact",
+    user: "/user"
+};
+
 const router = createBrowserRouter([
     {
         errorElement: <ErrorPage />,
         children: [
             {
-                path: "/",
+                path: appRoutes.home,
                 element: <LandingPage />,
             },
             {
-                path: "auth",
+                path: appRoutes.login,
                 element: <AuthPage />
             },
             {
-                path: "user",
+                path: appRoutes.signup,
                 element: <UserPage />
             },
             {

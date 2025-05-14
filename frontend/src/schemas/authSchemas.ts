@@ -36,7 +36,7 @@ export const loginSchema = z
     })
     .strict();
 
-export const singupInputSchema = z
+export const signupInputSchema = z
     .object({
         name: nameSchema,
         email: emailSchema,
@@ -44,7 +44,7 @@ export const singupInputSchema = z
         confirmPassword: z.string(),
     });
 
-export const signupSchema = singupInputSchema
+export const signupSchema = signupInputSchema
     .strict()
     .refine((data) => data.password === data.confirmPassword, {
         path: ['confirmPassword'],

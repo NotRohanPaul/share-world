@@ -1,10 +1,11 @@
 import { AppImages } from "@src/assets";
+import { appRoutes } from "@src/routes/app-router";
 import { Link } from "react-router";
 
 export const NavBar = () => {
     return (
         <header className="h-15 flex justify-between items-center p-1 bg-primary">
-            <Link to={"/"}>
+            <Link to={appRoutes.home}>
                 <AppImages.ShareWorld width={50} height="auto" className="w-10 h-auto aspect-square object-center object-contain p-1 bg-white rounded-full"
                 />
             </Link>
@@ -13,11 +14,11 @@ export const NavBar = () => {
 
                 <div className="flex gap-2">
                     <Link
-                        to={"/auth"}
+                        to={appRoutes.login}
                         children={"Manage Account"}
                     />
                     <Link
-                        to={"/logout"}
+                        to={appRoutes.logout}
                         children={"Logout"}
                     />
                 </div>

@@ -1,5 +1,6 @@
 import { AppIcons } from "@src/assets";
 import { loginHandler } from "@src/axios/handlers/auth-handler";
+import { appRoutes } from "@src/routes/app-router";
 import { loginSchema } from "@src/schemas/authSchemas";
 import {
     useRef,
@@ -33,7 +34,7 @@ export const LoginForm = () => {
             const response = await loginHandler(loginFormData);
             console.log(response);
             if (response.status === 200) {
-                navigate("/user");
+                navigate(appRoutes.user);
             } else if (response.status === 400) {
                 setLoginError("Invalid Username or Password.");
             } else {
@@ -115,11 +116,11 @@ export const LoginForm = () => {
     return (
         <>
             {loginError === '' ? null : <p className="input-error text-center">{loginError}</p>}
-            <label htmlFor="loginEmail">Email</label>
+            <label htmlFor="login-email">Email</label>
             <input
                 type="email"
                 name="email"
-                id="loginEmail"
+                id="login-email"
                 autoComplete="email"
                 placeholder="hello@example.com"
                 value={loginFormData.email}
@@ -129,13 +130,13 @@ export const LoginForm = () => {
             />
             {emailError !== '' ? <p className="input-error">{emailError}</p> : null}
 
-            <label htmlFor="loginPassword">Password</label>
+            <label htmlFor="login-password">Password</label>
             <div className="relative">
                 <input
                     className="w-full pr-8"
                     type={isPasswordVisible ? "text" : "password"}
                     name="password"
-                    id="loginPassword"
+                    id="login-password"
                     autoComplete="current-password"
                     value={loginFormData.password}
                     onChange={handleInputChange}
@@ -166,8 +167,8 @@ export const LoginForm = () => {
 
             <button
                 type="button"
-                className="submit"
-                value={"login"}
+                className="submit-btn"
+                value="login"
                 onClick={handleLoginClick}
             >
                 Login

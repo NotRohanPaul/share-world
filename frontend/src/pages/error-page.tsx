@@ -1,3 +1,4 @@
+import { appRoutes } from "@src/routes/app-router";
 import { Link } from "react-router";
 
 
@@ -8,7 +9,7 @@ export const ErrorPage = () => {
             <h1 className="text-5xl font-bold">
                 Something went wrong.
             </h1>
-            <Link to="/" className="primary-btn justify-self-center text-xl p-2">
+            <Link to={appRoutes.home} className="primary-btn justify-self-center text-xl p-2">
                 Home
             </Link>
         </main>

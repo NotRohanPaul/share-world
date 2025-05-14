@@ -1,6 +1,7 @@
 import { AppImages } from "@src/assets";
 import { AuthForm } from "@src/components/auth/auth-form";
 import type { AuthVariantType } from "@src/components/auth/types";
+import { appRoutes } from "@src/routes/app-router";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router";
@@ -15,7 +16,7 @@ export const AuthPage = () => {
         </Helmet>
         <article className="h-[100dvh] grid place-content-center gap-4">
             <header className="justify-self-center">
-                <Link to={"/"}>
+                <Link to={appRoutes.home}>
                     <AppImages.ShareWorld width={200} height="auto" className="w-40 h-auto max-sm:w-30 max-sm:h-12" />
                 </Link>
             </header>

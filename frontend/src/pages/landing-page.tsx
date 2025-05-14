@@ -1,4 +1,5 @@
 import { AppImages } from "@src/assets";
+import { appRoutes } from "@src/routes/app-router";
 import { Link } from "react-router";
 
 export const LandingPage = () => {
@@ -6,18 +7,18 @@ export const LandingPage = () => {
     return (
         <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
             <header className="h-15 flex justify-between items-center p-1 bg-primary">
-                <Link to={"/"}>
+                <Link to={appRoutes.home}>
                     <AppImages.ShareWorld width={50} height="auto" className="w-10 h-auto aspect-square object-center object-contain p-1 bg-white rounded-full"
                     />
                 </Link>
                 <nav className="font-semibold text-white">
                     <div className="flex gap-2">
                         <Link
-                            to={"/auth"}
+                            to={appRoutes.login}
                             children={"Login/Signup"}
                         />
                         <Link
-                            to={"/contact"}
+                            to={appRoutes.contact}
                             children={"Contact"}
                         />
                     </div>

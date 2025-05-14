@@ -5,7 +5,6 @@ import { authEndpoints } from "../endpoints";
 
 export const loginHandler = async (data: LoginSchemaType) => {
   const res = await axiosInstance.post(authEndpoints.login, data);
-
   return res;
 };
 
