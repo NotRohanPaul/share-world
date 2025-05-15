@@ -73,5 +73,8 @@ export default defineConfig({
     include: ['tests/**/*.{test,spec}.{js,ts,tsx}'],
     env: loadEnv('development', process.cwd()),
     watch: false,
+    coverage: {
+      reportsDirectory: './.cache/coverage'
+    }
   }
 });

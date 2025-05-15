@@ -6,6 +6,8 @@ node_modules/
 .env.*
 !.test.env
 
+# Dev temp files and folder like coverage are inside this cache folder
+.cache/
 
 # VS Code
 .vscode/
