@@ -23,6 +23,16 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      'no-restricted-imports': [
+    'error',
+    {
+      paths: [{
+        name: 'tests',
+        message: 'Do not import from tests in src',
+      }],
+      patterns: ['tests/*'],
+    },
+  ],
     },
   },
 )

@@ -38,6 +38,7 @@
     "strictFunctionTypes": true,
   },
   "include": [
-    "src"
-  ]
+    "src",
+    "tests"
+  ],
 }
