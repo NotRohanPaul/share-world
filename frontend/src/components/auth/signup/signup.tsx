@@ -209,9 +209,10 @@ export const SignupForm = () => {
                 <button
                     className="password-visibility-btn"
                     title={isPasswordVisible ? "Hide Password" : "Show Password"}
-                    // aria-label="Toggle password visibility"
-                    // name="password-eye-btn"
+                    aria-label="Toggle password visibility"
+                    name="password-eye-btn"
                     onClick={handleEyeClick}
+                    type="button"
                 >
                     {isPasswordVisible ?
                         <AppIcons.EyeOff width={10} height={10} />
@@ -243,6 +244,7 @@ export const SignupForm = () => {
                     aria-label="Toggle password visibility"
                     name="confirm-password-eye-btn"
                     onClick={handleEyeClick}
+                    type="button"
                 >
                     {isConfirmPasswordVisible ?
                         <AppIcons.EyeOff width={10} height={10} />

@@ -159,13 +159,6 @@ export const LoginForm = () => {
                 </button>
             </div>
             <button
-                value="forgot"
-                className="self-start text-sm text-gray-800 bg-none hover:underline"
-                type="button">
-                Forgot Password
-            </button>
-
-            <button
                 type="button"
                 className="submit-btn"
                 value="login"
