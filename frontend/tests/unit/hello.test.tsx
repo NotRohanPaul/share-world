@@ -8,6 +8,6 @@ it("should have hello world", () => {
     render(<MemoryRouter>
         <LoginForm />
     </MemoryRouter>);
-    const message = screen.queryByText(/login/i);
-    expect(message).toBeTruthy();
+  const button = screen.getByRole('button', { name: /login/i });
+  expect(button).toBeEnabled();
 });

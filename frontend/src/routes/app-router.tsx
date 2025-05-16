@@ -4,15 +4,8 @@ import { LandingPage } from "@src/pages/landing-page";
 import { NotFoundPage } from "@src/pages/not-found";
 import { UserPage } from "@src/pages/user-page";
 import { createBrowserRouter, RouterProvider } from "react-router";
+import { appRoutes } from "./app-routes";
 
-export const appRoutes = {
-    home: "/",
-    login: "/login",
-    logout: "/logout",
-    signup: "/signup",
-    contact: "/contact",
-    user: "/user"
-};
 
 const router = createBrowserRouter([
     {

@@ -1,7 +1,7 @@
 import { AppImages } from "@src/assets";
 import { AuthForm } from "@src/components/auth/auth-form";
 import type { AuthVariantType } from "@src/components/auth/types";
-import { appRoutes } from "@src/routes/app-router";
+import { appRoutes } from "@src/routes/app-routes";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router";

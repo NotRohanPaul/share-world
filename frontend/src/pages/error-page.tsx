@@ -1,4 +1,4 @@
-import { appRoutes } from "@src/routes/app-router";
+import { appRoutes } from "@src/routes/app-routes";
 import { Link } from "react-router";
 
 

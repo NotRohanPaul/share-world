@@ -1,8 +1,8 @@
-import { describe, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
 
 describe('Button component', () => {
-    test('renders correctly', () => { /* ... */ });
-    test('handles click', () => { /* ... */ });
+  test('renders correctly', () => { /* ... */ });
+  test('handles click', () => { /* ... */ });
 });
 

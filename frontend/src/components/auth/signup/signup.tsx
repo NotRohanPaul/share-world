@@ -1,6 +1,6 @@
 import { AppIcons } from "@src/assets";
 import { signupHandler } from "@src/axios/handlers/auth-handler";
-import { appRoutes } from "@src/routes/app-router";
+import { appRoutes } from "@src/routes/app-routes";
 import { signupInputSchema } from "@src/schemas/authSchemas";
 import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler } from "react";
 import { useNavigate } from "react-router";
@@ -56,7 +56,10 @@ export const SignupForm = () => {
         e: ChangeEvent<HTMLInputElement>,
     ) => {
         if (e.isTrusted === false || e.target.tagName !== "INPUT") return;
-        let { name, value } = e.target as HTMLInputElement;
+        const target = e.target as HTMLInputElement;
+        let name = target.name;
+        const value = target.value;
+
         if (name === "confirm-password")
             name = "confirmPassword";
 
