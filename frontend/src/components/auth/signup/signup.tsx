@@ -40,7 +40,7 @@ export const SignupForm = () => {
             const response = await signupHandler(signupFormData);
             console.log(response);
             if (response.status === 201) {
-                navigate(appRoutes.user);
+               void navigate(appRoutes.user);
             } else if (response.status === 400) {
                 setSignupError("Invalid Username or Password.");
             } else {
@@ -104,7 +104,7 @@ export const SignupForm = () => {
         if (isEveryFieldNotEmpty === false) return;
 
         setSignupError("");
-        formSignupHandler();
+        void formSignupHandler();
     };
 
     const handleEnter: KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -129,7 +129,7 @@ export const SignupForm = () => {
                 return;
             }
             case "confirm-password": {
-                formSignupHandler();
+                void formSignupHandler();
                 return;
             }
 

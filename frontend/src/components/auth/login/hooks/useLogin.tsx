@@ -27,7 +27,7 @@ export const useLogin = () => {
             const response = await loginHandler(loginFormData);
             console.log(response);
             if (response.status === 200) {
-                navigate(appRoutes.user);
+                void navigate(appRoutes.user);
             } else if (response.status === 400) {
                 setLoginError("Invalid Username or Password.");
             } else {
@@ -73,7 +73,7 @@ export const useLogin = () => {
         if (loginFormData.password === "" || loginFormData.email === "" || emailInputError !== "") return;
 
         setLoginError("");
-        formLoginHandler();
+        void formLoginHandler();
     };
 
     const handleEnter: KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -87,7 +87,7 @@ export const useLogin = () => {
         }
         if (target.name === "password") {
             if (target.value === "") return;
-            formLoginHandler();
+            void formLoginHandler();
         }
     };
 

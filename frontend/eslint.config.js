@@ -1,17 +1,20 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist',".cache"] },
+  { ignores: ['dist', ".cache", "node_modules"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
+    files: ['src/**/*.{ts,tsx}', 'tests/**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parserOptions: {
+        projectService: true,
+      },
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -24,15 +27,34 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       'no-restricted-imports': [
-    'error',
-    {
-      paths: [{
-        name: 'tests',
-        message: 'Do not import from tests in src',
-      }],
-      patterns: ['tests/*'],
-    },
-  ],
+        'error',
+        {
+          paths: [{
+            name: 'tests',
+            message: 'Do not import from tests in src',
+          }],
+          patterns: ['tests/*'],
+        },
+      ],
+      "@typescript-eslint/explicit-function-return-type": ["error"],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "caughtErrorsIgnorePattern": "^_",
+        }
+      ],
+      "require-await": "off",
+      "@typescript-eslint/require-await": "error",
+      '@typescript-eslint/no-floating-promises': 'error',
+      "@typescript-eslint/no-misused-promises": "error"
     },
   },
-)
+  {
+    files: ['src/**/*.tsx', 'tests/**/*.tsx'],
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off',
+    },
+  },
+);

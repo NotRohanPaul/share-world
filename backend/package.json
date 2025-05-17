@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "if exist dist rmdir /s /q dist",
     "cpy-pkg": "if exist dist copy package.json dist",
-    "lint": "eslint ./src --ext .ts",
+    "lint": "eslint .",
     "build:prod": "npm run lint && npm run clean && tsc && tsc-alias && npm run cpy-pkg",
     "mongo-svr:vsc-admin": "mongod -f \"C:/Program Files/MongoDB/Server/8.0/bin/mongod.cfg\"",
     "mongo-svr:vsc-noadmin": "powershell -ExecutionPolicy Bypass -File ./start-mongo.ps1",
