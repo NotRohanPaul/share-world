@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 import fs from "node:fs";
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadEnv } from 'vite';
+import { loadEnv, Plugin } from 'vite';
 import viteCompression from 'vite-plugin-compression';
 import htmlMinifier from 'vite-plugin-html-minifier';
 import svgr from "vite-plugin-svgr";
@@ -15,8 +15,9 @@ import { version } from './package.json';
 const outDirName = "dist";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const metaGeneratorPlugin = {
+const metaGeneratorPlugin: Plugin = {
   name: 'meta-generator',
+  apply: 'build',
   closeBundle() {
     const buildNumber = Date.now();
     const outputDir = path.join(__dirname, outDirName);
@@ -74,6 +75,8 @@ export default defineConfig({
     env: loadEnv('development', process.cwd()),
     watch: false,
     coverage: {
+      provider: 'v8',
+      reporter: ['text'],
       reportsDirectory: './.cache/coverage'
     }
   }

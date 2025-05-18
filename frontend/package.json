@@ -8,10 +8,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --mode development",
-    "build": "eslint . && tsc -b && vite build --mode production",
+    "build": "eslint . && npm run test && tsc -b && vite build --mode production",
     "lint": "eslint .",
     "preview": "vite preview --mode production",
-    "test": "vitest",
+    "test": "vitest run",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
