@@ -41,4 +41,7 @@
     "src",
     "tests"
   ],
+  "exclude": [
+    "dist"
+  ]
 }

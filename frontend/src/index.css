@@ -30,6 +30,10 @@
     }
 
     .auth-form {
+        label {
+            @apply font-semibold;
+        }
+
         input {
             @apply outline-1 p-2 outline-gray-500 rounded-sm focus:outline-2 focus:outline-primary placeholder:text-gray-600;
         }

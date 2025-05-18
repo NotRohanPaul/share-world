@@ -38,7 +38,7 @@ export const useSignup = () => {
             const response = await signupHandler(signupFormData);
             console.log(response);
             if (response.status === 201) {
-               void navigate(appRoutes.user);
+                void navigate(appRoutes.user);
             } else if (response.status === 400) {
                 setSignupError("Invalid Username or Password.");
             } else {
@@ -53,7 +53,7 @@ export const useSignup = () => {
     const handleInputChange = (
         e: ChangeEvent<HTMLInputElement>,
     ) => {
-        if (e.isTrusted === false || e.target.tagName !== "INPUT") return;
+        if (isTrusted(e) === false || e.target.tagName !== "INPUT") return;
         const target = e.target as HTMLInputElement;
         let name = target.name;
         const value = target.value;
@@ -97,7 +97,7 @@ export const useSignup = () => {
 
     const handleSignupClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         const target = e.target as HTMLButtonElement;
-        if (e.isTrusted === false || target.tagName !== "BUTTON") return;
+        if (isTrusted(e) === false || target.tagName !== "BUTTON") return;
         const isEveryFieldNotEmpty = [signupFormData.name, signupFormData.email, signupFormData.password, signupFormData.confirmPassword].every((item) => item !== "");
         if (isEveryFieldNotEmpty === false) return;
 
@@ -106,7 +106,7 @@ export const useSignup = () => {
     };
 
     const handleEnter: KeyboardEventHandler<HTMLInputElement> = (e) => {
-        if (e.key !== "Enter" || e.isTrusted === false) return;
+        if (e.key !== "Enter" || isTrusted(e) === false) return;
         const target = e.target as HTMLInputElement;
         if (target.tagName !== "INPUT") return;
         if (target.value === "") return;
@@ -136,7 +136,7 @@ export const useSignup = () => {
 
     const handleEyeClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         console.log("hello");
-        if (e.isTrusted === false || e.currentTarget.tagName !== "BUTTON") return;
+        if (isTrusted(e) === false || e.currentTarget.tagName !== "BUTTON") return;
         e.stopPropagation();
         const btnName = e.currentTarget.name;
         let input: HTMLInputElement | null = null;
@@ -155,7 +155,7 @@ export const useSignup = () => {
             input.setSelectionRange(len, len);
         }, 0);
     };
-   
+
     return {
         signupFormData,
         inputErrors,
@@ -167,5 +167,5 @@ export const useSignup = () => {
         handleSignupClick,
         handleEnter,
         handleEyeClick,
-    }
-}
+    };
+};

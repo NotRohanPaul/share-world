@@ -1,6 +1,7 @@
 import { loginHandler } from "@src/axios/handlers/auth-handler";
 import { appRoutes } from "@src/routes/app-routes";
 import { loginSchema } from "@src/schemas/authSchemas";
+import { isTrusted } from "@src/utils/event-trusted";
 import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler } from "react";
 import { useNavigate } from "react-router";
 
@@ -42,7 +43,7 @@ export const useLogin = () => {
     const handleInputChange = (
         e: ChangeEvent<HTMLInputElement>,
     ) => {
-        if (e.isTrusted === false || e.target.tagName !== "INPUT") return;
+        if (isTrusted(e) === false || e.target.tagName !== "INPUT") return;
         if (Object.keys(loginFormData).includes(e.target.name) === false) return;
 
         e.preventDefault();
@@ -69,7 +70,8 @@ export const useLogin = () => {
 
     const handleLoginClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         const target = e.target as HTMLButtonElement;
-        if (e.isTrusted === false || target.tagName !== "BUTTON") return;
+        console.dir(e.constructor);
+        if (isTrusted(e) === false || target.tagName !== "BUTTON") return;
         if (loginFormData.password === "" || loginFormData.email === "" || emailInputError !== "") return;
 
         setLoginError("");
@@ -77,7 +79,7 @@ export const useLogin = () => {
     };
 
     const handleEnter: KeyboardEventHandler<HTMLInputElement> = (e) => {
-        if (e.key !== "Enter" || e.isTrusted === false) return;
+        if (e.key !== "Enter" || isTrusted(e) === false) return;
         const target = e.target as HTMLInputElement;
         if (target.tagName !== "INPUT") return;
 
@@ -92,7 +94,7 @@ export const useLogin = () => {
     };
 
     const handleEyeClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-        if (e.isTrusted === false || e.currentTarget.tagName !== "BUTTON") return;
+        if (isTrusted(e) === false || e.currentTarget.tagName !== "BUTTON") return;
         e.stopPropagation();
         setIsPasswordVisible(prev => !prev);
         setTimeout(() => {
