@@ -9,11 +9,12 @@ export const AppImages = {
     ),
 };
 
-
 import EyeOff from "./icons/eye-off.svg";
 import EyeIcon from "./icons/eye.svg";
+import Avatar from "./icons/avatar.svg";
 
 export const AppIcons = {
     EyeIcon,
     EyeOff,
+    Avatar
 };
