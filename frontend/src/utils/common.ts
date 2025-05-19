@@ -9,3 +9,9 @@ export const isTrusted = (e: React.SyntheticEvent<any>): boolean => {
 
     return false;
 };
+
+export const testId = (id: string): { "data-testid": string; } | {} => {
+    if (APP_ENV === "development" || APP_ENV === "test") return { "data-testid": id };
+
+    return {};
+};

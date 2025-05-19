@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "start:dev": "vite --mode development",
     "build:stage": "vite build --mode production",
-    "build:prod": "eslint . && npm run test && tsc -b && vite build --mode production",
+    "build:prod": "eslint . && tsc -b && npm run test &&  vite build --mode production",
     "start:prod": "vite preview --mode production"
   },
   "dependencies": {

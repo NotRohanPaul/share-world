@@ -1,4 +1,4 @@
-import { isTrusted } from "@src/utils/event-trusted";
+import { isTrusted } from "@src/utils/common";
 import type { SyntheticEvent } from "react";
 import { expect, it } from "vitest";
 
