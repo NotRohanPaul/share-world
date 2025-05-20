@@ -2,7 +2,6 @@
 
 @theme {
     --color-primary: theme(colors.blue.600);
-    --feature-grid: repeat(3, 150px);
     /* equals 480px */
     --breakpoint-xs: 30rem;
 }
@@ -11,6 +10,7 @@
     body {
         background-color: aliceblue;
         color: #000033;
+        overflow: hidden;
     }
 
     button {
@@ -48,10 +48,10 @@
     }
 
     .features-container {
-        @apply grid grid-cols-(--feature-grid) grid-rows-[100px] gap-3 justify-self-center;
+        @apply flex gap-5 text-primary font-bold max-sm:flex-col;
 
         div {
-            @apply w-full h-full grid place-content-center text-xl text-center outline outline-primary p-2 text-primary;
+            @apply w-[250px] h-[150px] grid place-items-center text-center text-xl outline-3 outline-primary outline-dashed p-2 max-md:w-[120px] max-md:h-[100px] max-md:text-base;
         }
     }
 
