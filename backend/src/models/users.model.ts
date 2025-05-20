@@ -3,11 +3,26 @@ import mongoose from "mongoose";
 
 
 const UserDBSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    emailVerified: { type: Boolean, default: false }
-});
+    name: {
+        type: String,
+        required: true,
+        minLength: 3,
+        maxLength: 21
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        minLength: 5,
+        maxLength: 255,
+        lowercase: true
+    },
+    password: {
+        type: String,
+        required: true,
+        minLength: 8
+    },
+}, { strict: true });
 
 UserDBSchema.pre("save", async function (next) {
     if (this.isModified("password")) {

@@ -4,14 +4,17 @@ import { z } from "zod";
 const nameSchema = z
     .string()
     .min(3, "Name must be at least 3 characters long.")
-    .max(50, "Name must not exceed 50 characters.")
-    .regex(/^[A-Za-z\s]+$/, "Name must contain only letters and spaces.");
+    .max(21, "Name must not exceed 21 characters.")
+    .regex(/^[A-Za-z\s]+$/, "Name must contain only letters and spaces.")
+    .trim();
 
 const emailSchema = z
     .string()
     .min(5, { message: "Email must be at least 5 characters." })
     .max(255, { message: "Email must be at most 255 characters." })
-    .email({ message: "Invalid email format." });
+    .email({ message: "Invalid email format." })
+    .toLowerCase()
+    .trim();
 
 const passwordSchema = z
     .string()
