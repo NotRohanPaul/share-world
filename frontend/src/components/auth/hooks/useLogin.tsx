@@ -2,7 +2,7 @@ import { loginHandler } from "@src/axios/handlers/auth-handler";
 import { appRoutes } from "@src/routes/app-routes";
 import { loginSchema } from "@src/schemas/authSchemas";
 import { isTrusted } from "@src/utils/common";
-import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler } from "react";
+import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler, type PointerEventHandler } from "react";
 import { useNavigate } from "react-router";
 
 
@@ -93,11 +93,11 @@ export const useLogin = () => {
         }
     };
 
-    const handleEyeClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    const handleEyeClick: PointerEventHandler<HTMLButtonElement> = (e) => {
         if (isTrusted(e) === false || e.currentTarget.tagName !== "BUTTON") return;
         e.stopPropagation();
         setIsPasswordVisible(prev => !prev);
-        if ((e.nativeEvent as PointerEvent).pointerType === "touch")
+        if (e.pointerType === "touch")
             return;
         setTimeout(() => {
             const input = inputRefs.current.passwordRef;

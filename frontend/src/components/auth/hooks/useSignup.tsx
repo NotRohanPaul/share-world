@@ -2,7 +2,7 @@ import { signupHandler } from "@src/axios/handlers/auth-handler";
 import { appRoutes } from "@src/routes/app-routes";
 import { signupInputSchema } from "@src/schemas/authSchemas";
 import { isTrusted } from "@src/utils/common";
-import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler } from "react";
+import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler, type PointerEventHandler } from "react";
 import { useNavigate } from "react-router";
 
 export const useSignup = () => {
@@ -111,7 +111,6 @@ export const useSignup = () => {
         const target = e.target as HTMLInputElement;
         if (target.tagName !== "INPUT") return;
         if (target.value === "") return;
-        console.log("hello");
         switch (target.name) {
             case "name": {
                 console.log(target.name);
@@ -135,7 +134,7 @@ export const useSignup = () => {
         }
     };
 
-    const handleEyeClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    const handleEyeClick: PointerEventHandler<HTMLButtonElement> = (e) => {
         console.log("hello");
         if (isTrusted(e) === false || e.currentTarget.tagName !== "BUTTON") return;
         e.stopPropagation();
@@ -150,7 +149,7 @@ export const useSignup = () => {
             input = inputRefs.current.confirmPasswordRef;
         }
         if (input === null) return;
-        if ((e.nativeEvent as PointerEvent).pointerType === "touch")
+        if (e.pointerType === "touch")
             return;
         setTimeout(() => {
             input.focus();

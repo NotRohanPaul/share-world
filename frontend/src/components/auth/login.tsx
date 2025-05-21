@@ -51,7 +51,7 @@ export const LoginForm = () => {
                     title={isPasswordVisible ? "Hide Password" : "Show Password"}
                     aria-label="Toggle password visibility"
                     type="button"
-                    onClick={handleEyeClick}
+                    onPointerDown={handleEyeClick}
                 >
                     {isPasswordVisible ?
                         <AppIcons.EyeOff width={10} height={10} />

@@ -72,7 +72,7 @@ export const SignupForm = () => {
                     title={isPasswordVisible ? "Hide Password" : "Show Password"}
                     aria-label="Toggle password visibility"
                     name="password-eye-btn"
-                    onClick={handleEyeClick}
+                    onPointerDown={handleEyeClick}
                     type="button"
                 >
                     {isPasswordVisible ?
@@ -104,7 +104,7 @@ export const SignupForm = () => {
                     title={isConfirmPasswordVisible ? "Hide Password" : "Show Password"}
                     aria-label="Toggle password visibility"
                     name="confirm-password-eye-btn"
-                    onClick={handleEyeClick}
+                    onPointerDown={handleEyeClick}
                     type="button"
                 >
                     {isConfirmPasswordVisible ?
