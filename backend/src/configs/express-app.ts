@@ -18,8 +18,8 @@ app.use(cors({
     origin: APP_URL,
     credentials: true,
 }));
-
-app.use(express.static(path.join(import.meta.dirname, 'public')));
+console.log(import.meta.dirname);
+app.use(express.static(path.resolve('public/index.html')));
 
 app.use("/api/v1", routesHandler);
 

@@ -3,7 +3,6 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from "node:fs";
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { loadEnv, Plugin } from 'vite';
 import viteCompression from 'vite-plugin-compression';
 import htmlMinifier from 'vite-plugin-html-minifier';
@@ -13,14 +12,12 @@ import { defineConfig } from 'vitest/config';
 import { version } from './package.json';
 
 const outDirName = "dist";
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 const metaGeneratorPlugin: Plugin = {
   name: 'meta-generator',
   apply: 'build',
   closeBundle() {
     const buildNumber = Date.now();
-    const outputDir = path.join(__dirname, outDirName);
+    const outputDir = path.join(import.meta.dirname, outDirName);
 
     fs.writeFileSync(
       path.resolve(outputDir, 'meta-frontend.json'),
