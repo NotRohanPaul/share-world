@@ -150,6 +150,8 @@ export const useSignup = () => {
             input = inputRefs.current.confirmPasswordRef;
         }
         if (input === null) return;
+        if ((e.nativeEvent as PointerEvent).pointerType === "touch")
+            return;
         setTimeout(() => {
             input.focus();
             const len = input.value.length;

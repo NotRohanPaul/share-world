@@ -97,6 +97,8 @@ export const useLogin = () => {
         if (isTrusted(e) === false || e.currentTarget.tagName !== "BUTTON") return;
         e.stopPropagation();
         setIsPasswordVisible(prev => !prev);
+        if ((e.nativeEvent as PointerEvent).pointerType === "touch")
+            return;
         setTimeout(() => {
             const input = inputRefs.current.passwordRef;
             if (input) {
