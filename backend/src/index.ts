@@ -1,40 +1,24 @@
-import express from "express";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import http from 'node:http';
+import { Server } from "socket.io";
 import { connectDB } from "./configs/connect-DB";
+import { app } from "./configs/express-app";
 import { APP_URL, PORT } from "./constants/env";
-import { errorHandler } from "./middleware/error-handler";
-import { unknownHandler } from "./middleware/unknown-handler";
-import { routesHandler } from "./routes/routes";
-import helmet from "helmet";
-import cors from "cors";
+import { initializeSocket } from './configs/socket-handler';
 
-export const app = express();
 
-app.disable('x-powered-by');
-app.use(helmet({
-    xFrameOptions: { action: "sameorigin" },
-}));
-app.use(express.json());
-app.use(cors({
-    origin: APP_URL,
-    credentials: true,
-}));
-app.use(express.static(path.join(path.dirname(fileURLToPath(import.meta.url)), 'public')));
-app.use("/api/v1", routesHandler);
-
-app.get('/*public', (_req, res) => {
-    res.set('Cache-Control', 'no-store');
-    res.sendFile(path.resolve('public/index.html'));
+const server = http.createServer(app);
+const io = new Server(server, {
+    path: "/socket/v1/socket.io",
+    cors: {
+        origin: APP_URL,
+        credentials: true,
+    }
 });
 
-
-app.use(errorHandler);
-
-app.use(unknownHandler);
+initializeSocket(io);
 
 void connectDB().then(() => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
         console.log(`Listening: http://localhost:${PORT}`);
     });
 });
