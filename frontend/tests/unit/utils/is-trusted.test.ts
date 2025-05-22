@@ -4,6 +4,6 @@ import { expect, it } from "vitest";
 
 
 it("isTrusted", () => {
-    const event = { isTrusted: true } as unknown as SyntheticEvent;
+    const event = { isTrusted: false } as unknown as SyntheticEvent;
     expect(isTrusted(event)).toBe(true);
 });
