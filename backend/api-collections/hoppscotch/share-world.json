@@ -1,120 +1,155 @@
-{
-  "v": 6,
-  "name": "share world",
-  "folders": [
-    {
-      "v": 6,
-      "name": "api",
-      "folders": [
-        {
-          "v": 6,
-          "name": "auth",
-          "folders": [],
-          "requests": [
-            {
-              "v": "11",
-              "name": "logout",
-              "method": "GET",
-              "endpoint": "http://<<host>>/api/v1/auth/logout",
-              "params": [],
-              "headers": [],
-              "preRequestScript": "",
-              "testScript": "",
-              "auth": {
-                "authType": "inherit",
-                "authActive": true
+[
+  {
+    "v": 6,
+    "name": "share world",
+    "folders": [
+      {
+        "v": 6,
+        "name": "api",
+        "folders": [
+          {
+            "v": 6,
+            "name": "auth",
+            "folders": [],
+            "requests": [
+              {
+                "v": "11",
+                "name": "logout",
+                "method": "GET",
+                "endpoint": "http://<<host>>/api/v1/auth/logout",
+                "params": [],
+                "headers": [],
+                "preRequestScript": "",
+                "testScript": "",
+                "auth": {
+                  "authType": "inherit",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": null,
+                  "body": null
+                },
+                "requestVariables": [],
+                "responses": {}
               },
-              "body": {
-                "contentType": null,
-                "body": null
+              {
+                "v": "11",
+                "name": "login",
+                "method": "POST",
+                "endpoint": "http://<<host>>/api/v1/auth/login",
+                "params": [],
+                "headers": [],
+                "preRequestScript": "",
+                "testScript": "",
+                "auth": {
+                  "authType": "inherit",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": "application/json",
+                  "body": "{\n  \"email\": \"test1@test.com\",\n  \"password\": \"12345678\"\n}\n"
+                },
+                "requestVariables": [],
+                "responses": {}
               },
-              "requestVariables": [],
-              "responses": {}
+              {
+                "v": "11",
+                "name": "signup",
+                "method": "POST",
+                "endpoint": "http://<<host>>/api/v1/auth/signup",
+                "params": [],
+                "headers": [],
+                "preRequestScript": "",
+                "testScript": "",
+                "auth": {
+                  "authType": "inherit",
+                  "authActive": true
+                },
+                "body": {
+                  "contentType": "application/json",
+                  "body": "{\n  \"email\": \"test3@test.com\",\n  \"password\": \"12345678\"\n}"
+                },
+                "requestVariables": [],
+                "responses": {}
+              }
+            ],
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
             },
-            {
-              "v": "11",
-              "name": "login",
-              "method": "POST",
-              "endpoint": "http://<<host>>/api/v1/auth/login",
-              "params": [],
-              "headers": [],
-              "preRequestScript": "",
-              "testScript": "",
-              "auth": {
-                "authType": "inherit",
-                "authActive": true
-              },
-              "body": {
-                "contentType": "application/json",
-                "body": "{\n  \"email\": \"test1@test.com\",\n  \"password\": \"12345678\"\n}\n"
-              },
-              "requestVariables": [],
-              "responses": {}
+            "headers": [],
+            "_ref_id": "coll_m9qzx8a8_21b075d9-8a22-4bcc-a839-a7286a3e123c"
+          }
+        ],
+        "requests": [],
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "headers": [],
+        "_ref_id": "coll_m9qzx3d0_e068557c-fb09-4ee5-9f01-c5c24f4c6444"
+      },
+      {
+        "v": 6,
+        "name": "socket",
+        "folders": [],
+        "requests": [
+          {
+            "v": "11",
+            "name": "socket.io",
+            "method": "GET",
+            "endpoint": "http://localhost:5000/socket/v1/socket.io/?EIO=4&transport=polling",
+            "params": [],
+            "headers": [],
+            "preRequestScript": "",
+            "testScript": "",
+            "auth": {
+              "authType": "inherit",
+              "authActive": true
             },
-            {
-              "v": "11",
-              "name": "signup",
-              "method": "POST",
-              "endpoint": "http://<<host>>/api/v1/auth/signup",
-              "params": [],
-              "headers": [],
-              "preRequestScript": "",
-              "testScript": "",
-              "auth": {
-                "authType": "inherit",
-                "authActive": true
-              },
-              "body": {
-                "contentType": "application/json",
-                "body": "{\n  \"email\": \"test3@test.com\",\n  \"password\": \"12345678\"\n}"
-              },
-              "requestVariables": [],
-              "responses": {}
-            }
-          ],
-          "auth": {
-            "authType": "inherit",
-            "authActive": true
-          },
-          "headers": [],
-          "_ref_id": "coll_m9qzx8a8_21b075d9-8a22-4bcc-a839-a7286a3e123c"
-        }
-      ],
-      "requests": [],
-      "auth": {
-        "authType": "inherit",
-        "authActive": true
-      },
-      "headers": [],
-      "_ref_id": "coll_m9qzx3d0_e068557c-fb09-4ee5-9f01-c5c24f4c6444"
-    }
-  ],
-  "requests": [
-    {
-      "v": "11",
-      "name": "root",
-      "method": "GET",
-      "endpoint": "http://<<host>>/api/v1/",
-      "params": [],
-      "headers": [],
-      "preRequestScript": "",
-      "testScript": "",
-      "auth": {
-        "authType": "inherit",
-        "authActive": true
-      },
-      "body": {
-        "contentType": null,
-        "body": null
-      },
-      "requestVariables": [],
-      "responses": {}
-    }
-  ],
-  "auth": {
-    "authType": "none",
-    "authActive": true
-  },
-  "headers": [],
-  "_ref_id": "coll_m9kvfo01_533211fd-d0ca-44e4-8f8b-d66643c0af54"
-}
+            "body": {
+              "contentType": null,
+              "body": null
+            },
+            "requestVariables": [],
+            "responses": {}
+          }
+        ],
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "headers": [],
+        "_ref_id": "coll_maxpliz0_f79105c4-2cf9-4947-a9b3-cbfd23ce5822"
+      }
+    ],
+    "requests": [
+      {
+        "v": "11",
+        "name": "root",
+        "method": "GET",
+        "endpoint": "http://<<host>>/api/v1/",
+        "params": [],
+        "headers": [],
+        "preRequestScript": "",
+        "testScript": "",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "body": {
+          "contentType": null,
+          "body": null
+        },
+        "requestVariables": [],
+        "responses": {}
+      }
+    ],
+    "auth": {
+      "authType": "none",
+      "authActive": true
+    },
+    "headers": [],
+    "_ref_id": "coll_m9kvfo01_533211fd-d0ca-44e4-8f8b-d66643c0af54"
+  }
+]

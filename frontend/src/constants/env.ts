@@ -1,5 +1,5 @@
 const getEnv = (key: string, defaultValue?: string): string => {
-    if (import.meta.env[key] !== undefined)
+    if (import.meta.env[key] !== undefined && import.meta.env[key] !== '')
         return import.meta.env[key];
 
     if (defaultValue !== undefined) {

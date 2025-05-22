@@ -1,5 +1,5 @@
 import { userSchema } from "@src/schemas/auth-schemas";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export const createPasswordHash = async (password: string): Promise<string | null> => {
     const parsedPassword = await userSchema.password.spa(password);

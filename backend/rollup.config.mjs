@@ -9,20 +9,19 @@ export default {
     input: 'src/index.ts',
     output: {
         dir: 'dist',
-        format: 'esm',
-        entryFileNames: '[name].js',
     },
     plugins: [
         json(),
         resolve({
             preferBuiltins: false
         }),
-        commonjs({
-            transformMixedEsModules: true,
-            esmExternals: true
-        }),
+        commonjs(),
         typescript({ tsconfig: './tsconfig.json' }),
-        terser(),
+        terser({
+            format: {
+                comments: false,
+            }
+        }),
     ],
     external: (id) =>
         /^node:/.test(id) ||
