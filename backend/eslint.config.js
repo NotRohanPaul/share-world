@@ -38,7 +38,8 @@ export default tseslint.config(
       "require-await": "off",
       "@typescript-eslint/require-await": "error",
       '@typescript-eslint/no-floating-promises': 'error',
-      "@typescript-eslint/no-misused-promises": "error"
+      "@typescript-eslint/no-misused-promises": "error",
+      'no-console': 'warn'
     }
   }
 );

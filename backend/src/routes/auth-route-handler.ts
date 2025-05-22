@@ -12,7 +12,7 @@ const authRouteHandler = Router();
 
 authRouteHandler.use(timeoutHandler(10_000));
 
-authRouteHandler.get('/some-endpoint', async (req, res) => {
+authRouteHandler.get('/some-endpoint', async (_req, res) => {
     try {
         const result = await new Promise((resolve) => setTimeout(() => resolve("Done"), 12000));
         res.send(result);

@@ -2,7 +2,7 @@ import type React from "react";
 import { APP_ENV } from "@src/constants/env";
 
 
-export const isTrusted = (e: React.SyntheticEvent<any>): boolean => {
+export const isTrusted = (e: React.SyntheticEvent<unknown>): boolean => {
     if (APP_ENV === "development" || APP_ENV === "test") return true;
 
     if (e.isTrusted === true) return true;
@@ -10,7 +10,7 @@ export const isTrusted = (e: React.SyntheticEvent<any>): boolean => {
     return false;
 };
 
-export const testId = (id: string): { "data-testid": string; } | {} => {
+export const testId = (id: string): { "data-testid": string; } | Record<string, never> => {
     if (APP_ENV === "development" || APP_ENV === "test") return { "data-testid": id };
 
     return {};

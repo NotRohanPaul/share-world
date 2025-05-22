@@ -6,7 +6,7 @@ import { APP_URL, PORT } from "./constants/env";
 import { initializeSocket } from './configs/socket-handler';
 
 
-const server = http.createServer(app);
+const server = http.createServer(app as http.RequestListener);
 const io = new Server(server, {
     path: "/socket/v1/socket.io",
     cors: {
@@ -21,4 +21,4 @@ void connectDB().then(() => {
     server.listen(PORT, () => {
         console.log(`Listening: http://localhost:${PORT}`);
     });
-});
+}); 
