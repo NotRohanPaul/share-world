@@ -1,9 +1,9 @@
 {
-  "name": "share-world-frontend",
-  "private": true,
   "version": "1.0.0",
-  "type": "module",
+  "name": "share-world-frontend",
   "description": "Basic File Sharing with Authentication Frontend",
+  "type": "module",
+  "private": true,
   "author": "RP",
   "license": "MIT",
   "scripts": {

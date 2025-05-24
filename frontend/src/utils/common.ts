@@ -1,9 +1,15 @@
 import type React from "react";
 import { APP_ENV } from "@src/constants/env";
 
+export const isSecureEnv = (): boolean => {
+    const insecureEnvs = ['development', 'test'];
+    const isSecure = insecureEnvs.includes(APP_ENV) === false;
+
+    return isSecure;
+};
 
 export const isTrusted = (e: React.SyntheticEvent<unknown>): boolean => {
-    if (APP_ENV === "development" || APP_ENV === "test") return true;
+    if (isSecureEnv() === false) return true;
 
     if (e.isTrusted === true) return true;
 
@@ -11,7 +17,8 @@ export const isTrusted = (e: React.SyntheticEvent<unknown>): boolean => {
 };
 
 export const testId = (id: string): { "data-testid": string; } | Record<string, never> => {
-    if (APP_ENV === "development" || APP_ENV === "test") return { "data-testid": id };
+    if (isSecureEnv() === false) return { "data-testid": id };
 
     return {};
 };
+

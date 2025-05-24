@@ -1,14 +1,17 @@
 {
-  "name": "share-world-backend",
   "version": "1.0.0",
+  "name": "share-world-backend",
   "description": "Basic File Sharing with Authentication Backend",
   "type": "module",
   "private": true,
+  "author": "RP",
+  "license": "MIT",
   "scripts": {
     "clean": "if exist dist rmdir /s /q dist",
     "cpy-pkg": "if exist dist copy package.json dist",
     "lint": "eslint .",
-    "test": "jest --config=jest.config.ts",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
     "bundle": "npm run clean && rollup -c",
     "mongo-svr:vsc-admin": "mongod -f \"C:/Program Files/MongoDB/Server/8.0/bin/mongod.cfg\"",
     "mongo-svr:vsc-noadmin": "powershell -ExecutionPolicy Bypass -File ./start-mongo.ps1",
@@ -17,8 +20,6 @@
     "build:prod": "npm run lint && tsc -b && npm run test && npm run bundle",
     "start:prod": "node --env-file=.env.production ./dist/index.js"
   },
-  "author": "RP",
-  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
@@ -38,21 +39,20 @@
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.1",
-    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.1",
     "@types/supertest": "^6.0.3",
+    "dotenv": "^16.5.0",
     "eslint": "^9.24.0",
-    "jest": "^29.7.0",
     "nodemon": "^3.1.9",
     "rollup": "^4.41.0",
     "rollup-plugin-gzip": "^4.0.1",
     "supertest": "^7.1.1",
-    "ts-jest": "^29.3.4",
-    "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.15",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.30.1"
+    "typescript-eslint": "^8.30.1",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.1.4"
   }
 }
