@@ -1,7 +1,7 @@
 import { errorHandler } from "@middleware/error-handler";
 import { unknownHandler } from "@middleware/unknown-handler";
 import { routesHandler } from "@routes/routes";
-import { APP_URL } from "@src/constants/env";
+import { APP_ORIGIN } from "@src/constants/env";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
@@ -15,7 +15,7 @@ app.use(helmet({
 }));
 app.use(express.json());
 app.use(cors({
-    origin: APP_URL,
+    origin: APP_ORIGIN,
     credentials: true,
 }));
 
