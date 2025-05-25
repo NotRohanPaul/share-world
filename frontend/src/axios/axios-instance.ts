@@ -1,8 +1,8 @@
-import { API_URL } from "@src/constants/env";
+import { API_ORIGIN } from "@src/constants/env";
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-    baseURL: API_URL + "/api/v1",
+    baseURL: API_ORIGIN + "/api/v1",
     withCredentials: true,
     validateStatus: () => true,
     timeout: 10000,

@@ -1,7 +1,7 @@
 import { errorHandler } from "@middleware/error-handler";
 import { unknownHandler } from "@middleware/unknown-handler";
 import { routesHandler } from "@routes/routes";
-import { APP_ORIGIN } from "@src/constants/env";
+import { API_ORIGIN, APP_ORIGIN } from "@src/constants/env";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
@@ -12,6 +12,16 @@ const app = express();
 app.disable('x-powered-by');
 app.use(helmet({
     xFrameOptions: { action: "sameorigin" },
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            connectSrc: ["'self'", API_ORIGIN],
+            scriptSrc: ["'self'"],
+            styleSrc: ["'self'"],
+            imgSrc: ["'self'"],
+            frameAncestors: ["'self'"]
+        }
+    }
 }));
 app.use(express.json());
 app.use(cors({
@@ -19,7 +29,7 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use(express.static(path.resolve('public/index.html')));
+app.use(express.static(path.resolve('public')));
 app.use("/api/v1", routesHandler);
 app.get("*public", (_req, res) => {
     res.set('Cache-Control', 'no-store');
