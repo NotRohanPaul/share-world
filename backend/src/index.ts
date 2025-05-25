@@ -8,9 +8,10 @@ import { APP_ORIGIN, PORT } from "./constants/env";
 
 const server = http.createServer(app as http.RequestListener);
 const io = new Server(server, {
-    path: "/socket/v1/socket.io",
+    path: "/socket/v1/",
     cors: {
         origin: APP_ORIGIN,
+        methods: ['GET', 'POST'],
         credentials: true,
     }
 });

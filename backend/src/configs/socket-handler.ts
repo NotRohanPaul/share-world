@@ -5,6 +5,7 @@ export function initializeSocket(io: Server): void {
         console.log('User connected');
 
         socket.on('offer', (data) => {
+            console.log("Hello client");
             socket.broadcast.emit('offer', data);
         });
 

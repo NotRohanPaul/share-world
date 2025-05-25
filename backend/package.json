@@ -14,7 +14,7 @@
     "coverage": "vitest run --coverage",
     "bundle": "npm run clean && rollup -c",
     "mongo-svr:vsc-admin": "mongod -f \"C:/Program Files/MongoDB/Server/8.0/bin/mongod.cfg\"",
-    "mongo-svr:vsc-noadmin": "powershell -ExecutionPolicy Bypass -File ./start-mongo.ps1",
+    "mongo-svr:vsc-noadmin": "powershell -ExecutionPolicy Bypass -File ../scripts/start-mongo.ps1",
     "start:dev": "nodemon --exec tsx --env-file=.env.development ./src/index.ts",
     "build:ts": "npm run lint && npm run test && npm run clean && tsc -b -p tsconfig.build.json && tsc-alias && npm run cpy-pkg",
     "build:prod": "npm run lint && tsc -b && npm run test && npm run bundle",

@@ -29,7 +29,7 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use(express.static(path.resolve('public')));
+app.use(express.static('public'));
 app.use("/api/v1", routesHandler);
 app.get("*public", (_req, res) => {
     res.set('Cache-Control', 'no-store');

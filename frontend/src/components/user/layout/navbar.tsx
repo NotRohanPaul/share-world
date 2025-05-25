@@ -22,7 +22,6 @@ export const NavBar = () => {
             document.removeEventListener("click", handleOutsideClick);
         };
     }, [isAccountMenuVisible]);
-    console.log(isAccountMenuVisible);
 
     return (
         <header className="h-15 flex justify-between items-center p-2 bg-primary">
