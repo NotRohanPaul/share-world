@@ -19,7 +19,6 @@ export const Main = () => {
         pc.current = new RTCPeerConnection({
             iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }],
         });
-
         dataChannel.current = pc.current.createDataChannel('fileTransfer');
 
         dataChannel.current.onopen = () => {
