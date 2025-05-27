@@ -2,6 +2,7 @@
     This script allows creation of sample files that can be used to test the sharing feature. 
     If you do not pass any destination directory the default location of files will be users downloads location which is best location for testing.
 */
+
 import readline from "node:readline";
 import path from "node:path";
 import os from "node:os";
@@ -20,33 +21,39 @@ const extensionsMultiplierObj = {
     P: 1024 ** 4,
 };
 const defaultAnswers = {
-    defaultLocation: path.join(os.homedir(), 'Downloads', "sample-files"),
-    defaultQuantity: 5,
-    defaultFileExtensions: "txt,md,html,pdf,png",
-    defaultSizes: "1B,1K,1M,500K,50M",
+    location: path.join(os.homedir(), 'Downloads', "sample-files"),
+    quantity: 5,
+    fileExtensions: "txt,md,html,pdf,png",
+    sizes: "1B,1K,1M,500K,50M",
 };
 
-const customAnswers = defaultAnswers;
+const customAnswers = {
+    location: defaultAnswers.location,
+    quantity: defaultAnswers.quantity,
+    fileExtensions: defaultAnswers.fileExtensions,
+    sizes: defaultAnswers.sizes,
+};
 
 /* Questions */
+
 const questionsStringObj = {
     initial: `Defaults:
-    Location: ${defaultAnswers.defaultLocation}
-    Files Quantity: ${defaultAnswers.defaultQuantity}
-    Files Extensions: ${defaultAnswers.defaultFileExtensions}
-    Files Sizes: ${defaultAnswers.defaultSizes} 
+    Location: ${defaultAnswers.location}
+    Files Quantity: ${defaultAnswers.quantity}
+    Files Extensions: ${defaultAnswers.fileExtensions}
+    Files Sizes: ${defaultAnswers.sizes} 
 Do you want automatic creation of files with default input? (y/n): `,
-    location: `What's the location of the files creation? (Defaults to ${defaultAnswers.defaultLocation}): `,
-    quantity: `How many files you require? (Defaults to ${defaultAnswers.defaultQuantity}): `,
-    fileExtensions: `Enter the files extensions? (Defaults to these ${defaultAnswers.defaultFileExtensions}): `,
-    sizes: `Enter the sizes of the files? (Defaults to these ${defaultAnswers.defaultSizes}): `,
+    location: `What's the location of the files creation? (Defaults to ${defaultAnswers.location}): `,
+    quantity: `How many files you require? (Defaults to ${defaultAnswers.quantity}): `,
+    fileExtensions: `Enter the files extensions? (Defaults to these ${defaultAnswers.fileExtensions}): `,
+    sizes: `Enter the sizes of the files? (Defaults to these ${defaultAnswers.sizes}): `,
 };
 
-/* Utility */
+/* Utilities */
 
-/* Split the string into an array then trim the spaces then remove possible dot user may input*/
-const extractFilesExtensions = (prasedString) => {
-    return prasedString
+// Split the string into an array then trim the spaces then remove possible dot user may input 
+const extractFilesExtensions = (validString) => {
+    return validString
         .split(',')
         .map(ext => {
             let modifiedExt = ext.trim();
@@ -57,9 +64,9 @@ const extractFilesExtensions = (prasedString) => {
         });
 };
 
-/* Split the string into an array then trim the spaces then changes then covert the units to bytes*/
-const extractSizes = (prasedString) => {
-    return prasedString
+// Split the string into an array then trim the spaces then changes then covert the units to bytes
+const extractSizes = (validString) => {
+    return validString
         .split(',')
         .map(size => {
             size = size.trim();
@@ -70,93 +77,115 @@ const extractSizes = (prasedString) => {
         });
 };
 
-const parseFileExtensions = () => { };
-const parseFileSizes = () => { };
-
-
 /* Handlers */
+
+//File handlers
 const defaultAnswersFilesHandler = async () => {
     try {
-        await fs.promises.access(defaultAnswers.defaultLocation, fs.constants.W_OK | fs.constants.R_OK);
-        console.log(`Folder: ${defaultAnswers.defaultLocation} is accessible`);
+        await fs.promises.access(defaultAnswers.location, fs.constants.W_OK | fs.constants.R_OK);
+        console.log(`Folder: ${defaultAnswers.location} is accessible`);
     }
     catch (err) {
         try {
-            await fs.promises.mkdir(defaultAnswers.defaultLocation);
+            await fs.promises.mkdir(defaultAnswers.location);
             console.log(`Additional Required Folders is created`);
         }
         catch (err) {
-            console.log(`Folder: ${defaultAnswers.defaultLocation} is NOT accessible may be its not present or the OS or AntiMalware is blocking the script from accessing it.`);
+            console.log(`Folder: ${defaultAnswers.location} is NOT accessible may be its not present or the OS or AntiMalware is blocking the script from accessing it.`);
             throw err;
         }
     };
 
-    const filesExtension = extractFilesExtensions(defaultAnswers.defaultFileExtensions);
-    const filesSizes = extractSizes(defaultAnswers.defaultSizes);
-    for (let fileCount = 0; fileCount < defaultAnswers.defaultQuantity; fileCount++) {
+    const filesExtension = extractFilesExtensions(defaultAnswers.fileExtensions);
+    const filesSizes = extractSizes(defaultAnswers.sizes);
+    for (let fileCount = 0; fileCount < defaultAnswers.quantity; fileCount++) {
         const timestamp = new Date().toISOString().replace(/[:]/g, '-');
         const fileName = `sample-file-${fileCount}-${timestamp}.${filesExtension[fileCount % filesExtension.length]}`;
 
-        const filePath = path.join(defaultAnswers.defaultLocation, fileName);
+        const filePath = path.join(defaultAnswers.location, fileName);
         await fs.promises.writeFile(filePath, Buffer.alloc(filesSizes[fileCount % filesSizes.length]));
     }
-
-
 };
 const customAnswersFilesHandler = async () => {
+    try {
+        if (path.isAbsolute(customAnswers.location) === false) {
+            customAnswers.location = path.resolve(import.meta.dirname, customAnswers.location);
+        }
+        await fs.promises.access(customAnswers.location, fs.constants.W_OK | fs.constants.R_OK);
+        console.log(`Folder: ${customAnswers.location} is accessible`);
+        const sampleFilesPath = path.join(customAnswers.location, 'sample-files');
+        await fs.promises.mkdir(sampleFilesPath);
+        console.log(`Additional Required Folders is created`);
+        const filesExtension = extractFilesExtensions(customAnswers.fileExtensions);
+        const filesSizes = extractSizes(customAnswers.sizes);
+
+        if (filesExtension.length !== customAnswers.quantity) {
+            console.log("File Extensions do no match with the quantity using defaults");
+        }
+        if (filesSizes.length !== customAnswers.quantity) {
+            console.log("File Sizes do no match with the quantity using defaults");
+        }
+
+        for (let fileCount = 0; fileCount < customAnswers.quantity; fileCount++) {
+            const timestamp = new Date().toISOString().replace(/[:]/g, '-');
+            const fileName = `sample-file-${fileCount}-${timestamp}.${filesExtension[fileCount % filesExtension.length]}`;
+
+            const filePath = path.join(sampleFilesPath, fileName);
+            await fs.promises.writeFile(filePath, Buffer.alloc(filesSizes[fileCount % filesSizes.length]));
+        }
+    }
+    catch (err) {
+        console.log(`Folder: ${customAnswers.location} is NOT accessible. May be its not present or the OS or AntiMalware Software is blocking the script from accessing it.`);
+        throw err;
+    };
 
 };
 
-const contextHandler = async (context) => {
-    if (context !== "default" && context !== "custom")
-        throw new Error(`Wrong context: ${context}`);
+//Questions handlers
+const askQuestion = async (questionString, defaultValue, transform) => {
+    if (questionString === undefined)
+        throw new Error("No question string");
+    if (transform !== undefined && typeof transform !== "function")
+        throw new Error("Transform argument is not a function");
 
-    if (context === "default") {
-        await defaultAnswersFilesHandler();
+    const answer = await readInterface.question(questionString);
+    console.log('Received:', answer);
+    if (answer === undefined || answer.trim() === '') {
+        if (defaultValue === undefined) {
+            throw new Error("Invalid input");
+        }
+        console.log('Using default value:', defaultValue);
+        return defaultValue;
     }
     else {
-        await customAnswersFilesHandler();
-    }
+        const trimmedAnswer = answer.trim();
+        if (transform !== undefined)
+            return transform(trimmedAnswer);
 
+        return trimmedAnswer;
+    }
 };
 
-
 const questionsHandler = async () => {
-    const initialAnswer = await readInterface.question(questionsStringObj.initial);
-    console.log('Received:', initialAnswer);
-    if (initialAnswer === undefined || initialAnswer === '' || initialAnswer.toLowerCase() !== "y") {
+    const initialAnswer = await askQuestion(questionsStringObj.initial, 'n', (s) => s.toLowerCase());
+
+    if (initialAnswer !== "y") {
         console.log('Switching to custom prompts!');
     } else {
-        await contextHandler("default");
+        await defaultAnswersFilesHandler();
         console.log("Done");
         process.exit(0);
     }
 
+    // Questions for custom inputs
+    customAnswers.location = await askQuestion(questionsStringObj.location, defaultAnswers.location);
+    customAnswers.quantity = await askQuestion(questionsStringObj.quantity, defaultAnswers.quantity, Number);
+    customAnswers.fileExtensions = await askQuestion(questionsStringObj.fileExtensions, defaultAnswers.fileExtensions, (s) => s.toLowerCase());
+    customAnswers.sizes = await askQuestion(questionsStringObj.sizes, defaultAnswers.sizes, (s) => s.toUpperCase());
 
-    const locationAnswer = await readInterface.question(questionsStringObj.location);
-    console.log('Received:', locationAnswer);
-    if (locationAnswer === undefined || locationAnswer === '') {
-        console.log('Using default location:', defaultAnswers.defaultLocation);
-    }
-
-    const quantityAnswer = await readInterface.question(questionsStringObj.quantity);
-    console.log('Received:', quantityAnswer);
-    if (quantityAnswer === undefined || quantityAnswer === '' || Number.isNaN(Number(quantityAnswer))) {
-        console.log('Using default value:', 5);
-    }
-
-    const fileExtensionsAnswer = await readInterface.question(questionsStringObj.fileExtensions);
-    console.log('Received:', fileExtensionsAnswer);
-    if (fileExtensionsAnswer === undefined || fileExtensionsAnswer === '' || Number.isNaN(Number(fileExtensionsAnswer))) {
-        console.log('Using default value:', 5);
-    }
-
-    const sizesAnswer = await readInterface.question(questionsStringObj.sizes);
-    console.log('Received:', sizesAnswer);
-    if (sizesAnswer === undefined || sizesAnswer === '' || Number.isNaN(Number(sizesAnswer))) {
-        console.log('Using default value:', 5);
-    }
-
+    await customAnswersFilesHandler();
+    console.log("Done");
+    process.exit(0);
 };
 
 
