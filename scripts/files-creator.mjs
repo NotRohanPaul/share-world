@@ -18,7 +18,6 @@ const extensionsMultiplierObj = {
     K: 1024 ** 1,
     M: 1024 ** 2,
     G: 1024 ** 3,
-    P: 1024 ** 4,
 };
 const defaultAnswers = {
     location: path.join(os.homedir(), 'Downloads', "sample-files"),
