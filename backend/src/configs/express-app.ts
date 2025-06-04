@@ -2,6 +2,7 @@ import { errorHandler } from "@middleware/error-handler";
 import { unknownHandler } from "@middleware/unknown-handler";
 import { routesHandler } from "@routes/routes";
 import { API_ORIGIN, APP_ORIGIN } from "@src/constants/env";
+import { isSecureEnv } from "@src/utils/common";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
@@ -11,8 +12,8 @@ const app = express();
 
 app.disable('x-powered-by');
 app.use(helmet({
-    xFrameOptions: { action: "sameorigin" },
-    contentSecurityPolicy: {
+    frameguard: { action: "sameorigin" },
+    contentSecurityPolicy: isSecureEnv() ? {
         directives: {
             defaultSrc: ["'self'"],
             connectSrc: ["'self'", API_ORIGIN],
@@ -21,11 +22,11 @@ app.use(helmet({
             imgSrc: ["'self'"],
             frameAncestors: ["'self'"]
         }
-    }
+    } : false
 }));
 app.use(express.json());
 app.use(cors({
-    origin: APP_ORIGIN,
+    origin: isSecureEnv() ? APP_ORIGIN : true,
     credentials: true,
 }));
 

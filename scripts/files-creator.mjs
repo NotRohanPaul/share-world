@@ -1,6 +1,8 @@
+#!/usr/bin/env node
+
 /* 
     This script allows creation of sample files that can be used to test the sharing feature. 
-    If you do not pass any destination directory the default location of files will be users downloads location which is best location for testing.
+    If you do not pass any destination directory, the default location of file creation will be user's downloads folder, which is ideal for testing.
 */
 
 import readline from "node:readline";
@@ -105,6 +107,7 @@ const defaultAnswersFilesHandler = async () => {
         await fs.promises.writeFile(filePath, Buffer.alloc(filesSizes[fileCount % filesSizes.length]));
     }
 };
+
 const customAnswersFilesHandler = async () => {
     try {
         if (path.isAbsolute(customAnswers.location) === false) {
@@ -112,9 +115,19 @@ const customAnswersFilesHandler = async () => {
         }
         await fs.promises.access(customAnswers.location, fs.constants.W_OK | fs.constants.R_OK);
         console.log(`Folder: ${customAnswers.location} is accessible`);
+
         const sampleFilesPath = path.join(customAnswers.location, 'sample-files');
-        await fs.promises.mkdir(sampleFilesPath);
-        console.log(`Additional Required Folders is created`);
+        try {
+
+            await fs.promises.access(sampleFilesPath, fs.constants.W_OK | fs.constants.R_OK);
+            console.log(`Folder: ${sampleFilesPath} is accessible`);
+        }
+        catch (err) {
+            await fs.promises.mkdir(sampleFilesPath);
+            console.log(`Additional Required Folders is created`);
+            throw err;
+        }
+
         const filesExtension = extractFilesExtensions(customAnswers.fileExtensions);
         const filesSizes = extractSizes(customAnswers.sizes);
 

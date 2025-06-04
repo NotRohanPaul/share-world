@@ -1,5 +1,5 @@
 import { API_ORIGIN } from '@src/constants/env';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 
 export const Main = () => {
@@ -11,11 +11,17 @@ export const Main = () => {
     const incomingFileSize = useRef(0);
     const incomingFileName = useRef('');
 
-    const socket = io(API_ORIGIN, {
-        path: '/socket/v1',
-    });
+    const [userId, setUserId] = useState('');
+    const [connectedUserId, setConnectedUserId] = useState('');
+    const socketRef = useRef<any>(null);
 
     useEffect(() => {
+
+        const socket = io(API_ORIGIN, {
+            path: '/socket/v1',
+        });
+        socketRef.current = socket;
+
         pc.current = new RTCPeerConnection({
             iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }],
         });
@@ -112,6 +118,15 @@ export const Main = () => {
             }
         });
 
+        socket.on('user-id', (id) => {
+            setUserId(id);
+        });
+
+        socket.on('connected-user-id', (id) => {
+            setConnectedUserId(id);
+        });
+
+
         const startConnection = async () => {
             if (!pc.current) return;
             const offer = await pc.current.createOffer();
@@ -169,6 +184,8 @@ export const Main = () => {
     return (
         <main>
             <div>Main - WebRTC File Sharing</div>
+            <div>User ID: {userId}</div>
+            <div>Connected User ID: {connectedUserId}</div>
             <label htmlFor="file-input">Upload File: </label>
             <input
                 type="file"

@@ -8,5 +8,6 @@ export const connectDB = async (): Promise<void> => {
     }
     catch (err) {
         console.log("Error connecting to DB", err);
+        throw err;
     }
 };

@@ -10,5 +10,5 @@ const getEnv = (key: string, defaultValue?: string): string => {
 };
 
 export const APP_ENV = import.meta.env.MODE;
-export const API_ORIGIN = getEnv("VITE_API_ORIGIN", window.location.origin);
-export const APP_ORIGIN = getEnv("VITE_APP_ORIGIN");
+export const API_ORIGIN = getEnv("VITE_API_ORIGIN", `http://${location.hostname}:${5000}`);
+export const APP_ORIGIN = getEnv("VITE_APP_ORIGIN", location.origin);
