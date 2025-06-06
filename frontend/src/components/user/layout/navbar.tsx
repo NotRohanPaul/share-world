@@ -25,7 +25,7 @@ export const NavBar = () => {
 
     return (
         <header className="h-15 flex justify-between items-center p-2 bg-primary">
-            <Link to={appRoutes.home}>
+            <Link to={appRoutes.home} title="Share World">
                 <AppImages.ShareWorld width={50} height="auto" className="w-10 h-auto aspect-square object-center object-contain p-1 bg-white rounded-full"
                 />
             </Link>
@@ -34,6 +34,7 @@ export const NavBar = () => {
                     onClick={() => setIsAccountMenuVisible(prev => !prev)}
                     aria-label="account avatar"
                     className="overflow-hidden"
+                    title="User"
                 >
                     <AppIcons.Avatar
                         width={45}
