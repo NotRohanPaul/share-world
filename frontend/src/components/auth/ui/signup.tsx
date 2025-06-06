@@ -1,5 +1,5 @@
 import { AppIcons } from "@src/assets";
-import { useSignup } from "./hooks/useSignup";
+import { useSignup } from "../hooks/useSignup";
 
 
 export const SignupForm = () => {

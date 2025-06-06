@@ -1,5 +1,5 @@
-import { LoginForm } from "./login";
-import { SignupForm } from "./signup";
+import { LoginForm } from "./ui/login";
+import { SignupForm } from "./ui/signup";
 import type { AuthVariantType } from "./types";
 
 

@@ -1,5 +1,5 @@
-import { LoginForm } from '@src/components/auth/login';
-import { SignupForm } from '@src/components/auth/signup';
+import { LoginForm } from '@src/components/auth/ui/login';
+import { SignupForm } from '@src/components/auth/ui/signup';
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';

@@ -1,5 +1,5 @@
 import { AppIcons } from "@src/assets";
-import { useLogin } from "./hooks/useLogin";
+import { useLogin } from "../hooks/useLogin";
 
 
 export const LoginForm = () => {

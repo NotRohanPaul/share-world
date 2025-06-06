@@ -41,7 +41,7 @@ export const NavBar = () => {
                     />
                 </button>
                 {isAccountMenuVisible === false ? null :
-                    <div className="absolute -right-1 top-15 w-max flex flex-col p-1 bg-blue-600 [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-blue-600"
+                    <div className="absolute -right-1 top-15 w-max flex flex-col p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
                         onClick={() => setIsAccountMenuVisible(false)}
                         ref={menuRef}
                     >

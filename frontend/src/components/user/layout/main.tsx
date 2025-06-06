@@ -1,11 +1,11 @@
 import { API_ORIGIN } from '@src/constants/env';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { io } from 'socket.io-client';
+import { FilesInput } from "../ui/files-input";
 
 export const Main = () => {
     const pc = useRef<RTCPeerConnection | null>(null);
     const dataChannel = useRef<RTCDataChannel | null>(null);
-    const fileReader = useRef<FileReader | null>(null);
     const receiveBuffer = useRef<Uint8Array[]>([]);
     const receivedSize = useRef(0);
     const incomingFileSize = useRef(0);
@@ -15,8 +15,7 @@ export const Main = () => {
     const [connectedUserId, setConnectedUserId] = useState('');
     const socketRef = useRef<any>(null);
 
-    useEffect(() => {
-
+    const handleStartConnection = () => {
         const socket = io(API_ORIGIN, {
             path: '/socket/v1',
         });
@@ -142,61 +141,23 @@ export const Main = () => {
             socket.off('answer');
             socket.off('ice-candidate');
         };
-    }, []);
-
-    const CHUNK_SIZE = 16 * 1024;
-
-    const sendFile = (file: File) => {
-        if (!dataChannel.current || dataChannel.current.readyState !== 'open') {
-            return;
-        }
-
-        dataChannel.current.send(
-            JSON.stringify({
-                type: 'file-meta',
-                name: file.name,
-                size: file.size,
-            })
-        );
-
-        let offset = 0;
-        fileReader.current = new FileReader();
-
-        fileReader.current.onload = (e) => {
-            if (e.target?.result && dataChannel.current) {
-                dataChannel.current.send(e.target.result as ArrayBuffer);
-                offset += (e.target.result as ArrayBuffer).byteLength;
-
-                if (offset < file.size) {
-                    readSlice(offset);
-                }
-            }
-        };
-
-        const readSlice = (o: number) => {
-            const slice = file.slice(o, o + CHUNK_SIZE);
-            fileReader.current?.readAsArrayBuffer(slice);
-        };
-
-        readSlice(0);
     };
 
     return (
-        <main>
-            <div>Main - WebRTC File Sharing</div>
-            <div>User ID: {userId}</div>
-            <div>Connected User ID: {connectedUserId}</div>
-            <label htmlFor="file-input">Upload File: </label>
-            <input
-                type="file"
-                name="file"
-                id="file-input"
-                onChange={(e) => {
-                    if (e.target.files?.length) {
-                        sendFile(e.target.files[0]);
-                    }
-                }}
-            />
+        <main className="flex flex-col gap-2 items-center justify-center">
+            <button
+                className="w-fit bg-primary text-white p-2 rounded-md"
+                onPointerDown={handleStartConnection}
+            >
+                Start Connection
+            </button>
+            <section className="w-[300px] flex flex-col gap-2 bg-primary text-white p-2">
+                <div className="w-fit">User ID: {userId}</div>
+                <div className="w-fit">Connected User ID: {connectedUserId}</div>
+            </section>
+            <section className="grid grid-cols-[repeat(1,200px)] grid-rows-[repeat(1,150px)] gap-2 p-2 [&>*]:w-full [&>*]:h-full [&>*]:bg-gray-600 [&>*]:text-white [&>*]:p-2 [&>*]:flex [&>*]:justify-center [&>*]:items-center [&>*]:text-2xl">
+                <FilesInput dataChannel={dataChannel} />
+            </section>
         </main>
     );
 };
