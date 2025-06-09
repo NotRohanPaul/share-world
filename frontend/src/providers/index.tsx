@@ -4,15 +4,12 @@ import { AppHelmetProvider } from "./helmet-provider";
 import { ReduxStoreProvider } from "./redux-store";
 
 
-export const AppProviders: FC<{ children: ReactNode; }> =
-    ({ children }) => {
-        return (
-            <ReduxStoreProvider>
-                <QueryProvider>
-                    <AppHelmetProvider>
-                        {children}
-                    </AppHelmetProvider>
-                </QueryProvider>
-            </ReduxStoreProvider>
-        );
-    };
+export const AppProviders: FC<{ children: ReactNode; }> = ({ children }) => (
+    <ReduxStoreProvider>
+        <QueryProvider>
+            <AppHelmetProvider>
+                {children}
+            </AppHelmetProvider>
+        </QueryProvider>
+    </ReduxStoreProvider>
+);

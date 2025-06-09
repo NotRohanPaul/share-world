@@ -9,8 +9,4 @@ const store = configureStore({
    },
 });
 
-export const ReduxStoreProvider: FC<{ children: ReactNode; }> = ({ children }) => {
-   return (
-      <Provider store={store} children={children} />
-   );
-};
+export const ReduxStoreProvider: FC<{ children: ReactNode; }> = ({ children }) => <Provider store={store} children={children} />;
