@@ -1,16 +1,18 @@
 import { timeoutHandler } from "@src/middleware/timeout-handler";
-import express, { type ErrorRequestHandler } from "express";
+import express, { type Express, type ErrorRequestHandler } from "express";
 import request from "supertest";
 import { describe, it } from "vitest";
 
-export const appWithTimeout = (setupRoutes: (app: express.Express) => void) => {
+export const appWithTimeout = (setupRoutes: (app: express.Express) => void): Express => {
     const app = express();
 
     setupRoutes(app);
 
     const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
         console.log("Error handler triggered");
-        console.log("Message: ", err.message);
+        if (err instanceof Error) {
+            console.log("Message: ", err.message);
+        }
         res.sendStatus(500);
     };
 
@@ -46,7 +48,7 @@ describe("Timeout middleware", () => {
     it("returns error when request times out", async () => {
         const app = appWithTimeout(app => {
             app.get("/slow", timeoutHandler(1_000), async (_req, res) => {
-              await new Promise(resolve => setTimeout(resolve, 2_000)); 
+                await new Promise(resolve => setTimeout(resolve, 2_000));
 
                 res.send("done");
             });

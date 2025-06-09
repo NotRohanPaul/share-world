@@ -1,26 +1,28 @@
-import http from 'node:http';
-import { Server } from "socket.io";
+import http, { type RequestListener } from 'node:http';
 import { connectDB } from "./configs/connect-DB";
 import { app } from "./configs/express-app";
+import { gracefulShutdown } from "./configs/graceful-shutdown";
 import { initializeSocket } from './configs/socket-handler';
-import { APP_ORIGIN, HOST, PORT } from "./constants/env";
-import { isSecureEnv } from './utils/common';
+import { HOST, PORT } from "./constants/env";
 
-
-const server = http.createServer(app as http.RequestListener);
-const io = new Server(server, {
-    path: "/socket/v1",
-    cors: {
-        origin: isSecureEnv() ? APP_ORIGIN : true,
-        methods: ['GET', 'POST'],
-        credentials: true,
-    }
+const server = http.createServer(app as RequestListener);
+server.keepAliveTimeout = 30000;
+server.headersTimeout = 35000;
+server.on('error', (err) => {
+    console.error('Server error: \n', err);
+    process.exit(1);
 });
 
-initializeSocket(io);
+initializeSocket(server);
 
-void connectDB().then(() => {
+try {
+    await connectDB();
     server.listen(PORT, HOST, () => {
-        console.log(`Listening: http://${HOST}:${PORT}`);
+        console.log(`Listening on http://${HOST}:${PORT}`);
     });
-}); 
+} catch (err) {
+    console.error("Failed to start server \n", err);
+    process.exit(1);
+}
+
+gracefulShutdown(server);

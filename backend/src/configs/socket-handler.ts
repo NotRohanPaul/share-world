@@ -1,6 +1,20 @@
-import type { Server } from "socket.io";
+import { APP_ORIGIN } from "@src/constants/env";
+import { isSecureEnv } from "@src/utils/common";
+import type { Server as ServerType } from "node:http";
+import { Server } from "socket.io";
 
-export function initializeSocket(io: Server): void {
+export function initializeSocket(server: ServerType): void {
+    const io = new Server(server, {
+        path: "/socket/v1",
+        pingTimeout: 20000,
+        pingInterval: 25000,
+        cors: {
+            origin: isSecureEnv() ? APP_ORIGIN : true,
+            methods: ['GET', 'POST'],
+            credentials: true,
+        }
+    });
+
     io.on('connection', (socket) => {
         console.log('User connected');
 
@@ -22,7 +36,7 @@ export function initializeSocket(io: Server): void {
         });
 
         socket.on('disconnect', () => {
-            console.log('User disconnected');
+            console.log(`User ${socket.id} disconnected`);
         });
     });
 }
