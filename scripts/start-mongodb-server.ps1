@@ -13,5 +13,8 @@ $sendKeys = @"
 "@
 
 if (-not (Get-Process -Name mongod -ErrorAction SilentlyContinue)) {
-Start-Process powershell -Verb runAs -ArgumentList '-NoExit', '-Command', $sendKeys
+    Start-Process powershell -Verb runAs -ArgumentList '-NoExit', '-Command', $sendKeys
+}
+else {
+    Write-Host "mongod is already running. Skipping launch."
 }
