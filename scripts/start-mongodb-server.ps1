@@ -12,4 +12,6 @@ $sendKeys = @"
     [System.Windows.Forms.SendKeys]::SendWait('~')
 "@
 
+if (-not (Get-Process -Name mongod -ErrorAction SilentlyContinue)) {
 Start-Process powershell -Verb runAs -ArgumentList '-NoExit', '-Command', $sendKeys
+}
