@@ -1,9 +1,10 @@
-import type { RequestHandler } from "express";
 import { HTTP_STATUS_CODES } from "@constants/error-codes";
 import { UserModel } from "@models/users.model";
 import { userSchema } from "@schemas/auth-schemas";
+import { appLogger } from "@src/configs/app-logger";
 import { comparePasswordHash } from "@src/utils/bcrypt-utils";
 import { attachAccessAndRefreshTokenCookie } from "@src/utils/jwt-utils";
+import type { RequestHandler } from "express";
 
 export const loginController: RequestHandler = async (req, res) => {
     try {
@@ -22,14 +23,14 @@ export const loginController: RequestHandler = async (req, res) => {
                 userId: userDoc._id,
                 email: userDoc.email
             };
-            console.log(payload);
+            appLogger.info(payload);
             attachAccessAndRefreshTokenCookie(res, payload);
             return void res.sendStatus(HTTP_STATUS_CODES.OK);
         }
 
         return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
     } catch (err) {
-        console.log(err);
+        appLogger.info(err);
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };

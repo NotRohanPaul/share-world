@@ -2,6 +2,7 @@ import { APP_ORIGIN } from "@src/constants/env";
 import { isSecureEnv } from "@src/utils/common";
 import type { Server as ServerType } from "node:http";
 import { Server } from "socket.io";
+import { appLogger } from "./app-logger";
 
 export function initializeSocket(server: ServerType): void {
     const io = new Server(server, {
@@ -16,14 +17,14 @@ export function initializeSocket(server: ServerType): void {
     });
 
     io.on('connection', (socket) => {
-        console.log('User connected');
+        appLogger.info('User connected');
 
         const userId = socket.id;
         socket.emit('user-id', userId);
         socket.broadcast.emit('connected-user-id', userId);
 
         socket.on('offer', (data) => {
-            console.log("Hello client");
+            appLogger.info("Hello client");
             socket.broadcast.emit('offer', data);
         });
 
@@ -36,7 +37,7 @@ export function initializeSocket(server: ServerType): void {
         });
 
         socket.on('disconnect', () => {
-            console.log(`User ${socket.id} disconnected`);
+            appLogger.info(`User ${socket.id} disconnected`);
         });
     });
 }

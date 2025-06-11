@@ -1,14 +1,15 @@
 import mongoose from "mongoose";
 import { MONGO_URI } from "../constants/env";
+import { appLogger } from "./app-logger";
 
 export const connectDB = async (): Promise<void> => {
     try {
-        console.log("Connecting to DB");
+        appLogger.info("Connecting to DB");
         await mongoose.connect(MONGO_URI);
-        console.log("Connected to DB");
+        appLogger.info("Connected to DB");
     }
     catch (err) {
-        console.log("Error connecting to DB \n", err);
+        appLogger.info("Error connecting to DB \n", err);
         process.exit(1);
     }
 };

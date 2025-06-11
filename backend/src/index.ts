@@ -1,4 +1,5 @@
 import http, { type RequestListener } from 'node:http';
+import { appLogger } from "./configs/app-logger";
 import { connectDB } from "./configs/connect-DB";
 import { app } from "./configs/express-app";
 import { gracefulShutdown } from "./configs/graceful-shutdown";
@@ -9,7 +10,7 @@ const server = http.createServer(app as RequestListener);
 server.keepAliveTimeout = 30000;
 server.headersTimeout = 35000;
 server.on('error', (err) => {
-    console.error('Server error: \n', err);
+    appLogger.error('Server error: \n', err);
     process.exit(1);
 });
 
@@ -18,10 +19,10 @@ initializeSocket(server);
 try {
     await connectDB();
     server.listen(PORT, HOST, () => {
-        console.log(`Listening on http://${HOST}:${PORT}`);
+        appLogger.info(`Listening on http://${HOST}:${PORT}`);
     });
 } catch (err) {
-    console.error("Failed to start server \n", err);
+    appLogger.error("Failed to start server \n", err);
     process.exit(1);
 }
 

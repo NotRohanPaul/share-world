@@ -1,9 +1,10 @@
-import jwt from "jsonwebtoken";
+import { appLogger } from "@src/configs/app-logger";
 import { JWT_SECRET } from "@src/constants/env";
 import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
-import type { RequestHandler } from "express";
 import { cookiesSchema } from "@src/schemas/auth-schemas";
 import { attachNewAccessToken } from "@src/utils/jwt-utils";
+import type { RequestHandler } from "express";
+import jwt from "jsonwebtoken";
 
 export const refreshController: RequestHandler = async (req, res) => {
     try {
@@ -17,7 +18,7 @@ export const refreshController: RequestHandler = async (req, res) => {
         return void res.sendStatus(HTTP_STATUS_CODES.OK);
     }
     catch (err) {
-        console.log(err);
+        appLogger.info(err);
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };

@@ -1,3 +1,4 @@
+import { appLogger } from "@src/configs/app-logger";
 import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
 import { UserModel } from "@src/models/users.model";
 import { userSchema } from "@src/schemas/auth-schemas";
@@ -47,7 +48,7 @@ export const signupController: RequestHandler = async (req, res) => {
             .send("Signup successful");
     }
     catch (err) {
-        console.log(err);
+        appLogger.info(err);
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import type { Server } from "node:http";
+import { appLogger } from "./app-logger";
 
 export const gracefulShutdown = (server: Server) => {
     //To prevent multiple calls for termination
@@ -9,31 +10,31 @@ export const gracefulShutdown = (server: Server) => {
         if (isShuttingDown === true) return;
         isShuttingDown = true;
 
-        console.log('Shutting down server...');
+        appLogger.info('Shutting down server...');
 
         server.on('close', () => {
-            console.log('Server has closed');
+            appLogger.info('Server has closed');
         });
         server.close(async () => {
             try {
-                console.log('Closing MongoDB connection');
+                appLogger.info('Closing MongoDB connection');
                 await mongoose.connection.close(false);
-                console.log('MongoDB connection closed');
+                appLogger.info('MongoDB connection closed');
                 process.exit(0);
             }
             catch (err) {
-                console.log('Something went wrong during MongoDB connection closing \n', err);
+                appLogger.info('Something went wrong during MongoDB connection closing \n', err);
                 process.exit(1);
             }
         });
     }
 
     process.on('unhandledRejection', (reason, origin) => {
-        console.error(`Unhandled Rejection at: ${origin}`, reason);
+        appLogger.error(`Unhandled Rejection at: ${origin}`, reason);
         shutdown();
     });
     process.on('uncaughtException', (error, origin) => {
-        console.error(`Uncaught Exception at: ${origin}`, error);
+        appLogger.error(`Uncaught Exception at: ${origin}`, error);
         shutdown();
     });
     process.on('SIGINT', shutdown);

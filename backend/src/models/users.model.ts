@@ -1,6 +1,6 @@
+import { appLogger } from "@src/configs/app-logger";
 import { createPasswordHash } from "@src/utils/bcrypt-utils";
 import mongoose from "mongoose";
-
 
 const UserDBSchema = new mongoose.Schema({
     name: {
@@ -22,7 +22,7 @@ const UserDBSchema = new mongoose.Schema({
         required: true,
         minLength: 8
     },
-}, { strict: true });
+}, { strict: true, timestamps: true, });
 
 UserDBSchema.pre("save", async function (next) {
     if (this.isModified("password")) {
@@ -34,12 +34,13 @@ UserDBSchema.pre("save", async function (next) {
                 throw new Error("Password hashing failed");
             }
         } catch (error) {
-            console.error("Error during password hashing:", error);
+            appLogger.error("Error during password hashing:", error);
             return void next(error as mongoose.CallbackError);
         }
     }
     next();
 });
+
 export const UserModel = mongoose.model(
     "users-v1",
     UserDBSchema
