@@ -9,12 +9,12 @@ export const AppImages = {
     ),
 };
 
-import EyeOff from "./icons/eye-off.svg";
-import EyeIcon from "./icons/eye.svg";
-import Avatar from "./icons/avatar.svg";
+import { EyeIcon, EyeOff, CircleUser, Send, type LucideProps } from "lucide-react";
 
 export const AppIcons = {
     EyeIcon,
     EyeOff,
-    Avatar
+    Avatar: CircleUser,
+    Send,
+    Receive: (props: LucideProps) => <Send transform={" rotate(180)"} {...props} />
 };

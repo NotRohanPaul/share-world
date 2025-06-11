@@ -1,25 +1,30 @@
 @import "tailwindcss";
 
+:root {
+    --app-color-primary: hsl(217, 100%, 50%);
+    --app-color-white: hsl(210 100% 98%);
+    --app-color-black: hsl(240 100% 10%);
+}
+
 @theme {
-    --color-primary: theme(colors.blue.600);
-    /* equals 480px */
+    --color-primary: var(--app-color-primary);
+    --color-white: var(--app-color-white);
+    --color-black: var(--app-color-black);
+    /* equals 480px  */
     --breakpoint-xs: 30rem;
 }
 
+
 @layer base {
     body {
-        background-color: aliceblue;
-        color: #000033;
-        overflow: hidden;
+        @apply bg-white text-black overflow-hidden;
     }
 
     button {
-        user-select: none;
-        cursor: pointer;
+        @apply select-none cursor-pointer;
 
         &:focus-visible {
-            outline: none;
-            box-shadow: inset 0 0 0 2px black;
+            @apply outline-none shadow-[inset_0_0_0_2px_black];
         }
     }
 }

@@ -37,12 +37,11 @@ export const NavBar = () => {
                     title="User"
                 >
                     <AppIcons.Avatar
-                        width={45}
-                        height={45}
+                        className="w-[2rem] h-[2rem]"
                     />
                 </button>
                 {isAccountMenuVisible === false ? null :
-                    <div className="absolute -right-1 top-15 w-max flex flex-col p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
+                    <div className="absolute -right-1 top-10 w-max flex flex-col p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
                         onClick={() => setIsAccountMenuVisible(false)}
                         ref={menuRef}
                     >
