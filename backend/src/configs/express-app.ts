@@ -1,5 +1,5 @@
-import { errorHandler } from "@middleware/error-handler";
-import { unknownHandler } from "@middleware/unknown-handler";
+import { errorHandler } from "@middlewares/error-handler";
+import { unknownHandler } from "@middlewares/unknown-handler";
 import { routesHandler } from "@routes/routes";
 import { API_ORIGIN, APP_ORIGIN } from "@src/constants/env";
 import { isSecureEnv } from "@src/utils/common";

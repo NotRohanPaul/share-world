@@ -4,7 +4,7 @@ import {
     signupController
 } from "@controllers/auth-controllers";
 import { refreshController } from "@src/controllers/auth-controllers/refresh-controller";
-import { timeoutHandler } from "@src/middleware/timeout-handler";
+import { timeoutHandler } from "@src/middlewares/timeout-handler";
 import { Router } from "express";
 
 

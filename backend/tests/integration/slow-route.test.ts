@@ -1,4 +1,4 @@
-import { timeoutHandler } from "@src/middleware/timeout-handler";
+import { timeoutHandler } from "@src/middlewares/timeout-handler";
 import express, { type Express, type ErrorRequestHandler } from "express";
 import request from "supertest";
 import { describe, it } from "vitest";

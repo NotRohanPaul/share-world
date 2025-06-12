@@ -20,8 +20,8 @@
       "@constants/*": [
         "src/constants/*"
       ],
-      "@middleware/*": [
-        "src/middleware/*"
+      "@middlewares/*": [
+        "src/middlewares/*"
       ],
       "@models/*": [
         "src/models/*"
