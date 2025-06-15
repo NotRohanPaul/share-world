@@ -29,6 +29,9 @@ const metaGeneratorPlugin: Plugin = {
 
 // https://vite.dev/config/
 export default defineConfig({
+   server: {
+    open: '/user',
+  },
   define: {
     ...(process.env.NODE_ENV !== 'development'
       ? {

@@ -47,7 +47,7 @@ export const FilesInput = ({
     };
 
     return (
-        <label>
+        <label className="w-full h-full bg-gray-600 text-white p-2 flex justify-center items-center text-2xl">
             Select Files
             <input
                 type="file"

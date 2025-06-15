@@ -1,12 +1,13 @@
+import type { ActionType } from "@src/components/user/types";
 import { API_ORIGIN } from "@src/constants/env";
 import { io } from "socket.io-client";
 
-
-export const startSocket = async (): Promise<{
-    dataChannel: RTCDataChannel;
-    userId: string;
-    connectedUserId: string;
-} | void> => {
+export const startSocket = async (receiverId: string | null,
+    action: ActionType): Promise<{
+        dataChannel: RTCDataChannel;
+        userId: string;
+        connectedUserId: string;
+    } | void> => {
     let pc: RTCPeerConnection | null = null;
     let dataChannel: RTCDataChannel | null = null;
     let receiveBuffer: Uint8Array[] = [];
@@ -15,59 +16,25 @@ export const startSocket = async (): Promise<{
     let incomingFileName = '';
     let userId = '';
     let connectedUserId = '';
+    let isInitiator = false;
+    let isRemoteDescriptionSet = false;
+    let iceCandidatesQueue: RTCIceCandidate[] = [];
 
-    const socket = io(API_ORIGIN, {
-        path: '/socket/v1',
-    });
+    const socket = io(API_ORIGIN, { path: '/socket/v1' });
 
-    pc = new RTCPeerConnection({
-        iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }],
-    });
-    dataChannel = pc.createDataChannel('fileTransfer');
-
-    dataChannel.onopen = () => {
-        console.log('Data channel opened');
-    };
-
-    dataChannel.onmessage = (event) => {
-        if (typeof event.data === 'string') {
-            const message = JSON.parse(event.data);
-            if (message.type === 'file-meta') {
-                incomingFileName = message.name;
-                incomingFileSize = message.size;
-                receiveBuffer = [];
-                receivedSize = 0;
-            }
-        } else {
-            receiveBuffer.push(new Uint8Array(event.data));
-            receivedSize += event.data.byteLength;
-
-            if (receivedSize === incomingFileSize) {
-                const received = new Blob(receiveBuffer);
-                const url = URL.createObjectURL(received);
-
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = incomingFileName;
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-                URL.revokeObjectURL(url);
-            }
-        }
-    };
+    pc = new RTCPeerConnection({ iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }] });
 
     pc.onicecandidate = (event) => {
         if (event.candidate) {
-            socket.emit('ice-candidate', event.candidate);
+            socket.emit('ice-candidate', { to: connectedUserId, candidate: event.candidate });
         }
     };
 
-    pc.ondatachannel = (event) => {
-        const receiveChannel = event.channel;
-        receiveChannel.onmessage = (msgEvent) => {
-            if (typeof msgEvent.data === 'string') {
-                const message = JSON.parse(msgEvent.data);
+    const setDataChannelHandlers = (channel: RTCDataChannel) => {
+        channel.onopen = () => console.log('Data channel open');
+        channel.onmessage = (event) => {
+            if (typeof event.data === 'string') {
+                const message = JSON.parse(event.data);
                 if (message.type === 'file-meta') {
                     incomingFileName = message.name;
                     incomingFileSize = message.size;
@@ -75,71 +42,72 @@ export const startSocket = async (): Promise<{
                     receivedSize = 0;
                 }
             } else {
-                receiveBuffer.push(new Uint8Array(msgEvent.data));
-                receivedSize += msgEvent.data.byteLength;
-
+                receiveBuffer.push(new Uint8Array(event.data));
+                receivedSize += event.data.byteLength;
                 if (receivedSize === incomingFileSize) {
-                    const received = new Blob(receiveBuffer);
-                    const url = URL.createObjectURL(received);
-
+                    const blob = new Blob(receiveBuffer);
                     const a = document.createElement('a');
-                    a.href = url;
+                    a.href = URL.createObjectURL(blob);
                     a.download = incomingFileName;
-                    document.body.appendChild(a);
                     a.click();
-                    a.remove();
-                    URL.revokeObjectURL(url);
                 }
             }
         };
     };
 
-    socket.on('offer', async (offer) => {
-        if (!pc) return;
-        await pc.setRemoteDescription(new RTCSessionDescription(offer));
-        const answer = await pc.createAnswer();
-        await pc.setLocalDescription(answer);
-        socket.emit('answer', answer);
+    return new Promise((resolve) => {
+        socket.on('user-id', (id) => {
+            userId = id;
+            if (action === 'Send' && receiverId) {
+                isInitiator = true;
+                socket.emit('pair-request', { to: receiverId, from: id });
+            }
+        });
+
+        socket.on('paired', async (id) => {
+            connectedUserId = id;
+            if (!pc) return;
+
+            if (isInitiator) {
+                dataChannel = pc.createDataChannel('fileTransfer');
+                setDataChannelHandlers(dataChannel);
+                const offer = await pc.createOffer();
+                await pc.setLocalDescription(offer);
+                socket.emit('offer', { to: connectedUserId, offer });
+            }
+        });
+
+        socket.on('offer', async (offer) => {
+            await pc!.setRemoteDescription(new RTCSessionDescription(offer));
+            isRemoteDescriptionSet = true;
+            const answer = await pc!.createAnswer();
+            await pc!.setLocalDescription(answer);
+            socket.emit('answer', { to: connectedUserId, answer });
+        });
+
+        socket.on('answer', async (answer) => {
+            if (pc!.signalingState !== 'have-local-offer') return;
+            await pc!.setRemoteDescription(new RTCSessionDescription(answer));
+            isRemoteDescriptionSet = true;
+            for (const candidate of iceCandidatesQueue) {
+                await pc!.addIceCandidate(candidate);
+            }
+        });
+
+        socket.on('ice-candidate', async ({ candidate }) => {
+            if (isRemoteDescriptionSet) {
+                await pc!.addIceCandidate(new RTCIceCandidate(candidate));
+            } else {
+                iceCandidatesQueue.push(new RTCIceCandidate(candidate));
+            }
+        });
+
+        pc.ondatachannel = (e) => {
+            if (!isInitiator) {
+                dataChannel = e.channel;
+                setDataChannelHandlers(dataChannel);
+            }
+            resolve({ dataChannel: dataChannel!, userId, connectedUserId });
+        };
     });
-
-    socket.on('answer', async (answer) => {
-        if (!pc) return;
-        await pc.setRemoteDescription(new RTCSessionDescription(answer));
-    });
-
-    socket.on('ice-candidate', async (candidate) => {
-        if (!pc) return;
-        try {
-            await pc.addIceCandidate(new RTCIceCandidate(candidate));
-        } catch (e) {
-            console.error('Error adding received ice candidate', e);
-        }
-    });
-
-    socket.on('user-id', (id) => {
-        userId = id;
-    });
-
-    socket.on('connected-user-id', (id) => {
-        connectedUserId = id;
-    });
-
-
-    if (!pc) return;
-    const offer = await pc.createOffer();
-    await pc.setLocalDescription(offer);
-    socket.emit('offer', offer);
-
-    // return () => {
-    //     pc?.close();
-    //     socket.off('offer');
-    //     socket.off('answer');
-    //     socket.off('ice-candidate');
-    // };
-
-    return {
-        dataChannel,
-        userId,
-        connectedUserId,
-    };
 };
