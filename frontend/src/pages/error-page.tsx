@@ -10,7 +10,7 @@ export const ErrorPage = () => {
             </h1>
             <div className="justify-self-center flex gap-2">
                 <Link
-                    to={appRoutes.home}
+                    to={appRoutes.home.absolute}
                     className="primary-btn justify-self-center text-xl p-2"
                 >
                     Home

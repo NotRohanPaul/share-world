@@ -1,6 +1,6 @@
 import type { LoginSchemaType } from "@src/types";
 import { axiosInstance } from "../axios-instance";
-import { authEndpoints } from "../../constants/api-endpoints";
+import { authEndpoints } from "../endpoints/api-endpoints";
 import type { AxiosResponse } from "axios";
 
 

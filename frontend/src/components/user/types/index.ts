@@ -1,3 +1,3 @@
 
 
-export type ActionType = "Send" | "Receive" | null;
+// export type ActionType = "Send" | "Receive" | null;

@@ -8,13 +8,14 @@ export const SendAndReceiveFiles = ({ action }: { action: ActionType; }) => {
     const [userId, setUserId] = useState('');
     const [connectedUserId, setConnectedUserId] = useState('');
     const [inputReceiverId, setInputReceiverId] = useState('');
-    const [isConnecting, setIsConnecting] = useState(false);
     const [hasConnected, setHasConnected] = useState(false);
 
     useEffect(() => {
         const initReceiver = async () => {
+            console.log("test");
             if (action === "Receive") {
                 const returned = await startSocket(null, "Receive");
+                console.log(returned);
                 if (returned) {
                     dataChannel.current = returned.dataChannel;
                     setUserId(returned.userId);
@@ -29,15 +30,14 @@ export const SendAndReceiveFiles = ({ action }: { action: ActionType; }) => {
 
 
     const handleConnect = async () => {
-        setIsConnecting(true);
         const returned = await startSocket(inputReceiverId.trim(), action);
+        console.log("hello");
         if (returned) {
             dataChannel.current = returned.dataChannel;
             setUserId(returned.userId);
             setConnectedUserId(returned.connectedUserId);
             setHasConnected(true);
         }
-        setIsConnecting(false);
     };
 
     return (
@@ -56,7 +56,10 @@ export const SendAndReceiveFiles = ({ action }: { action: ActionType; }) => {
                         <button onClick={handleConnect} className="bg-blue-500 text-white p-2">Connect</button>
                     </div>
                 ) : (
-                    <p className="text-lg font-semibold">Waiting for sender to connect...</p>
+                    <>
+                        <p>Your User ID: {userId}</p>
+                        <p className="text-lg font-semibold">Waiting for sender to connect...</p>
+                    </>
                 )
             ) : (
                 <>

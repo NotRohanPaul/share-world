@@ -9,7 +9,7 @@ export const NotFoundPage = () => {
             <h1 className="text-5xl font-bold">
                 Page not found.
             </h1>
-            <Link to={appRoutes.home} className="primary-btn justify-self-center text-xl p-2">
+            <Link to={appRoutes.home.absolute} className="primary-btn justify-self-center text-xl p-2">
                 Home
             </Link>
         </main>

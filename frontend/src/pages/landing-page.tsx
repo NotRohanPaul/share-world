@@ -8,25 +8,25 @@ export const LandingPage = () => {
     return (
         <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
             <header className="h-15 flex justify-between items-center p-1 bg-primary">
-                <Link to={appRoutes.home}>
+                <Link to={appRoutes.home.absolute}>
                     <AppImages.ShareWorld width={50} height="auto" className="w-10 h-auto aspect-square object-center object-contain p-1 bg-white rounded-full"
                     />
                 </Link>
                 <nav className="font-semibold text-white">
                     <div className="flex gap-2">
                         <Link
-                            to={appRoutes.login}
+                            to={appRoutes.login.absolute}
                             children={"Login/Signup"}
                         />
                         <Link
-                            to={appRoutes.contact}
+                            to={appRoutes.contact.absolute}
                             children={"Contact"}
                         />
                     </div>
                 </nav>
             </header>
             <main className="h-full grid justify-items-center content-center gap-5">
-                <Link to={appRoutes.home}>
+                <Link to={appRoutes.home.absolute}>
                     <AppImages.ShareWorld width={200} height="auto" className="w-60 h-auto max-sm:w-40 max-sm:h-auto" />
                 </Link>
                 <motion.h1

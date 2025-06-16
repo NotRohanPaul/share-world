@@ -19,7 +19,7 @@ export const AuthPage = () => {
             className="h-[100dvh] grid place-content-center gap-4 max-xs:justify-normal max-xs:p-3">
             <header
                 className="justify-self-center">
-                <Link to={appRoutes.home}>
+                <Link to={appRoutes.home.absolute}>
                     <AppImages.ShareWorld width={200} height="auto" className="w-40 h-auto max-sm:w-30 max-sm:h-12" />
                 </Link>
             </header>
