@@ -12,7 +12,10 @@ const app = express();
 
 app.disable('x-powered-by');
 app.use(helmet({
+    xPoweredBy: false,
     frameguard: { action: "sameorigin" },
+    referrerPolicy: { policy: "no-referrer" },
+    crossOriginOpenerPolicy: false,
     contentSecurityPolicy: isSecureEnv() ? {
         directives: {
             defaultSrc: ["'self'"],
@@ -24,13 +27,14 @@ app.use(helmet({
         }
     } : false
 }));
-app.use(express.json());
 app.use(cors({
     origin: isSecureEnv() ? APP_ORIGIN : true,
     credentials: true,
 }));
 
+app.use(express.json());
 app.use(express.static('public'));
+
 app.use("/api/v1", routesHandler);
 app.get("*public", (_req, res) => {
     res.set('Cache-Control', 'no-store');
