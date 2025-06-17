@@ -24,7 +24,7 @@ export function initializeSocket(server: ServerType): void {
         const userId = socket.id;
         userMap.set(userId, socket);
 
-        socket.emit('user-id-client', userId);
+        socket.emit('user-id-client', {userId});
         appLogger.info({ socketId: userId }, 'User connected');
 
         socket.on('disconnect', () => {

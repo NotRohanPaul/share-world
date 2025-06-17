@@ -7,7 +7,8 @@ export const Main = () => {
 
     return (
         <main className="flex flex-col gap-2 items-center justify-center">
-            {location.pathname !== "/user" ? (<Outlet />) : (
+            {location.pathname !== "/user" ?
+                <Outlet /> :
                 <section className="flex gap-2">
                     <button
                         className="w-[10rem] h-[10rem] flex flex-col items-center justify-center text-2xl font-bold border-5 border-primary p-2 rounded-md bg-white text-primary transition-colors hover:bg-primary hover:text-white overflow-hidden"
@@ -25,7 +26,7 @@ export const Main = () => {
                         Receive
                     </button>
                 </section>
-            )}
+            }
         </main >
     );
 };
