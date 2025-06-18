@@ -5,19 +5,22 @@ export const ReceiveFiles = () => {
     const [userId, setUserId] = useState<string | null>(null);
     const [senderId, setSenderId] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
         const socket = socketInstance.connect();
-        console.log("hello");
-        console.log(userId);
         socket.on("user-id-client", ({ userId }: { userId: string; }) => {
             setUserId(userId);
-        });
-        socket.on("pair-failed-client", ({ message }: { message: string; }) => {
-            setError(message);
         });
         socket.on("paired-receiver-client", ({ from }: { from: string; }) => {
             setSenderId(from);
         });
+        socket.on("pair-failed-client", ({ message }: { message: string; }) => {
+            setError(message);
+        });
+
+        return () => {
+            socket.disconnect();
+        };
 
     }, []);
 

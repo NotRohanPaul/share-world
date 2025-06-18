@@ -1,23 +1,31 @@
 import { socketInstance } from "@src/sockets/socket-instance";
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import type { Socket } from "socket.io-client";
 
-const socket = socketInstance.connect();
 export const SendFiles = () => {
     const [userId, setUserId] = useState<string | null>(null);
     const [receiverIdInput, setReceiverIdInput] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+    const socketRef = useRef<Socket | null>(null);
+
 
     useEffect(() => {
+        const socket = socketInstance.connect();
+        socketRef.current = socket;
         socket.on("user-id-client", ({ userId }: { userId: string; }) => {
             setUserId(userId);
-        });
-        socket.on("pair-failed-client", ({ message }: { message: string; }) => {
-            setError(message);
         });
         socket.on("paired-sender-client", ({ to }: { to: string; }) => {
             setSuccess(to);
         });
+        socket.on("pair-failed-client", ({ message }: { message: string; }) => {
+            setError(message);
+        });
+
+        return () => {
+            socket.disconnect();
+        };
 
     }, []);
 
@@ -27,10 +35,10 @@ export const SendFiles = () => {
     };
 
     const handleConnect = () => {
-        if (receiverIdInput === null)
-            return void alert("No receiverId");
+        if (receiverIdInput === null || socketRef.current === null)
+            return void alert("No receiverId or socket");
 
-        socket.emit("pair-request-server", { to: receiverIdInput });
+        socketRef.current.emit("pair-request-server", { to: receiverIdInput });
     };
 
     return (

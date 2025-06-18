@@ -5,7 +5,7 @@ import type { Server as ServerType } from "node:http";
 import { Server, Socket } from "socket.io";
 import { appLogger } from "../configs/app-logger";
 import { pairEventsHandler } from "./handlers/pair-events-handler";
-import { rtcEventsHandler } from "./handlers/rtc-events-handlers";
+import { webrtcEventsHandler } from "./handlers/webrtc-events-handlers";
 
 export function initializeSocket(server: ServerType): void {
     const io = new Server(server, {
@@ -33,7 +33,7 @@ export function initializeSocket(server: ServerType): void {
         });
 
         pairEventsHandler(socket, userMap);
-        rtcEventsHandler(socket, userMap);
+        webrtcEventsHandler(socket, userMap);
     });
 
 }
