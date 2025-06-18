@@ -6,6 +6,8 @@ export function useReceiverWebRTC(peerId: string) {
     const [dataChannel, setDataChannel] = useState<RTCDataChannel | null>(null);
 
     useEffect(() => {
+        if (!peerId || pcRef.current) return;
+
         const pc = new RTCPeerConnection({
             iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
         });
@@ -42,8 +44,13 @@ export function useReceiverWebRTC(peerId: string) {
             console.error("ICE Candidate Error:", event);
         };
 
-        socketInstance.on("webrtc-offer-client", async ({ offer }) => {
+        socketInstance.on("webrtc-offer-client", async ({
+            offer
+        }: {
+            offer: RTCSessionDescriptionInit;
+        }) => {
             try {
+                console.log(offer);
                 await pc.setRemoteDescription(new RTCSessionDescription(offer));
                 const answer = await pc.createAnswer();
                 await pc.setLocalDescription(answer);
@@ -56,6 +63,7 @@ export function useReceiverWebRTC(peerId: string) {
 
         socketInstance.on("webrtc-ice-candidate-client", async ({ candidate }) => {
             try {
+                console.log(new RTCIceCandidate(candidate));
                 await pc.addIceCandidate(new RTCIceCandidate(candidate));
             } catch (err) {
                 console.error("ICE error (receiver)", err);

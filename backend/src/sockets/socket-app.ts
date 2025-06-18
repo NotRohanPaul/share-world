@@ -24,10 +24,10 @@ export function initializeSocket(server: ServerType): void {
         const userId = socket.id;
         userMap.set(userId, socket);
 
-        socket.emit('user-id-client', {userId});
-        appLogger.info({ socketId: userId }, 'User connected');
+        socket.emit("user-id-client", { userId });
+        appLogger.info({ socketId: userId }, "User connected");
 
-        socket.on('disconnect', () => {
+        socket.on("disconnect", () => {
             appLogger.info("User disconnected", userId);
             userMap.delete(userId);
         });

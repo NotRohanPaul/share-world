@@ -1,11 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { socketInstance } from "@src/sockets/socket-instance";
 
 export function useSenderWebRTC(peerId: string) {
     const pcRef = useRef<RTCPeerConnection | null>(null);
-    const dataChannelRef = useRef<RTCDataChannel | null>(null);
+    const [dataChannelInstance, setDataChannelInstance] = useState<RTCDataChannel | null>(null);
+
 
     useEffect(() => {
+        if (!peerId || pcRef.current) return;
         const pc = new RTCPeerConnection({
             iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
         });
@@ -15,9 +17,10 @@ export function useSenderWebRTC(peerId: string) {
 
 
         const dataChannel = pc.createDataChannel("fileTransfer");
-        dataChannelRef.current = dataChannel;
+        setDataChannelInstance(dataChannel);
 
         dataChannel.onopen = () => console.log("📤 Data channel open (sender)");
+        dataChannel.onclose = () => console.log("📤 Data channel closing (sender)");
         dataChannel.onerror = (event) => {
             console.error("Data channel error", event);
         };
@@ -87,9 +90,9 @@ export function useSenderWebRTC(peerId: string) {
             if (dataChannel && dataChannel.readyState !== "closed") {
                 dataChannel.close();
             }
-
+            setDataChannelInstance(null);
         };
     }, [peerId]);
 
-    return { dataChannel: dataChannelRef.current };
+    return { dataChannel: dataChannelInstance };
 }
