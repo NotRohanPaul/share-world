@@ -4,6 +4,8 @@ import { socketInstance } from "@src/sockets/socket-instance";
 export function useReceiverWebRTC(peerId: string) {
     const pcRef = useRef<RTCPeerConnection | null>(null);
     const [dataChannel, setDataChannel] = useState<RTCDataChannel | null>(null);
+    const iceCandidateQueueRef = useRef<RTCIceCandidateInit[]>([]);
+    let remoteDescriptionSet = false;
 
     useEffect(() => {
         if (!peerId || pcRef.current) return;
@@ -37,12 +39,12 @@ export function useReceiverWebRTC(peerId: string) {
         };
 
         pc.onicegatheringstatechange = () => {
-  console.log("ICE gathering state:", pc.iceGatheringState);
-};
+            console.log("ICE gathering state:", pc.iceGatheringState);
+        };
 
-pc.onnegotiationneeded = () => {
-  console.log("Negotiation needed");
-};
+        pc.onnegotiationneeded = () => {
+            console.log("Negotiation needed");
+        };
 
         pc.oniceconnectionstatechange = () => {
             console.log("ICE connection state:", pc.iceConnectionState);
@@ -62,8 +64,15 @@ pc.onnegotiationneeded = () => {
             offer: RTCSessionDescriptionInit;
         }) => {
             try {
-                console.log(offer);
+                console.log("Receiver: ", { offer });
                 await pc.setRemoteDescription(new RTCSessionDescription(offer));
+
+                remoteDescriptionSet = true;
+                for (const candidate of iceCandidateQueueRef.current) {
+                    await pc.addIceCandidate(new RTCIceCandidate(candidate));
+                }
+                iceCandidateQueueRef.current = [];
+
                 const answer = await pc.createAnswer();
                 await pc.setLocalDescription(answer);
                 socketInstance.emit("webrtc-answer-server", { to: peerId, answer });
@@ -75,8 +84,12 @@ pc.onnegotiationneeded = () => {
 
         socketInstance.on("webrtc-ice-candidate-client", async ({ candidate }) => {
             try {
-                console.log(new RTCIceCandidate(candidate));
-                await pc.addIceCandidate(new RTCIceCandidate(candidate));
+                console.log("Receiver ICE candidate: ", new RTCIceCandidate(candidate));
+                if (!remoteDescriptionSet) {
+                    iceCandidateQueueRef.current.push(candidate);
+                } else {
+                    await pc.addIceCandidate(new RTCIceCandidate(candidate));
+                }
             } catch (err) {
                 console.error("ICE error (receiver)", err);
             }

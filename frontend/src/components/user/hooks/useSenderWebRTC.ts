@@ -4,6 +4,8 @@ import { socketInstance } from "@src/sockets/socket-instance";
 export function useSenderWebRTC(peerId: string) {
     const pcRef = useRef<RTCPeerConnection | null>(null);
     const [dataChannelInstance, setDataChannelInstance] = useState<RTCDataChannel | null>(null);
+    const iceCandidateQueueRef = useRef<RTCIceCandidateInit[]>([]);
+    let remoteDescriptionSet = false;
 
 
     useEffect(() => {
@@ -20,11 +22,10 @@ export function useSenderWebRTC(peerId: string) {
         setDataChannelInstance(dataChannel);
 
         dataChannel.onopen = () => console.log("📤 Data channel open (sender)");
-        dataChannel.onclose = () => console.log("📤 Data channel closing (sender)");
+        dataChannel.onclose = () => console.log("🛑 Data channel closed");
         dataChannel.onerror = (event) => {
             console.error("Data channel error", event);
         };
-        dataChannel.onclose = () => console.log("🛑 Data channel closed");
 
         pc.onicecandidate = (e) => {
             if (e.candidate) {
@@ -73,6 +74,12 @@ export function useSenderWebRTC(peerId: string) {
         socketInstance.on("webrtc-answer-client", async ({ answer }: { answer: RTCSessionDescriptionInit; }) => {
             try {
                 await pc.setRemoteDescription(new RTCSessionDescription(answer));
+                remoteDescriptionSet = true;
+
+                for (const candidate of iceCandidateQueueRef.current) {
+                    await pc.addIceCandidate(new RTCIceCandidate(candidate));
+                }
+                iceCandidateQueueRef.current = [];
             }
             catch (err) {
                 console.log(err);
@@ -82,7 +89,11 @@ export function useSenderWebRTC(peerId: string) {
         socketInstance.on("webrtc-ice-candidate-client", async ({ candidate }: { candidate: RTCIceCandidateInit; }) => {
             try {
                 console.log({ "webrtc-ice-candidate-client": candidate });
-                await pc.addIceCandidate(new RTCIceCandidate(candidate));
+                if (!remoteDescriptionSet) {
+                    iceCandidateQueueRef.current.push(candidate);
+                } else {
+                    await pc.addIceCandidate(new RTCIceCandidate(candidate));
+                }
             } catch (err) {
                 console.error("ICE error (sender)", err);
             }

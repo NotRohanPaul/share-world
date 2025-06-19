@@ -5,6 +5,7 @@ import { Server, Socket } from "socket.io";
 import { appLogger } from "../configs/app-logger";
 import { pairEventsHandler } from "./handlers/pair-events-handler";
 import { webrtcEventsHandler } from "./handlers/webrtc-events-handlers";
+import { userIdHandler } from "./middlewares/user-id-handler";
 
 export function initializeSocket(server: ServerType): void {
     const io = new Server(server, {
@@ -18,16 +19,17 @@ export function initializeSocket(server: ServerType): void {
         },
     });
 
+    io.use(userIdHandler);
+
     const userMap = new Map<string, Socket>();
     io.on('connection', (socket) => {
-        const userId = socket.id.slice(0, 5);
+        const userId = socket.data.userId;
         userMap.set(userId, socket);
-
         socket.emit("user-id-client", { userId });
         appLogger.info({ socketId: userId }, "User connected");
 
         socket.on("disconnect", () => {
-            appLogger.info("User disconnected", userId);
+            appLogger.info({ socketId: userId }, "User disconnected");
             userMap.delete(userId);
         });
 

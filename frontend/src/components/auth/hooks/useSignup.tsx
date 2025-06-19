@@ -39,7 +39,7 @@ export const useSignup = () => {
             const response = await signupHandler(signupFormData);
             console.log(response);
             if (response.status === 201) {
-                void navigate(appRoutes.user);
+                void navigate(appRoutes.user.absolute);
             } else if (response.status === 400) {
                 setSignupError("Invalid Username or Password.");
             } else {

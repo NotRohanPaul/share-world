@@ -18,7 +18,7 @@ export const webrtcEventsHandler = (socket: Socket, userMap: Map<string, Socket>
         to: string,
         answer: Record<string, unknown>,
     }) => {
-        console.log({ answer });
+        console.log({ socketId: socket.data.userId, answer });
         userMap.get(to)?.emit("webrtc-answer-client", { answer });
     }
     );
@@ -29,7 +29,7 @@ export const webrtcEventsHandler = (socket: Socket, userMap: Map<string, Socket>
         to: string,
         candidate: Record<string, unknown>,
     }) => {
-        console.log({ candidate });
+        console.log({ socketId: socket.data.userId, candidate });
         userMap.get(to)?.emit("webrtc-ice-candidate-client", { candidate });
     }
     );

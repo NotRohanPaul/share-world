@@ -28,7 +28,7 @@ export const useLogin = () => {
             const response = await loginHandler(loginFormData);
             console.log(response);
             if (response.status === 200) {
-                void navigate(appRoutes.user);
+                void navigate(appRoutes.user.absolute);
             } else if (response.status === 400) {
                 setLoginError("Invalid Username or Password.");
             } else {
