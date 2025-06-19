@@ -1,12 +1,12 @@
-import { isSecureEnv } from "@src/utils/common";
+import { IS_SECURE_ENV } from "@src/constants/env";
+import { randomUUID } from "node:crypto";
+import fs from "node:fs";
 import path from "node:path";
 import pino, { multistream, type Logger } from "pino";
-import fs from "node:fs";
-import { randomUUID } from "node:crypto";
 
 let appLogger: Logger;
 
-if (isSecureEnv() === true) {
+if (IS_SECURE_ENV === true) {
     const logDir = path.join(process.cwd(), "logs");
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     const shortId = randomUUID().slice(0, 8);

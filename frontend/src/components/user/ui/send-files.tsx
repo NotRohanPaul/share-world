@@ -50,7 +50,9 @@ export const SendFiles = () => {
         if (receiverIdInput === null || socketRef.current === null)
             return console.log("No receiverId or socket");
 
+        console.log({ receiverIdInput });
         socketRef.current.emit("pair-request-server", { to: receiverIdInput });
+        setError(null);
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +70,7 @@ export const SendFiles = () => {
 
         reader.onload = () => {
             const arrayBuffer = reader.result as ArrayBuffer;
-            const chunkSize = 16 * 1024; // 16 KB
+            const chunkSize = 16 * 1024;
             let offset = 0;
 
             const sendChunk = () => {
@@ -86,11 +88,11 @@ export const SendFiles = () => {
                     offset += chunkSize;
                 }
 
-                setTimeout(sendChunk, 10); // ~10ms throttle to avoid flooding
+                setTimeout(sendChunk, 10);
             };
 
 
-            dataChannel.bufferedAmountLowThreshold = 1 * 1024 * 1024; // 1MB
+            dataChannel.bufferedAmountLowThreshold = 1 * 1024 * 1024;
             sendChunk();
         };
 
@@ -102,13 +104,13 @@ export const SendFiles = () => {
         <section>
             <p>Your User ID: {userId}</p>
             {isSuccessConnecting ? (
-                <div>
+                <div key={"send-input"}>
                     <p>Receiver Connected ID: {receiverId}</p>
                     {<input id="input-file" type="file" onChange={handleFileChange} />}
                     <button onClick={handleFileSend}>Send File</button>
                 </div>
             ) : (
-                <div>
+                <div key={"receiver-input"}>
                     <label htmlFor="receiver-input">Receiver Id</label>
                     <input type="text" name="receiver" id="receiver-input" value={receiverIdInput ?? ""} onChange={handleInput} />
                     <button onClick={handleConnect}>Connect</button>

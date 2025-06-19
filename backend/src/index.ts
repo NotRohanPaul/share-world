@@ -3,10 +3,9 @@ import { appLogger } from "./configs/app-logger";
 import { connectDB } from "./configs/connect-DB";
 import { app } from "./configs/express-app";
 import { gracefulShutdown } from "./configs/graceful-shutdown";
-import { initializeSocket } from './sockets/socket-app';
-import { HOST, NODE_ENV, PORT } from "./constants/env";
-import { isSecureEnv } from "./utils/common";
+import { HOST, IS_SECURE_ENV, NODE_ENV, PORT } from "./constants/env";
 import { APP_TIMEOUTS } from "./constants/timeouts";
+import { initializeSocket } from './sockets/socket-app';
 
 const server = http.createServer(app as RequestListener);
 server.keepAliveTimeout = APP_TIMEOUTS.keepAliveTimeout;
@@ -22,7 +21,7 @@ try {
     await connectDB();
     server.listen(PORT, HOST, () => {
         appLogger.info(`Listening on http://${HOST}:${PORT}`);
-        appLogger.info(`Enviroment: ${NODE_ENV} and isSecureEnv() value is ${isSecureEnv()}`);
+        appLogger.info(`Enviroment: ${NODE_ENV} and IS_SECURE_ENV value is ${IS_SECURE_ENV}`);
     });
 } catch (err) {
     appLogger.error("Failed to start server \n", err);

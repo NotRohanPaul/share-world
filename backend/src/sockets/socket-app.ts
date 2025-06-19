@@ -1,6 +1,5 @@
-import { APP_ORIGIN } from "@src/constants/env";
+import { APP_ORIGIN, IS_SECURE_ENV } from "@src/constants/env";
 import { APP_TIMEOUTS } from "@src/constants/timeouts";
-import { isSecureEnv } from "@src/utils/common";
 import type { Server as ServerType } from "node:http";
 import { Server, Socket } from "socket.io";
 import { appLogger } from "../configs/app-logger";
@@ -13,7 +12,7 @@ export function initializeSocket(server: ServerType): void {
         pingTimeout: APP_TIMEOUTS.pingTimeout,
         pingInterval: APP_TIMEOUTS.pingInterval,
         cors: {
-            origin: isSecureEnv() ? APP_ORIGIN : true,
+            origin: IS_SECURE_ENV ? APP_ORIGIN : true,
             methods: ['GET', 'POST'],
             credentials: true,
         },
@@ -21,7 +20,7 @@ export function initializeSocket(server: ServerType): void {
 
     const userMap = new Map<string, Socket>();
     io.on('connection', (socket) => {
-        const userId = socket.id;
+        const userId = socket.id.slice(0, 5);
         userMap.set(userId, socket);
 
         socket.emit("user-id-client", { userId });

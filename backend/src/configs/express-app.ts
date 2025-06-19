@@ -1,8 +1,7 @@
 import { errorHandler } from "@middlewares/error-handler";
 import { unknownHandler } from "@middlewares/unknown-handler";
 import { routesHandler } from "@routes/routes";
-import { API_ORIGIN, APP_ORIGIN } from "@src/constants/env";
-import { isSecureEnv } from "@src/utils/common";
+import { API_ORIGIN, APP_ORIGIN, IS_SECURE_ENV } from "@src/constants/env";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
@@ -16,7 +15,7 @@ app.use(helmet({
     frameguard: { action: "sameorigin" },
     referrerPolicy: { policy: "no-referrer" },
     crossOriginOpenerPolicy: false,
-    contentSecurityPolicy: isSecureEnv() ? {
+    contentSecurityPolicy: IS_SECURE_ENV ? {
         directives: {
             defaultSrc: ["'self'"],
             connectSrc: ["'self'", API_ORIGIN],
@@ -28,7 +27,7 @@ app.use(helmet({
     } : false
 }));
 app.use(cors({
-    origin: isSecureEnv() ? APP_ORIGIN : true,
+    origin: IS_SECURE_ENV ? APP_ORIGIN : true,
     credentials: true,
 }));
 

@@ -14,7 +14,6 @@ export const ReceiveFiles = () => {
         const receivedChunks: BlobPart[] = [];
 
         dataChannel.onmessage = (event) => {
-            // If we receive the end signal
             if (typeof event.data === "string" && event.data === "_END_") {
                 console.log(event.data);
                 const blob = new Blob(receivedChunks);
@@ -24,7 +23,7 @@ export const ReceiveFiles = () => {
                 a.download = "received_file";
                 a.click();
                 console.log("📥 File received");
-                receivedChunks.length = 0; // clear for next file
+                receivedChunks.length = 0;
             } else {
                 receivedChunks.push(event.data);
                 console.count(event.data);

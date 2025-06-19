@@ -12,3 +12,7 @@ const getEnv = (key: string, defaultValue?: string): string => {
 export const APP_ENV = import.meta.env.MODE;
 export const API_ORIGIN = getEnv("VITE_API_ORIGIN", `http://${location.hostname}:${5000}`);
 export const APP_ORIGIN = getEnv("VITE_APP_ORIGIN", location.origin);
+export const IS_SECURE_ENV = ((): boolean => {
+    const insecureEnvs = ['development', 'test'];
+    return insecureEnvs.includes(APP_ENV) === false;
+})();

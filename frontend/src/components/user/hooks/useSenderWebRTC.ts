@@ -28,7 +28,11 @@ export function useSenderWebRTC(peerId: string) {
 
         pc.onicecandidate = (e) => {
             if (e.candidate) {
+                console.log("Local ICE candidate:", e.candidate.candidate);
                 socketInstance.emit("webrtc-ice-candidate-server", { to: peerId, candidate: e.candidate });
+            }
+            else {
+                console.log("All ICE candidates sent");
             }
         };
 
@@ -44,12 +48,21 @@ export function useSenderWebRTC(peerId: string) {
             console.error("ICE Candidate Error:", event);
         };
 
+        pc.onicegatheringstatechange = () => {
+            console.log("ICE gathering state:", pc.iceGatheringState);
+        };
+
+        pc.onnegotiationneeded = () => {
+            console.log("Negotiation needed");
+        };
+
         // Create offer and send
         (async () => {
             try {
                 const offer = await pc.createOffer();
                 await pc.setLocalDescription(offer);
                 socketInstance.emit("webrtc-offer-server", { to: peerId, offer });
+                console.log({ to: peerId, offer });
             }
             catch (err) {
                 console.log(err);
@@ -68,6 +81,7 @@ export function useSenderWebRTC(peerId: string) {
 
         socketInstance.on("webrtc-ice-candidate-client", async ({ candidate }: { candidate: RTCIceCandidateInit; }) => {
             try {
+                console.log({ "webrtc-ice-candidate-client": candidate });
                 await pc.addIceCandidate(new RTCIceCandidate(candidate));
             } catch (err) {
                 console.error("ICE error (sender)", err);

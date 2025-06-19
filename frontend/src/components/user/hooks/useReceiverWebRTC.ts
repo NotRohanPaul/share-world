@@ -28,9 +28,21 @@ export function useReceiverWebRTC(peerId: string) {
 
         pc.onicecandidate = (e) => {
             if (e.candidate) {
+                console.log("Local ICE candidate:", e.candidate.candidate);
                 socketInstance.emit("webrtc-ice-candidate-server", { to: peerId, candidate: e.candidate });
             }
+            else {
+                console.log("All ICE candidates sent");
+            }
         };
+
+        pc.onicegatheringstatechange = () => {
+  console.log("ICE gathering state:", pc.iceGatheringState);
+};
+
+pc.onnegotiationneeded = () => {
+  console.log("Negotiation needed");
+};
 
         pc.oniceconnectionstatechange = () => {
             console.log("ICE connection state:", pc.iceConnectionState);

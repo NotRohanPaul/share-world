@@ -1,12 +1,11 @@
-import { APP_ORIGIN } from "@src/constants/env";
-import { isSecureEnv } from "@src/utils/common";
+import { APP_ORIGIN, IS_SECURE_ENV } from "@src/constants/env";
 import type { FC, ReactNode } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 
 export const AppHelmetProvider: FC<{ children: ReactNode; }> = ({ children }) => (
     <HelmetProvider>
-        {(isSecureEnv() === false) ? null :
+        {(IS_SECURE_ENV === false) ? null :
             <Helmet prioritizeSeoTags={true}>
                 <meta property="og:url" content={APP_ORIGIN} />
                 <meta http-equiv="Content-Security-Policy"
