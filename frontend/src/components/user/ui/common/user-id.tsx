@@ -15,7 +15,7 @@ export const UserId = ({ userId, peerType }: { userId: string | null, peerType: 
     };
 
     return (
-        <p className="flex gap-2 text-lg font-bold">
+        <p className="flex gap-2 font-bold">
             <span>Your User ID:</span>
             <span className="text-primary">{userId}</span>
             {
@@ -24,12 +24,12 @@ export const UserId = ({ userId, peerType }: { userId: string | null, peerType: 
                 userId !== null
                 &&
                 <button
-                    className="text-primary"
+                    className={`text-primary ${isCopyClicked === true ? "cursor-default" : ""}`}
                     onClick={handleCopy}
                 >
                     {isCopyClicked === false ?
-                        <AppIcons.Copy className="w-5" /> :
-                        <AppIcons.CopyCheck className="w-5" />
+                        <AppIcons.Copy className="w-[2rem] h-[2rem]" /> :
+                        <AppIcons.CopyCheck className="w-[2rem] h-[2rem]" />
                     }
                 </button>
             }

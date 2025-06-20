@@ -1,5 +1,5 @@
-import { ReceiveFiles } from "@src/components/user/ui/receive-files";
-import { SendFiles } from "@src/components/user/ui/send-files";
+import { ReceiverMain } from "@src/components/user/ui/receiver/receiver-main";
+import { SenderMain } from "@src/components/user/ui/sender/sender-main";
 import { AuthPage } from "@src/pages/auth-page";
 import { ErrorPage } from "@src/pages/error-page";
 import { LandingPage } from "@src/pages/landing-page";
@@ -31,11 +31,11 @@ const router = createBrowserRouter([
                 children: [
                     {
                         path: appRoutes.user.send.relative,
-                        element: <SendFiles />
+                        element: <SenderMain />
                     },
                     {
                         path: appRoutes.user.receive.relative,
-                        element: <ReceiveFiles />
+                        element: <ReceiverMain />
                     }
                 ]
             },
