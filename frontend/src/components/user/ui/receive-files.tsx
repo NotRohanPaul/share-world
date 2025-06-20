@@ -1,6 +1,7 @@
 import { socketInstance } from "@src/sockets/socket-instance";
 import { useEffect, useState } from "react";
 import { useReceiverWebRTC } from "../hooks/useReceiverWebRTC";
+import { UserId } from "./other/user-id";
 
 export const ReceiveFiles = () => {
     const [userId, setUserId] = useState<string | null>(null);
@@ -53,9 +54,9 @@ export const ReceiveFiles = () => {
 
     return (
         <section>
-            <p>Your User ID: {userId}</p>
+            <UserId userId={userId} peerType="receiver" />
             {senderId === null ?
-                <p>Connecting</p>
+                <p className="font-semibold">Share this ID with the Sender</p>
                 :
                 <p>Send User ID: {senderId}</p>
             }

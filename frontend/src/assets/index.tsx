@@ -9,12 +9,15 @@ export const AppImages = {
     ),
 };
 
-import { EyeIcon, EyeOff, CircleUser, Send, type LucideProps } from "lucide-react";
+import { EyeIcon, EyeOff, CircleUser, Send, type LucideProps, ClipboardCopy, Check, LoaderCircle } from "lucide-react";
 
 export const AppIcons = {
     EyeIcon,
     EyeOff,
     Avatar: CircleUser,
     Send,
-    Receive: (props: LucideProps) => <Send transform={" rotate(180)"} {...props} />
+    Receive: (props: LucideProps) => <Send transform={" rotate(180)"} {...props} />,
+    Copy: ClipboardCopy,
+    CopyCheck: Check,
+    Loader: (props: LucideProps) => <LoaderCircle className={`animate-spin`} {...props} />,
 };

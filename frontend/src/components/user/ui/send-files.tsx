@@ -1,7 +1,8 @@
 import { socketInstance } from "@src/sockets/socket-instance";
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
 import type { Socket } from "socket.io-client";
 import { useSenderWebRTC } from "../hooks/useSenderWebRTC";
+import { UserId } from "./other/user-id";
 
 export const SendFiles = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -14,6 +15,7 @@ export const SendFiles = () => {
 
     const { dataChannel } = useSenderWebRTC(receiverId ?? "");
     const socketRef = useRef<Socket | null>(null);
+
     useEffect(() => {
         if (dataChannel === null) return;
 
@@ -48,10 +50,16 @@ export const SendFiles = () => {
 
     const handleConnect = () => {
         if (receiverIdInput === null || socketRef.current === null)
-            return console.log("No receiverId or socket");
+            return setError("No receiverId or socket");
+
+        if (receiverIdInput === userId)
+            return setError("You cant use your own userId as receiverId");
 
         console.log({ receiverIdInput });
-        socketRef.current.emit("pair-request-server", { to: receiverIdInput });
+        socketRef.current.emit(
+            "pair-request-server",
+            { to: receiverIdInput }
+        );
         setError(null);
     };
 
@@ -99,24 +107,49 @@ export const SendFiles = () => {
         reader.readAsArrayBuffer(file);
     };
 
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            handleConnect();
+        }
+    };
 
     return (
-        <section>
-            <p>Your User ID: {userId}</p>
-            {isSuccessConnecting ? (
-                <div key={"send-input"}>
-                    <p>Receiver Connected ID: {receiverId}</p>
-                    {<input id="input-file" type="file" onChange={handleFileChange} />}
-                    <button onClick={handleFileSend}>Send File</button>
-                </div>
-            ) : (
-                <div key={"receiver-input"}>
-                    <label htmlFor="receiver-input">Receiver Id</label>
-                    <input type="text" name="receiver" id="receiver-input" value={receiverIdInput ?? ""} onChange={handleInput} />
+        <section className="flex flex-col gap-2">
+            <UserId userId={userId} peerType="sender" />
+            {isSuccessConnecting === false ? (
+                <>
+                    <div className="flex gap-2 text-lg">
+                        <label
+                            htmlFor="receiver-input"
+                            className="font-bold"
+                        >
+                            Enter Receiver's ID:
+                        </label>
+                        <input
+                            className="w-25 outline outline-primary rounded-full caret-primary px-3 py-.5 focus:outline-2"
+                            id="receiver-input"
+                            type="text"
+                            name="receiver"
+                            value={receiverIdInput ?? ""}
+                            onChange={handleInput}
+                            onKeyDown={handleKeyDown}
+                        />
+                    </div>
                     <button onClick={handleConnect}>Connect</button>
-                </div>
+                </>
+            ) : (
+                <>
+                    <p>Receiver's ID: {receiverId}</p>
+                    {<input
+                        id="input-file"
+                        type="file"
+                        onChange={handleFileChange}
+                    />
+                    }
+                    <button onClick={handleFileSend}>Send File</button>
+                </>
             )}
-            {error && <p>Error: {error}</p>}
+            {error && <p className="text-orange-500">Error: {error}</p>}
         </section>
     );
-};
+};;

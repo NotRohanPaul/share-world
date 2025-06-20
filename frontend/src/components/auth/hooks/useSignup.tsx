@@ -19,6 +19,7 @@ export const useSignup = () => {
         password: '',
         confirmPassword: '',
     });
+    const [isLoading, setIsLoading] = useState(false);
     const [signupError, setSignupError] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
@@ -36,6 +37,7 @@ export const useSignup = () => {
 
     const formSignupHandler = async () => {
         try {
+            setIsLoading(true);
             const response = await signupHandler(signupFormData);
             console.log(response);
             if (response.status === 201) {
@@ -48,6 +50,9 @@ export const useSignup = () => {
         }
         catch {
             setSignupError("Network Error.");
+        }
+        finally {
+            setIsLoading(false);
         }
     };
 
@@ -98,6 +103,7 @@ export const useSignup = () => {
 
     const handleSignupClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         const target = e.target as HTMLButtonElement;
+        if (isLoading === true) return;
         if (isTrusted(e) === false || target.tagName !== "BUTTON") return;
         const isEveryFieldNotEmpty = [signupFormData.name, signupFormData.email, signupFormData.password, signupFormData.confirmPassword].every((item) => item !== "");
         if (isEveryFieldNotEmpty === false) return;
@@ -127,6 +133,7 @@ export const useSignup = () => {
                 return;
             }
             case "confirm-password": {
+                if (isLoading === true) return;
                 void formSignupHandler();
                 return;
             }
@@ -159,6 +166,7 @@ export const useSignup = () => {
     };
 
     return {
+        isLoading,
         signupFormData,
         inputErrors,
         signupError,

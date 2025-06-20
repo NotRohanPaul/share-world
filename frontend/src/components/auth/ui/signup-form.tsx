@@ -4,6 +4,7 @@ import { useSignup } from "../hooks/useSignup";
 
 export const SignupForm = () => {
     const {
+        isLoading,
         signupFormData,
         inputErrors,
         signupError,
@@ -122,7 +123,10 @@ export const SignupForm = () => {
                 value="signup"
                 onClick={handleSignupClick}
             >
-                SignUp
+                {isLoading === false ?
+                    "SignUp" :
+                    <AppIcons.Loader />
+                }
             </button>
         </>
     );

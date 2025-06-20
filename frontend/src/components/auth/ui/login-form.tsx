@@ -4,6 +4,7 @@ import { useLogin } from "../hooks/useLogin";
 
 export const LoginForm = () => {
     const {
+        isLoading,
         loginFormData,
         loginError,
         emailInputError,
@@ -66,7 +67,11 @@ export const LoginForm = () => {
                 value="login"
                 onClick={handleLoginClick}
             >
-                Login
+                {
+                    isLoading === false ?
+                        "Login" :
+                        <AppIcons.Loader />
+                }
             </button>
 
         </>

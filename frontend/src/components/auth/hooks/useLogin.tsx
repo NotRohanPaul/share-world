@@ -15,6 +15,7 @@ export const useLogin = () => {
     const [loginError, setLoginError] = useState("");
     const [emailInputError, setEmailError] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const inputRefs = useRef<{
         emailRef: HTMLInputElement | null,
         passwordRef: HTMLInputElement | null,
@@ -25,6 +26,7 @@ export const useLogin = () => {
 
     const formLoginHandler = async () => {
         try {
+            setIsLoading(true);
             const response = await loginHandler(loginFormData);
             console.log(response);
             if (response.status === 200) {
@@ -37,6 +39,9 @@ export const useLogin = () => {
         }
         catch {
             setLoginError("Network Error.");
+        }
+        finally {
+            setIsLoading(false);
         }
     };
 
@@ -70,7 +75,7 @@ export const useLogin = () => {
 
     const handleLoginClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         const target = e.target as HTMLButtonElement;
-        console.dir(e.constructor);
+        if (isLoading === true) return;
         if (isTrusted(e) === false || target.tagName !== "BUTTON") return;
         if (loginFormData.password === "" || loginFormData.email === "" || emailInputError !== "") return;
 
@@ -89,6 +94,7 @@ export const useLogin = () => {
         }
         if (target.name === "password") {
             if (target.value === "") return;
+            if (isLoading === true) return;
             void formLoginHandler();
         }
     };
@@ -110,6 +116,7 @@ export const useLogin = () => {
     };
 
     return {
+        isLoading,
         loginFormData,
         loginError,
         emailInputError,

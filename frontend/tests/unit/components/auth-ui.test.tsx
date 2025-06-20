@@ -1,4 +1,4 @@
-import { AuthForm } from "@src/components/auth/auth-form";
+import { AuthForm } from "@src/components/auth/layout/auth-form";
 import { cleanup, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import { beforeEach, describe, expect, it } from "vitest";

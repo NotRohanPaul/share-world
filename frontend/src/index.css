@@ -17,7 +17,7 @@
 
 @layer base {
     body {
-        @apply bg-white text-black overflow-hidden font-serif;
+        @apply bg-white text-black overflow-hidden;
     }
 
     button {

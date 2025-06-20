@@ -1,5 +1,5 @@
 import { AppImages } from "@src/assets";
-import { AuthForm } from "@src/components/auth/auth-form";
+import { AuthForm } from "@src/components/auth/layout/auth-form";
 import type { AuthVariantType } from "@src/components/auth/types";
 import { appRoutes } from "@src/routes/app-routes";
 import { motion } from "motion/react";
