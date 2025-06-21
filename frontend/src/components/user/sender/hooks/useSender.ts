@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
-import { useSenderWebRTC } from "./useSenderWebRTC";
-import type { Socket } from "socket.io-client";
 import { socketInstance } from "@src/sockets/socket-instance";
+import { useEffect, useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
+import type { Socket } from "socket.io-client";
+import { useSenderWebRTC } from "./useSenderWebRTC";
 
 
 export const useSender = () => {
-    const [file, setFile] = useState<File | null>(null);
+    const [fileList, setFileList] = useState<FileList | null>(null);
 
     const [userId, setUserId] = useState<string | null>(null);
     const [receiverIdInput, setReceiverIdInput] = useState<string | null>(null);
@@ -65,46 +65,73 @@ export const useSender = () => {
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            setFile(e.target.files[0]);
+            setFileList(e.target.files);
         }
     };
     const handleSendClick = () => {
-        if (!file || !dataChannel || dataChannel.readyState !== "open") {
-            console.log("No file or DataChannel is not open", { file }, dataChannel?.readyState);
+        if (!fileList || !dataChannel || dataChannel.readyState !== "open") {
+            console.log("No file or DataChannel is not open", { fileList }, dataChannel?.readyState);
             return;
         }
 
-        const reader = new FileReader();
+        const metadataList = [];
 
-        reader.onload = () => {
-            const arrayBuffer = reader.result as ArrayBuffer;
-            const chunkSize = 16 * 1024;
-            let offset = 0;
+        for (let i = 0; i < fileList.length; i++) {
+            const file = fileList[i];
+            metadataList.push({
+                name: file.name,
+                size: file.size,
+                type: file.type,
+            });
+        }
 
-            const sendChunk = () => {
-                if (
-                    offset >= arrayBuffer.byteLength
-                ) {
-                    dataChannel.send("_END_");
-                    console.log("📤 File sent:", file.name);
-                    return;
-                }
+        const metadataStr = JSON.stringify(metadataList);
+        const encoder = new TextEncoder();
+        const encodedMetadata = encoder.encode(metadataStr);
 
-                if (dataChannel.bufferedAmount < dataChannel.bufferedAmountLowThreshold) {
-                    const chunk = arrayBuffer.slice(offset, offset + chunkSize);
-                    dataChannel.send(chunk);
-                    offset += chunkSize;
-                }
+        const chunkSize = 8000; // 8 KB chunks to stay under 16 KiB limit
+        for (let offset = 0; offset < encodedMetadata.length; offset += chunkSize) {
+            const chunk = encodedMetadata.slice(offset, offset + chunkSize);
+            dataChannel.send(chunk);
+        }
 
-                setTimeout(sendChunk, 10);
-            };
+        dataChannel.send("_METADATA_END_"); // Signal end of metadata
+        console.log("📤 Metadata sent");
 
-
-            dataChannel.bufferedAmountLowThreshold = 1 * 1024 * 1024;
-            sendChunk();
-        };
-
-        reader.readAsArrayBuffer(file);
+        /*   for (let i = 0; i < fileList.length; i++) {
+              const file = fileList[i];
+              const reader = new FileReader();
+     
+              reader.onload = () => {
+                  const arrayBuffer = reader.result as ArrayBuffer;
+                  const chunkSize = 16 * 1024;
+                  let offset = 0;
+                  const sendChunk = () => {
+                      if (
+                          offset >= arrayBuffer.byteLength
+                      ) {
+                          dataChannel.send("_END_");
+                          console.log("📤 File sent:", file.name);
+                          return;
+                      }
+     
+                      if (dataChannel.bufferedAmount < dataChannel.bufferedAmountLowThreshold) {
+                          const chunk = arrayBuffer.slice(offset, offset + chunkSize);
+                          dataChannel.send(chunk);
+                          offset += chunkSize;
+                      }
+     
+                      setTimeout(sendChunk, 10);
+                  };
+     
+     
+                  dataChannel.bufferedAmountLowThreshold = 1 * 1024 * 1024;
+                  sendChunk();
+              };
+     
+              reader.readAsArrayBuffer(file); 
+          }
+          */
     };
 
     const handleInputEnter = (e: KeyboardEvent<HTMLInputElement>) => {

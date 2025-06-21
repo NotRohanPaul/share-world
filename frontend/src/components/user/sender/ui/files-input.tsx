@@ -30,6 +30,7 @@ export const FilesInput = ({
                 className="w-fit"
                 id="input-file"
                 type="file"
+                multiple
                 onChange={handleFileChange}
                 hidden
             />
@@ -37,7 +38,7 @@ export const FilesInput = ({
                 className="self-center text-2xl py-2 px-4 rounded-full text-white bg-primary transition-colors duration-300 hover:bg-white hover:text-primary hover:outline-2 hover:outline-primary active:outline-offset-2"
                 onClick={handleSendClick}
             >
-                Send File
+                Send
             </button>
         </div>
     );

@@ -1,5 +1,5 @@
-import { ReceiverMain } from "@src/components/user/ui/receiver/receiver-main";
-import { SenderMain } from "@src/components/user/ui/sender/sender-main";
+import { ReceiverMain } from "@src/components/user/receiver/layout/receiver-main";
+import { SenderMain } from "@src/components/user/sender/layout/sender-main";
 import { AuthPage } from "@src/pages/auth-page";
 import { ErrorPage } from "@src/pages/error-page";
 import { LandingPage } from "@src/pages/landing-page";
