@@ -12,6 +12,7 @@ export const SenderMain = () => {
         receiverIdInput,
         isSuccessConnecting,
         error,
+        fileList,
         handleReceiverIdInput,
         handleFileChange,
         handleSendClick,
@@ -36,41 +37,17 @@ export const SenderMain = () => {
                     />
                 ) : (
                     <>
+                        <p className="flex gap-2 font-bold">
+                            <span>
+                                Receiver's ID:
+                            </span>
+                            <span className="text-primary">{receiverId}</span>
+                        </p>
                         <FilesInput
-                            receiverId={receiverId}
                             handleFileChange={handleFileChange}
                             handleSendClick={handleSendClick}
                         />
-                        <FileList fileList={[{
-                            name: "hello.png",
-                            size: "1GiB",
-                            type: "image/png"
-                        }, {
-                            name: "hello.png",
-                            size: "1GiB",
-                            type: "image/png"
-                        },
-                        {
-                            name: "hello.png",
-                            size: "1GiB",
-                            type: "image/png"
-                        },
-                        {
-                            name: "hello.png",
-                            size: "1GiB",
-                            type: "image/png"
-                        },
-                        {
-                            name: "hello.png",
-                            size: "1GiB",
-                            type: "image/png"
-                        },
-                        {
-                            name: "hello.png",
-                            size: "1GiB",
-                            type: "image/png"
-                        },
-                        ]} />
+                        {fileList !== null && <FileList fileList={fileList} />}
                     </>
                 )}
                 {error && <p className="text-orange-500">Error: {error}</p>}

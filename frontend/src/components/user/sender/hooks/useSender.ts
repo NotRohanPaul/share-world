@@ -146,6 +146,7 @@ export const useSender = () => {
         receiverIdInput,
         isSuccessConnecting,
         error,
+        fileList,
         handleReceiverIdInput,
         handleFileChange,
         handleSendClick,

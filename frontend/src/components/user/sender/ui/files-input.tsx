@@ -2,28 +2,21 @@ import type { ChangeEvent, MouseEvent } from "react";
 
 
 export const FilesInput = ({
-    receiverId,
     handleFileChange,
     handleSendClick
 }: {
-    receiverId: string | null,
     handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void,
     handleSendClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }) => {
     return (
         <div className="flex flex-col items-center gap-6 font-bold">
-            <p className="flex gap-2">
-                <span>
-                    Receiver's ID:
-                </span>
-                <span className="text-primary">{receiverId}</span>
-            </p>
+
             <label
                 className="w-[15rem] h-auto flex flex-col gap-2 text-center p-5 outline-dashed outline-4 outline-primary cursor-pointer transition-colors duration-300 hover:bg-primary hover:text-white group/label"
                 htmlFor={"input-file"}
             >
                 <span>Select Files</span>
-                <span className="text-primary group-hover/label:text-white">or</span>
+                <span className="text-primary group-hover/label:text-white transition-colors duration-300">or</span>
                 <span>Drag files</span>
             </label>
             <input

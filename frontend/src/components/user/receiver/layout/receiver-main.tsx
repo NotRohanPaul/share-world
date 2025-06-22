@@ -21,36 +21,7 @@ export const ReceiverMain = () => {
                 <UserId userId={userId} peerType="receiver" />
                 <SenderId senderId={senderId} />
                 {error && <p>Error: {error}</p>}
-                <FileList fileList={[{
-                    name: "hello.png",
-                    size: "1GiB",
-                    type: "image/png"
-                }, {
-                    name: "hello.png",
-                    size: "1GiB",
-                    type: "image/png"
-                },
-                {
-                    name: "hello.png",
-                    size: "1GiB",
-                    type: "image/png"
-                },
-                {
-                    name: "hello.png",
-                    size: "1GiB",
-                    type: "image/png"
-                },
-                {
-                    name: "hello.png",
-                    size: "1GiB",
-                    type: "image/png"
-                },
-                {
-                    name: "hello.png",
-                    size: "1GiB",
-                    type: "image/png"
-                },
-                ]} />
+                <FileList fileList={[]} />
             </main>
         </section>
     );

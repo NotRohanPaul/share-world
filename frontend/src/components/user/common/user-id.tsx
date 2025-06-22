@@ -2,7 +2,13 @@ import { AppIcons } from "@src/assets";
 import { useState } from "react";
 
 
-export const UserId = ({ userId, peerType }: { userId: string | null, peerType: "sender" | "receiver"; }) => {
+export const UserId = ({
+    userId,
+    peerType
+}: {
+    userId: string | null,
+    peerType: "sender" | "receiver";
+}) => {
     const [isCopyClicked, setIsCopyClicked] = useState(false);
 
     const handleCopy = async () => {

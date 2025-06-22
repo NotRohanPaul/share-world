@@ -4,6 +4,9 @@
     --app-color-primary: hsl(217, 100%, 50%);
     --app-color-white: hsl(210 100% 98%);
     --app-color-black: hsl(240 100% 10%);
+
+    --app-scroll--thumb-color: rgb(24, 147, 241);
+    --app-scroll--track-color: rgb(128, 225, 255);
 }
 
 
@@ -13,6 +16,11 @@
     --color-black: var(--app-color-black);
     /* equals 480px  */
     --breakpoint-xs: 30rem;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--app-scroll--thumb-color) var(--app-scroll--track-color);
 }
 
 
