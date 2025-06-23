@@ -14,33 +14,43 @@ const fileIconsProvider = (fileName: string) => {
 export const FileList = ({ fileList }: { fileList: FileList; }) => {
 
     return (
-        <section className="w-[70%] h-full flex flex-col gap-2 text-base  border-4 border-primary p-2 rounded-sm overflow-auto">
-            {
-                [...fileList].map((file) => {
-                    const Icon = fileIconsProvider(file.name);
+        <section className="w-[70%] h-full flex flex-col gap-2 text-base border-4 border-primary p-2 rounded-sm ">
+            <div className="flex gap-2 rounded-sm bg-primary/80 text-white p-2">
+                <p>
+                    Files: {[...fileList].length}
+                </p>
+                <p>
+                    Size: {convertBytesToUnits([...fileList].reduce((acc, file) => acc + file.size, 0))}
+                </p>
+            </div>
+            <div className="h-full flex flex-col gap-2">
+                {
+                    [...fileList].map((file) => {
+                        const Icon = fileIconsProvider(file.name);
 
-                    return (
-                        <div key={file.name} className="flex flex-col rounded-sm bg-primary/50">
-                            <div className="flex gap-2 px-2 pt-2">
-                                <div
-                                    className="w-[5rem] h-[5rem]  bg-white rounded-full p-2"
-                                >
-                                    <Icon className="w-full h-full text-primary" />
+                        return (
+                            <div key={file.name} className="flex flex-col rounded-sm bg-primary/50">
+                                <div className="flex gap-2 px-2 pt-2">
+                                    <div
+                                        className="w-[5rem] h-[5rem]  bg-white rounded-full p-2"
+                                    >
+                                        <Icon className="w-full h-full text-primary" />
+                                    </div>
+                                    <div className="flex flex-col overflow-ellipsis">
+                                        <p>{file.name}</p>
+                                        <p>{convertBytesToUnits(file.size)}</p>
+                                        <p>{file.type}</p>
+                                    </div>
                                 </div>
-                                <div className="flex flex-col overflow-ellipsis">
-                                    <p>{file.name}</p>
-                                    <p>{convertBytesToUnits(file.size)}</p>
-                                    <p>{file.type}</p>
+                                <div className="flex items-center gap-2 px-2">
+                                    <div className="w-full h-[.5rem] bg-white rounded-full"></div>
+                                    <p>{"0%"}</p>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-2 px-2">
-                                <div className="w-full h-[.5rem] bg-white rounded-full"></div>
-                                <p>{"0%"}</p>
-                            </div>
-                        </div>
-                    );
-                })
-            }
+                        );
+                    })
+                }
+            </div>
         </section>
     );
 };

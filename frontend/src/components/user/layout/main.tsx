@@ -6,7 +6,7 @@ export const Main = () => {
     const location = useLocation();
 
     return (
-        <main className="flex flex-col gap-2 items-center justify-center">
+        <main className="flex flex-col overflow-y-auto">
             {location.pathname !== "/user" ?
                 <Outlet /> :
                 <section className="flex gap-2">

@@ -10,7 +10,6 @@ export const FilesInput = ({
 }) => {
     return (
         <div className="flex flex-col items-center gap-6 font-bold">
-
             <label
                 className="w-[15rem] h-auto flex flex-col gap-2 text-center p-5 outline-dashed outline-4 outline-primary cursor-pointer transition-colors duration-300 hover:bg-primary hover:text-white group/label"
                 htmlFor={"input-file"}

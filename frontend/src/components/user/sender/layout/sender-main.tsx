@@ -4,6 +4,7 @@ import { useSender } from "../hooks/useSender";
 import { FilesInput } from "../ui/files-input";
 import { ReceiverIdInput } from "../ui/receiver-id-input";
 import { FileList } from "../../common/files-list";
+import { UserHeader, UserMain, UserSection } from "../../common/layout/user-layouts";
 
 export const SenderMain = () => {
     const {
@@ -21,12 +22,12 @@ export const SenderMain = () => {
     } = useSender();
 
     return (
-        <section className="w-full h-[50rem] grid grid-rows-[100px_1fr]">
-            <header className="self-start justify-self-center flex gap-2">
+        <UserSection>
+            <UserHeader>
                 <AppIcons.Send className="w-[3rem] h-[3rem] relative -bottom-2" />
                 <h1 className="text-5xl font-semibold">Sender</h1>
-            </header>
-            <main className="w-full h-full flex flex-col items-center gap-6 text-4xl overflow-auto">
+            </UserHeader>
+            <UserMain>
                 <UserId userId={userId} peerType="sender" />
                 {isSuccessConnecting === false ? (
                     <ReceiverIdInput
@@ -51,7 +52,7 @@ export const SenderMain = () => {
                     </>
                 )}
                 {error && <p className="text-orange-500">Error: {error}</p>}
-            </main>
-        </section>
+            </UserMain>
+        </UserSection>
     );
 };;
