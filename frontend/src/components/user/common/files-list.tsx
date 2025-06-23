@@ -14,7 +14,7 @@ const fileIconsProvider = (fileName: string) => {
 export const FileList = ({ fileList }: { fileList: FileList; }) => {
 
     return (
-        <section className="w-[70%] h-full flex flex-col gap-2 text-base border-4 border-primary p-2 rounded-sm ">
+        <section className="w-[70%] h-fit flex flex-col gap-2 text-base border-4 border-primary p-2 rounded-sm ">
             <div className="flex gap-2 rounded-sm bg-primary/80 text-white p-2">
                 <p>
                     Files: {[...fileList].length}

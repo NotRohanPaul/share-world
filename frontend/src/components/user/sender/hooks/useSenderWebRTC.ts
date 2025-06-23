@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { socketInstance } from "@src/sockets/socket-instance";
 
-export function useSenderWebRTC(peerId: string) {
+export function useSenderWebRTC(receiverId: string | null) {
     const pcRef = useRef<RTCPeerConnection | null>(null);
     const [dataChannelInstance, setDataChannelInstance] = useState<RTCDataChannel | null>(null);
     const iceCandidateQueueRef = useRef<RTCIceCandidateInit[]>([]);
@@ -9,7 +9,7 @@ export function useSenderWebRTC(peerId: string) {
 
 
     useEffect(() => {
-        if (!peerId || pcRef.current) return;
+        if (receiverId === null || pcRef.current) return;
         const pc = new RTCPeerConnection({
             iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
         });
@@ -30,7 +30,7 @@ export function useSenderWebRTC(peerId: string) {
         pc.onicecandidate = (e) => {
             if (e.candidate) {
                 console.log("Local ICE candidate:", e.candidate.candidate);
-                socketInstance.emit("webrtc-ice-candidate-server", { to: peerId, candidate: e.candidate });
+                socketInstance.emit("webrtc-ice-candidate-server", { to: receiverId, candidate: e.candidate });
             }
             else {
                 console.log("All ICE candidates sent");
@@ -57,20 +57,18 @@ export function useSenderWebRTC(peerId: string) {
             console.log("Negotiation needed");
         };
 
-        // Create offer and send
         (async () => {
             try {
                 const offer = await pc.createOffer();
                 await pc.setLocalDescription(offer);
-                socketInstance.emit("webrtc-offer-server", { to: peerId, offer });
-                console.log({ to: peerId, offer });
+                socketInstance.emit("webrtc-offer-server", { to: receiverId, offer });
+                console.log({ to: receiverId, offer });
             }
             catch (err) {
                 console.log(err);
             }
         })();
 
-        // Receive answer
         socketInstance.on("webrtc-answer-client", async ({ answer }: { answer: RTCSessionDescriptionInit; }) => {
             try {
                 await pc.setRemoteDescription(new RTCSessionDescription(answer));
@@ -117,7 +115,7 @@ export function useSenderWebRTC(peerId: string) {
             }
             setDataChannelInstance(null);
         };
-    }, [peerId]);
+    }, [receiverId]);
 
     return { dataChannel: dataChannelInstance };
 }

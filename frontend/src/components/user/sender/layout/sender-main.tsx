@@ -26,6 +26,7 @@ export const SenderMain = () => {
             <UserHeader>
                 <AppIcons.Send className="w-[3rem] h-[3rem] relative -bottom-2" />
                 <h1 className="text-5xl font-semibold">Sender</h1>
+                {error && <p className="text-orange-500">Error: {error}</p>}
             </UserHeader>
             <UserMain>
                 <UserId userId={userId} peerType="sender" />
@@ -51,8 +52,7 @@ export const SenderMain = () => {
                         {fileList !== null && <FileList fileList={fileList} />}
                     </>
                 )}
-                {error && <p className="text-orange-500">Error: {error}</p>}
             </UserMain>
         </UserSection>
     );
-};;
+};

@@ -12,7 +12,7 @@ export const useSenderInputs = (
     const [receiverIdInput, setReceiverIdInput] = useState<string | null>(null);
     const [isSuccessConnecting, setIsSuccessConnecting] = useState(false);
 
-    const { dataChannel } = useSenderWebRTC(receiverId ?? "");
+    const { dataChannel } = useSenderWebRTC(receiverId);
 
     useEffect(() => {
         if (dataChannel === null) return;
@@ -49,6 +49,7 @@ export const useSenderInputs = (
     };
     const handleSendClick = () => {
         if (!fileList || !dataChannel || dataChannel.readyState !== "open") {
+            setError("No file or DataChannel is not open");
             console.log("No file or DataChannel is not open", { fileList }, dataChannel?.readyState);
             return;
         }
