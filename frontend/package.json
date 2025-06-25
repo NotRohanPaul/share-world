@@ -18,7 +18,7 @@
     "start:dev": "vite --mode development",
     "start:dev-host": "vite --mode development --host",
     "build:stage": "vite build --mode production",
-    "build:prod": "npm run lint && tsc -b && npm run test &&  vite build --mode production",
+    "build:prod": "npm run lint && npm run tsc && npm run test &&  vite build --mode production",
     "start:prod": "vite preview --mode production"
   },
   "dependencies": {
