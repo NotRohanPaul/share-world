@@ -1,61 +1,62 @@
 import { useEffect, useRef, useState } from "react";
 import { socketInstance } from "@src/sockets/socket-instance";
+import { appLogger } from "@src/utils/common";
 
-export function useReceiverWebRTC(peerId: string) {
+export function useReceiverWebRTC(peerId: string | null) {
     const pcRef = useRef<RTCPeerConnection | null>(null);
     const [dataChannel, setDataChannel] = useState<RTCDataChannel | null>(null);
     const iceCandidateQueueRef = useRef<RTCIceCandidateInit[]>([]);
-    let remoteDescriptionSet = false;
+    const remoteDescriptionSet = useRef<boolean>(false);
 
     useEffect(() => {
-        if (!peerId || pcRef.current) return;
+        if (peerId === null || pcRef.current !== null) return;
 
         const pc = new RTCPeerConnection({
             iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
         });
         pcRef.current = pc;
-        pc.onsignalingstatechange = () => console.log("Signaling state:", pc.signalingState);
-        pc.onconnectionstatechange = () => console.log("Connection state:", pc.connectionState);
+        pc.onsignalingstatechange = () => appLogger.log("Signaling state:", pc.signalingState);
+        pc.onconnectionstatechange = () => appLogger.log("Connection state:", pc.connectionState);
 
 
         pc.ondatachannel = (event) => {
             const channel = event.channel;
             setDataChannel(channel);
-            console.log("📥 Data channel open (receiver)");
+            appLogger.log("📥 Data channel open (receiver)");
             channel.onerror = (event) => {
-                console.error("Data channel error", event);
+                appLogger.error("Data channel error", event);
             };
-            channel.onclose = () => console.log("🛑 Data channel closed (receiver)");
+            channel.onclose = () => appLogger.log("🛑 Data channel closed (receiver)");
         };
 
         pc.onicecandidate = (e) => {
             if (e.candidate) {
-                console.log("Local ICE candidate:", e.candidate.candidate);
+                appLogger.log("Local ICE candidate:", e.candidate.candidate);
                 socketInstance.emit("webrtc-ice-candidate-server", { to: peerId, candidate: e.candidate });
             }
             else {
-                console.log("All ICE candidates sent");
+                appLogger.log("All ICE candidates sent");
             }
         };
 
         pc.onicegatheringstatechange = () => {
-            console.log("ICE gathering state:", pc.iceGatheringState);
+            appLogger.log("ICE gathering state:", pc.iceGatheringState);
         };
 
         pc.onnegotiationneeded = () => {
-            console.log("Negotiation needed");
+            appLogger.log("Negotiation needed");
         };
 
         pc.oniceconnectionstatechange = () => {
-            console.log("ICE connection state:", pc.iceConnectionState);
+            appLogger.log("ICE connection state:", pc.iceConnectionState);
             if (pc.iceConnectionState === "failed") {
-                console.error("❌ ICE connection failed");
+                appLogger.error("❌ ICE connection failed");
             }
         };
 
 
         pc.onicecandidateerror = (event) => {
-            console.error("ICE Candidate Error:", event);
+            appLogger.error("ICE Candidate Error:", event);
         };
 
         socketInstance.on("webrtc-offer-client", async ({
@@ -64,10 +65,10 @@ export function useReceiverWebRTC(peerId: string) {
             offer: RTCSessionDescriptionInit;
         }) => {
             try {
-                console.log("Receiver: ", { offer });
+                appLogger.log("Receiver: ", { offer });
                 await pc.setRemoteDescription(new RTCSessionDescription(offer));
 
-                remoteDescriptionSet = true;
+                remoteDescriptionSet.current = true;
                 for (const candidate of iceCandidateQueueRef.current) {
                     await pc.addIceCandidate(new RTCIceCandidate(candidate));
                 }
@@ -78,20 +79,20 @@ export function useReceiverWebRTC(peerId: string) {
                 socketInstance.emit("webrtc-answer-server", { to: peerId, answer });
             }
             catch (err) {
-                console.log(err);
+                appLogger.log(err);
             }
         });
 
         socketInstance.on("webrtc-ice-candidate-client", async ({ candidate }) => {
             try {
-                console.log("Receiver ICE candidate: ", new RTCIceCandidate(candidate));
-                if (!remoteDescriptionSet) {
+                appLogger.log("Receiver ICE candidate: ", new RTCIceCandidate(candidate));
+                if (remoteDescriptionSet.current === false) {
                     iceCandidateQueueRef.current.push(candidate);
                 } else {
                     await pc.addIceCandidate(new RTCIceCandidate(candidate));
                 }
             } catch (err) {
-                console.error("ICE error (receiver)", err);
+                appLogger.error("ICE error (receiver)", err);
             }
         });
 
@@ -112,7 +113,7 @@ export function useReceiverWebRTC(peerId: string) {
                 dataChannel.close();
             }
         };
-    }, [peerId]);
+    }, [peerId, dataChannel]);
 
     return { dataChannel };
 }

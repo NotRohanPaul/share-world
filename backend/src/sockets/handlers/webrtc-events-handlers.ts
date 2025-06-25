@@ -1,6 +1,6 @@
-import type { Socket } from "socket.io";
+import type { SocketWithUserIdType } from "../types";
 
-export const webrtcEventsHandler = (socket: Socket, userMap: Map<string, Socket>) => {
+export const webrtcEventsHandler = (socket: SocketWithUserIdType, userMap: Map<string, SocketWithUserIdType>): void => {
     socket.on("webrtc-offer-server", ({
         to,
         offer

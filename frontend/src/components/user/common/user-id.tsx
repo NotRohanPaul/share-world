@@ -31,7 +31,7 @@ export const UserId = ({
                 &&
                 <button
                     className={`text-primary ${isCopyClicked === true ? "cursor-default" : ""}`}
-                    onClick={handleCopy}
+                    onClick={void handleCopy}
                 >
                     {isCopyClicked === false ?
                         <AppIcons.Copy className="w-[2rem] h-[2rem]" /> :

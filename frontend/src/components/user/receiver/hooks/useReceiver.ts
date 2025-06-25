@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useReceiverSocket } from "./useReceiverSocket";
 import { useReceiverWebRTC } from "./useReceiverWebRTC";
 import type { FileListType, MetadataType } from "../../types";
+import { appLogger } from "@src/utils/common";
 
 
 export const useReceiver = () => {
@@ -10,7 +11,7 @@ export const useReceiver = () => {
         senderId,
         error,
     } = useReceiverSocket();
-    const { dataChannel } = useReceiverWebRTC(senderId ?? "");
+    const { dataChannel } = useReceiverWebRTC(senderId);
     const [fileList, setFileList] = useState<FileListType>([]);
 
     useEffect(() => {
@@ -23,7 +24,7 @@ export const useReceiver = () => {
         let isMetadataReceived = false;
         let currentFileSize = 0;
 
-        dataChannel.onmessage = async (event) => {
+        dataChannel.onmessage = (event): void => {
             if (!isMetadataReceived) {
                 if (typeof event.data === "string" && event.data === "_METADATA_END_") {
                     const totalLength = receivedChunks.reduce((acc, chunk) => acc + chunk.length, 0);
@@ -39,7 +40,7 @@ export const useReceiver = () => {
 
                     try {
                         parsedMetadata = JSON.parse(metadataJSON);
-                        console.log("📥 Metadata parsed:", parsedMetadata);
+                        appLogger.log("📥 Metadata parsed:", parsedMetadata);
                         isMetadataReceived = true;
                         setFileList((prev) => {
                             const additionalFileListWithState: FileListType = parsedMetadata.map((metadata) => {
@@ -53,7 +54,7 @@ export const useReceiver = () => {
                             return [...prev, ...additionalFileListWithState];
                         });
                     } catch (err) {
-                        console.error("❌ Failed to parse metadata", err);
+                        appLogger.error("❌ Failed to parse metadata", err);
                     } finally {
                         receivedChunks.length = 0;
                     }
@@ -82,7 +83,7 @@ export const useReceiver = () => {
                 const metaIndex = parsedMetadata.findIndex(m => m.id === currentFileId);
                 const meta = parsedMetadata[metaIndex];
                 const percent = ((currentFileSize / meta.size) * 100).toFixed(1);
-                console.log(`📦 Receiving "${meta.name}" — ${percent}%`);
+                appLogger.log(`📦 Receiving "${meta.name}" — ${percent}%`);
                 setFileList((prev) =>
                     prev.map((f) =>
                         f.id === meta.id && f.state !== "done"
@@ -117,14 +118,14 @@ export const useReceiver = () => {
                             : f
                     )
                 );
-                console.log("✅ File received: ", currentFileId, file.name);
+                appLogger.log("✅ File received: ", currentFileId, file.name);
 
                 currentFileId = null;
                 currentFileSize = 0;
                 receivedChunks.length = 0;
 
                 if (fileList.length === parsedMetadata.length) {
-                    console.log("🎉 All files received");
+                    appLogger.log("🎉 All files received");
                 }
 
                 return;

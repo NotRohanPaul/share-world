@@ -2,6 +2,7 @@ import { useEffect, useState, type ChangeEvent, type Dispatch, type KeyboardEven
 import type { Socket } from "socket.io-client";
 import type { FileListType, MetadataType } from "../../types";
 import { useSenderWebRTC } from "./useSenderWebRTC";
+import { appLogger } from "@src/utils/common";
 
 export const useSenderInputs = (
     userId: string | null,
@@ -18,21 +19,21 @@ export const useSenderInputs = (
     useEffect(() => {
         if (dataChannel === null) return;
 
-        dataChannel.onopen = () => {
+        dataChannel.onopen = (): void => {
             setIsSuccessConnecting(true);
         };
     }, [dataChannel]);
 
-    const handleReceiverIdInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleReceiverIdInput = (e: ChangeEvent<HTMLInputElement>): void => {
         const target = e.target;
         setReceiverIdInput(target.value);
     };
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const files = e.target.files;
             const filesList = [...files];
 
-            const additionalFilesList: FileListType = await Promise.all(filesList.map(async (file) => {
+            const additionalFilesList: FileListType = filesList.map((file) => {
                 return {
                     id: crypto.randomUUID(),
                     metadata: {
@@ -43,7 +44,7 @@ export const useSenderInputs = (
                     state: "pending",
                     data: file
                 };
-            }));
+            });
 
             setFileList((prev) => [...prev, ...additionalFilesList]);
             e.target.value = "";
@@ -57,7 +58,7 @@ export const useSenderInputs = (
         if (receiverIdInput === userId)
             return setError("You cant use your own userId as receiverId");
 
-        console.log({ receiverIdInput });
+        appLogger.log({ receiverIdInput });
         socketRef.current.emit(
             "pair-request-server",
             { to: receiverIdInput }
@@ -74,7 +75,7 @@ export const useSenderInputs = (
     const handleSendClick = () => {
         if (!fileList || !dataChannel || dataChannel.readyState !== "open") {
             setError("No file or DataChannel is not open");
-            console.log("No file or DataChannel is not open", { fileList }, dataChannel?.readyState);
+            appLogger.log("No file or DataChannel is not open", { fileList }, dataChannel?.readyState);
             return;
         }
 
@@ -85,27 +86,27 @@ export const useSenderInputs = (
         }
         const metadataStr = JSON.stringify(metadataList);
         const encoder = new TextEncoder();
-        console.log({ encoder });
+        appLogger.log({ encoder });
         const encodedMetadata = encoder.encode(metadataStr);
-        console.log({ encodedMetadata });
+        appLogger.log({ encodedMetadata });
 
         const chunkSize = 8000;
         for (let offset = 0; offset < encodedMetadata.length; offset += chunkSize) {
             const chunk = encodedMetadata.slice(offset, offset + chunkSize);
-            console.log({ chunk });
+            appLogger.log({ chunk });
             dataChannel.send(chunk);
         }
 
         dataChannel.send("_METADATA_END_");
-        console.log("📤 Metadata sent");
+        appLogger.log("📤 Metadata sent");
 
         const sendFileChunks = async (file: FileListType[number]) => {
             const chunkSize = 16000;
             let sentChunksSize = 0;
             for (let offset = 0; offset < file.metadata.size; offset += chunkSize) {
-                console.log(offset, file.metadata.size);
+                appLogger.log(offset, file.metadata.size);
                 if (file.data === undefined) {
-                    console.log("No File Data");
+                    appLogger.log("No File Data");
                     return;
                 }
                 const chunk = file.data.slice(offset, offset + chunkSize);
@@ -114,16 +115,16 @@ export const useSenderInputs = (
                 dataChannel.send(buffer);
 
                 const precent = ((sentChunksSize / file.metadata.size) * 100).toFixed(1);
-                console.log({ precent });
+                appLogger.log({ precent });
                 setFileList((prev) => prev.map(f => f.id === file.id ? { ...f, percentage: precent } : f));
             }
 
             dataChannel.send("_FILE_END_");
             setFileList((prev) => prev.map(f => f.id === file.id ? { ...f, state: "done" } : f));
-            console.log("📤 File sent");
+            appLogger.log("📤 File sent");
         };
 
-        (async () => {
+        void (async () => {
             for (let i = 0; i < fileList.length; i++) {
                 const file = fileList[i];
                 dataChannel.send(`_FILE_ID_${file.id}`);

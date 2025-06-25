@@ -1,9 +1,10 @@
 import type { Socket } from "socket.io";
+import type { SocketWithUserIdType } from "../types";
 
 export const pairEventsHandler = (
-    socket: Socket,
+    socket: SocketWithUserIdType,
     userMap: Map<string, Socket>,
-) => {
+): void => {
     socket.on("pair-request-server", ({ to }: { to: string; }) => {
         console.log({ to });
         console.log(userMap.keys());

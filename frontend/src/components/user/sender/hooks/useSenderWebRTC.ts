@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { socketInstance } from "@src/sockets/socket-instance";
+import { appLogger } from "@src/utils/common";
 
 export function useSenderWebRTC(receiverId: string | null) {
     const pcRef = useRef<RTCPeerConnection | null>(null);
     const [dataChannelInstance, setDataChannelInstance] = useState<RTCDataChannel | null>(null);
     const iceCandidateQueueRef = useRef<RTCIceCandidateInit[]>([]);
-    let remoteDescriptionSet = false;
+    const remoteDescriptionSet = useRef<boolean>(false);
 
 
     useEffect(() => {
@@ -14,65 +15,65 @@ export function useSenderWebRTC(receiverId: string | null) {
             iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
         });
         pcRef.current = pc;
-        pc.onsignalingstatechange = () => console.log("Signaling state:", pc.signalingState);
-        pc.onconnectionstatechange = () => console.log("Connection state:", pc.connectionState);
+        pc.onsignalingstatechange = () => appLogger.log("Signaling state:", pc.signalingState);
+        pc.onconnectionstatechange = () => appLogger.log("Connection state:", pc.connectionState);
 
 
         const dataChannel = pc.createDataChannel("fileTransfer");
         setDataChannelInstance(dataChannel);
 
-        dataChannel.onopen = () => console.log("📤 Data channel open (sender)");
-        dataChannel.onclose = () => console.log("🛑 Data channel closed");
+        dataChannel.onopen = () => appLogger.log("📤 Data channel open (sender)");
+        dataChannel.onclose = () => appLogger.log("🛑 Data channel closed");
         dataChannel.onerror = (event) => {
-            console.error("Data channel error", event);
+            appLogger.error("Data channel error", event);
         };
 
         pc.onicecandidate = (e) => {
             if (e.candidate) {
-                console.log("Local ICE candidate:", e.candidate.candidate);
+                appLogger.log("Local ICE candidate:", e.candidate.candidate);
                 socketInstance.emit("webrtc-ice-candidate-server", { to: receiverId, candidate: e.candidate });
             }
             else {
-                console.log("All ICE candidates sent");
+                appLogger.log("All ICE candidates sent");
             }
         };
 
         pc.oniceconnectionstatechange = () => {
-            console.log("ICE connection state:", pc.iceConnectionState);
+            appLogger.log("ICE connection state:", pc.iceConnectionState);
             if (pc.iceConnectionState === "failed") {
-                console.error("❌ ICE connection failed");
+                appLogger.error("❌ ICE connection failed");
             }
         };
 
 
         pc.onicecandidateerror = (event) => {
-            console.error("ICE Candidate Error:", event);
+            appLogger.error("ICE Candidate Error:", event);
         };
 
         pc.onicegatheringstatechange = () => {
-            console.log("ICE gathering state:", pc.iceGatheringState);
+            appLogger.log("ICE gathering state:", pc.iceGatheringState);
         };
 
         pc.onnegotiationneeded = () => {
-            console.log("Negotiation needed");
+            appLogger.log("Negotiation needed");
         };
 
-        (async () => {
+        void (async () => {
             try {
                 const offer = await pc.createOffer();
                 await pc.setLocalDescription(offer);
                 socketInstance.emit("webrtc-offer-server", { to: receiverId, offer });
-                console.log({ to: receiverId, offer });
+                appLogger.log({ to: receiverId, offer });
             }
             catch (err) {
-                console.log(err);
+                appLogger.log(err);
             }
         })();
 
         socketInstance.on("webrtc-answer-client", async ({ answer }: { answer: RTCSessionDescriptionInit; }) => {
             try {
                 await pc.setRemoteDescription(new RTCSessionDescription(answer));
-                remoteDescriptionSet = true;
+                remoteDescriptionSet.current = true;
 
                 for (const candidate of iceCandidateQueueRef.current) {
                     await pc.addIceCandidate(new RTCIceCandidate(candidate));
@@ -80,20 +81,20 @@ export function useSenderWebRTC(receiverId: string | null) {
                 iceCandidateQueueRef.current = [];
             }
             catch (err) {
-                console.log(err);
+                appLogger.log(err);
             }
         });
 
         socketInstance.on("webrtc-ice-candidate-client", async ({ candidate }: { candidate: RTCIceCandidateInit; }) => {
             try {
-                console.log({ "webrtc-ice-candidate-client": candidate });
-                if (!remoteDescriptionSet) {
+                appLogger.log({ "webrtc-ice-candidate-client": candidate });
+                if (remoteDescriptionSet.current === false) {
                     iceCandidateQueueRef.current.push(candidate);
                 } else {
                     await pc.addIceCandidate(new RTCIceCandidate(candidate));
                 }
             } catch (err) {
-                console.error("ICE error (sender)", err);
+                appLogger.error("ICE error (sender)", err);
             }
         });
 

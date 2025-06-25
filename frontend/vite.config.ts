@@ -29,7 +29,7 @@ const metaGeneratorPlugin: Plugin = {
 
 // https://vite.dev/config/
 export default defineConfig({
-   server: {
+  server: {
     open: '/user',
   },
   define: {

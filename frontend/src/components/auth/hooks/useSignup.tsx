@@ -1,7 +1,7 @@
 import { signupHandler } from "@src/axios/handlers/auth-handler";
 import { appRoutes } from "@src/routes/app-routes";
 import { signupInputSchema } from "@src/schemas/authSchemas";
-import { isTrusted } from "@src/utils/common";
+import { appLogger, isTrusted } from "@src/utils/common";
 import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler, type PointerEventHandler } from "react";
 import { useNavigate } from "react-router";
 
@@ -39,7 +39,7 @@ export const useSignup = () => {
         try {
             setIsLoading(true);
             const response = await signupHandler(signupFormData);
-            console.log(response);
+            appLogger.log(response);
             if (response.status === 201) {
                 void navigate(appRoutes.user.absolute);
             } else if (response.status === 400) {
@@ -119,12 +119,12 @@ export const useSignup = () => {
         if (target.value === "") return;
         switch (target.name) {
             case "name": {
-                console.log(target.name);
+                appLogger.log(target.name);
                 inputRefs.current.emailRef?.focus();
                 return;
             }
             case "email": {
-                console.log(target.name);
+                appLogger.log(target.name);
                 inputRefs.current.passwordRef?.focus();
                 return;
             }
@@ -142,7 +142,7 @@ export const useSignup = () => {
     };
 
     const handleEyeClick: PointerEventHandler<HTMLButtonElement> = (e) => {
-        console.log("hello");
+        appLogger.log("hello");
         if (isTrusted(e) === false || e.currentTarget.tagName !== "BUTTON") return;
         e.stopPropagation();
         const btnName = e.currentTarget.name;

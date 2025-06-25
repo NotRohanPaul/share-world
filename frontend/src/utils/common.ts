@@ -1,7 +1,7 @@
 import { IS_SECURE_ENV } from "@src/constants/env";
-import type React from "react";
+import type { SyntheticEvent } from "react";
 
-export const isTrusted = (e: React.SyntheticEvent<unknown>): boolean => {
+export const isTrusted = (e: SyntheticEvent<unknown>): boolean => {
     if (IS_SECURE_ENV === false) return true;
 
     if (e.isTrusted === true) return true;
@@ -16,13 +16,15 @@ export const testId = (id: string): { "data-testid": string; } | Record<string, 
 };
 
 
-export const debounceProvider = <T extends any[]>(
-    fn: (...args: T) => any,
+export const debounceProvider = <T extends unknown[]>(
+    fn: (...args: T) => unknown,
     delay: number
 ) => {
     let timerId: number | null = null;
-    return (...params: T) => {
+    return (...params: T): void => {
         if (timerId !== null) clearTimeout(timerId);
         timerId = setTimeout(fn, delay, ...params);
     };
 };
+
+export const appLogger = console;

@@ -20,7 +20,7 @@
     "mongo-svr:vsc-admin": "mongod -f \"C:/Program Files/MongoDB/Server/8.0/bin/mongod.cfg\"",
     "mongo-svr:vsc-noadmin": "powershell -ExecutionPolicy Bypass -File ../scripts/start-mongodb-server.ps1",
     "start:dev": "nodemon --exec tsx --env-file=.env.development ./src/index.ts",
-    "build:ts": "npm run lint && npm run test && npm run clean && tsc -b -p tsconfig.build.json && tsc-alias && npm run cpy-pkg",
+    "build:ts": "npm run lint && npm run test && npm run clean && tsc --project tsconfig.build.json && tsc-alias && npm run cpy-pkg",
     "build:prod": "npm run lint && tsc -b && npm run test && npm run bundle",
     "start:prod": "node --env-file=.env.production ./dist/index.js"
   },
