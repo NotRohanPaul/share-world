@@ -26,7 +26,6 @@ const metaGeneratorPlugin: Plugin = {
     console.log('meta-frontend.json created:', version);
   }
 };
-
 // https://vite.dev/config/
 export default defineConfig({
   server: {
