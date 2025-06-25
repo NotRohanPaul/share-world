@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useReceiverSocket } from "./useReceiverSocket";
 import { useReceiverWebRTC } from "./useReceiverWebRTC";
+import type { FileListType, MetadataType } from "../../types";
 
 
 export const useReceiver = () => {
@@ -10,45 +11,126 @@ export const useReceiver = () => {
         error,
     } = useReceiverSocket();
     const { dataChannel } = useReceiverWebRTC(senderId ?? "");
-    const [fileList, setFileList] = useState<FileList | null>(null);
+    const [fileList, setFileList] = useState<FileListType>([]);
 
     useEffect(() => {
         if (!dataChannel) return;
 
-        const receivedChunks: Uint8Array[] = [];
+        let parsedMetadata: MetadataType = [];
 
-        dataChannel.onmessage = (event) => {
-            if (typeof event.data === "string" && event.data === "_METADATA_END_") {
+        const receivedChunks: Uint8Array[] = [];
+        let currentFileId: string | null = null;
+        let isMetadataReceived = false;
+        let currentFileSize = 0;
+
+        dataChannel.onmessage = async (event) => {
+            if (!isMetadataReceived) {
+                if (typeof event.data === "string" && event.data === "_METADATA_END_") {
+                    const totalLength = receivedChunks.reduce((acc, chunk) => acc + chunk.length, 0);
+                    const combined = new Uint8Array(totalLength);
+                    let offset = 0;
+                    for (const chunk of receivedChunks) {
+                        combined.set(chunk, offset);
+                        offset += chunk.length;
+                    }
+
+                    const decoder = new TextDecoder();
+                    const metadataJSON = decoder.decode(combined);
+
+                    try {
+                        parsedMetadata = JSON.parse(metadataJSON);
+                        console.log("📥 Metadata parsed:", parsedMetadata);
+                        isMetadataReceived = true;
+                        setFileList((prev) => {
+                            const additionalFileListWithState: FileListType = parsedMetadata.map((metadata) => {
+                                return {
+                                    id: metadata.id,
+                                    metadata: { ...metadata },
+                                    state: "pending"
+                                };
+                            });
+
+                            return [...prev, ...additionalFileListWithState];
+                        });
+                    } catch (err) {
+                        console.error("❌ Failed to parse metadata", err);
+                    } finally {
+                        receivedChunks.length = 0;
+                    }
+                    return;
+                }
+
+                if (event.data instanceof ArrayBuffer) {
+                    receivedChunks.push(new Uint8Array(event.data));
+                }
+
+                return;
+            }
+            if (typeof event.data === "string" && event.data.startsWith("_FILE_ID_")) {
+                currentFileId = event.data.slice("_FILE_ID_".length);
+                currentFileSize = 0;
+                receivedChunks.length = 0;
+                return;
+            }
+
+            if (event.data instanceof ArrayBuffer) {
+                const chunk = new Uint8Array(event.data);
+                receivedChunks.push(chunk);
+                currentFileSize += chunk.length;
+
+                if (currentFileId === null) return;
+                const metaIndex = parsedMetadata.findIndex(m => m.id === currentFileId);
+                const meta = parsedMetadata[metaIndex];
+                const percent = ((currentFileSize / meta.size) * 100).toFixed(1);
+                console.log(`📦 Receiving "${meta.name}" — ${percent}%`);
+                setFileList((prev) =>
+                    prev.map((f) =>
+                        f.id === meta.id && f.state !== "done"
+                            ? { ...f, state: "processing", percentage: percent }
+                            : f
+                    )
+                );
+                return;
+            }
+
+            if (typeof event.data === "string" && event.data === "_FILE_END_") {
+                if (!currentFileId) return;
+
+                const meta = parsedMetadata.find((m) => m.id === currentFileId);
+                if (!meta) return;
                 const totalLength = receivedChunks.reduce((acc, chunk) => acc + chunk.length, 0);
                 const combined = new Uint8Array(totalLength);
+
                 let offset = 0;
                 for (const chunk of receivedChunks) {
                     combined.set(chunk, offset);
                     offset += chunk.length;
                 }
 
-                const decoder = new TextDecoder();
-                const metadataJSON = decoder.decode(combined);
+                const blob = new Blob([combined], { type: meta.type });
+                const file = new File([blob], meta.name, { type: meta.type });
 
-                try {
-                    const parsedMetadata = JSON.parse(metadataJSON);
-                    console.log("📥 Received Metadata:", parsedMetadata);
-                    setFileList(parsedMetadata);
-                } catch (err) {
-                    console.error("❌ Failed to parse metadata", err);
+                setFileList((prev) =>
+                    prev.map((f) =>
+                        f.id === meta.id
+                            ? { ...f, state: "done", data: file }
+                            : f
+                    )
+                );
+                console.log("✅ File received: ", currentFileId, file.name);
+
+                currentFileId = null;
+                currentFileSize = 0;
+                receivedChunks.length = 0;
+
+                if (fileList.length === parsedMetadata.length) {
+                    console.log("🎉 All files received");
                 }
 
-                receivedChunks.length = 0;
-            } else if (event.data instanceof ArrayBuffer) {
-                receivedChunks.push(new Uint8Array(event.data));
-            } else if (event.data instanceof Blob) {
-                event.data.arrayBuffer().then(buffer => {
-                    receivedChunks.push(new Uint8Array(buffer));
-                });
+                return;
             }
         };
     }, [dataChannel]);
-
 
 
     return {

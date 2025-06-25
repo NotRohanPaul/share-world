@@ -49,7 +49,7 @@ export const SenderMain = () => {
                             handleFileChange={handleFileChange}
                             handleSendClick={handleSendClick}
                         />
-                        {fileList !== null && <FileList fileList={fileList} />}
+                        {fileList.length !== 0 && <FileList fileList={fileList} />}
                     </>
                 )}
             </UserMain>

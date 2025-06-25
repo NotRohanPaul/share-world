@@ -15,3 +15,14 @@ export const testId = (id: string): { "data-testid": string; } | Record<string, 
     return {};
 };
 
+
+export const debounceProvider = <T extends any[]>(
+    fn: (...args: T) => any,
+    delay: number
+) => {
+    let timerId: number | null = null;
+    return (...params: T) => {
+        if (timerId !== null) clearTimeout(timerId);
+        timerId = setTimeout(fn, delay, ...params);
+    };
+};

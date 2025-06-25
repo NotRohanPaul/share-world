@@ -6,13 +6,21 @@ import { Link } from "react-router";
 export const NavBar = () => {
     const [isAccountMenuVisible, setIsAccountMenuVisible] = useState<boolean>(false);
 
+    const buttonRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if (isAccountMenuVisible === false) return;
+
         const handleOutsideClick = (e: MouseEvent) => {
-            if ((e.target as HTMLButtonElement)?.closest("button")) return;
-            if (!isAccountMenuVisible || menuRef.current === null) return;
-            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+            if (
+                menuRef.current === null ||
+                buttonRef.current === null
+            ) return;
+
+            if (buttonRef.current.contains(e.target as Node)) return;
+
+            if (menuRef.current.contains(e.target as Node) === false) {
                 setIsAccountMenuVisible(false);
             }
         };
@@ -35,13 +43,14 @@ export const NavBar = () => {
                     aria-label="account avatar"
                     className="overflow-hidden"
                     title="User"
+                    ref={buttonRef}
                 >
                     <AppIcons.Avatar
                         className="w-[2rem] h-[2rem]"
                     />
                 </button>
                 {isAccountMenuVisible === false ? null :
-                    <div className="absolute -right-1 top-10 w-max flex flex-col p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
+                    <div className="absolute -right-1 top-10 z-10 w-max flex flex-col p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
                         onClick={() => setIsAccountMenuVisible(false)}
                         ref={menuRef}
                     >

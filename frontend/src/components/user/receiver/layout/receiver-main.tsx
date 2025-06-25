@@ -23,7 +23,7 @@ export const ReceiverMain = () => {
             <UserMain>
                 <UserId userId={userId} peerType="receiver" />
                 <SenderId senderId={senderId} />
-                {fileList !== null && <FileList fileList={fileList} />}
+                {fileList.length !== 0 && <FileList fileList={fileList} />}
             </UserMain>
         </UserSection>
     );

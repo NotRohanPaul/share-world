@@ -8,6 +8,7 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "types": [],
     "module": "ES2020",
     "skipLibCheck": true,
     "baseUrl": ".",
