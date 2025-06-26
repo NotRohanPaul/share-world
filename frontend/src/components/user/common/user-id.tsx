@@ -12,6 +12,7 @@ export const UserId = ({
     const [isCopyClicked, setIsCopyClicked] = useState(false);
 
     const handleCopy = async () => {
+        console.log("Hello");
         if (peerType !== "receiver" || isCopyClicked === true || userId === null) return;
         await navigator.clipboard.writeText(userId);
         setIsCopyClicked(true);
@@ -31,7 +32,7 @@ export const UserId = ({
                 &&
                 <button
                     className={`text-primary ${isCopyClicked === true ? "cursor-default" : ""}`}
-                    onClick={void handleCopy}
+                    onClick={() => void handleCopy()}
                 >
                     {isCopyClicked === false ?
                         <AppIcons.Copy className="w-[2rem] h-[2rem]" /> :
