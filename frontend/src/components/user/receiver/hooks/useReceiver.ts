@@ -67,6 +67,8 @@ export const useReceiver = () => {
 
                 return;
             }
+
+
             if (typeof event.data === "string" && event.data.startsWith("_FILE_ID_")) {
                 currentFileId = event.data.slice("_FILE_ID_".length);
                 currentFileSize = 0;
@@ -86,7 +88,7 @@ export const useReceiver = () => {
                 appLogger.log(`📦 Receiving "${meta.name}" — ${percent}%`);
                 setFileList((prev) =>
                     prev.map((f) =>
-                        f.id === meta.id && f.state !== "done"
+                        f.id === meta.id
                             ? { ...f, state: "processing", percentage: percent }
                             : f
                     )

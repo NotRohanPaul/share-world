@@ -16,11 +16,13 @@ import {
     Check,
     CircleUser,
     ClipboardCopy,
+    ClockFading,
     EyeIcon,
     EyeOff,
     File,
     FileImage,
     FileText,
+    HardDriveDownload,
     LoaderCircle,
     Send,
     type LucideProps,
@@ -46,5 +48,7 @@ export const AppIcons = {
         jpg: FileImage,
         jpeg: FileImage,
         unknown: File,
-    }
+    },
+    SaveToDisk: HardDriveDownload,
+    Pending: ClockFading,
 };

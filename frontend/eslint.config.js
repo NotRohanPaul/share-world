@@ -36,7 +36,12 @@ export default tseslint.config(
           patterns: ["tests/*"],
         },
       ],
-      "@typescript-eslint/explicit-function-return-type": ["error"],
+      "@typescript-eslint/explicit-function-return-type": [
+        "error",
+        {
+          allowHigherOrderFunctions: false,
+        }
+      ],
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

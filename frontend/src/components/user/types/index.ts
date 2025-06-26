@@ -8,7 +8,7 @@ export type FileListType = {
     },
     state: "done" | "pending" | "processing",
     percentage?: string,
-    data?: Blob,
+    data?: File,
 }[];
 
 type FileItem = FileListType[number];
