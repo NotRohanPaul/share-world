@@ -29,7 +29,7 @@ export const useSenderSocket = (
             socket.disconnect();
         };
 
-    }, []);
+    }, [setError]);
 
     return {
         userId,
