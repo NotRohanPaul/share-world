@@ -113,7 +113,7 @@ export function useReceiverWebRTC(peerId: string | null) {
                 dataChannel.close();
             }
         };
-    }, [peerId, dataChannel]);
+    }, [peerId]);
 
     return { dataChannel };
 }

@@ -12,7 +12,6 @@ export const UserId = ({
     const [isCopyClicked, setIsCopyClicked] = useState(false);
 
     const handleCopy = async () => {
-        console.log("Hello");
         if (peerType !== "receiver" || isCopyClicked === true || userId === null) return;
         await navigator.clipboard.writeText(userId);
         setIsCopyClicked(true);
