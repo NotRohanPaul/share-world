@@ -7,7 +7,7 @@ import pino, { multistream, type Logger } from "pino";
 let appLogger: Logger;
 
 if (IS_SECURE_ENV === true) {
-    const logDir = path.join(process.cwd(), "logs");
+    const logDir = path.join(import.meta.dirname, "logs");
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     const shortId = randomUUID().slice(0, 8);
     const logFilePath = path.join(logDir, `app-${timestamp}-${shortId}.log`);

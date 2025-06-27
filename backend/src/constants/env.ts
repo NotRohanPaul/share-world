@@ -16,6 +16,7 @@ export const MONGO_URI = getEnv("MONGO_URI");
 export const JWT_SECRET = getEnv("JWT_SECRET");
 export const APP_ORIGIN = getEnv("APP_ORIGIN");
 export const API_ORIGIN = getEnv("API_ORIGIN");
+export const WS_API_ORIGIN = API_ORIGIN.replace(/^http/, "ws");
 export const IS_SECURE_ENV = ((): boolean => {
     const insecureEnvs = ['development', 'test'];
     return insecureEnvs.includes(NODE_ENV) === false;

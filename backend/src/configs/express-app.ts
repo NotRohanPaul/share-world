@@ -1,7 +1,7 @@
 import { errorHandler } from "@middlewares/error-handler";
 import { unknownHandler } from "@middlewares/unknown-handler";
 import { routesHandler } from "@routes/routes";
-import { API_ORIGIN, APP_ORIGIN, IS_SECURE_ENV } from "@src/constants/env";
+import { API_ORIGIN, APP_ORIGIN, IS_SECURE_ENV, WS_API_ORIGIN } from "@src/constants/env";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
@@ -18,7 +18,7 @@ app.use(helmet({
     contentSecurityPolicy: IS_SECURE_ENV ? {
         directives: {
             defaultSrc: ["'self'"],
-            connectSrc: ["'self'", API_ORIGIN],
+            connectSrc: ["'self'", API_ORIGIN, WS_API_ORIGIN],
             scriptSrc: ["'self'"],
             styleSrc: ["'self'"],
             imgSrc: ["'self'"],
