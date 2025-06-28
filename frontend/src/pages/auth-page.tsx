@@ -5,11 +5,12 @@ import { appRoutes } from "@src/routes/app-routes";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 
 export const AuthPage = () => {
     const [authType, setAuthType] = useState<AuthVariantType>("login");
+    const navigate = useNavigate();
 
     return (<>
         <Helmet prioritizeSeoTags={true}>
@@ -46,6 +47,15 @@ export const AuthPage = () => {
                     className="text-xl border-2 border-gray-500 rounded-lg max-sm:text-base">
                     <AuthForm authType={authType} />
                 </motion.main>
+                <div className="h-1 [background-image:repeating-linear-gradient(90deg,transparent_0_3%,gray_3%_7%)] " />
+                <button
+                    type="button"
+                    className="self-center font-semibold py-2 px-4 rounded-full text-white bg-primary hover:bg-white hover:text-primary hover:outline-2 hover:outline-primary active:outline-offset-2 transition-colors duration-300"
+                    value="guest"
+                    onClick={() => void navigate(appRoutes.user.absolute)}
+                >
+                    Login as Guest
+                </button>
             </main>
         </article>
     </>
