@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { socketInstance } from "@src/sockets/socket-instance";
-import { appLogger } from "@src/utils/common";
 
 export function useSenderWebRTC(receiverId: string | null) {
     const pcRef = useRef<RTCPeerConnection | null>(null);
@@ -15,47 +14,47 @@ export function useSenderWebRTC(receiverId: string | null) {
             iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
         });
         pcRef.current = pc;
-        pc.onsignalingstatechange = () => appLogger.log("Signaling state:", pc.signalingState);
-        pc.onconnectionstatechange = () => appLogger.log("Connection state:", pc.connectionState);
+        pc.onsignalingstatechange = () => console.log("Signaling state:", pc.signalingState);
+        pc.onconnectionstatechange = () => console.log("Connection state:", pc.connectionState);
 
 
         const dataChannel = pc.createDataChannel("fileTransfer");
         setDataChannelInstance(dataChannel);
 
-        dataChannel.onopen = () => appLogger.log("📤 Data channel open (sender)");
-        dataChannel.onclose = () => appLogger.log("🛑 Data channel closed");
+        dataChannel.onopen = () => console.log("📤 Data channel open (sender)");
+        dataChannel.onclose = () => console.log("🛑 Data channel closed");
         dataChannel.onerror = (event) => {
-            appLogger.error("Data channel error", event);
+            console.error("Data channel error", event);
         };
 
         pc.onicecandidate = (e) => {
             if (e.candidate) {
-                appLogger.log("Local ICE candidate:", e.candidate.candidate);
+                console.log("Local ICE candidate:", e.candidate.candidate);
                 socketInstance.emit("webrtc-ice-candidate-server", { to: receiverId, candidate: e.candidate });
             }
             else {
-                appLogger.log("All ICE candidates sent");
+                console.log("All ICE candidates sent");
             }
         };
 
         pc.oniceconnectionstatechange = () => {
-            appLogger.log("ICE connection state:", pc.iceConnectionState);
+            console.log("ICE connection state:", pc.iceConnectionState);
             if (pc.iceConnectionState === "failed") {
-                appLogger.error("❌ ICE connection failed");
+                console.error("❌ ICE connection failed");
             }
         };
 
 
         pc.onicecandidateerror = (event) => {
-            appLogger.error("ICE Candidate Error:", event);
+            console.error("ICE Candidate Error:", event);
         };
 
         pc.onicegatheringstatechange = () => {
-            appLogger.log("ICE gathering state:", pc.iceGatheringState);
+            console.log("ICE gathering state:", pc.iceGatheringState);
         };
 
         pc.onnegotiationneeded = () => {
-            appLogger.log("Negotiation needed");
+            console.log("Negotiation needed");
         };
 
         void (async () => {
@@ -63,10 +62,10 @@ export function useSenderWebRTC(receiverId: string | null) {
                 const offer = await pc.createOffer();
                 await pc.setLocalDescription(offer);
                 socketInstance.emit("webrtc-offer-server", { to: receiverId, offer });
-                appLogger.log({ to: receiverId, offer });
+                console.log({ to: receiverId, offer });
             }
             catch (err) {
-                appLogger.log(err);
+                console.log(err);
             }
         })();
 
@@ -81,20 +80,20 @@ export function useSenderWebRTC(receiverId: string | null) {
                 iceCandidateQueueRef.current = [];
             }
             catch (err) {
-                appLogger.log(err);
+                console.log(err);
             }
         });
 
         socketInstance.on("webrtc-ice-candidate-client", async ({ candidate }: { candidate: RTCIceCandidateInit; }) => {
             try {
-                appLogger.log({ "webrtc-ice-candidate-client": candidate });
+                console.log({ "webrtc-ice-candidate-client": candidate });
                 if (remoteDescriptionSet.current === false) {
                     iceCandidateQueueRef.current.push(candidate);
                 } else {
                     await pc.addIceCandidate(new RTCIceCandidate(candidate));
                 }
             } catch (err) {
-                appLogger.error("ICE error (sender)", err);
+                console.error("ICE error (sender)", err);
             }
         });
 

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useReceiverSocket } from "./useReceiverSocket";
 import { useReceiverWebRTC } from "./useReceiverWebRTC";
 import type { FileListType, MetadataType } from "../../types";
-import { appLogger } from "@src/utils/common";
 
 
 export const useReceiver = () => {
@@ -40,7 +39,7 @@ export const useReceiver = () => {
 
                     try {
                         parsedMetadata = JSON.parse(metadataJSON);
-                        appLogger.log("📥 Metadata parsed:", parsedMetadata);
+                        console.log("📥 Metadata parsed:", parsedMetadata);
                         isMetadataReceived = true;
                         setFileList((prev) => {
                             const additionalFileListWithState: FileListType = parsedMetadata.map((metadata) => {
@@ -54,7 +53,7 @@ export const useReceiver = () => {
                             return [...prev, ...additionalFileListWithState];
                         });
                     } catch (err) {
-                        appLogger.error("❌ Failed to parse metadata", err);
+                        console.error("❌ Failed to parse metadata", err);
                     } finally {
                         receivedChunks.length = 0;
                     }
@@ -85,7 +84,7 @@ export const useReceiver = () => {
                 const metaIndex = parsedMetadata.findIndex(m => m.id === currentFileId);
                 const meta = parsedMetadata[metaIndex];
                 const percent = ((currentFileSize / meta.size) * 100).toFixed(1);
-                appLogger.log(`📦 Receiving "${meta.name}" — ${percent}%`);
+                console.log(`📦 Receiving "${meta.name}" — ${percent}%`);
                 setFileList((prev) =>
                     prev.map((f) =>
                         f.id === meta.id
@@ -120,14 +119,14 @@ export const useReceiver = () => {
                             : f
                     )
                 );
-                appLogger.log("✅ File received: ", currentFileId, file.name);
+                console.log("✅ File received: ", currentFileId, file.name);
 
                 currentFileId = null;
                 currentFileSize = 0;
                 receivedChunks.length = 0;
 
                 if (fileList.length === parsedMetadata.length) {
-                    appLogger.log("🎉 All files received");
+                    console.log("🎉 All files received");
                 }
 
                 return;

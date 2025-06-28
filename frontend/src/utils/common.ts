@@ -39,5 +39,3 @@ export const throttlingProvider = <T extends unknown[]>(
         timerId = setTimeout(() => { timerId = null; }, delay);
     };
 };
-
-export const appLogger = console;

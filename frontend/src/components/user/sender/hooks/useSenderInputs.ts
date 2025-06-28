@@ -2,7 +2,6 @@ import { useEffect, useState, type ChangeEvent, type Dispatch, type KeyboardEven
 import type { Socket } from "socket.io-client";
 import type { FileListType, MetadataType } from "../../types";
 import { useSenderWebRTC } from "./useSenderWebRTC";
-import { appLogger } from "@src/utils/common";
 
 export const useSenderInputs = (
     userId: string | null,
@@ -58,7 +57,7 @@ export const useSenderInputs = (
         if (receiverIdInput === userId)
             return setError("You cant use your own userId as receiverId");
 
-        appLogger.log({ receiverIdInput });
+        console.log({ receiverIdInput });
         socketRef.current.emit(
             "pair-request-server",
             { to: receiverIdInput }
@@ -75,7 +74,7 @@ export const useSenderInputs = (
     const handleSendClick = () => {
         if (!fileList || !dataChannel || dataChannel.readyState !== "open") {
             setError("No file or DataChannel is not open");
-            appLogger.log("No file or DataChannel is not open", { fileList }, dataChannel?.readyState);
+            console.log("No file or DataChannel is not open", { fileList }, dataChannel?.readyState);
             return;
         }
 
@@ -86,27 +85,27 @@ export const useSenderInputs = (
         }
         const metadataStr = JSON.stringify(metadataList);
         const encoder = new TextEncoder();
-        appLogger.log({ encoder });
+        console.log({ encoder });
         const encodedMetadata = encoder.encode(metadataStr);
-        appLogger.log({ encodedMetadata });
+        console.log({ encodedMetadata });
 
         const chunkSize = 8000;
         for (let offset = 0; offset < encodedMetadata.length; offset += chunkSize) {
             const chunk = encodedMetadata.slice(offset, offset + chunkSize);
-            appLogger.log({ chunk });
+            console.log({ chunk });
             dataChannel.send(chunk);
         }
 
         dataChannel.send("_METADATA_END_");
-        appLogger.log("📤 Metadata sent");
+        console.log("📤 Metadata sent");
 
         const sendFileChunks = async (file: FileListType[number]) => {
             const chunkSize = 16000;
             let sentChunksSize = 0;
             for (let offset = 0; offset < file.metadata.size; offset += chunkSize) {
-                appLogger.log(offset, file.metadata.size);
+                console.log(offset, file.metadata.size);
                 if (file.data === undefined) {
-                    appLogger.log("No File Data");
+                    console.log("No File Data");
                     return;
                 }
                 const chunk = file.data.slice(offset, offset + chunkSize);
@@ -115,13 +114,13 @@ export const useSenderInputs = (
                 dataChannel.send(buffer);
 
                 const precent = ((sentChunksSize / file.metadata.size) * 100).toFixed(1);
-                appLogger.log({ precent });
+                console.log({ precent });
                 setFileList((prev) => prev.map(f => f.id === file.id ? { ...f, percentage: precent } : f));
             }
 
             dataChannel.send("_FILE_END_");
             setFileList((prev) => prev.map(f => f.id === file.id ? { ...f, state: "done" } : f));
-            appLogger.log("📤 File sent");
+            console.log("📤 File sent");
         };
 
         void (async () => {

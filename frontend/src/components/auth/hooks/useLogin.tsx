@@ -1,7 +1,7 @@
 import { loginHandler } from "@src/axios/handlers/auth-handler";
 import { appRoutes } from "@src/routes/app-routes";
 import { loginSchema } from "@src/schemas/authSchemas";
-import { appLogger, isTrusted } from "@src/utils/common";
+import {  isTrusted } from "@src/utils/common";
 import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler, type PointerEventHandler } from "react";
 import { useNavigate } from "react-router";
 
@@ -28,7 +28,7 @@ export const useLogin = () => {
         try {
             setIsLoading(true);
             const response = await loginHandler(loginFormData);
-            appLogger.log(response);
+            console.log(response);
             if (response.status === 200) {
                 void navigate(appRoutes.user.absolute);
             } else if (response.status === 400) {

@@ -1,5 +1,4 @@
 import { API_ORIGIN } from "@src/constants/env";
-import { appLogger } from "@src/utils/common";
 import axios from "axios";
 
 export const axiosInstance = axios.create({
@@ -11,22 +10,22 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     config => {
-        appLogger.log('Request:', config);
+        console.log('Request:', config);
         return config;
     },
     error => {
-        appLogger.error('Request error:', error);
+        console.error('Request error:', error);
         return Promise.reject(error);
     }
 );
 
 axiosInstance.interceptors.response.use(
     response => {
-        appLogger.log('Response:', response);
+        console.log('Response:', response);
         return response;
     },
     error => {
-        appLogger.error('Response error:', error);
+        console.error('Response error:', error);
         return Promise.reject(error);
     }
 );
