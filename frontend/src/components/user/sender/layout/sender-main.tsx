@@ -45,11 +45,24 @@ export const SenderMain = () => {
                             </span>
                             <span className="text-primary">{receiverId}</span>
                         </p>
-                        <FilesInput
-                            handleFileChange={handleFileChange}
-                            handleSendClick={handleSendClick}
-                        />
-                        {fileList.length !== 0 && <FileList fileList={fileList} />}
+                        <div
+                            className="flex flex-col items-center gap-6"
+                        >
+                            <button
+                                className="self-center text-2xl py-2 px-4 rounded-full text-white bg-primary transition-colors duration-300 hover:bg-white hover:text-primary hover:outline-2 hover:outline-primary active:outline-offset-2"
+                                onClick={handleSendClick}
+                            >
+                                Send
+                            </button>
+                            {fileList.length === 0 ?
+                                <FilesInput
+                                    handleFileChange={handleFileChange}
+                                />
+                                :
+                                <FileList fileList={fileList} />
+                            }
+                        </div>
+
                     </>
                 )}
             </UserMain>

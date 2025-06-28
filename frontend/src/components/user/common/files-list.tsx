@@ -76,7 +76,7 @@ export const FileList = ({ fileList }: { fileList: FileListType; }) => {
                                         <motion.div
                                             className="h-full bg-primary"
                                             initial={{ width: 0 }}
-                                            animate={{ width: `${file.percentage}%` }}
+                                            animate={{ width: `${file.percentage ?? 0}%` }}
                                             transition={{ duration: 0.5 }}
                                         />
                                     </div>

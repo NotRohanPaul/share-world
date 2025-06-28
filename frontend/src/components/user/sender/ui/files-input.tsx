@@ -1,22 +1,43 @@
-import type { ChangeEvent, MouseEvent } from "react";
-
+import { CURRENT_DEVICE_TYPE } from "@src/constants/common";
+import { useState, type ChangeEvent } from "react";
 
 export const FilesInput = ({
     handleFileChange,
-    handleSendClick
 }: {
     handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void,
-    handleSendClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }) => {
+    const [isDragOver, setIsDragOver] = useState(false);
     return (
-        <div className="flex flex-col items-center gap-6 font-bold">
+        <>
             <label
-                className="w-[15rem] h-auto flex flex-col gap-2 text-center p-5 outline-dashed outline-4 outline-primary cursor-pointer transition-colors duration-300 hover:bg-primary hover:text-white group/label"
+                className={`w-[15rem] h-auto flex flex-col gap-2 font-bold text-center p-5 outline-dashed outline-4 outline-primary cursor-pointer transition-colors duration-300 hover:bg-primary hover:text-white group/label ${isDragOver === true ? "shadow-[inset_0_0_50px_0_var(--app-color-primary)] opacity-90" : ""}`}
                 htmlFor={"input-file"}
+                onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDragOver(true);
+                }}
+                onDragLeave={(e) => {
+                    if (e.relatedTarget instanceof Node && e.currentTarget.contains(e.relatedTarget) === false) {
+                        setIsDragOver(false);
+                    }
+                }}
+                onDrop={(e) => {
+                    e.preventDefault();
+                    setIsDragOver(false);
+                    const mockEvent = {
+                        target: { files: e.dataTransfer.files },
+                    } as unknown as ChangeEvent<HTMLInputElement>;
+
+                    handleFileChange(mockEvent);
+                }}
             >
                 <span>Select Files</span>
-                <span className="text-primary group-hover/label:text-white transition-colors duration-300">or</span>
-                <span>Drag files</span>
+                {CURRENT_DEVICE_TYPE !== "mobile" && (
+                    <>
+                        <span className="text-primary group-hover/label:text-white transition-colors duration-300">or</span>
+                        <span>Drag files</span>
+                    </>
+                )}
             </label>
             <input
                 className="w-fit"
@@ -26,12 +47,6 @@ export const FilesInput = ({
                 onChange={handleFileChange}
                 hidden
             />
-            <button
-                className="self-center text-2xl py-2 px-4 rounded-full text-white bg-primary transition-colors duration-300 hover:bg-white hover:text-primary hover:outline-2 hover:outline-primary active:outline-offset-2"
-                onClick={handleSendClick}
-            >
-                Send
-            </button>
-        </div>
+        </>
     );
 };
