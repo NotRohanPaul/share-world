@@ -5,7 +5,7 @@ export const axiosInstance = axios.create({
     baseURL: API_ORIGIN + "/api/v1",
     withCredentials: true,
     validateStatus: () => true,
-    timeout: 10000,
+    timeout: 100000,
 });
 
 axiosInstance.interceptors.request.use(
