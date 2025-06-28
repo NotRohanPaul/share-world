@@ -20,7 +20,7 @@ export const UserHeader: FC<{ children: ReactNode; }> = ({ children }) => {
 
 export const UserMain: FC<{ children: ReactNode; }> = ({ children }) => {
     return (
-        <main className="w-full h-full flex flex-col items-center gap-6 text-4xl p-2">
+        <main className="w-full h-full flex flex-col items-center gap-6 text-4xl max-md:text-2xl p-2">
             {children}
         </main>
     );

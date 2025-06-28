@@ -55,8 +55,8 @@ export const NavBar = () => {
                         ref={menuRef}
                     >
                         <Link
-                            to={"#"}
-                            children={"Manage Account"}
+                            to={appRoutes.user.absolute}
+                            children={"Send/Receive"}
                         />
                         <Link
                             to={appRoutes.logout.absolute}
