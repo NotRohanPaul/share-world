@@ -9,7 +9,7 @@ export const LandingPage = () => {
         <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
             <header className="h-15 flex justify-between items-center p-2 bg-primary">
                 <Link to={appRoutes.home.absolute}>
-                    <AppImages.ShareWorld className="w-10 h-10 aspect-square object-center object-contain p-1 bg-white rounded-full"
+                    <AppImages.ShareWorldFade className="w-10 h-10 aspect-square object-center object-contain p-1 bg-white rounded-full"
                     />
                 </Link>
                 <nav className="font-semibold text-white">
@@ -27,7 +27,7 @@ export const LandingPage = () => {
             </header>
             <main className="h-full grid justify-items-center content-center gap-5">
                 <Link to={appRoutes.home.absolute}>
-                    <AppImages.ShareWorld className="w-60 h-auto max-sm:w-40 max-sm:h-auto" />
+                    <AppImages.ShareWorldFade className="w-60 h-auto max-sm:w-40 max-sm:h-auto" />
                 </Link>
                 <motion.h1
                     initial={{ y: -500, opacity: 0 }}

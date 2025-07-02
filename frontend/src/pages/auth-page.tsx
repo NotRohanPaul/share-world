@@ -21,7 +21,7 @@ export const AuthPage = () => {
             <header
                 className="justify-self-center">
                 <Link to={appRoutes.home.absolute}>
-                    <AppImages.ShareWorld width={200} height="auto" className="w-40 h-auto max-sm:w-30 max-sm:h-12" />
+                    <AppImages.ShareWorldFade width={200} height="auto" className="w-40 h-auto max-sm:w-30 max-sm:h-12" />
                 </Link>
             </header>
             <main

@@ -35,7 +35,7 @@ export const NavBar = () => {
     return (
         <header className="h-15 flex justify-between items-center p-2 bg-primary">
             <Link to={appRoutes.home.absolute} title="Share World">
-                <AppImages.ShareWorld width={50} height={10} className="w-10 h-10 aspect-square object-center object-contain p-1 bg-white rounded-full"
+                <AppImages.ShareWorldFade width={50} height={10} className="w-10 h-10 aspect-square object-center object-contain p-1 bg-white rounded-full"
                 />
             </Link>
             <nav className="relative flex items-center font-semibold text-white">
