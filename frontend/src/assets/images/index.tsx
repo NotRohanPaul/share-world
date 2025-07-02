@@ -1,7 +1,7 @@
 import {
     type ImgHTMLAttributes
 } from "react";
-import ShareWorldImageSrc from "./images/share-world.png";
+import ShareWorldImageSrc from "./share-world.png";
 
 type ImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt'>;
 
