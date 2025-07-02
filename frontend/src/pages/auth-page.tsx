@@ -1,4 +1,4 @@
-import { AppImages } from "@src/assets";
+import { AppImages } from "@src/assets/images";
 import { AuthForm } from "@src/components/auth/layout/auth-form";
 import type { AuthVariantType } from "@src/components/auth/types";
 import { appRoutes } from "@src/routes/app-routes";

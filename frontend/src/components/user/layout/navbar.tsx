@@ -1,4 +1,5 @@
-import { AppIcons, AppImages } from "@src/assets";
+import { AppIcons } from "@src/assets/icons";
+import { AppImages } from "@src/assets/images";
 import { appRoutes } from "@src/routes/app-routes";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";

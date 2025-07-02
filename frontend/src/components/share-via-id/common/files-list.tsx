@@ -1,4 +1,4 @@
-import { AppIcons } from "@src/assets";
+import { AppIcons } from "@src/assets/icons";
 import { convertBytesToUnits } from "@src/utils/math";
 import type { FileListType } from "../types";
 import { motion } from "motion/react";

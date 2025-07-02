@@ -1,4 +1,4 @@
-import { AppIcons } from "@src/assets";
+import { AppIcons } from "@src/assets/icons";
 import { appRoutes } from "@src/routes/app-routes";
 import { useNavigate } from "react-router";
 

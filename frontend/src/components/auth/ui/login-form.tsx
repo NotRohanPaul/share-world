@@ -1,4 +1,4 @@
-import { AppIcons } from "@src/assets";
+import { AppIcons } from "@src/assets/icons";
 import { useLogin } from "../hooks/useLogin";
 
 

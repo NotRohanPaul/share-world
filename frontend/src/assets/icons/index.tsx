@@ -1,18 +1,4 @@
 import {
-    forwardRef,
-    type ImgHTMLAttributes
-} from "react";
-import ShareWorldImageSrc from "./images/share-world.png";
-
-type ImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt'>;
-
-export const AppImages = {
-    ShareWorld: (props: ImageProps) => (
-        <img {...props} src={ShareWorldImageSrc} alt="Share World" />
-    ),
-};
-
-import {
     Check,
     CircleUser,
     ClipboardCopy,
@@ -27,6 +13,7 @@ import {
     Send,
     type LucideProps,
 } from "lucide-react";
+import { forwardRef } from "react";
 
 
 export const AppIcons = {

@@ -1,4 +1,4 @@
-import { AppIcons } from "@src/assets";
+import { AppIcons } from "@src/assets/icons";
 import { useState, type MouseEvent } from "react";
 
 const menuButtons = ["friends", "requests", "blocks"] as const;
@@ -40,15 +40,15 @@ export const FriendsMain = () => {
                         })
                     }
                 </header>
-                <main className="w-[50%] bg-primary/50">
-                    <div className="flex gap-2 p-2">
+                <main className="w-[50%] flex flex-col gap-2 outline-2 outline-primary shadow-2xl p-2">
+                    <div className="flex gap-2 p-2 bg-primary/50">
                         <AppIcons.Avatar className="text-white" />
                         <p className="w-full">
                             Name
                         </p>
                         ...
                     </div>
-                    <div className="flex gap-2 p-2">
+                    <div className="flex gap-2 p-2 bg-primary/50">
                         <AppIcons.Avatar className="text-white" />
                         <p className="w-full">
                             Name

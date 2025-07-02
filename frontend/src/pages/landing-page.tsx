@@ -1,4 +1,4 @@
-import { AppImages } from "@src/assets";
+import { AppImages } from "@src/assets/images";
 import { appRoutes } from "@src/routes/app-routes";
 import { motion } from "motion/react";
 import { Link } from "react-router";

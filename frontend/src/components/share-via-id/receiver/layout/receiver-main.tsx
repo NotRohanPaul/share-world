@@ -1,4 +1,4 @@
-import { AppIcons } from "@src/assets";
+import { AppIcons } from "@src/assets/icons";
 import { useReceiver } from "../hooks/useReceiver";
 import { UserId } from "../../common/user-id";
 import { SenderId } from "../ui/sender-id";

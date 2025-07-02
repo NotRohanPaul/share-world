@@ -1,4 +1,4 @@
-import { AppIcons } from "@src/assets";
+import { AppIcons } from "@src/assets/icons";
 import { UserId } from "../../common/user-id";
 import { useSender } from "../hooks/useSender";
 import { FilesInput } from "../ui/files-input";
