@@ -50,13 +50,17 @@ export const NavBar = () => {
                     />
                 </button>
                 {isAccountMenuVisible === false ? null :
-                    <div className="absolute -right-1 top-13 z-10 min-w-[7rem] flex flex-col text-center p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
+                    <div className="absolute -right-1 top-13 z-10 min-w-[10rem] flex flex-col text-center p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
                         onClick={() => setIsAccountMenuVisible(false)}
                         ref={menuRef}
                     >
                         <Link
                             to={appRoutes.user.absolute}
                             children={"Home"}
+                        />
+                        <Link
+                            to={appRoutes.setting.absolute}
+                            children={"Setting"}
                         />
                         <Link
                             to={appRoutes.logout.absolute}
