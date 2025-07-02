@@ -35,19 +35,19 @@ export const NavBar = () => {
     return (
         <header className="h-15 flex justify-between items-center p-2 bg-primary">
             <Link to={appRoutes.home.absolute} title="Share World">
-                <AppImages.ShareWorld width={50} height="auto" className="w-10 h-auto aspect-square object-center object-contain p-1 bg-white rounded-full"
+                <AppImages.ShareWorld width={50} height={10} className="w-10 h-10 aspect-square object-center object-contain p-1 bg-white rounded-full"
                 />
             </Link>
-            <nav className="relative font-semibold text-white">
+            <nav className="relative flex items-center font-semibold text-white">
                 <button
                     onClick={() => setIsAccountMenuVisible(prev => !prev)}
                     aria-label="account avatar"
-                    className="overflow-hidden"
+                    className="w-[2.5rem] overflow-hidden"
                     title="User"
                     ref={buttonRef}
                 >
                     <AppIcons.Avatar
-                        className="w-[2rem] h-[2rem]"
+                        className="w-full h-full"
                     />
                 </button>
                 {isAccountMenuVisible === false ? null :
