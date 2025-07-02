@@ -5,7 +5,7 @@ import { SenderId } from "../ui/sender-id";
 import { FileList } from "../../common/files-list";
 import { UserHeader, UserMain, UserSection } from "../../common/layout/user-layouts";
 
-export const ReceiverMain = () => {
+export const ReceiverViaIdMain = () => {
     const {
         userId,
         senderId,
