@@ -1,7 +1,7 @@
 import { loginHandler } from "@src/axios/handlers/auth-handler";
 import { appRoutes } from "@src/routes/app-routes";
-import { loginSchema } from "@src/schemas/authSchemas";
-import {  isTrusted } from "@src/utils/common";
+import { loginSchema } from "@src/schemas/auth-schemas";
+import { isTrusted } from "@src/utils/common";
 import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler, type PointerEventHandler } from "react";
 import { useNavigate } from "react-router";
 
