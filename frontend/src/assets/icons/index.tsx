@@ -8,9 +8,12 @@ import {
     File,
     FileImage,
     FileText,
+    GitCompareArrows,
     HardDriveDownload,
     LoaderCircle,
     Send,
+    UserPlus,
+    Users,
     type LucideProps,
 } from "lucide-react";
 import { forwardRef } from "react";
@@ -38,4 +41,7 @@ export const AppIcons = {
     },
     SaveToDisk: HardDriveDownload,
     Pending: ClockFading,
+    ShareId: GitCompareArrows,
+    Users,
+    AddUsers: UserPlus,
 };
