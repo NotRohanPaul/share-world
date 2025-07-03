@@ -1,13 +1,14 @@
 import { AppImages } from "@src/assets/images";
+import { Navbar } from "@src/components/common/layout/navbar";
+import { Footer } from "@src/components/common/layout/footer";
 import { appRoutes } from "@src/routes/app-routes";
 import { motion } from "motion/react";
 import { Link } from "react-router";
 
 export const LandingPage = () => {
-
     return (
         <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
-            <header className="h-15 flex justify-between items-center p-2 bg-primary">
+            <Navbar>
                 <Link to={appRoutes.home.absolute}>
                     <AppImages.ShareWorldFade className="w-10 h-10 aspect-square object-center object-contain p-1 bg-white rounded-full"
                     />
@@ -18,13 +19,9 @@ export const LandingPage = () => {
                             to={appRoutes.login.absolute}
                             children={"Login/Signup"}
                         />
-                        <Link
-                            to={appRoutes.contact.absolute}
-                            children={"Contact"}
-                        />
                     </div>
                 </nav>
-            </header>
+            </Navbar>
             <main className="h-full grid justify-items-center content-center gap-5">
                 <Link to={appRoutes.home.absolute}>
                     <AppImages.ShareWorldFade className="w-60 h-auto max-sm:w-40 max-sm:h-auto" />
@@ -55,9 +52,7 @@ export const LandingPage = () => {
                     >Resume support</motion.div>
                 </div>
             </main>
-            <footer className="h-10 grid place-content-center text-center bg-primary text-white">
-                @Copyright Share World
-            </footer>
+            <Footer />
         </article>
     );
 };

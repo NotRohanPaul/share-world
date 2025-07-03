@@ -2,6 +2,7 @@ import { AuthPage } from "@src/pages/auth-page";
 import { ErrorPage } from "@src/pages/error-page";
 import { LandingPage } from "@src/pages/landing-page";
 import { NotFoundPage } from "@src/pages/not-found";
+import { SettingsPage } from "@src/pages/settings-page";
 import { UserPage } from "@src/pages/user-page";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { appRoutes } from "./app-routes";
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
             {
                 path: appRoutes.home.absolute,
                 element: <LandingPage />,
+            },
+            {
+                path: appRoutes.settings.absolute,
+                element: <SettingsPage />,
             },
             {
                 path: appRoutes.login.absolute,

@@ -1,5 +1,6 @@
 import { AppIcons } from "@src/assets/icons";
 import { AppImages } from "@src/assets/images";
+import { Navbar } from "@src/components/common/layout/navbar";
 import { appRoutes } from "@src/routes/app-routes";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
@@ -33,7 +34,7 @@ export const NavBar = () => {
     }, [isAccountMenuVisible]);
 
     return (
-        <header className="h-15 flex justify-between items-center p-2 bg-primary">
+        <Navbar>
             <Link to={appRoutes.home.absolute} title="Share World">
                 <AppImages.ShareWorldFade width={50} height={10} className="w-10 h-10 aspect-square object-center object-contain p-1 bg-white rounded-full"
                 />
@@ -60,8 +61,8 @@ export const NavBar = () => {
                             children={"Home"}
                         />
                         <Link
-                            to={appRoutes.setting.absolute}
-                            children={"Setting"}
+                            to={appRoutes.settings.absolute}
+                            children={"Settings"}
                         />
                         <Link
                             to={appRoutes.logout.absolute}
@@ -70,6 +71,6 @@ export const NavBar = () => {
                     </div>
                 }
             </nav>
-        </header>
+        </Navbar>
     );
 };

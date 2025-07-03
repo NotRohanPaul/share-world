@@ -3,13 +3,9 @@ export const appRoutes = {
         relative: "",
         absolute: "/"
     },
-    setting: {
-        relative: "setting",
-        absolute: "/setting"
-    },
-    contact: {
-        relative: "contact",
-        absolute: "/contact"
+    settings: {
+        relative: "settings",
+        absolute: "/settings"
     },
     login: {
         relative: "login",
