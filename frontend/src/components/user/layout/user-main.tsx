@@ -11,18 +11,18 @@ export const UserMain = () => {
             {location.pathname !== "/user" ?
                 <Outlet /> :
                 <section className="flex flex-col gap-2 text-2xl max-xs:text-base">
-                    <div className="flex gap-2">
+                    <div className="w-[20rem] h-[10rem] max-xs:w-[15rem] max-xs:h-[7rem] flex gap-2">
                         <button
-                            className="w-[10rem] h-[10rem] max-xs:w-[7rem] max-xs:h-[7rem] flex flex-col items-center justify-center font-bold border-5 border-primary p-2 rounded-md bg-white text-primary transition-colors hover:bg-primary hover:text-white overflow-hidden"
+                            className="w-full flex flex-col items-center justify-center font-bold border-5 border-primary p-2 rounded-md bg-white text-primary transition-colors hover:bg-primary hover:text-white overflow-hidden"
                             onClick={() => void navigate(appRoutes["via-id"].absolute)}
                         >
                             <AppIcons.ShareId className="w-full h-full" />
-                            <p>
+                            <p className="p-[0.1rem]">
                                 Share via ID
                             </p>
                         </button>
                         <button
-                            className="w-[10rem] h-[10rem]  max-xs:w-[7rem] max-xs:h-[7rem] flex flex-col items-center justify-center font-bold border-5 border-primary p-2 rounded-md bg-white text-primary transition-colors hover:bg-primary hover:text-white overflow-hidden"
+                            className="w-full flex flex-col items-center justify-center font-bold border-5 border-primary p-2 rounded-md bg-white text-primary transition-colors hover:bg-primary hover:text-white overflow-hidden"
                             onClick={() => void navigate(appRoutes["via-friends"].absolute)}
 
                         >
