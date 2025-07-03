@@ -1,7 +1,7 @@
-import type { LoginSchemaType } from "@src/types";
+import type { LoginSchemaType } from "@src/schemas/auth-schemas";
+import type { AxiosResponse } from "axios";
 import { axiosInstance } from "../axios-instance";
 import { authEndpoints } from "../endpoints/api-endpoints";
-import type { AxiosResponse } from "axios";
 
 
 export const loginHandler = async (data: LoginSchemaType): Promise<AxiosResponse> => {

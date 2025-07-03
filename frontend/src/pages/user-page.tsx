@@ -1,4 +1,4 @@
-import { Footer } from "@src/components/user/layout/footer";
+import { Footer } from "@src/components/common/layout/footer";
 import { Main } from "@src/components/user/layout/main";
 import { NavBar } from "@src/components/user/layout/navbar";
 

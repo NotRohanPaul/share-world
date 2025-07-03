@@ -3,11 +3,27 @@ import { AppImages } from "@src/assets/images";
 import { Navbar } from "@src/components/common/layout/navbar";
 import { appRoutes } from "@src/routes/app-routes";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
+
+
+const menuOptions = [{
+    name: "Home",
+    to: appRoutes.user.absolute,
+    Icon: AppIcons.Home
+}, {
+    name: "Settings",
+    to: appRoutes.settings.absolute,
+    Icon: AppIcons.Settings
+}, {
+    name: "Logout",
+    to: appRoutes.logout.absolute,
+    Icon: AppIcons.Logout
+}];
+
 
 export const NavBar = () => {
+    const location = useLocation();
     const [isAccountMenuVisible, setIsAccountMenuVisible] = useState<boolean>(false);
-
     const buttonRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -52,22 +68,21 @@ export const NavBar = () => {
                     />
                 </button>
                 {isAccountMenuVisible === false ? null :
-                    <div className="absolute -right-1 top-13 z-10 min-w-[10rem] flex flex-col text-center p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
+                    <div className="absolute -right-1 top-13 z-10 min-w-[8rem] flex flex-col text-center p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
                         onClick={() => setIsAccountMenuVisible(false)}
                         ref={menuRef}
                     >
-                        <Link
-                            to={appRoutes.user.absolute}
-                            children={"Home"}
-                        />
-                        <Link
-                            to={appRoutes.settings.absolute}
-                            children={"Settings"}
-                        />
-                        <Link
-                            to={appRoutes.logout.absolute}
-                            children={"Logout"}
-                        />
+                        {menuOptions.map(({ name, to, Icon }) => {
+                            if (location.pathname === to)
+                                return null;
+
+                            return (
+                                <Link key={name} to={to} className="flex items-center gap-1">
+                                    <Icon />
+                                    {name}
+                                </Link>
+                            );
+                        })}
                     </div>
                 }
             </nav>

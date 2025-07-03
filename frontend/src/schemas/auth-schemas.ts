@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-
 const nameSchema = z
     .string()
     .min(3, "Name must be at least 3 characters long.")
@@ -38,6 +37,7 @@ export const loginSchema = z
         password: z.string()
     })
     .strict();
+export type LoginSchemaType = z.infer<typeof loginSchema>;
 
 export const signupInputSchema = z
     .object({
