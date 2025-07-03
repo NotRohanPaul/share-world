@@ -1,6 +1,6 @@
 import { AppIcons } from "@src/assets/icons";
-import { AppImages } from "@src/assets/images";
 import { Navbar } from "@src/components/common/layout/navbar";
+import { ShareWorldImgLink } from "@src/components/common/ui/share-world-img-link";
 import { appRoutes } from "@src/routes/app-routes";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
@@ -21,7 +21,7 @@ const menuOptions = [{
 }];
 
 
-export const NavBar = () => {
+export const UserNavBar = () => {
     const location = useLocation();
     const [isAccountMenuVisible, setIsAccountMenuVisible] = useState<boolean>(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -51,15 +51,12 @@ export const NavBar = () => {
 
     return (
         <Navbar>
-            <Link to={appRoutes.home.absolute} title="Share World">
-                <AppImages.ShareWorldFade width={50} height={10} className="w-10 h-10 aspect-square object-center object-contain p-1 bg-white rounded-full"
-                />
-            </Link>
+            <ShareWorldImgLink />
             <nav className="relative flex items-center font-semibold text-white">
                 <button
                     onClick={() => setIsAccountMenuVisible(prev => !prev)}
                     aria-label="account avatar"
-                    className="w-[2.5rem] overflow-hidden"
+                    className="w-[2.5rem] max-xs:w-7 overflow-hidden"
                     title="User"
                     ref={buttonRef}
                 >
@@ -68,7 +65,7 @@ export const NavBar = () => {
                     />
                 </button>
                 {isAccountMenuVisible === false ? null :
-                    <div className="absolute -right-1 top-13 z-10 min-w-[8rem] flex flex-col text-center p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
+                    <div className="absolute -right-1 max-xs:-right-[1px] top-13 max-xs:top-9 z-10 min-w-[8rem] max-xs:min-w-[6rem] flex flex-col text-center p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
                         onClick={() => setIsAccountMenuVisible(false)}
                         ref={menuRef}
                     >
@@ -77,8 +74,8 @@ export const NavBar = () => {
                                 return null;
 
                             return (
-                                <Link key={name} to={to} className="flex items-center gap-1">
-                                    <Icon />
+                                <Link key={name} to={to} className="flex items-center gap-1 max-xs:text-sm">
+                                    <Icon className="w-[1.5rem] h-[1.5rem] max-xs:w-[1rem] max-xs:h-[1rem]" />
                                     {name}
                                 </Link>
                             );

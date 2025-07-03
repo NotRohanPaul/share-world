@@ -21,7 +21,7 @@ export const UserId = ({
     };
 
     return (
-        <p className="flex gap-2 font-bold">
+        <p className="flex gap-2 font-bold max-xs:text-base">
             <span>Your User ID:</span>
             <span className="text-primary">{userId}</span>
             {
@@ -34,8 +34,8 @@ export const UserId = ({
                     onClick={() => void handleCopy()}
                 >
                     {isCopyClicked === false ?
-                        <AppIcons.Copy className="w-[2rem] h-[2rem]" /> :
-                        <AppIcons.CopyCheck className="w-[2rem] h-[2rem]" />
+                        <AppIcons.Copy className="w-[2rem] h-[2rem] max-xs:w-[1rem] max-xs:h-[1rem]" /> :
+                        <AppIcons.CopyCheck className="w-[2rem] h-[2rem] max-xs:w-[1rem] max-xs:h-[1rem]" />
                     }
                 </button>
             }

@@ -1,13 +1,11 @@
 import { Footer } from "@src/components/common/layout/footer";
 import { SettingsMain } from "@src/components/settings";
-import { NavBar } from "@src/components/user/layout/navbar";
+import { UserNavBar } from "@src/components/user/layout/user-navbar";
 
 export const SettingsPage = () => {
     return (
         <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
-            <NavBar>
-
-            </NavBar>
+            <UserNavBar />
             <SettingsMain />
             <Footer />
         </article>

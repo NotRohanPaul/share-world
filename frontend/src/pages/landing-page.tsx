@@ -1,6 +1,6 @@
-import { AppImages } from "@src/assets/images";
-import { Navbar } from "@src/components/common/layout/navbar";
 import { Footer } from "@src/components/common/layout/footer";
+import { Navbar } from "@src/components/common/layout/navbar";
+import { ShareWorldImgLink } from "@src/components/common/ui/share-world-img-link";
 import { appRoutes } from "@src/routes/app-routes";
 import { motion } from "motion/react";
 import { Link } from "react-router";
@@ -9,12 +9,9 @@ export const LandingPage = () => {
     return (
         <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
             <Navbar>
-                <Link to={appRoutes.home.absolute}>
-                    <AppImages.ShareWorldFade className="w-10 h-10 aspect-square object-center object-contain p-1 bg-white rounded-full"
-                    />
-                </Link>
+                <ShareWorldImgLink />
                 <nav className="font-semibold text-white">
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 max-xs:text-sm">
                         <Link
                             to={appRoutes.login.absolute}
                             children={"Login/Signup"}
@@ -23,14 +20,12 @@ export const LandingPage = () => {
                 </nav>
             </Navbar>
             <main className="h-full grid justify-items-center content-center gap-5">
-                <Link to={appRoutes.home.absolute}>
-                    <AppImages.ShareWorldFade className="w-60 h-auto max-sm:w-40 max-sm:h-auto" />
-                </Link>
+                <ShareWorldImgLink className="w-60 max-xs:w-[7rem] h-auto max-sm:w-40 max-sm:h-auto" />
                 <motion.h1
                     initial={{ y: -500, opacity: 0 }}
                     animate={{ y: 0, opacity: 100 }}
                     transition={{ type: "spring", stiffness: 80 }}
-                    className="w-[80%] max-md:w-full text-4xl text-center font-bold max-sm:text-2xl">
+                    className="w-[80%] max-md:w-full text-4xl text-center font-bold max-sm:text-2xl max-xs:text-pretty max-xs:text-xl p-2">
                     Share Files directly using Peer to Peer tech without sending it to the sever.
                 </motion.h1>
                 <div className="features-container">

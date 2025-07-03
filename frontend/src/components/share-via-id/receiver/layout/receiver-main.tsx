@@ -16,8 +16,8 @@ export const ReceiverViaIdMain = () => {
     return (
         <UserSection>
             <UserHeader>
-                <AppIcons.Receive className="w-[3rem] h-[3rem] relative -bottom-1" />
-                <h1 className="text-5xl font-semibold">Receiver</h1>
+                <AppIcons.Receive className="w-[3rem] h-[3rem] max-xs:w-[2rem] max-xs:h-[2rem] flex items-center relative -bottom-1 max-xs:-bottom-2" />
+                <h1 className="text-5xl max-xs:text-4xl font-semibold">Receiver</h1>
                 {error && <p className="text-orange-500">Error: {error}</p>}
             </UserHeader>
             <UserMain>

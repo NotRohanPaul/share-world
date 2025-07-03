@@ -1,12 +1,12 @@
 import { Footer } from "@src/components/common/layout/footer";
-import { Main } from "@src/components/user/layout/main";
-import { NavBar } from "@src/components/user/layout/navbar";
+import { UserMain } from "@src/components/user/layout/user-main";
+import { UserNavBar } from "@src/components/user/layout/user-navbar";
 
 export const UserPage = () => {
     return (
         <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
-            <NavBar />
-            <Main />
+            <UserNavBar />
+            <UserMain />
             <Footer />
         </article>
     );

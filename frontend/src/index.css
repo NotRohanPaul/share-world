@@ -62,10 +62,10 @@
     }
 
     .features-container {
-        @apply flex gap-5 text-primary font-bold max-sm:flex-col;
+        @apply flex gap-5 text-primary font-bold;
 
         div {
-            @apply w-[250px] h-[150px] grid place-items-center text-center text-xl outline-3 outline-primary outline-dashed p-2 max-md:w-[120px] max-md:h-[100px] max-md:text-base;
+            @apply w-[20vw] min-h-[15vw] grid place-items-center text-center text-2xl max-md:text-base max-xs:text-sm outline-3 outline-primary outline-dashed p-2;
         }
     }
 

@@ -10,7 +10,7 @@ export const FilesInput = ({
     return (
         <>
             <label
-                className={`w-[15rem] h-auto flex flex-col gap-2 font-bold text-center p-5 outline-dashed outline-4 outline-primary cursor-pointer transition-colors duration-300 hover:bg-primary hover:text-white group/label ${isDragOver === true ? "shadow-[inset_0_0_50px_0_var(--app-color-primary)] opacity-90" : ""}`}
+                className={`w-[15rem] h-auto max-xs:w-[10rem] flex flex-col gap-2 font-bold text-center  max-xs:text-base p-5 outline-dashed outline-4 outline-primary cursor-pointer transition-colors duration-300 hover:bg-primary hover:text-white group/label ${isDragOver === true ? "shadow-[inset_0_0_50px_0_var(--app-color-primary)] opacity-90" : ""}`}
                 htmlFor={"input-file"}
                 onDragOver={(e) => {
                     e.preventDefault();
