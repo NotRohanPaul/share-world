@@ -19,7 +19,8 @@
     "start:dev-host": "vite --mode development --host",
     "start:vite": "vite preview --mode production",
     "build:vite": "vite build --mode production",
-    "build:prod": "npm run lint && npm run tsc && npm run test &&  vite build --mode production"
+    "build:prod": "npm run lint && npm run tsc && npm run test &&  vite build --mode production",
+    "render:build": "npm ci --include=dev && npm run build:prod"
   },
   "dependencies": {
     "@reduxjs/toolkit": "2.8.2",
