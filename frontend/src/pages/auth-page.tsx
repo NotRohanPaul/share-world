@@ -17,16 +17,15 @@ export const AuthPage = () => {
             <title>Login/Signup</title>
         </Helmet>
         <article
-            className="h-[100dvh] grid place-content-center gap-4 max-xs:justify-normal max-xs:p-3">
+            className="w-full h-[100dvh] flex flex-col  justify-center items-center [@media(max-height:20rem)]:justify-start gap-4 max-xs:p-3 overflow-auto">
             <header
                 className="justify-self-center">
                 <Link to={appRoutes.home.absolute}>
-                    <AppImages.ShareWorldFade width={200} height="auto" className="w-40 h-auto max-sm:w-30 max-sm:h-12" />
+                    <AppImages.ShareWorldFade className="w-40 h-auto max-sm:w-30" />
                 </Link>
             </header>
-            <main
-                className="w-[450px] flex flex-col gap-4 p-1  max-sm:w-[350px] max-xs:w-full">
-                <header className="self-center text-xl p-0.5 rounded-full border-2 border-gray-500 overflow-hidden max-sm:text-xl  [&>button]:w-[100px] [&>button]:p-2 max-sm:[&>button]:p-1 max-sm:[&>button]:w-[80px] max-sm:[&>button]:text-base">
+            <main className="w-[450px] max-sm:w-[350px] max-xs:w-full flex flex-col gap-4 p-1">
+                <header className="self-center text-xl p-0.5 rounded-full border-2 border-gray-500 overflow-hidden max-sm:text-xl [&>button]:w-[100px] [&>button]:p-2 max-sm:[&>button]:p-1 max-sm:[&>button]:w-[80px] max-sm:[&>button]:text-base">
                     <button
                         className={`rounded-l-full ${authType === "login" ? "bg-primary text-white" : "hover:bg-blue-200"}`}
                         onClick={() => setAuthType("login")}

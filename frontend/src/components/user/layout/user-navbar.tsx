@@ -2,6 +2,7 @@ import { AppIcons } from "@src/assets/icons";
 import { Navbar } from "@src/components/common/layout/navbar";
 import { ShareWorldImgLink } from "@src/components/common/ui/share-world-img-link";
 import { appRoutes } from "@src/routes/app-routes";
+import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 
@@ -56,16 +57,20 @@ export const UserNavBar = () => {
                 <button
                     onClick={() => setIsAccountMenuVisible(prev => !prev)}
                     aria-label="account avatar"
-                    className="w-[2.5rem] max-xs:w-7 overflow-hidden"
+                    className="w-[2.5rem] max-xs:w-9 overflow-hidden"
                     title="User"
                     ref={buttonRef}
                 >
                     <AppIcons.Avatar
-                        className="w-full h-full"
+                        className="w-full h-full text-primary"
                     />
                 </button>
                 {isAccountMenuVisible === false ? null :
-                    <div className="absolute -right-1 max-xs:-right-[1px] top-13 max-xs:top-9 z-10 min-w-[8rem] max-xs:min-w-[6rem] flex flex-col text-center p-1 bg-primary [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
+                    <motion.div
+                        layout
+                        initial={{ x: 100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        className="absolute -right-1 max-xs:-right-[1px] top-13 max-xs:top-9 z-10 min-w-[8rem] max-xs:min-w-[6rem] flex flex-col text-center p-1 bg-primary/80 [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
                         onClick={() => setIsAccountMenuVisible(false)}
                         ref={menuRef}
                     >
@@ -75,12 +80,12 @@ export const UserNavBar = () => {
 
                             return (
                                 <Link key={name} to={to} className="flex items-center gap-1 max-xs:text-sm">
-                                    <Icon className="w-[1.5rem] h-[1.5rem] max-xs:w-[1rem] max-xs:h-[1rem]" />
+                                    <Icon className="w-[1.5rem] h-[1.5rem] max-xs:w-[1.25rem] max-xs:h-[1.25rem]" />
                                     {name}
                                 </Link>
                             );
                         })}
-                    </div>
+                    </motion.div>
                 }
             </nav>
         </Navbar>

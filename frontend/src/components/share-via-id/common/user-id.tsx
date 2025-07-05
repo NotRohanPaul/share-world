@@ -13,6 +13,7 @@ export const UserId = ({
 
     const handleCopy = async () => {
         if (peerType !== "receiver" || isCopyClicked === true || userId === null) return;
+        if (navigator.clipboard === undefined) return;
         await navigator.clipboard.writeText(userId);
         setIsCopyClicked(true);
         setTimeout(() => {
@@ -21,10 +22,12 @@ export const UserId = ({
     };
 
     return (
-        <p className="flex gap-2 font-bold max-xs:text-base">
-            <span>Your User ID:</span>
-            <span className="text-primary">{userId}</span>
+        <p className="flex gap-2 font-bold max-xs:text-xl">
+            <span>Your ID:</span>
+            <span className="text-primary tracking-widest">{userId}</span>
             {
+                navigator.clipboard !== undefined
+                &&
                 peerType === "receiver"
                 &&
                 userId !== null
@@ -34,8 +37,8 @@ export const UserId = ({
                     onClick={() => void handleCopy()}
                 >
                     {isCopyClicked === false ?
-                        <AppIcons.Copy className="w-[2rem] h-[2rem] max-xs:w-[1rem] max-xs:h-[1rem]" /> :
-                        <AppIcons.CopyCheck className="w-[2rem] h-[2rem] max-xs:w-[1rem] max-xs:h-[1rem]" />
+                        <AppIcons.Copy className="w-[2rem] h-[2rem] max-xs:w-[1.5rem] max-xs:h-[1.5rem]" /> :
+                        <AppIcons.CopyCheck className="w-[2rem] h-[2rem] max-xs:w-[1.5rem] max-xs:h-[1.5rem]" />
                     }
                 </button>
             }

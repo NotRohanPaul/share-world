@@ -7,10 +7,10 @@ import { Link } from "react-router";
 
 export const LandingPage = () => {
     return (
-        <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto]">
+        <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto] overflow-auto">
             <Navbar>
                 <ShareWorldImgLink />
-                <nav className="font-semibold text-white">
+                <nav className="font-semibold">
                     <div className="flex gap-2 max-xs:text-sm">
                         <Link
                             to={appRoutes.login.absolute}
@@ -19,32 +19,63 @@ export const LandingPage = () => {
                     </div>
                 </nav>
             </Navbar>
-            <main className="h-full grid justify-items-center content-center gap-5">
-                <ShareWorldImgLink className="w-60 max-xs:w-[7rem] h-auto max-sm:w-40 max-sm:h-auto" />
-                <motion.h1
-                    initial={{ y: -500, opacity: 0 }}
-                    animate={{ y: 0, opacity: 100 }}
-                    transition={{ type: "spring", stiffness: 80 }}
-                    className="w-[80%] max-md:w-full text-4xl text-center font-bold max-sm:text-2xl max-xs:text-pretty max-xs:text-xl p-2">
-                    Share Files directly using Peer to Peer tech without sending it to the sever.
-                </motion.h1>
+            <main className="h-full grid grid-rows-[30%_auto_1fr] gap-5 p-2 overflow-auto [@media(max-height:20rem)]:grid-rows-none ">
+                <div className="flex flex-col items-center justify-center p-2">
+                    <ShareWorldImgLink className="w-60 max-xs:w-[7rem] h-auto max-sm:w-40 max-sm:h-auto" />
+                    <h1 className="text-5xl max-sm:text-2xl font-semibold text-black">Share World</h1>
+                </div>
+                <div className="flex flex-col items-center">
+                    <motion.h1
+                        initial={{ y: -500, opacity: 0 }}
+                        animate={{ y: 0, opacity: 100 }}
+                        transition={{ type: "spring", stiffness: 80 }}
+                        className="w-[80%] max-md:w-full text-4xl text-center font-bold max-sm:text-2xl text-pretty max-xs:text-xl p-2">
+                        Share Files directly using Peer to Peer tech without sending it to the sever.
+                    </motion.h1>
+                </div>
                 <div className="features-container">
-                    <motion.div
-                        initial={{ x: -100, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.8 }}
-                    >No file size limit
-                    </motion.div>
-                    <motion.div
-                        initial={{ y: 100, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.8 }}
-                    >No ram limit</motion.div>
-                    <motion.div
-                        initial={{ x: 100, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.8 }}
-                    >Resume support</motion.div>
+                    <h2>Features</h2>
+                    <div>
+                        <motion.p
+                            initial={{ x: -100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            No file size limit
+                        </motion.p>
+
+                        <motion.p
+                            initial={{ x: 100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            No ram limit
+                        </motion.p>
+
+                        <motion.p
+                            initial={{ x: -100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            Resume support
+                        </motion.p>
+
+                        <motion.p
+                            initial={{ x: 100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            Share via ID
+                        </motion.p>
+
+                        <motion.p
+                            initial={{ x: -100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            Share via Friends
+                        </motion.p>
+                    </div>
                 </div>
             </main>
             <Footer />

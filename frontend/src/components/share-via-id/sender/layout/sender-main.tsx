@@ -24,7 +24,7 @@ export const SenderViaIdMain = () => {
     return (
         <UserSection>
             <UserHeader>
-                <AppIcons.Send className="w-[3rem] h-[3rem] max-xs:w-[2rem] max-xs:h-[2rem] relative -bottom-2" />
+                <AppIcons.Send className="w-[3rem] h-[3rem] max-xs:w-[2rem] max-xs:h-[2rem] relative -bottom-1" />
                 <h1 className="text-5xl max-xs:text-4xl font-semibold">Sender</h1>
                 {error && <p className="text-orange-500">Error: {error}</p>}
             </UserHeader>
@@ -39,17 +39,17 @@ export const SenderViaIdMain = () => {
                     />
                 ) : (
                     <>
-                        <p className="flex gap-2 font-bold max-xs:text-base">
+                        <p className="flex gap-2 font-bold max-xs:text-xl">
                             <span>
                                 Receiver's ID:
                             </span>
-                            <span className="text-primary">{receiverId}</span>
+                            <span className="text-primary tracking-widest">{receiverId}</span>
                         </p>
                         <div
                             className="flex flex-col items-center gap-6"
                         >
                             <button
-                                className="self-center text-2xl py-2 px-4 max-sm:px-2 max-sm:py-1 rounded-full text-white max-sm:text-base bg-primary transition-colors duration-300 hover:bg-white hover:text-primary hover:outline-2 hover:outline-primary active:outline-offset-2"
+                                className="self-center text-2xl max-sm:text-xl py-2 px-4 max-sm:px-2 max-sm:py-1 rounded-full text-white  bg-primary transition-colors duration-300 hover:bg-white hover:text-primary hover:outline-2 hover:outline-primary active:outline-offset-2"
                                 onClick={handleSendClick}
                             >
                                 Send
