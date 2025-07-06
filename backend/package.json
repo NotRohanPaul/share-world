@@ -11,8 +11,8 @@
     "npm": ">=11.3.0"
   },
   "scripts": {
-    "clean": "if exist dist rmdir /s /q dist",
-    "cpy-pkg": "if exist dist copy package.json dist",
+    "clean": "[ -d dist ] && rm -rf dist || true",
+    "cpy-pkg": "[ -d dist ] && cp package.json dist/ || true",
     "lint": "eslint .",
     "test": "vitest run",
     "tsc": "tsc -b",
@@ -24,7 +24,7 @@
     "build:prod": "npm run lint && npm run tsc && npm run test && npm run bundle",
     "start:dev": "nodemon --exec tsx --env-file=.env.development ./src/index.ts",
     "start:prod": "node --env-file=.env.production ./dist/index.js",
-    "render:build": "npm ci --include=dev && npx rollup -c",
+    "render:build": "npm ci --include=dev && npm run build:prod",
     "render:start": "node ./dist/index.js"
   },
   "dependencies": {
