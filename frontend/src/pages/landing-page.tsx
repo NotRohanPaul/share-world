@@ -30,7 +30,7 @@ export const LandingPage = () => {
                         animate={{ y: 0, opacity: 100 }}
                         transition={{ type: "spring", stiffness: 80 }}
                         className="w-[80%] max-md:w-full text-4xl text-center font-bold max-sm:text-2xl text-pretty max-xs:text-xl p-2">
-                        Share Files directly using Peer to Peer tech without sending it to the sever.
+                        Share Files directly using Peer to Peer tech without sending it to the server.
                     </motion.h1>
                 </div>
                 <div className="features-container">
