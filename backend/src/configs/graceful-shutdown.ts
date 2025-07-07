@@ -24,7 +24,7 @@ export const gracefulShutdown = (server: Server): void => {
                     process.exit(0);
                 }
                 catch (err) {
-                    appLogger.info('Something went wrong during MongoDB connection closing \n', err);
+                    appLogger.error({ err }, 'Something went wrong during MongoDB connection closing \n');
                     process.exit(1);
                 }
             })();

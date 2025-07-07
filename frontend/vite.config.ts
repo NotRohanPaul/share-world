@@ -30,6 +30,12 @@ const metaGeneratorPlugin: Plugin = {
 export default defineConfig({
   server: {
     open: '/user',
+    https: (process.env.NODE_ENV === 'development')
+      ? {
+        key: fs.readFileSync('../temp/cert/local-network-key.pem'),
+        cert: fs.readFileSync('../temp/cert/local-network.pem')
+      }
+      : undefined,
   },
   define: {
     ...(process.env.NODE_ENV !== 'development'

@@ -8,6 +8,7 @@ node_modules/
 
 # Dev temp files and folder like coverage are inside this cache folder
 .cache/
+temp/
 
 # VS Code
 .vscode/
