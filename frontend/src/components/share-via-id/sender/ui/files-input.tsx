@@ -1,4 +1,4 @@
-import { CURRENT_DEVICE_TYPE } from "@src/constants/common";
+import { IS_TOUCH_DEVICE } from "@src/constants/common";
 import { useState, type ChangeEvent } from "react";
 
 export const FilesInput = ({
@@ -32,7 +32,7 @@ export const FilesInput = ({
                 }}
             >
                 <span>Select Files</span>
-                {CURRENT_DEVICE_TYPE !== "mobile" && (
+                {IS_TOUCH_DEVICE === false && (
                     <>
                         <span className="text-primary group-hover/label:text-white transition-colors duration-300">or</span>
                         <span>Drag files</span>

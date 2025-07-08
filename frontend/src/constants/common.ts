@@ -24,3 +24,4 @@ const currentDeviceType = (): "mobile" | "desktop" | "unknown" => {
 };
 
 export const CURRENT_DEVICE_TYPE = currentDeviceType();
+export const IS_TOUCH_DEVICE = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
