@@ -1,46 +1,60 @@
-import strip from '@rollup/plugin-strip';
-import tailwindcss from '@tailwindcss/vite';
-import react from '@vitejs/plugin-react';
+import strip from "@rollup/plugin-strip";
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
 import fs from "node:fs";
-import path from 'node:path';
-import { loadEnv, Plugin } from 'vite';
-import viteCompression from 'vite-plugin-compression';
-import htmlMinifier from 'vite-plugin-html-minifier';
+import path from "node:path";
+import { loadEnv, Plugin } from "vite";
+import viteCompression from "vite-plugin-compression";
+import htmlMinifier from "vite-plugin-html-minifier";
 import svgr from "vite-plugin-svgr";
-import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig } from 'vitest/config';
-import { version } from './package.json';
+import tsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig } from "vitest/config";
+import { version } from "./package.json";
 
+const hasHostFlag = process.argv.includes("--host");
 const outDirName = "dist";
 const metaGeneratorPlugin: Plugin = {
-  name: 'meta-generator',
-  apply: 'build',
+  name: "meta-generator",
+  apply: "build",
   closeBundle() {
     const buildNumber = Date.now();
     const outputDir = path.join(import.meta.dirname, outDirName);
 
     fs.writeFileSync(
-      path.resolve(outputDir, 'meta-frontend.json'),
+      path.resolve(outputDir, "meta-frontend.json"),
       JSON.stringify({ version, buildNumber, timestamp: new Date().toISOString() }, null, 2)
     );
-    console.log('meta-frontend.json created:', version);
+    console.log("meta-frontend.json created:", version);
   }
 };
+
 // https://vite.dev/config/
 export default defineConfig({
   server: {
-    open: '/user',
-    https: (process.env.NODE_ENV === 'development')
+    open: "/user",
+    https: hasHostFlag === true
       ? {
-        key: fs.readFileSync('../temp/cert/local-network-key.pem'),
-        cert: fs.readFileSync('../temp/cert/local-network.pem')
+        key: fs.readFileSync("../temp/cert/local-network-key.pem"),
+        cert: fs.readFileSync("../temp/cert/local-network.pem")
       }
       : undefined,
+    hmr: {
+      protocol: hasHostFlag === true
+        ? "wss" : "ws",
+    },
+    proxy: {
+      "/api": "http://localhost:5000",
+      "/socket": {
+        target: "http://localhost:5000",
+        ws: true,
+        changeOrigin: true
+      }
+    }
   },
   define: {
-    ...(process.env.NODE_ENV !== 'development'
+    ...(process.env.NODE_ENV !== "development"
       ? {
-        '__REACT_DEVTOOLS_GLOBAL_HOOK__': { isDisabled: true },
+        "__REACT_DEVTOOLS_GLOBAL_HOOK__": { isDisabled: true },
       }
       : {}),
   },
@@ -49,7 +63,7 @@ export default defineConfig({
     rollupOptions: {
       plugins: [
         strip({
-          include: '**/*.(ts|tsx|js|jsx|ejs|mjs)'
+          include: "**/*.(ts|tsx|js|jsx|ejs|mjs)"
         })
       ]
     }
@@ -74,15 +88,15 @@ export default defineConfig({
   ],
   test: {
     globals: false,
-    environment: 'jsdom',
-    setupFiles: './tests/setupTests.ts',
-    include: ['tests/**/*.{test,spec}.{js,ts,tsx}'],
-    env: loadEnv('development', process.cwd()),
+    environment: "jsdom",
+    setupFiles: "./tests/setupTests.ts",
+    include: ["tests/**/*.{test,spec}.{js,ts,tsx}"],
+    env: loadEnv("development", process.cwd()),
     watch: false,
     coverage: {
-      provider: 'v8',
-      reporter: ['text'],
-      reportsDirectory: './.cache/coverage'
+      provider: "v8",
+      reporter: ["text"],
+      reportsDirectory: "./.cache/coverage"
     }
   }
 });
