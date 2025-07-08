@@ -19,7 +19,7 @@ export const LandingPage = () => {
                     </div>
                 </nav>
             </Navbar>
-            <main className="h-full grid grid-rows-[30%_auto_1fr] gap-5 p-2 overflow-auto [@media(max-height:20rem)]:grid-rows-none ">
+            <main className="h-full grid grid-rows-[30%_auto_1fr] gap-5 p-2 overflow-auto [@media(max-height:40rem)]:grid-rows-none ">
                 <div className="flex flex-col items-center justify-center p-2">
                     <ShareWorldImgLink className="w-60 max-xs:w-[7rem] h-auto max-sm:w-40 max-sm:h-auto" />
                     <h1 className="text-5xl max-sm:text-2xl font-semibold text-black">Share World</h1>
