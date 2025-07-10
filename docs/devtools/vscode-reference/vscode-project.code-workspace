@@ -1,0 +1,18 @@
+// Just a copy of my vscode workspace
+{
+    "folders": [
+        {
+            "name": "share-world",
+            "path": ".."
+        },
+        {
+            "name": "backend",
+            "path": "../backend"
+        },
+        {
+            "name": "frontend",
+            "path": "../frontend"
+        }
+    ],
+    "settings": {}
+}

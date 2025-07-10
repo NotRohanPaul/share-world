@@ -1,0 +1,147 @@
+// Copy this to your tasks.json file or .code-workspace file 
+{
+    "version": "2.0.0",
+    "tasks": [
+        // === BACKEND TASKS ===
+        {
+            "label": "MongoDB Windows",
+            "command": "powershell -ExecutionPolicy Bypass -File ./scripts/start-mongodb-server.ps1",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "close": true
+            },
+            "icon": {
+                "id": "database",
+                "color": "terminal.ansiBlue"
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "MongoDB Docker",
+            "type": "shell",
+            "command": "docker start -a mongo-server",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "icon": {
+                "id": "database",
+                "color": "terminal.ansiBlue"
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Backend",
+            "command": "npm run start:dev --prefix backend",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "icon": {
+                "id": "server-environment",
+                "color": "terminal.ansiMagenta"
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Frontend",
+            "command": "npm run start:dev --prefix frontend",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "icon": {
+                "id": "device-desktop",
+                "color": "terminal.ansiGreen"
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Start All",
+            "dependsOn": [
+                "MongoDB Windows",
+                "Backend",
+                "Frontend"
+            ],
+            "dependsOrder": "parallel",
+            "runOptions": {
+                "runOn": "default"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        // === MobileTASKS ===
+        {
+            "label": "Start Emulator",
+            "type": "shell",
+            "command": "emulator -avd \"$(emulator -list-avds | head -n 1)\"",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            }
+        },
+        {
+            "label": "Open URL in Emulator",
+            "type": "shell",
+            "command": "adb wait-for-device && adb shell am start -a android.intent.action.VIEW -d \"https://10.0.2.2\"",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "close": true
+            },
+            "isBackground": true,
+            "runOptions": {
+                "runOn": "default",
+                "instanceLimit": 1
+            }
+        },
+        {
+            "label": "Mobile",
+            "dependsOn": [
+                "Start Emulator",
+                "Open URL in Emulator"
+            ],
+            "dependsOrder": "parallel",
+            "group": "build",
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "icon": {
+                "id": "device-mobile",
+                "color": "terminal.ansiRed"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

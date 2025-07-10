@@ -18,8 +18,6 @@
     "tsc": "tsc -b",
     "coverage": "vitest run --coverage",
     "bundle": "npm run clean && rollup -c",
-    "mongo-svr:vsc-admin": "mongod -f \"C:/Program Files/MongoDB/Server/8.0/bin/mongod.cfg\"",
-    "mongo-svr:vsc-noadmin": "powershell -ExecutionPolicy Bypass -File ../scripts/start-mongodb-server.ps1",
     "build:ts": "npm run lint && npm run test && npm run clean && tsc --project tsconfig.build.json && tsc-alias && npm run cpy-pkg",
     "build:prod": "npm run lint && npm run tsc && npm run test && npm run bundle",
     "build:stage": "npm run bundle",
