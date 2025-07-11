@@ -19,7 +19,7 @@ export const testId = (id: string): { "data-testid": string; } | Record<string, 
 export const debounceProvider = <T extends unknown[]>(
     fn: (...args: T) => unknown,
     delay: number
-): (...params: T) => void => {
+): ((...params: T) => void) => {
     let timerId: number | null = null;
     return (...params: T): void => {
         if (timerId !== null) clearTimeout(timerId);
@@ -30,11 +30,12 @@ export const debounceProvider = <T extends unknown[]>(
 export const throttlingProvider = <T extends unknown[]>(
     fn: (...args: T) => unknown,
     delay: number
-): (...params: T) => void => {
+): ((...params: T) => void) => {
     let timerId: number | null = null;
+    console.log(timerId);
     return (...params: T): void => {
+        console.log(timerId);
         if (timerId !== null) return;
-
         fn(...params);
         timerId = setTimeout(() => { timerId = null; }, delay);
     };
