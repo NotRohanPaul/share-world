@@ -4,6 +4,7 @@ import { UserModel } from "@src/models/users.model";
 import { userSchema } from "@src/schemas/auth-schemas";
 import { attachAccessAndRefreshTokenCookie } from "@src/utils/jwt-utils";
 import type { RequestHandler } from "express";
+import { ZodError } from "zod";
 
 
 type SignupReqBody = {
@@ -49,6 +50,8 @@ export const signupController: RequestHandler = async (req, res) => {
     }
     catch (err) {
         appLogger.info(err);
+        if (err instanceof ZodError)
+            return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };

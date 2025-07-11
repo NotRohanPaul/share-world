@@ -5,6 +5,7 @@ import { appLogger } from "@src/configs/app-logger";
 import { comparePasswordHash } from "@src/utils/bcrypt-utils";
 import { attachAccessAndRefreshTokenCookie } from "@src/utils/jwt-utils";
 import type { RequestHandler } from "express";
+import { ZodError } from "zod";
 
 export const loginController: RequestHandler = async (req, res) => {
     try {
@@ -30,7 +31,10 @@ export const loginController: RequestHandler = async (req, res) => {
 
         return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
     } catch (err) {
-        appLogger.info(err);
+        appLogger.error(err);
+       if (err instanceof ZodError) 
+            return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
+
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };
