@@ -17,6 +17,7 @@ import {
     Settings,
     UserPlus,
     Users,
+    X,
     type LucideProps,
 } from "lucide-react";
 import { forwardRef } from "react";
@@ -50,4 +51,5 @@ export const AppIcons = {
     Home: House,
     Settings,
     Logout: LogOut,
+    Close: X
 };
