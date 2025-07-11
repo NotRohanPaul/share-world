@@ -1,4 +1,5 @@
 import { loginHandler } from "@src/axios/handlers/auth-handler";
+import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { appRoutes } from "@src/routes/app-routes";
 import { loginSchema } from "@src/schemas/auth-schemas";
 import { isTrusted } from "@src/utils/common";
@@ -12,7 +13,6 @@ export const useLogin = () => {
         email: '',
         password: ''
     });
-    const [loginError, setLoginError] = useState("");
     const [emailInputError, setEmailError] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +24,8 @@ export const useLogin = () => {
         passwordRef: null,
     });
 
+    const showToast = useToastContext();
+
     const formLoginHandler = async () => {
         try {
             setIsLoading(true);
@@ -32,13 +34,13 @@ export const useLogin = () => {
             if (response.status === 200) {
                 void navigate(appRoutes.user.absolute);
             } else if (response.status === 400) {
-                setLoginError("Invalid Username or Password.");
+                showToast({ text: "Invalid Username or Password." });
             } else {
-                setLoginError("Server Error.");
+                showToast({ text: "Server Error." });
             }
         }
         catch {
-            setLoginError("Network Error.");
+            showToast({ text: "Network Error." });
         }
         finally {
             setIsLoading(false);
@@ -79,7 +81,6 @@ export const useLogin = () => {
         if (isTrusted(e) === false || target.tagName !== "BUTTON") return;
         if (loginFormData.password === "" || loginFormData.email === "" || emailInputError !== "") return;
 
-        setLoginError("");
         void formLoginHandler();
     };
 
@@ -118,7 +119,6 @@ export const useLogin = () => {
     return {
         isLoading,
         loginFormData,
-        loginError,
         emailInputError,
         isPasswordVisible,
         inputRefs,

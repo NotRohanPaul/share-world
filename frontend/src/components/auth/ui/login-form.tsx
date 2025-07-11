@@ -6,7 +6,6 @@ export const LoginForm = () => {
     const {
         isLoading,
         loginFormData,
-        loginError,
         emailInputError,
         isPasswordVisible,
         inputRefs,
@@ -18,7 +17,6 @@ export const LoginForm = () => {
 
     return (
         <>
-            {loginError === '' ? null : <p className="input-error text-center">{loginError}</p>}
             <label htmlFor="login-email">Email</label>
             <input
                 type="email"

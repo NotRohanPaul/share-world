@@ -7,7 +7,6 @@ export const SignupForm = () => {
         isLoading,
         signupFormData,
         inputErrors,
-        signupError,
         isPasswordVisible,
         isConfirmPasswordVisible,
         inputRefs,
@@ -19,7 +18,6 @@ export const SignupForm = () => {
 
     return (
         <>
-            {signupError === '' ? null : <p className="input-error text-center">{signupError}</p>}
             <label htmlFor="signup-name">
                 Name
             </label>

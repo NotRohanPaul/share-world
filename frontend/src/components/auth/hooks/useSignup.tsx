@@ -1,4 +1,5 @@
 import { signupHandler } from "@src/axios/handlers/auth-handler";
+import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { appRoutes } from "@src/routes/app-routes";
 import { signupInputSchema } from "@src/schemas/auth-schemas";
 import { isTrusted } from "@src/utils/common";
@@ -20,7 +21,6 @@ export const useSignup = () => {
         confirmPassword: '',
     });
     const [isLoading, setIsLoading] = useState(false);
-    const [signupError, setSignupError] = useState("");
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const inputRefs = useRef<{
@@ -35,6 +35,9 @@ export const useSignup = () => {
         confirmPasswordRef: null,
     });
 
+    const showToast = useToastContext();
+
+
     const formSignupHandler = async () => {
         try {
             setIsLoading(true);
@@ -43,13 +46,13 @@ export const useSignup = () => {
             if (response.status === 201) {
                 void navigate(appRoutes.user.absolute);
             } else if (response.status === 400) {
-                setSignupError("Invalid Username or Password.");
+                showToast({ text: "Invalid Inputs." });
             } else {
-                setSignupError("Server Error.");
+                showToast({ text: "Server Error." });
             }
         }
         catch {
-            setSignupError("Network Error.");
+            showToast({ text: "Network Error." });
         }
         finally {
             setIsLoading(false);
@@ -108,7 +111,6 @@ export const useSignup = () => {
         const isEveryFieldNotEmpty = [signupFormData.name, signupFormData.email, signupFormData.password, signupFormData.confirmPassword].every((item) => item !== "");
         if (isEveryFieldNotEmpty === false) return;
 
-        setSignupError("");
         void formSignupHandler();
     };
 
@@ -169,7 +171,6 @@ export const useSignup = () => {
         isLoading,
         signupFormData,
         inputErrors,
-        signupError,
         isPasswordVisible,
         isConfirmPasswordVisible,
         inputRefs,
