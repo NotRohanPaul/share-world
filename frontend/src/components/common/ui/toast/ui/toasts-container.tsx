@@ -8,7 +8,7 @@ export const ToastsContainer = ({
     toastsList: Array<ToastOptionsType>;
 }) => {
     return createPortal(
-        <section className="w-[12rem] h-full absolute z-10 top-0 right-0 flex flex-col items-center gap-2 pointer-events-none overflow-hidden p-2">
+        toastsList.length !== 0 && <section className="w-[12rem] h-full absolute z-10 top-0 right-0 flex flex-col items-center gap-2 pointer-events-none overflow-hidden p-2">
             <AnimatePresence>
                 {toastsList.map((options) => {
                     return (
