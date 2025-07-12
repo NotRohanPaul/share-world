@@ -1,4 +1,4 @@
-import { socketInstance } from "@src/sockets/socket-instance";
+import { shareViaIdSocketInstance } from "@src/sockets/socket-instance";
 import { useEffect, useState } from "react";
 
 
@@ -9,7 +9,7 @@ export const useReceiverSocket = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const socket = socketInstance.connect();
+        const socket = shareViaIdSocketInstance.connect();
         socket.on("user-id-client", ({ userId }: { userId: string; }) => {
             setUserId(userId);
         });

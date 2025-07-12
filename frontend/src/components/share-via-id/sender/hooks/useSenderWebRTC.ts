@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { socketInstance } from "@src/sockets/socket-instance";
+import { shareViaIdSocketInstance } from "@src/sockets/socket-instance";
 
 export function useSenderWebRTC(receiverId: string | null) {
     const pcRef = useRef<RTCPeerConnection | null>(null);
@@ -30,7 +30,7 @@ export function useSenderWebRTC(receiverId: string | null) {
         pc.onicecandidate = (e) => {
             if (e.candidate) {
                 console.log("Local ICE candidate:", e.candidate.candidate);
-                socketInstance.emit("webrtc-ice-candidate-server", { to: receiverId, candidate: e.candidate });
+                shareViaIdSocketInstance.emit("webrtc-ice-candidate-server", { to: receiverId, candidate: e.candidate });
             }
             else {
                 console.log("All ICE candidates sent");
@@ -61,7 +61,7 @@ export function useSenderWebRTC(receiverId: string | null) {
             try {
                 const offer = await pc.createOffer();
                 await pc.setLocalDescription(offer);
-                socketInstance.emit("webrtc-offer-server", { to: receiverId, offer });
+                shareViaIdSocketInstance.emit("webrtc-offer-server", { to: receiverId, offer });
                 console.log({ to: receiverId, offer });
             }
             catch (err) {
@@ -69,7 +69,7 @@ export function useSenderWebRTC(receiverId: string | null) {
             }
         })();
 
-        socketInstance.on("webrtc-answer-client", async ({ answer }: { answer: RTCSessionDescriptionInit; }) => {
+        shareViaIdSocketInstance.on("webrtc-answer-client", async ({ answer }: { answer: RTCSessionDescriptionInit; }) => {
             try {
                 await pc.setRemoteDescription(new RTCSessionDescription(answer));
                 remoteDescriptionSet.current = true;
@@ -84,7 +84,7 @@ export function useSenderWebRTC(receiverId: string | null) {
             }
         });
 
-        socketInstance.on("webrtc-ice-candidate-client", async ({ candidate }: { candidate: RTCIceCandidateInit; }) => {
+        shareViaIdSocketInstance.on("webrtc-ice-candidate-client", async ({ candidate }: { candidate: RTCIceCandidateInit; }) => {
             try {
                 console.log({ "webrtc-ice-candidate-client": candidate });
                 if (remoteDescriptionSet.current === false) {
@@ -98,8 +98,8 @@ export function useSenderWebRTC(receiverId: string | null) {
         });
 
         return () => {
-            socketInstance.off("webrtc-answer-client");
-            socketInstance.off("webrtc-ice-candidate-client");
+            shareViaIdSocketInstance.off("webrtc-answer-client");
+            shareViaIdSocketInstance.off("webrtc-ice-candidate-client");
 
             if (pcRef.current) {
                 pcRef.current.onicecandidate = null;

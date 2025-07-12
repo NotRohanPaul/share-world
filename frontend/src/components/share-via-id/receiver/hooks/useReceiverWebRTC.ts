@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { socketInstance } from "@src/sockets/socket-instance";
+import { shareViaIdSocketInstance } from "@src/sockets/socket-instance";
 
 export function useReceiverWebRTC(peerId: string | null) {
     const pcRef = useRef<RTCPeerConnection | null>(null);
@@ -31,7 +31,7 @@ export function useReceiverWebRTC(peerId: string | null) {
         pc.onicecandidate = (e) => {
             if (e.candidate) {
                 console.log("Local ICE candidate:", e.candidate.candidate);
-                socketInstance.emit("webrtc-ice-candidate-server", { to: peerId, candidate: e.candidate });
+                shareViaIdSocketInstance.emit("webrtc-ice-candidate-server", { to: peerId, candidate: e.candidate });
             }
             else {
                 console.log("All ICE candidates sent");
@@ -58,7 +58,7 @@ export function useReceiverWebRTC(peerId: string | null) {
             console.error("ICE Candidate Error:", event);
         };
 
-        socketInstance.on("webrtc-offer-client", async ({
+        shareViaIdSocketInstance.on("webrtc-offer-client", async ({
             offer
         }: {
             offer: RTCSessionDescriptionInit;
@@ -75,14 +75,14 @@ export function useReceiverWebRTC(peerId: string | null) {
 
                 const answer = await pc.createAnswer();
                 await pc.setLocalDescription(answer);
-                socketInstance.emit("webrtc-answer-server", { to: peerId, answer });
+                shareViaIdSocketInstance.emit("webrtc-answer-server", { to: peerId, answer });
             }
             catch (err) {
                 console.log(err);
             }
         });
 
-        socketInstance.on("webrtc-ice-candidate-client", async ({ candidate }) => {
+        shareViaIdSocketInstance.on("webrtc-ice-candidate-client", async ({ candidate }) => {
             try {
                 console.log("Receiver ICE candidate: ", new RTCIceCandidate(candidate));
                 if (remoteDescriptionSet.current === false) {
@@ -96,8 +96,8 @@ export function useReceiverWebRTC(peerId: string | null) {
         });
 
         return () => {
-            socketInstance.off("webrtc-offer-client");
-            socketInstance.off("webrtc-ice-candidate-client");
+            shareViaIdSocketInstance.off("webrtc-offer-client");
+            shareViaIdSocketInstance.off("webrtc-ice-candidate-client");
 
             if (pcRef.current) {
                 pcRef.current.onicecandidate = null;
