@@ -32,15 +32,14 @@ const passwordSchema = z
     });
 
 export const loginSchema = z
-    .object({
+    .strictObject({
         email: emailSchema,
         password: z.string()
-    })
-    .strict();
+    });
 export type LoginSchemaType = z.infer<typeof loginSchema>;
 
 export const signupInputSchema = z
-    .object({
+    .strictObject({
         name: nameSchema,
         email: emailSchema,
         password: passwordSchema,
@@ -48,7 +47,6 @@ export const signupInputSchema = z
     });
 
 export const signupSchema = signupInputSchema
-    .strict()
     .refine((data) => data.password === data.confirmPassword, {
         path: ['confirmPassword'],
         message: "Passwords do not match.",
