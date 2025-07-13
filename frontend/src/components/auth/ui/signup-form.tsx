@@ -22,6 +22,7 @@ export const SignupForm = () => {
                 Name
             </label>
             <input
+                autoFocus={true}
                 type="text"
                 name="name"
                 id="signup-name"

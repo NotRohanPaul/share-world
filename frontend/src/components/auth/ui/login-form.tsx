@@ -19,6 +19,7 @@ export const LoginForm = () => {
         <>
             <label htmlFor="login-email">Email</label>
             <input
+                autoFocus={true}
                 type="email"
                 name="email"
                 id="login-email"
