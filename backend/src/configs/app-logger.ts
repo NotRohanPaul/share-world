@@ -24,14 +24,17 @@ if (IS_SECURE_ENV === true) {
         ])
     );
 } else {
-    appLogger = pino({
-        transport: {
-            target: 'pino-pretty',
-            options: {
-                colorize: true
+    const isTestEnv = process.env.VITEST === 'true' || process.env.NODE_ENV === 'test';
+    appLogger = isTestEnv
+        ? pino({ level: 'info' })
+        : pino({
+            transport: {
+                target: 'pino-pretty',
+                options: {
+                    colorize: true
+                }
             }
-        }
-    });
+        });
 }
 
 export { appLogger };

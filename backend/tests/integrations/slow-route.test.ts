@@ -2,7 +2,7 @@ import { timeoutHandler } from "@src/middlewares/timeout-handler";
 import express, { type Express, type ErrorRequestHandler } from "express";
 import request from "supertest";
 import { describe, it } from "vitest";
-
+import * as timers from "node:timers";
 export const appWithTimeout = (setupRoutes: (app: express.Express) => void): Express => {
     const app = express();
 
@@ -37,7 +37,7 @@ describe("Timeout middleware", () => {
     it("returns 200 when times out is respected", async () => {
         const app = appWithTimeout(app => {
             app.get("/fast", timeoutHandler(1_000), async (_req, res) => {
-                await new Promise(resolve => setTimeout(resolve, 200));
+                await timers.promises.setTimeout(200);
                 res.send("done");
             });
         });
@@ -48,7 +48,7 @@ describe("Timeout middleware", () => {
     it("returns error when request times out", async () => {
         const app = appWithTimeout(app => {
             app.get("/slow", timeoutHandler(1_000), async (_req, res) => {
-                await new Promise(resolve => setTimeout(resolve, 2_000));
+                await timers.promises.setTimeout(2_000);
 
                 res.send("done");
             });

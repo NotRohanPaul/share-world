@@ -2,6 +2,7 @@ import { errorHandler } from "@middlewares/error-handler";
 import { unknownHandler } from "@middlewares/unknown-handler";
 import { routesHandler } from "@routes/routes";
 import { API_ORIGIN, APP_ORIGIN, IS_SECURE_ENV, WS_API_ORIGIN } from "@src/constants/env";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
@@ -10,6 +11,7 @@ import path from "node:path";
 const app = express();
 
 app.disable('x-powered-by');
+app.use(cookieParser());
 app.use(helmet({
     xPoweredBy: false,
     frameguard: { action: "sameorigin" },

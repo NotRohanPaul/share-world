@@ -10,8 +10,8 @@ import { ZodError } from "zod";
 export const loginController: RequestHandler = async (req, res) => {
     try {
         const { email, password } = req.body as Record<string, unknown>;
-        const parsedEmail = await userSchema.email.parseAsync(email);
-        const parsedPassword = await userSchema.password.parseAsync(password);
+        const parsedEmail = await userSchema.shape.email.parseAsync(email);
+        const parsedPassword = await userSchema.shape.password.parseAsync(password);
 
         const userDoc = await UserModel.findOne({ email: parsedEmail }).exec();
         if (userDoc === null) {
@@ -21,7 +21,7 @@ export const loginController: RequestHandler = async (req, res) => {
         const isSame = await comparePasswordHash(parsedPassword, userDoc.password);
         if (isSame === true) {
             const payload = {
-                userId: userDoc._id,
+                userId: userDoc._id.toHexString(),
                 email: userDoc.email
             };
             const parsedPayload = await jwtPayloadSchema.parseAsync(payload);

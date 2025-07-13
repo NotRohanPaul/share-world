@@ -7,22 +7,35 @@ import jwt from "jsonwebtoken";
 
 export const authHandler: RequestHandler = async (req, res, next) => {
     try {
-        const parsedCookies = await cookiesSchema.parseAsync(req.cookies as Record<string, unknown>);
-        const accessToken = parsedCookies.accessToken;
-        if (accessToken === undefined)
+        const cookies = req.cookies as Record<"accessToken", string> | undefined;
+        if (cookies === undefined) {
+            appLogger.error("No Cookies");
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
-
-
-        const payload = jwt.verify(accessToken, JWT_SECRET);
-
-        const parsedPayload = await jwtPayloadSchema.parseAsync(payload);
-        if (parsedPayload !== null && typeof parsedPayload === "object") {
-            next();
         }
+
+        const prasedCookieAccessToken = await cookiesSchema.shape.accessToken.safeParseAsync(cookies.accessToken);
+        if (prasedCookieAccessToken.success === false || prasedCookieAccessToken.data === undefined) {
+            appLogger.error("Cookie Prasing Error");
+            return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
+        }
+
+        const accessToken = prasedCookieAccessToken.data;
+        const jwtPayload = jwt.verify(accessToken, JWT_SECRET);
+
+        const payloadParsedResult = await jwtPayloadSchema.safeParseAsync(jwtPayload);
+
+        if (payloadParsedResult.success === false || payloadParsedResult.data === undefined) {
+            appLogger.error("JWT Payload Parsing Error");
+            return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
+        }
+
+        if (res.context === undefined) res.context = {};
+        res.context.auth = payloadParsedResult.data;
+        next();
+
     }
     catch (err) {
         appLogger.error({ err });
         return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
     }
-
 };

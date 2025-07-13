@@ -33,21 +33,21 @@ const passwordSchema = z
 
 
 
-export const userSchema = {
+export const userSchema = z.strictObject({
     email: emailSchema,
     password: passwordSchema,
     name: nameSchema,
     emailVerified: z.boolean().optional()
-};
+});
 
 
-export const cookiesSchema = z.object({
-    refreshToken: z.string().optional(),
-    accessToken: z.string().optional(),
+export const cookiesSchema = z.strictObject({
+    refreshToken: z.string(),
+    accessToken: z.string(),
 });
 
 
 export const jwtPayloadSchema = z.object({
+    userId: z.string().regex(/^[a-fA-F0-9]{24}$/, "Must be a 24-character hexadecimal string"),
     email: emailSchema,
-    userId: z.string()
-})
+}).passthrough();
