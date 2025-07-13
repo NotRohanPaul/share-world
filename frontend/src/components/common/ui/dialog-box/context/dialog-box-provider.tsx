@@ -1,6 +1,7 @@
-import { createContext, useState, type FC, type ReactElement } from "react";
+import { createContext, useEffect, useState, type FC, type ReactElement } from "react";
 import type { DialogBoxOptionsType, DialogBoxContextType } from "../types";
 import { DialogBox } from "../ui/dialog-box";
+import { AnimatePresence } from "motion/react";
 
 
 
@@ -15,17 +16,30 @@ export const DialogBoxProvider: FC<{ children: ReactElement; }> = ({ children })
         setDialogBoxOptions(options);
     };
 
+    useEffect(() => {
+        const rootElm = document.getElementById("root");
+
+        if (rootElm === null) return;
+        rootElm.inert = isDialogBoxVisible;
+
+        return () => {
+            rootElm.inert = false;
+        };
+    }, [isDialogBoxVisible]);
+
     return (
         <>
             <DialogBoxContext.Provider value={showDialogBox} children={children} />
-            {
-                isDialogBoxVisible === true &&
-                dialogBoxOptions !== undefined &&
-                <DialogBox
-                    options={dialogBoxOptions}
-                    setIsDialogBoxVisible={setIsDialogBoxVisible}
-                />
-            }
+            <AnimatePresence>
+                {
+                    isDialogBoxVisible === true &&
+                    dialogBoxOptions !== undefined &&
+                    <DialogBox
+                        options={dialogBoxOptions}
+                        setIsDialogBoxVisible={setIsDialogBoxVisible}
+                    />
+                }
+            </AnimatePresence>
         </>
     );
 };

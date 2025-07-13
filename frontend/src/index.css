@@ -3,7 +3,7 @@
 :root {
     --app-color-primary: hsl(217, 100%, 50%);
     --app-color-white: hsl(210 100% 98%);
-    --app-color-black: hsl(240 100% 10%);
+    --app-color-black: hsl(240, 100%, 6%);
 
     --app-scroll--thumb-color: rgb(24, 147, 241);
     --app-scroll--track-color: rgb(128, 225, 255);
