@@ -35,7 +35,7 @@ export const AuthPage = () => {
                         <button
                             className={`rounded-r-full ${authType === "signup" ? "bg-primary text-white" : "hover:bg-blue-200"}`}
                             onClick={() => setAuthType("signup")}
-                            children="SignUp"
+                            children="Signup"
                         />
                     </header>
                     <motion.main
