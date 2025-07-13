@@ -1,7 +1,6 @@
 import { createContext, useCallback, useState, type FC, type ReactElement } from "react";
 import type { ToastContextType, ToastOptionsType } from "../types";
 import { ToastsContainer } from "../ui/toasts-container";
-import { throttlingProvider } from "@src/utils/common";
 
 
 
@@ -15,23 +14,24 @@ export const ToastsProvider: FC<{ children: ReactElement; }> = ({ children }) =>
         const toastId = crypto.randomUUID();
         setToastsList((prev) =>
             [
-                ...prev,
                 {
                     ...options,
                     id: toastId,
-                }
+                },
+                ...prev,
             ]);
 
         setTimeout(() => {
-            setToastsList((prev) => prev.filter((options) => options.id === toastId));
+            console.log(toastsList, toastId);
+            setToastsList((prev) => prev.filter((options) => options.id !== toastId));
         }, 5e3);
     }, []);
 
-    const throttledShowToast = useCallback(throttlingProvider(showToast, 1e3), []);
 
+    console.log(toastsList);
     return (
         <>
-            <ToastsContext.Provider value={throttledShowToast} children={children} />
+            <ToastsContext.Provider value={showToast} children={children} />
             <ToastsContainer toastsList={toastsList} />
         </>
     );

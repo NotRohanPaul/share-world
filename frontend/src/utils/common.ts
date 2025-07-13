@@ -32,11 +32,26 @@ export const throttlingProvider = <T extends unknown[]>(
     delay: number
 ): ((...params: T) => void) => {
     let timerId: number | null = null;
-    console.log(timerId);
+    let lastArgs: T | null = null;
+
     return (...params: T): void => {
-        console.log(timerId);
-        if (timerId !== null) return;
-        fn(...params);
-        timerId = setTimeout(() => { timerId = null; }, delay);
+        if (timerId === null) {
+            fn(...params);
+            timerId = window.setTimeout(() => {
+                timerId = null;
+
+                if (lastArgs) {
+                    fn(...lastArgs);
+                    lastArgs = null;
+
+                    timerId = window.setTimeout(() => {
+                        timerId = null;
+                    }, delay);
+                }
+
+            }, delay);
+        } else {
+            lastArgs = params;
+        }
     };
 };
