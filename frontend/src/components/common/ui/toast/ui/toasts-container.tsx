@@ -13,10 +13,10 @@ export const ToastsContainer = ({
         if (isVisible === false && toastsList.length !== 0) {
             setIsVisible(true);
         }
-    }, [toastsList]);
+    }, [toastsList, isVisible]);
 
     return createPortal(
-        isVisible === true && <motion.section layout className="w-[12rem] h-full absolute z-10 top-0 right-0 flex flex-col items-center gap-2 pointer-events-none overflow-hidden p-2">
+        isVisible === true && <motion.section className="w-[17rem] max-xs:w-[15rem] h-full absolute z-10 top-0 right-0 flex flex-col items-end gap-4 pointer-events-none overflow-hidden p-4 max-xs:p-2">
             <AnimatePresence
                 onExitComplete={() => {
                     if (toastsList.length === 0) {
