@@ -7,7 +7,7 @@ export const UserMain = () => {
     const location = useLocation();
 
     return (
-        <main className="h-full flex flex-col justify-center items-center [@media(max-height:20rem)]:justify-start overflow-y-auto p-1">
+        <main className="h-full flex flex-col justify-center items-center [@media(max-height:30rem)]:justify-start overflow-y-auto p-1">
             {location.pathname !== "/user" ?
                 <Outlet /> :
                 <section className="flex flex-col gap-2 text-2xl max-xs:text-base">

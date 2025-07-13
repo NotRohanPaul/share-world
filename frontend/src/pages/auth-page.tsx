@@ -18,7 +18,7 @@ export const AuthPage = () => {
                 <title>Login/Signup</title>
             </Helmet>
             <article
-                className="w-full h-[100dvh] flex flex-col  justify-center items-center [@media(max-height:20rem)]:justify-start gap-4 max-xs:p-3 overflow-auto">
+                className="w-full h-[100dvh] flex flex-col  justify-center items-center [@media(max-height:30rem)]:justify-start gap-4 max-xs:p-3 overflow-auto">
                 <header
                     className="justify-self-center">
                     <Link to={appRoutes.home.absolute}>
@@ -26,7 +26,7 @@ export const AuthPage = () => {
                     </Link>
                 </header>
                 <main className="w-[450px] max-sm:w-[350px] max-xs:w-full flex flex-col gap-4 p-1">
-                    <header className="self-center text-xl p-0.5 rounded-full border-2 border-gray-500 overflow-hidden max-sm:text-xl [&>button]:w-[100px] [&>button]:p-2 max-sm:[&>button]:p-1 max-sm:[&>button]:w-[80px] max-sm:[&>button]:text-base">
+                    <header className="self-center flex text-xl p-0.5 rounded-full border-2 border-gray-500 overflow-hidden max-sm:text-xl [&>button]:w-[100px] [&>button]:p-2 max-sm:[&>button]:p-1 max-sm:[&>button]:w-[80px] max-sm:[&>button]:text-base">
                         <button
                             className={`rounded-l-full ${authType === "login" ? "bg-primary text-white" : "hover:bg-blue-200"}`}
                             onClick={() => setAuthType("login")}
