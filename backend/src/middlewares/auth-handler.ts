@@ -1,7 +1,7 @@
 import { appLogger } from "@src/configs/app-logger";
 import { JWT_SECRET } from "@src/constants/env";
 import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
-import { cookiesSchema } from "@src/schemas/auth-schemas";
+import { cookiesSchema, jwtPayloadSchema } from "@src/schemas/auth-schemas";
 import type { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 
@@ -15,8 +15,8 @@ export const authHandler: RequestHandler = async (req, res, next) => {
 
         const payload = jwt.verify(accessToken, JWT_SECRET);
 
-
-        if (typeof payload === "string" || typeof payload === "object") {
+        const parsedPayload = await jwtPayloadSchema.parseAsync(payload);
+        if (parsedPayload !== null && typeof parsedPayload === "object") {
             next();
         }
     }

@@ -1,6 +1,6 @@
 import { HTTP_STATUS_CODES } from "@constants/error-codes";
 import { UserModel } from "@models/users.model";
-import { userSchema } from "@schemas/auth-schemas";
+import { jwtPayloadSchema, userSchema } from "@schemas/auth-schemas";
 import { appLogger } from "@src/configs/app-logger";
 import { comparePasswordHash } from "@src/utils/bcrypt-utils";
 import { attachAccessAndRefreshTokenCookie } from "@src/utils/jwt-utils";
@@ -24,15 +24,16 @@ export const loginController: RequestHandler = async (req, res) => {
                 userId: userDoc._id,
                 email: userDoc.email
             };
-            appLogger.info(payload);
-            attachAccessAndRefreshTokenCookie(res, payload);
+            const parsedPayload = await jwtPayloadSchema.parseAsync(payload);
+            appLogger.info(parsedPayload);
+            attachAccessAndRefreshTokenCookie(res, parsedPayload);
             return void res.sendStatus(HTTP_STATUS_CODES.OK);
         }
 
         return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
     } catch (err) {
         appLogger.error(err);
-       if (err instanceof ZodError) 
+        if (err instanceof ZodError)
             return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
 
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);

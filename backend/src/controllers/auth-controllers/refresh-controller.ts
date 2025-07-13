@@ -1,7 +1,7 @@
 import { appLogger } from "@src/configs/app-logger";
 import { JWT_SECRET } from "@src/constants/env";
 import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
-import { cookiesSchema } from "@src/schemas/auth-schemas";
+import { cookiesSchema, jwtPayloadSchema } from "@src/schemas/auth-schemas";
 import { attachNewAccessToken } from "@src/utils/jwt-utils";
 import type { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
@@ -14,7 +14,8 @@ export const refreshController: RequestHandler = async (req, res) => {
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
 
         const payload = jwt.verify(refreshToken, JWT_SECRET) as Record<string, unknown>;
-        attachNewAccessToken(res, payload);
+        const parsedPayload = await jwtPayloadSchema.parseAsync(payload);
+        attachNewAccessToken(res, parsedPayload);
         return void res.sendStatus(HTTP_STATUS_CODES.OK);
     }
     catch (err) {

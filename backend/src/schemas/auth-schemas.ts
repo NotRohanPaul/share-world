@@ -45,3 +45,9 @@ export const cookiesSchema = z.object({
     refreshToken: z.string().optional(),
     accessToken: z.string().optional(),
 });
+
+
+export const jwtPayloadSchema = z.object({
+    email: emailSchema,
+    userId: z.string()
+})
