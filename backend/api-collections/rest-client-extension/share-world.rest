@@ -1,0 +1,30 @@
+@host = localhost:5000
+
+### Root route
+GET http://{{host}}/api/v1/
+
+### Signup
+POST http://{{host}}/api/v1/auth/signup
+Content-Type: application/json
+
+{
+  "name": "test",
+  "email": "test7@test.com",
+  "password": "Test@123",
+  "confirmPassword": "Test@123"
+}
+
+### Login
+POST http://{{host}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "test1@test.com",
+  "password": "Test@123"
+}
+
+### Logout
+GET http://{{host}}/api/v1/auth/logout
+
+### Socket.IO connection check
+GET http://localhost:5000/socket/v1/socket.io/?EIO=4&transport=polling
