@@ -17,10 +17,10 @@ type SignupReqBody = {
 export const signupController: RequestHandler = async (req, res) => {
     try {
         const { name, email, password, confirmPassword } = req.body as SignupReqBody;
-        const parsedName = await userSchema.name.parseAsync(name);
-        const parsedEmail = await userSchema.email.parseAsync(email);
-        const parsedPassword = await userSchema.password.parseAsync(password);
-        const parsedConfirmPassword = await userSchema.password.parseAsync(confirmPassword);
+        const parsedName = await userSchema.shape.name.parseAsync(name);
+        const parsedEmail = await userSchema.shape.email.parseAsync(email);
+        const parsedPassword = await userSchema.shape.password.parseAsync(password);
+        const parsedConfirmPassword = await userSchema.shape.password.parseAsync(confirmPassword);
 
         if (parsedPassword !== parsedConfirmPassword)
             return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
