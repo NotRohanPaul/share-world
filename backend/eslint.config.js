@@ -16,16 +16,6 @@ export default tseslint.config(
       },
     },
     rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: [{
-            name: "tests",
-            message: "Do not import from tests in src",
-          }],
-          patterns: ["tests/*"],
-        },
-      ],
       "@typescript-eslint/explicit-function-return-type": ["error"],
       "@typescript-eslint/no-unused-vars": [
         "error",

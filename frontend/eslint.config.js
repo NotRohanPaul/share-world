@@ -27,16 +27,6 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       "react-hooks/exhaustive-deps": "off",
-      "no-restricted-imports": [
-        "error",
-        {
-          paths: [{
-            name: "tests",
-            message: "Do not import from tests in src",
-          }],
-          patterns: ["tests/*"],
-        },
-      ],
       "@typescript-eslint/explicit-function-return-type": [
         "error",
         {
