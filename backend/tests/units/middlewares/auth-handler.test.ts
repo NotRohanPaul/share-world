@@ -25,7 +25,16 @@ const createTestApp = (): Express => {
 
 describe("To check auth middleware", () => {
     it("next function runs for users with correct tokens", async () => {
-        const validAccessToken = jwt.sign({ userId: "f".padStart(24, '0'), email: "test@test.com" }, JWT_SECRET, { expiresIn: '15m' });
+        const validAccessToken = jwt.sign(
+            {
+                userId: "f".padStart(24, '0'),
+                email: "test@test.com"
+            },
+            JWT_SECRET,
+            {
+                expiresIn: '15m'
+            }
+        );
 
         const mockRequest = {
             cookies: {
@@ -38,6 +47,12 @@ describe("To check auth middleware", () => {
         const mockResponse = {} as express.Response;
         await authHandler(mockRequest, mockResponse, mockNext);
         expect(mockNext).toHaveBeenCalledTimes(1);
+        expect(mockRequest.context?.auth).toEqual(
+            expect.objectContaining({
+                userId: "f".padStart(24, "0"),
+                email: "test@test.com",
+            })
+        );
     });
 
     it("response 200 for users with correct tokens", async () => {
@@ -52,6 +67,7 @@ describe("To check auth middleware", () => {
 
         expect(res.status).toBe(200);
         expect(res.text).toBe("Authorized");
+
     });
 
     it("response 401 for users with invalid tokens", async () => {

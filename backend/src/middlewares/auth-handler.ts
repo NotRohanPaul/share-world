@@ -29,8 +29,8 @@ export const authHandler: RequestHandler = async (req, res, next) => {
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
         }
 
-        if (res.context === undefined) res.context = {};
-        res.context.auth = payloadParsedResult.data;
+        if (req.context === undefined) req.context = {};
+        req.context.auth = payloadParsedResult.data;
         next();
 
     }
