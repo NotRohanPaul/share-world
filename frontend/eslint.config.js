@@ -46,22 +46,28 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_",
-          "caughtErrorsIgnorePattern": "^_",
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
         }
       ],
       "require-await": "off",
       "@typescript-eslint/require-await": "error",
-      '@typescript-eslint/no-floating-promises': 'error',
+      "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/no-misused-promises": "error",
-      'no-console': 'warn'
+      "no-console": "warn"
     },
   },
   {
     files: ["src/**/*.tsx", "tests/**/*.tsx", "**/hooks/**/*.ts"],
     rules: {
       "@typescript-eslint/explicit-function-return-type": "off",
+    },
+  },
+  {
+    files: ['tests/**/*.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/unbound-method': 'off',
     },
   },
 );
