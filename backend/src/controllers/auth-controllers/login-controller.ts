@@ -15,27 +15,38 @@ export const loginController: RequestHandler = async (req, res) => {
 
         const userDoc = await UserModel.findOne({ email: parsedEmail }).exec();
         if (userDoc === null) {
+            appLogger.info("No user found");
             return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
         }
 
         const isSame = await comparePasswordHash(parsedPassword, userDoc.password);
-        if (isSame === true) {
-            const payload = {
-                userId: userDoc._id.toHexString(),
-                email: userDoc.email
-            };
-            const parsedPayload = await jwtPayloadSchema.parseAsync(payload);
-            appLogger.info(parsedPayload);
-            attachAccessAndRefreshTokenCookie(res, parsedPayload);
-            return void res.sendStatus(HTTP_STATUS_CODES.OK);
+        if (isSame === false) {
+            appLogger.info({ parsedPassword, test: userDoc.password }, "Password Mismatch",);
+            return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
         }
 
-        return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
-    } catch (err) {
-        appLogger.error(err);
-        if (err instanceof ZodError)
-            return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
 
+        const payload = {
+            userId: userDoc._id.toHexString(),
+            email: userDoc.email
+        };
+        const parsedPayload = await jwtPayloadSchema.parseAsync(payload);
+        appLogger.info(parsedPayload);
+        attachAccessAndRefreshTokenCookie(res, parsedPayload);
+        return void res
+            .status(HTTP_STATUS_CODES.OK)
+            .send({
+                name: userDoc.name,
+                email: userDoc.email,
+            });
+
+    } catch (err) {
+        if (err instanceof ZodError) {
+            appLogger.info(err, "Zod Error: ");
+            return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
+        }
+
+        appLogger.error(err);
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };
