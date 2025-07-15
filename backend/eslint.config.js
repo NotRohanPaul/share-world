@@ -2,28 +2,28 @@ import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ['dist', ".cache", "node_modules"] },
+  { ignores: ["dist", ".cache", "node_modules"] },
   {
     extends: [
       eslint.configs.recommended,
       tseslint.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
     ],
-    files: ['src/**/*.ts', 'tests/**/*.ts'],
+    files: ["src/**/*.ts", "tests/**/*.ts"],
     languageOptions: {
       parserOptions: {
         projectService: true,
       },
     },
     rules: {
-      'no-restricted-imports': [
-        'error',
+      "no-restricted-imports": [
+        "error",
         {
           paths: [{
-            name: 'tests',
-            message: 'Do not import from tests in src',
+            name: "tests",
+            message: "Do not import from tests in src",
           }],
-          patterns: ['tests/*'],
+          patterns: ["tests/*"],
         },
       ],
       "@typescript-eslint/explicit-function-return-type": ["error"],
@@ -37,15 +37,15 @@ export default tseslint.config(
       ],
       "require-await": "off",
       "@typescript-eslint/require-await": "error",
-      '@typescript-eslint/no-floating-promises': 'error',
+      "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/no-misused-promises": "error",
-      'no-console': 'warn'
+      "no-console": "warn"
     }
   },
   {
-    files: ['tests/**/*.ts'],
+    files: ["tests/**/*.ts"],
     rules: {
-      '@typescript-eslint/unbound-method': 'off',
+      "@typescript-eslint/unbound-method": "off",
     },
   },
 );
