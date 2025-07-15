@@ -1,10 +1,7 @@
-import { createContext, useCallback, useState, type FC, type ReactElement } from "react";
+import { useCallback, useState, type FC, type ReactElement } from "react";
 import type { ToastContextType, ToastOptionsType } from "../types";
 import { ToastsContainer } from "../ui/toasts-container";
-
-
-
-export const ToastsContext = createContext<ToastContextType | undefined>(undefined);
+import { ToastsContext } from "./toasts-context";
 
 
 export const ToastsProvider: FC<{ children: ReactElement; }> = ({ children }) => {

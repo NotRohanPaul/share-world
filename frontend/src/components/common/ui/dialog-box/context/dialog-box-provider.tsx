@@ -1,11 +1,11 @@
-import { createContext, useEffect, useState, type FC, type ReactElement } from "react";
-import type { DialogBoxOptionsType, DialogBoxContextType } from "../types";
-import { DialogBox } from "../ui/dialog-box";
 import { AnimatePresence } from "motion/react";
+import { useEffect, useState, type FC, type ReactElement } from "react";
+import type { DialogBoxOptionsType } from "../types";
+import { DialogBox } from "../ui/dialog-box";
+import { DialogBoxContext } from "./dialog-box-context";
 
 
 
-export const DialogBoxContext = createContext<DialogBoxContextType | undefined>(undefined);
 
 export const DialogBoxProvider: FC<{ children: ReactElement; }> = ({ children }) => {
     const [dialogBoxOptions, setDialogBoxOptions] = useState<DialogBoxOptionsType | undefined>(undefined);
