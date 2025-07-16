@@ -4,17 +4,14 @@ import { createPasswordHash } from "@utils/bcrypt-utils";
 import express from "express";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
+import { MongodbMemoryOptions } from "tests/configs/memory-db-options";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
 
 describe("test loginController", () => {
     let mongoServer: MongoMemoryServer;
     beforeAll(async () => {
-        mongoServer = await MongoMemoryServer.create({
-            binary: {
-                version: "8.0.4"
-            }
-        });
+        mongoServer = await MongoMemoryServer.create(MongodbMemoryOptions);
         const uri = mongoServer.getUri();
         await mongoose.connect(uri);
     });
