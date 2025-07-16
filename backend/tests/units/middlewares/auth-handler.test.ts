@@ -47,7 +47,8 @@ describe("To check auth middleware", () => {
         const mockResponse = {} as express.Response;
         await authHandler(mockRequest, mockResponse, mockNext);
         expect(mockNext).toHaveBeenCalledTimes(1);
-        expect(mockRequest.context?.auth).toEqual(
+        const requestWithContext = (mockRequest as { context?: { auth: unknown; }; }); 
+        expect(requestWithContext.context?.auth).toEqual(
             expect.objectContaining({
                 userId: "f".padStart(24, "0"),
                 email: "test@test.com",
