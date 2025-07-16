@@ -1,38 +1,37 @@
-import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
-import resolve from '@rollup/plugin-node-resolve';
-import terser from '@rollup/plugin-terser';
-import typescript from '@rollup/plugin-typescript';
-import fs from 'node:fs';
-import { builtinModules } from 'node:module';
-import path from 'node:path';
-import gzipPlugin from 'rollup-plugin-gzip';
-import pkg from './package.json' with { type: 'json' };
+import commonjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
+import resolve from "@rollup/plugin-node-resolve";
+import terser from "@rollup/plugin-terser";
+import typescript from "@rollup/plugin-typescript";
+import fs from "node:fs";
+import { builtinModules } from "node:module";
+import path from "node:path";
+import gzipPlugin from "rollup-plugin-gzip";
+import pkg from "./package.json" with { type: "json" };
 
 const { version } = pkg;
-const outDirName = 'dist';
+const outDirName = "dist";
 
 const metaGeneratorPlugin = {
-    name: 'meta-generator',
+    name: "meta-generator",
     closeBundle() {
         const buildNumber = Date.now();
         const outputDir = path.join(process.cwd(), outDirName);
 
         fs.writeFileSync(
-            path.resolve(outputDir, 'meta-backend.json'),
+            path.resolve(outputDir, "meta-backend.json"),
             JSON.stringify({
                 version,
                 buildNumber,
                 timestamp: new Date().toISOString()
             }, null, 2)
         );
-        console.log('meta-backend.json created:', version);
+        console.log("meta-backend.json created:", version);
     }
 };
 
 export default {
-    input: 'src/index.ts',
-
+    input: "src/index.ts",
     output: {
         dir: outDirName
     },
@@ -42,7 +41,7 @@ export default {
             preferBuiltins: false
         }),
         commonjs(),
-        typescript({ tsconfig: './tsconfig.json' }),
+        typescript({ tsconfig: "tsconfig.build.json" }),
         terser({
             format: {
                 comments: false,
