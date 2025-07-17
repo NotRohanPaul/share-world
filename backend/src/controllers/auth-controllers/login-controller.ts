@@ -1,6 +1,6 @@
 import { HTTP_STATUS_CODES } from "@constants/error-codes";
 import { UserModel } from "@models/users.model";
-import { jwtPayloadSchema, userSchema } from "@schemas/auth-schemas";
+import { jwtPayloadStrictSchema, userSchema } from "@schemas/auth-schemas";
 import { appLogger } from "@src/configs/app-logger";
 import { comparePasswordHash } from "@src/utils/bcrypt-utils";
 import { attachAccessAndRefreshTokenCookie } from "@src/utils/jwt-utils";
@@ -30,7 +30,7 @@ export const loginController: RequestHandler = async (req, res) => {
             userId: userDoc._id.toHexString(),
             email: userDoc.email
         };
-        const parsedPayload = await jwtPayloadSchema.parseAsync(payload);
+        const parsedPayload = await jwtPayloadStrictSchema.parseAsync(payload);
         appLogger.info(parsedPayload);
         attachAccessAndRefreshTokenCookie(res, parsedPayload);
         return void res

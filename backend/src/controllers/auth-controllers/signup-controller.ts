@@ -1,7 +1,7 @@
 import { appLogger } from "@src/configs/app-logger";
 import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
 import { UserModel } from "@src/models/users.model";
-import { jwtPayloadSchema, userSchema } from "@src/schemas/auth-schemas";
+import { jwtPayloadStrictSchema, userSchema } from "@src/schemas/auth-schemas";
 import { attachAccessAndRefreshTokenCookie } from "@src/utils/jwt-utils";
 import type { RequestHandler } from "express";
 import { ZodError } from "zod";
@@ -41,7 +41,7 @@ export const signupController: RequestHandler = async (req, res) => {
             userId: newUser._id.toHexString(),
             email: newUser.email
         };
-        const parsedPaylod = await jwtPayloadSchema.parseAsync(payload);
+        const parsedPaylod = await jwtPayloadStrictSchema.parseAsync(payload);
         attachAccessAndRefreshTokenCookie(res, parsedPaylod);
         return void res
             .status(HTTP_STATUS_CODES.CREATED)

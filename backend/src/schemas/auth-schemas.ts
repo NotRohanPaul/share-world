@@ -47,7 +47,19 @@ export const cookiesSchema = z.strictObject({
 });
 
 
-export const jwtPayloadSchema = z.object({
+export const jwtPayloadLooseTransformSchema = z
+  .object({
     userId: z.string().regex(/^[a-f0-9]{24}$/, "Must be a 24-character hexadecimal string"),
     email: emailSchema,
-}).passthrough();
+  })
+  .passthrough()
+  .transform(({ userId, email }) => ({
+    userId,
+    email,
+  }));
+
+export const jwtPayloadStrictSchema = z
+    .strictObject({
+        userId: z.string().regex(/^[a-f0-9]{24}$/, "Must be a 24-character hexadecimal string"),
+        email: emailSchema,
+    });

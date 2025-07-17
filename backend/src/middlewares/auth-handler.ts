@@ -1,7 +1,7 @@
 import { appLogger } from "@src/configs/app-logger";
 import { JWT_SECRET } from "@src/constants/env";
 import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
-import { cookiesSchema, jwtPayloadSchema } from "@src/schemas/auth-schemas";
+import { cookiesSchema, jwtPayloadLooseTransformSchema } from "@src/schemas/auth-schemas";
 import type { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 
@@ -22,7 +22,7 @@ export const authHandler: RequestHandler = async (req, res, next) => {
         const accessToken = prasedCookieAccessToken.data;
         const jwtPayload = jwt.verify(accessToken, JWT_SECRET);
 
-        const payloadParsedResult = await jwtPayloadSchema.safeParseAsync(jwtPayload);
+        const payloadParsedResult = await jwtPayloadLooseTransformSchema.safeParseAsync(jwtPayload);
 
         if (payloadParsedResult.success === false || payloadParsedResult.data === undefined) {
             appLogger.error("JWT Payload Parsing Error");
