@@ -4,7 +4,8 @@ import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
 import { cookiesSchema, jwtPayloadLooseTransformSchema } from "@src/schemas/auth-schemas";
 import { attachNewAccessToken } from "@src/utils/jwt-utils";
 import type { RequestHandler } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JsonWebTokenError } from "jsonwebtoken";
+import { ZodError } from "zod";
 
 export const refreshController: RequestHandler = async (req, res) => {
     try {
@@ -14,8 +15,11 @@ export const refreshController: RequestHandler = async (req, res) => {
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
         }
         const parsedRefreshToken = await cookiesSchema.shape.refreshToken.parseAsync(cookies.refreshToken);
-        if (parsedRefreshToken === undefined || parsedRefreshToken === '')
+        if (parsedRefreshToken === undefined || parsedRefreshToken === '') {
+
+            appLogger.info("Parsed Refresh Token is invalid");
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
+        }
 
         const payload = jwt.verify(parsedRefreshToken, JWT_SECRET) as Record<string, unknown>;
         const parsedPayload = await jwtPayloadLooseTransformSchema.parseAsync(payload);
@@ -23,7 +27,14 @@ export const refreshController: RequestHandler = async (req, res) => {
         return void res.sendStatus(HTTP_STATUS_CODES.OK);
     }
     catch (err) {
-        appLogger.info(err);
+        if (err instanceof ZodError) {
+            appLogger.info(err, "Zod Error: ");
+            return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
+        }
+        if (err instanceof JsonWebTokenError) {
+            appLogger.info(err, "JWT Error: ");
+            return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
+        }
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };
