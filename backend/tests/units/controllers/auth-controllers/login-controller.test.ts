@@ -43,10 +43,7 @@ describe("test loginController", () => {
             cookie: vi.fn().mockReturnThis(),
             sendStatus: vi.fn().mockReturnThis(),
             status: vi.fn().mockReturnThis(),
-            send: vi.fn().mockImplementation((...args) => {
-                console.log("cookie called with:", args);
-                return mockResponse;
-            }),
+            send: vi.fn().mockReturnThis(),
         } as unknown as express.Response;
         const mockNext = vi.fn();
 
@@ -84,7 +81,7 @@ describe("test loginController", () => {
 
     it("responds with 400 if password is incorrect", async () => {
         const hashedPassword = await createPasswordHash("Test@123");
-        console.log(hashedPassword);
+        
         await UserModel.create({
             name: "test",
             email: "wrongpass@example.com",
