@@ -1,7 +1,7 @@
 import { appLogger } from "@src/configs/app-logger";
 import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
 import { UserModel } from "@src/models/users.model";
-import { userSchema } from "@src/schemas/auth-schemas";
+import { jwtPayloadSchema, userSchema } from "@src/schemas/auth-schemas";
 import { attachAccessAndRefreshTokenCookie } from "@src/utils/jwt-utils";
 import type { RequestHandler } from "express";
 import { ZodError } from "zod";
@@ -25,28 +25,30 @@ export const signupController: RequestHandler = async (req, res) => {
         if (parsedPassword !== parsedConfirmPassword)
             return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
 
-        const exisitingUserDoc = await UserModel.exists({ email: parsedEmail });
-        if (exisitingUserDoc !== null)
+        const existingUserDoc = await UserModel.exists({ email: parsedEmail });
+        if (existingUserDoc !== null)
             return void res
                 .status(HTTP_STATUS_CODES.BAD_REQUEST)
                 .send("Email already registered");
 
-        const newUser = new UserModel({
+        const newUser = await UserModel.create({
             name: parsedName,
             email: parsedEmail,
             password: parsedPassword,
         });
 
-        await newUser.save();
-
         const payload = {
-            userId: newUser._id,
+            userId: newUser._id.toHexString(),
             email: newUser.email
         };
-        attachAccessAndRefreshTokenCookie(res, payload);
+        const parsedPaylod = await jwtPayloadSchema.parseAsync(payload);
+        attachAccessAndRefreshTokenCookie(res, parsedPaylod);
         return void res
             .status(HTTP_STATUS_CODES.CREATED)
-            .send("Signup successful");
+            .send({
+                name: newUser.name,
+                email: newUser.email,
+            });
     }
     catch (err) {
         appLogger.info(err);
