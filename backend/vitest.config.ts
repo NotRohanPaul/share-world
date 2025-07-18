@@ -1,7 +1,9 @@
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
-process.loadEnvFile("./.env.development");
+if (process.env.NODE_ENV !== 'production') {
+    process.loadEnvFile("./.env.development");
+}
 export default defineConfig({
     plugins: [tsconfigPaths()],
     test: {
