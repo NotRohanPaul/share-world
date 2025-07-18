@@ -4,7 +4,7 @@ import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
 import { cookiesSchema, jwtPayloadLooseTransformSchema } from "@src/schemas/auth-schemas";
 import { attachNewAccessToken } from "@src/utils/jwt-utils";
 import type { RequestHandler } from "express";
-import jwt, { JsonWebTokenError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { ZodError } from "zod";
 
 export const refreshController: RequestHandler = async (req, res) => {
@@ -31,7 +31,7 @@ export const refreshController: RequestHandler = async (req, res) => {
             appLogger.info(err, "Zod Error: ");
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
         }
-        if (err instanceof JsonWebTokenError) {
+        if (err instanceof jwt.JsonWebTokenError) {
             appLogger.info(err, "JWT Error: ");
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
         }
