@@ -91,8 +91,8 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./tests/setupTests.ts",
     include: ["tests/**/*.{test,spec}.{js,ts,tsx}"],
-    env: loadEnv("development", process.cwd()),
     watch: false,
+    env: loadEnv("development", process.cwd(), ""),
     coverage: {
       provider: "v8",
       reporter: ["text"],

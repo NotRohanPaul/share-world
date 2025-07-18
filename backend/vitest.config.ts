@@ -1,9 +1,7 @@
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
+import { loadEnv } from "vite";
 
-if (process.env.NODE_ENV !== 'production') {
-    process.loadEnvFile("./.env.development");
-}
 export default defineConfig({
     plugins: [tsconfigPaths()],
     test: {
@@ -11,6 +9,7 @@ export default defineConfig({
         watch: false,
         include: ['tests/**/*.{test,spec}.ts'],
         environment: 'node',
+        env: loadEnv("development", process.cwd(), ""),
         coverage: {
             reporter: ['text'],
             reportsDirectory: './.cache/coverage'
