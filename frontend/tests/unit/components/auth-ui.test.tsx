@@ -2,8 +2,9 @@ import { AuthForm } from "@src/components/auth/layout/auth-form";
 import { cleanup, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import { beforeEach, describe, expect, it } from "vitest";
+import { ToastsProvider } from "@src/components/common/ui/toast/context/toasts-provider";
 
-describe('AuthForm UI', () => {
+describe('test the render of AuthForm UI', () => {
   beforeEach(() => {
     cleanup();
   });
@@ -11,7 +12,9 @@ describe('AuthForm UI', () => {
   it('renders login inputs and button when authType is "login"', () => {
     render(
       <MemoryRouter>
-        <AuthForm authType="login" />
+        <ToastsProvider>
+          <AuthForm authType="login" />
+        </ToastsProvider>
       </MemoryRouter>
     );
 
@@ -26,7 +29,9 @@ describe('AuthForm UI', () => {
   it('renders signup inputs and button when authType is "signup"', () => {
     render(
       <MemoryRouter>
-        <AuthForm authType="signup" />
+        <ToastsProvider>
+          <AuthForm authType="signup" />
+        </ToastsProvider>
       </MemoryRouter>
     );
 
@@ -38,7 +43,7 @@ describe('AuthForm UI', () => {
       .toBeInTheDocument();
     expect(screen.getByLabelText(/^Confirm Password$/))
       .toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /^SignUp$/ }))
+    expect(screen.getByRole('button', { name: /^Signup$/ }))
       .toBeInTheDocument();
   });
 });

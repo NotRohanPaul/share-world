@@ -123,7 +123,7 @@ export const SignupForm = () => {
                 onClick={handleSignupClick}
             >
                 {isLoading === false ?
-                    "SignUp" :
+                    "Signup" :
                     <AppIcons.Loader />
                 }
             </button>

@@ -1,5 +1,6 @@
 import { LoginForm } from '@src/components/auth/ui/login-form';
 import { SignupForm } from '@src/components/auth/ui/signup-form';
+import { ToastsProvider } from "@src/components/common/ui/toast/context/toasts-provider";
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
@@ -13,7 +14,9 @@ describe('LoginForm and SignupForm Integration with Backend', () => {
     it('should allow typing and call loginHandler on login button click', async () => {
         render(
             <MemoryRouter>
-                <LoginForm />
+                <ToastsProvider>
+                    <LoginForm />
+                </ToastsProvider>
             </MemoryRouter>
         );
 
@@ -33,7 +36,9 @@ describe('LoginForm and SignupForm Integration with Backend', () => {
     it('should allow typing and call signupHandler on signup button click', async () => {
         render(
             <MemoryRouter>
-                <SignupForm />
+                <ToastsProvider>
+                    <SignupForm />
+                </ToastsProvider>
             </MemoryRouter>
         );
         const nameInput = screen.getByLabelText(/^Name$/) as HTMLInputElement;
