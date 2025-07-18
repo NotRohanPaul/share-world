@@ -20,7 +20,7 @@
     "coverage": "vitest run --coverage",
     "bundle": "npm run clean && rollup -c",
     "build:ts": "npm run lint && npm run test && npm run tsc:src",
-    "build:stage": "npm run lint && npm run tsc && npm run test && npm run bundle",
+    "build:prod": "npm run lint && npm run tsc && npm run test && npm run bundle",
     "start:dev": "nodemon --exec tsx --tsconfig ./tsconfig.app.json  --env-file=.env.development ./src/index.ts",
     "start:stage": "node --env-file=.env.staging ./dist/index.js",
     "render:build": "npm ci --include=dev && npm run build:prod",
