@@ -24,7 +24,7 @@ export const appWithTimeout = (setupRoutes: (app: express.Express) => void): Exp
 
 describe("Timeout middleware", () => {
 
-    it("returns 500 for invalid timeout duration input", async () => {
+    it("response 500 for invalid timeout duration input", async () => {
         const app = appWithTimeout(app => {
             app.get("/invalid", timeoutHandler(100), (_req, res) => {
                 res.send("should not get here");
@@ -34,7 +34,7 @@ describe("Timeout middleware", () => {
         await request(app).get("/invalid").expect(500);
     });
 
-    it("returns 200 when times out is respected", async () => {
+    it("response 200 when times out is respected", async () => {
         const app = appWithTimeout(app => {
             app.get("/fast", timeoutHandler(1_000), async (_req, res) => {
                 await timers.promises.setTimeout(200);
@@ -45,7 +45,7 @@ describe("Timeout middleware", () => {
         await request(app).get("/fast").expect(200);
     });
 
-    it("returns error when request times out", async () => {
+    it("response 504 when request times out", async () => {
         const app = appWithTimeout(app => {
             app.get("/slow", timeoutHandler(1_000), async (_req, res) => {
                 await timers.promises.setTimeout(2_000);
@@ -54,7 +54,7 @@ describe("Timeout middleware", () => {
             });
         });
 
-        await request(app).get("/slow").expect(500);
+        await request(app).get("/slow").expect(504);
     });
 
 });
