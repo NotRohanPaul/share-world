@@ -25,7 +25,8 @@ export const useSenderInputs = (
 
     const handleReceiverIdInput = (e: ChangeEvent<HTMLInputElement>): void => {
         const target = e.target;
-        setReceiverIdInput(target.value);
+        if (target.value.length <= 5)
+            setReceiverIdInput(target.value);
     };
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {

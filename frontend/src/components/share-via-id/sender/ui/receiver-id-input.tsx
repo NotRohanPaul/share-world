@@ -23,9 +23,8 @@ export const ReceiverIdInput = ({
                     Enter Receiver's ID:
                 </label>
                 <input
-                    className="outline-2 outline-primary rounded-sm caret-primary px-3 py-1 max-md:p-1 max-xs:px-1 max-xs:py-0 focus:outline-4 tracking-widest"
+                    className="w-[6em] border-b-[.1em] border-primary rounded-sm text-center caret-primary focus:outline-0 tracking-widest"
                     id="receiver-input"
-                    size={5}
                     type="text"
                     name="receiver"
                     value={receiverIdInput ?? ""}
