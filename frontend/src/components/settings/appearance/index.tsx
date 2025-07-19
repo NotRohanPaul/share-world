@@ -4,6 +4,7 @@ export const AppearanceSettings = () => {
             <div className="flex gap-2">
                 <label>Theme</label>
                 <select
+                    className="w-[5rem] text-end"
                     name=""
                     id=""
                 >
@@ -14,7 +15,11 @@ export const AppearanceSettings = () => {
             </div>
             <div className="flex gap-2">
                 <label>Animation</label>
-                <select name="" id="">
+                <select
+                    className="w-[5rem] text-end"
+                    name=""
+                    id=""
+                >
                     <option value="">Enable</option>
                     <option value="">Disable</option>
                 </select>
