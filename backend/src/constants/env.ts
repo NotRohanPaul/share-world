@@ -11,7 +11,7 @@ const getEnv = (key: string, defaultValue?: string): string => {
 
 export const NODE_ENV = getEnv("NODE_ENV", "production");
 export const IS_SECURE_ENV = ((): boolean => {
-    const insecureEnvs = ['development', 'test'];
+    const insecureEnvs = ["development", "test"];
     return insecureEnvs.includes(NODE_ENV) === false;
 })();
 

@@ -1,17 +1,17 @@
-import http, { type RequestListener } from 'node:http';
+import http, { type RequestListener } from "node:http";
 import { appLogger } from "./configs/app-logger";
 import { connectDB } from "./configs/connect-DB";
 import { app } from "./configs/express-app";
 import { gracefulShutdown } from "./configs/graceful-shutdown";
 import { HOST, IS_SECURE_ENV, NODE_ENV, PORT } from "./constants/env";
 import { APP_TIMEOUTS } from "./constants/timeouts";
-import { initializeSocket } from './sockets/socket-app';
+import { initializeSocket } from "./sockets/socket-app";
 
 const server = http.createServer(app as RequestListener);
 server.keepAliveTimeout = APP_TIMEOUTS.keepAliveTimeout;
 server.headersTimeout = APP_TIMEOUTS.headersTimeout;
-server.on('error', (err) => {
-    appLogger.error({ err }, 'Server error: \n');
+server.on("error", (err) => {
+    appLogger.error({ err }, "Server error: \n");
     process.exit(1);
 });
 

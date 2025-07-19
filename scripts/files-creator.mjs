@@ -22,7 +22,7 @@ const extensionsMultiplierObj = {
     G: 1024 ** 3,
 };
 const defaultAnswers = {
-    location: path.join(os.homedir(), 'Downloads', "sample-files"),
+    location: path.join(os.homedir(), "Downloads", "sample-files"),
     quantity: 5,
     fileExtensions: "txt,md,html,pdf,png",
     sizes: "1B,1K,1M,500K,50M",
@@ -116,7 +116,7 @@ const customAnswersFilesHandler = async () => {
         await fs.promises.access(customAnswers.location, fs.constants.W_OK | fs.constants.R_OK);
         console.log(`Folder: ${customAnswers.location} is accessible`);
 
-        const sampleFilesPath = path.join(customAnswers.location, 'sample-files');
+        const sampleFilesPath = path.join(customAnswers.location, "sample-files");
         try {
 
             await fs.promises.access(sampleFilesPath, fs.constants.W_OK | fs.constants.R_OK);
@@ -161,12 +161,12 @@ const askQuestion = async (questionString, defaultValue, transform) => {
         throw new Error("Transform argument is not a function");
 
     const answer = await readInterface.question(questionString);
-    console.log('Received:', answer);
+    console.log("Received:", answer);
     if (answer === undefined || answer.trim() === '') {
         if (defaultValue === undefined) {
             throw new Error("Invalid input");
         }
-        console.log('Using default value:', defaultValue);
+        console.log("Using default value:", defaultValue);
         return defaultValue;
     }
     else {
@@ -182,7 +182,7 @@ const questionsHandler = async () => {
     const initialAnswer = await askQuestion(questionsStringObj.initial, 'n', (s) => s.toLowerCase());
 
     if (initialAnswer !== "y") {
-        console.log('Switching to custom prompts!');
+        console.log("Switching to custom prompts!");
     } else {
         await defaultAnswersFilesHandler();
         console.log("Done");

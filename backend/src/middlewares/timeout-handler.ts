@@ -20,7 +20,7 @@ export const timeoutHandler = (duration: number): RequestHandler => {
             res.sendStatus(HTTP_STATUS_CODES.GATEWAY_TIMEOUT);
         }, duration);
 
-        res.on('finish', () => clearTimeout(timeoutId));
+        res.on("finish", () => clearTimeout(timeoutId));
 
         next();
     };

@@ -5,7 +5,7 @@ import ShareWorldImageSrc from "./share-world.png";
 import { FadeInImage, type MotionImageProps } from "./containers/fade-in-img";
 
 
-type ImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt'>;
+type ImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "alt">;
 
 
 export const AppImages = {

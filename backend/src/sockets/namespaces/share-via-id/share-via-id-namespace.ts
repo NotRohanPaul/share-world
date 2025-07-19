@@ -13,7 +13,7 @@ export const shareViaIdNamespace = (io: Server): void => {
     ns.use(userIdHandler);
 
     const userMap = new Map<string, SocketWithUserIdType>();
-    ns.on('connection', (socket: SocketWithUserIdType) => {
+    ns.on("connection", (socket: SocketWithUserIdType) => {
         const userId = socket.data.userId;
         userMap.set(userId, socket);
         socket.emit("user-id-client", { userId });

@@ -1,5 +1,5 @@
-import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig } from 'vitest/config';
+import tsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig } from "vitest/config";
 import { loadEnv } from "vite";
 
 export default defineConfig({
@@ -7,12 +7,12 @@ export default defineConfig({
     test: {
         globals: false,
         watch: false,
-        include: ['tests/**/*.{test,spec}.ts'],
-        environment: 'node',
+        include: ["tests/**/*.{test,spec}.ts"],
+        environment: "node",
         env: loadEnv("development", process.cwd(), ""),
         coverage: {
-            reporter: ['text'],
-            reportsDirectory: './.cache/coverage'
+            reporter: ["text"],
+            reportsDirectory: "./.cache/coverage"
         }
     }
 })

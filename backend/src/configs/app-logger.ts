@@ -24,12 +24,12 @@ if (IS_SECURE_ENV === true) {
         ])
     );
 } else {
-    const isTestEnv = process.env.VITEST === 'true' || process.env.NODE_ENV === 'test';
+    const isTestEnv = process.env.VITEST === "true" || process.env.NODE_ENV === "test";
     appLogger = isTestEnv
-        ? pino({ level: 'info' })
+        ? pino({ level: "info" })
         : pino({
             transport: {
-                target: 'pino-pretty',
+                target: "pino-pretty",
                 options: {
                     colorize: true
                 }

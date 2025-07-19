@@ -10,7 +10,7 @@ import path from "node:path";
 
 const app = express();
 
-app.disable('x-powered-by');
+app.disable("x-powered-by");
 app.use(cookieParser());
 app.use(helmet({
     xPoweredBy: false,
@@ -34,12 +34,12 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.use("/api/v1", routesHandler);
 app.get("*public", (_req, res) => {
-    res.set('Cache-Control', 'no-store');
-    res.sendFile(path.resolve('public/index.html'));
+    res.set("Cache-Control", "no-store");
+    res.sendFile(path.resolve("public/index.html"));
 });
 app.use(errorHandler);
 app.use(unknownHandler);

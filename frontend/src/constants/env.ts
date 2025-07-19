@@ -14,6 +14,6 @@ export const APP_ORIGIN = getEnv("VITE_APP_ORIGIN", location.origin);
 export const API_ORIGIN = getEnv("VITE_API_ORIGIN", APP_ORIGIN);
 export const WS_API_ORIGIN = API_ORIGIN.replace(/^http/, "ws");
 export const IS_SECURE_ENV = ((): boolean => {
-    const insecureEnvs = ['development', 'test'];
+    const insecureEnvs = ["development", "test"];
     return insecureEnvs.includes(APP_ENV) === false;
 })();

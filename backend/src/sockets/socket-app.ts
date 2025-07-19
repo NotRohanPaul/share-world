@@ -14,7 +14,7 @@ export function initializeSocket(server: ServerType): void {
         pingInterval: APP_TIMEOUTS.pingInterval,
         cors: {
             origin: IS_SECURE_ENV ? APP_ORIGIN : true,
-            methods: ['GET', 'POST'],
+            methods: ["GET", "POST"],
             credentials: true,
         },
     });
