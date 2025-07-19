@@ -21,7 +21,7 @@ export const ToastsProvider: FC<{ children: ReactElement; }> = ({ children }) =>
         setTimeout(() => {
             console.log(toastsList, toastId);
             setToastsList((prev) => prev.filter((options) => options.id !== toastId));
-        }, 5e3);
+        }, options.exitDelay ?? 3e3);
     }, []);
 
 
