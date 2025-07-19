@@ -16,7 +16,7 @@ export const ToastsContainer = ({
     }, [toastsList, isVisible]);
 
     return createPortal(
-        isVisible === true && <motion.section className="w-[17rem] max-xs:w-[15rem] h-full absolute z-10 top-0 right-0 flex flex-col items-end gap-4 pointer-events-none overflow-hidden p-4 max-xs:p-2">
+        isVisible === true && <motion.section className="h-full absolute z-10 top-10 right-0 flex flex-col items-end gap-4 pointer-events-none overflow-hidden p-4 max-xs:p-2">
             <AnimatePresence
                 onExitComplete={() => {
                     if (toastsList.length === 0) {

@@ -2,6 +2,7 @@
 export type ToastOptionsType = {
     id: string,
     text: string,
+    exitDelay: number;
 };
 
 type ToastContextOptionsType = Omit<ToastOptionsType, "id">;
