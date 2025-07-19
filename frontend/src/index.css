@@ -73,7 +73,7 @@
         }
 
         div p {
-            @apply flex items-center gap-2 text-primary text-left text-3xl max-md:text-base max-xs:text-sm;
+            @apply flex items-center gap-2 text-primary text-left text-3xl max-sm:text-base max-xs:text-sm;
         }
 
         div p::before {
