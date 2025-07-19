@@ -5,6 +5,8 @@ import { FilesInput } from "../ui/files-input";
 import { ReceiverIdInput } from "../ui/receiver-id-input";
 import { FileList } from "../../common/files-list";
 import { UserHeader, UserMain, UserSection } from "../../common/layout/user-layouts";
+import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
+import { useEffect } from "react";
 
 export const SenderViaIdMain = () => {
     const {
@@ -21,12 +23,23 @@ export const SenderViaIdMain = () => {
         handleConnectClick
     } = useSender();
 
+    const showToast = useToastContext();
+
+    useEffect(() => {
+        if (error === null || error.trim() === "") return;
+
+        showToast({
+            text: error,
+            exitDelay: 1e3
+        });
+
+    }, [error]);
+
     return (
         <UserSection>
             <UserHeader>
                 <AppIcons.Send className="w-[3rem] h-[3rem] max-xs:w-[2rem] max-xs:h-[2rem] relative -bottom-1" />
                 <h1 className="text-5xl max-xs:text-4xl font-semibold">Sender</h1>
-                {error && <p className="text-orange-500">Error: {error}</p>}
             </UserHeader>
             <UserMain>
                 <UserId userId={userId} peerType="sender" />

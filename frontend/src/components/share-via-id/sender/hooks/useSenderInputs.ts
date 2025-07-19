@@ -53,7 +53,7 @@ export const useSenderInputs = (
 
     const handleConnectClick = () => {
         if (receiverIdInput === null || socketRef.current === null)
-            return setError("No receiverId or socket");
+            return setError("No receiverId");
 
         if (receiverIdInput === userId)
             return setError("You cant use your own userId as receiverId");
