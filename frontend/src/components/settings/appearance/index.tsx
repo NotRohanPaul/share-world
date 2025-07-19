@@ -1,7 +1,7 @@
 export const AppearanceSettings = () => {
     return (
         <>
-            <div className="flex justify-between gap-2">
+            <div className="flex gap-2">
                 <label>Theme</label>
                 <select
                     name=""
@@ -12,7 +12,7 @@ export const AppearanceSettings = () => {
 
                 </select>
             </div>
-            <div className="flex justify-between gap-2">
+            <div className="flex gap-2">
                 <label>Animation</label>
                 <select name="" id="">
                     <option value="">Enable</option>
