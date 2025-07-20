@@ -14,13 +14,13 @@
     "test": "vitest run",
     "coverage": "vitest run --coverage",
     "lint": "eslint .",
-    "tsc": "tsc -b",
+    "tsc": "tsc -b --verbose",
     "start:dev": "vite --mode development",
     "start:dev-host-https": "vite --mode development --host",
     "start:stage": "vite preview --mode staging",
     "build:stage": "vite build --mode staging",
     "build:prod": "npm run lint && npm run tsc && npm run test &&  vite build --mode production",
-    "render:build": "npm ci --include=dev && npm run build:prod"
+    "render:build": "npm ci --include=dev && vite build --mode production"
   },
   "dependencies": {
     "@reduxjs/toolkit": "2.8.2",

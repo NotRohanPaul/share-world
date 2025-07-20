@@ -2,13 +2,16 @@ name: Deploy Pipeline
 
 on:
   push:
-    branches: [deploy, main]
+    branches: [deploy]
+  pull_request:
+    branches: [deploy]
   workflow_dispatch:
 
 jobs:
   all-ci:
-    name: Runs Lint, Tests and Build for both frontend and backend and then trigger deploy to render of the latest commits
-    runs-on: ubuntu-24.04.1
+    if: github.ref == 'refs/heads/deploy'
+    name: Lint, Tests, Build any Deploy
+    runs-on: ubuntu-24.04
     steps: 
         - name: Checkout to Branch 
           uses: actions/checkout@v3 
@@ -17,18 +20,28 @@ jobs:
           uses: actions/setup-node@v3 
           with:
             node-version: 22.14.0
-
         - name: Backend CI
           run: |
             cd backend
             npm ci
+
+            # This creates the development env for testing 
+            cat <<EOF > .env.development
+            NODE_ENV=development
+            PORT=5000
+            HOST=localhost
+            MONGO_URI=mongodb://localhost:27017/dev-file-share-v1
+            JWT_SECRET=1bc0469f4bc544c6ed0c255fb118b71a063eec520122f6ae7e97ff502a5779455c1caa4af768e752f4fbfb88fef4f60037de6265521963b64daecb7fa3d42d37
+            EOF
             npm run build:prod
         
         - name: Frontend CI
           run: |
-            cd backend
+            cd frontend
             npm ci
             npm run build:prod
 
         - name: Deploy to Render
-          run: curl -X POST ${{secrets.RENDER_DEPLOY_HOOK}}
+          run: |
+            curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}
+            curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}
