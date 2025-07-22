@@ -47,7 +47,6 @@ export default defineConfig({
       "/socket": {
         target: "http://localhost:5000",
         ws: true,
-        changeOrigin: true
       }
     }
   },
@@ -91,7 +90,7 @@ export default defineConfig({
     environment: "jsdom",
     environmentOptions: {
       jsdom: {
-        url: 'http://localhost:5173',
+        url: 'http://localhost:5325',
       },
     },
     setupFiles: "./tests/setupTests.ts",
