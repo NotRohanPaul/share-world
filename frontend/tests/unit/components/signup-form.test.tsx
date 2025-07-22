@@ -39,10 +39,10 @@ describe("to render signup form and test its input", () => {
         </ToastsProvider>
       </MemoryRouter>
     );
-    const nameInput = screen.getByLabelText(/^Name$/) as HTMLInputElement;
-    const emailInput = screen.getByLabelText(/^Email$/) as HTMLInputElement;
-    const passwordInput = screen.getByLabelText(/^Password$/) as HTMLInputElement;
-    const confirmPasswordInput = screen.getByLabelText(/^Confirm Password$/) as HTMLInputElement;
+    const nameInput = screen.getByLabelText(/^Name$/);
+    const emailInput = screen.getByLabelText(/^Email$/);
+    const passwordInput = screen.getByLabelText(/^Password$/);
+    const confirmPasswordInput = screen.getByLabelText(/^Confirm Password$/);
 
     const sampleName = "Test";
     const sampleEmail = `test${Math.floor(Math.random() * 1000)}@example.com`;

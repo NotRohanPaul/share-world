@@ -36,8 +36,8 @@ describe("to render login form and check its inputs", () => {
       </MemoryRouter>
     );
 
-    const emailInput = screen.getByLabelText(/^Email$/) as HTMLInputElement;
-    const passwordInput = screen.getByLabelText(/^Password$/) as HTMLInputElement;
+    const emailInput = screen.getByLabelText(/^Email$/);
+    const passwordInput = screen.getByLabelText(/^Password$/);
 
     const sampleEmail = "test@example.com";
     const samplePassword = "Test@123";
