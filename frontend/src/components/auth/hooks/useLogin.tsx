@@ -34,7 +34,7 @@ export const useLogin = () => {
             if (response.status === 200) {
                 void navigate(appRoutes.user.absolute);
             } else if (response.status === 400) {
-                showToast({ text: "Invalid Username or Password." });
+                showToast({ text: "Invalid Email or Password." });
             } else {
                 showToast({ text: "Server Error." });
             }
