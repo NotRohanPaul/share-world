@@ -6,7 +6,6 @@ import { ToastsContext } from "./toasts-context";
 
 export const ToastsProvider: FC<{ children: ReactElement; }> = ({ children }) => {
     const [toastsList, setToastsList] = useState<Array<ToastOptionsType>>([]);
-    console.log("Rerender");
     const showToast: ToastContextType = useCallback((options) => {
         const toastId = crypto.randomUUID();
         setToastsList((prev) =>
@@ -25,7 +24,6 @@ export const ToastsProvider: FC<{ children: ReactElement; }> = ({ children }) =>
     }, []);
 
 
-    console.log(toastsList);
     return (
         <>
             <ToastsContext.Provider value={showToast} children={children} />
