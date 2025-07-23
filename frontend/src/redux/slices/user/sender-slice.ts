@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const initialState = {
 
 };
@@ -7,9 +8,8 @@ const reducers = {
 
 };
 
-
-export const userSlice = createSlice({
-    name: "user",
+const senderSlice = createSlice({
+    name: "receiver",
     initialState,
     reducers
 });

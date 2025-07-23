@@ -8,7 +8,7 @@ const reducers = {
 
 };
 
-export const senderSlice = createSlice({
+const receiverSlice = createSlice({
     name: "receiver",
     initialState,
     reducers
