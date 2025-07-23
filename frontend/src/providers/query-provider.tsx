@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { FC, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 
 const queryClient = new QueryClient();
 
-export const QueryProvider: FC<{ children: ReactNode; }> = ({ children }) => <QueryClientProvider client={queryClient} children={children} />;
+export const QueryProvider = ({ children }: PropsWithChildren) => <QueryClientProvider client={queryClient} children={children} />;

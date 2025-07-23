@@ -1,9 +1,9 @@
 import { API_ORIGIN, APP_ORIGIN, IS_SECURE_ENV, WS_API_ORIGIN } from "@src/constants/env";
-import type { FC, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
 
-export const AppHelmetProvider: FC<{ children: ReactNode; }> = ({ children }) => (
+export const AppHelmetProvider = ({ children }: PropsWithChildren) => (
     <HelmetProvider>
         {(IS_SECURE_ENV === false) ? null :
             <Helmet prioritizeSeoTags={true}>

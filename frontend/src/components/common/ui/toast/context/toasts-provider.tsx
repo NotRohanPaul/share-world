@@ -1,10 +1,10 @@
-import { useCallback, useState, type FC, type ReactElement } from "react";
+import { useCallback, useState, type PropsWithChildren } from "react";
 import type { ToastContextType, ToastOptionsType } from "../types";
 import { ToastsContainer } from "../ui/toasts-container";
 import { ToastsContext } from "./toasts-context";
 
 
-export const ToastsProvider: FC<{ children: ReactElement; }> = ({ children }) => {
+export const ToastsProvider = ({ children }: PropsWithChildren) => {
     const [toastsList, setToastsList] = useState<Array<ToastOptionsType>>([]);
     const showToast: ToastContextType = useCallback((options) => {
         const toastId = crypto.randomUUID();

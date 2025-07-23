@@ -1,5 +1,5 @@
 import { AnimatePresence } from "motion/react";
-import { useEffect, useState, type FC, type ReactElement } from "react";
+import { useEffect, useState, type PropsWithChildren } from "react";
 import type { DialogBoxOptionsType } from "../types";
 import { DialogBox } from "../ui/dialog-box";
 import { DialogBoxContext } from "./dialog-box-context";
@@ -7,7 +7,7 @@ import { DialogBoxContext } from "./dialog-box-context";
 
 
 
-export const DialogBoxProvider: FC<{ children: ReactElement; }> = ({ children }) => {
+export const DialogBoxProvider = ({ children }: PropsWithChildren) => {
     const [dialogBoxOptions, setDialogBoxOptions] = useState<DialogBoxOptionsType | undefined>(undefined);
     const [isDialogBoxVisible, setIsDialogBoxVisible] = useState<boolean>(false);
 
