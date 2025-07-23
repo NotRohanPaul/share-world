@@ -1,21 +1,40 @@
 import { loginHandler } from "@src/axios/handlers/auth-handler";
 import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
+import { useAppDispatch, useAppSelector } from "@src/redux/hook";
+import {
+    resetForm,
+    selectLoginState,
+    setEmail,
+    setEmailError,
+    setPassword,
+    togglePasswordVisible
+} from "@src/redux/slices/auth/login-slice";
 import { appRoutes } from "@src/routes/app-routes";
 import { loginSchema } from "@src/schemas/auth-schemas";
 import { isTrusted } from "@src/utils/common";
-import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler, type PointerEventHandler } from "react";
+import { useMutation } from "@tanstack/react-query";
+import {
+    useRef,
+    type ChangeEvent,
+    type KeyboardEventHandler,
+    type MouseEventHandler,
+    type PointerEventHandler
+} from "react";
 import { useNavigate } from "react-router";
 
 
 export const useLogin = () => {
     const navigate = useNavigate();
-    const [loginFormData, setLoginFormData] = useState({
-        email: '',
-        password: ''
-    });
-    const [emailInputError, setEmailError] = useState("");
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const showToast = useToastContext();
+    const dispatch = useAppDispatch();
+
+    const {
+        email,
+        password,
+        emailError,
+        isPasswordVisible
+    } = useAppSelector(selectLoginState);
+
     const inputRefs = useRef<{
         emailRef: HTMLInputElement | null,
         passwordRef: HTMLInputElement | null,
@@ -24,91 +43,80 @@ export const useLogin = () => {
         passwordRef: null,
     });
 
-    const showToast = useToastContext();
 
-    const formLoginHandler = async () => {
-        try {
-            setIsLoading(true);
-            const response = await loginHandler(loginFormData);
-            console.log(response);
-            if (response.status === 200) {
-                void navigate(appRoutes.user.absolute);
-            } else if (response.status === 400) {
+    const { mutate: login, isPending: isLoading } = useMutation({
+        mutationFn: loginHandler,
+        onSuccess: async (res) => {
+            if (res.status === 200) {
+                dispatch(resetForm());
+                await navigate(appRoutes.user.absolute);
+            } else if (res.status === 400) {
                 showToast({ text: "Invalid Email or Password." });
             } else {
                 showToast({ text: "Server Error." });
             }
-        }
-        catch {
+        },
+        onError: () => {
             showToast({ text: "Network Error." });
-        }
-        finally {
-            setIsLoading(false);
-        }
+        },
+    });
+
+    const formLoginHandler = () => {
+        login({ email, password });
     };
 
     const handleInputChange = (
         e: ChangeEvent<HTMLInputElement>,
     ) => {
         if (isTrusted(e) === false || e.target.tagName !== "INPUT") return;
-        if (Object.keys(loginFormData).includes(e.target.name) === false) return;
 
-        e.preventDefault();
-        const { name, value } = e.target as HTMLInputElement & { name: keyof typeof loginFormData; };
-        setLoginFormData(prev => (
-            {
-                ...prev,
-                [name]: value
-            }
-        ));
-
+        const { name, value } = e.target;
         if (name === "email") {
-            const emailSchema = loginSchema.shape.email;
-            const parsedEmailResult = emailSchema.safeParse(value);
+            dispatch(setEmail(value));
 
-            setEmailError(() => {
-                if (parsedEmailResult.success === false) {
-                    return parsedEmailResult.error.issues[0].message;
-                }
-                return '';
-            });
+            const emailSchema = loginSchema.shape.email;
+            const result = emailSchema.safeParse(value);
+
+            dispatch(setEmailError(result.success === true ? "" : result.error.issues[0].message));
+        }
+
+        if (name === "password") {
+            dispatch(setPassword(value));
         }
     };
 
     const handleLoginClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-        const target = e.target as HTMLButtonElement;
-        if (isLoading === true) return;
-        if (isTrusted(e) === false || target.tagName !== "BUTTON") return;
-        if (loginFormData.password === "" || loginFormData.email === "" || emailInputError !== "") return;
+        if (isTrusted(e) === false || e.currentTarget.tagName !== "BUTTON") return;
+        if (isLoading === true || email === "" || password === "" || emailError !== "") return;
 
-        void formLoginHandler();
+        formLoginHandler();
     };
 
     const handleEnter: KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key !== "Enter" || isTrusted(e) === false) return;
-        const target = e.target as HTMLInputElement;
-        if (target.tagName !== "INPUT") return;
 
-        if (target.name === "email") {
-            if (target.value === "") return;
+        if (e.currentTarget.name === "email") {
+            if (email === "") return;
             inputRefs.current.passwordRef?.focus();
         }
-        if (target.name === "password") {
-            if (target.value === "") return;
+
+        if (e.currentTarget.name === "password") {
+            if (password === "") return;
             if (isLoading === true) return;
-            void formLoginHandler();
+            formLoginHandler();
         }
     };
 
     const handleEyeClick: PointerEventHandler<HTMLButtonElement> = (e) => {
         if (isTrusted(e) === false || e.currentTarget.tagName !== "BUTTON") return;
         e.stopPropagation();
-        setIsPasswordVisible(prev => !prev);
-        if (e.pointerType === "touch")
-            return;
+        dispatch(togglePasswordVisible());
+
+        if (e.pointerType === "touch") return;
+
         setTimeout(() => {
             const input = inputRefs.current.passwordRef;
-            if (input) {
+            if (input !== null) {
                 input.focus();
                 const len = input.value.length;
                 input.setSelectionRange(len, len);
@@ -118,8 +126,9 @@ export const useLogin = () => {
 
     return {
         isLoading,
-        loginFormData,
-        emailInputError,
+        email,
+        password,
+        emailError,
         isPasswordVisible,
         inputRefs,
         handleInputChange,

@@ -5,8 +5,9 @@ import { useLogin } from "../hooks/useLogin";
 export const LoginForm = () => {
     const {
         isLoading,
-        loginFormData,
-        emailInputError,
+        email,
+        password,
+        emailError,
         isPasswordVisible,
         inputRefs,
         handleInputChange,
@@ -25,12 +26,12 @@ export const LoginForm = () => {
                 id="login-email"
                 autoComplete="email"
                 placeholder="hello@example.com"
-                value={loginFormData.email}
+                value={email}
                 onChange={handleInputChange}
                 onKeyDown={handleEnter}
                 ref={(elem) => { inputRefs.current.emailRef = elem; }}
             />
-            {emailInputError !== '' ? <p className="input-error">{emailInputError}</p> : null}
+            {emailError !== '' ? <p className="input-error">{emailError}</p> : null}
 
             <label htmlFor="login-password">Password</label>
             <div className="relative">
@@ -40,7 +41,7 @@ export const LoginForm = () => {
                     name="password"
                     id="login-password"
                     autoComplete="current-password"
-                    value={loginFormData.password}
+                    value={password}
                     onChange={handleInputChange}
                     onKeyDown={handleEnter}
                     ref={(elem) => { inputRefs.current.passwordRef = elem; }}

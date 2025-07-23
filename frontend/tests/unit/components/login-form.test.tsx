@@ -1,9 +1,22 @@
 import { AuthForm } from "@src/components/auth/layout/auth-form";
-import { cleanup, render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router";
-import { beforeEach, describe, expect, it } from "vitest";
 import { ToastsProvider } from "@src/components/common/ui/toast/context/toasts-provider";
+import { QueryProvider } from "@src/providers/query-provider";
+import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router";
+import { renderWithProviders } from "tests/config/utils/render-with-redux-provider";
+import { beforeEach, describe, expect, it } from "vitest";
+
+const renderLogin = () => renderWithProviders(
+  <QueryProvider>
+    <ToastsProvider>
+      <MemoryRouter>
+        <AuthForm authType="login" />
+      </MemoryRouter>
+    </ToastsProvider>
+  </QueryProvider>
+);
+
 
 describe("to render login form and check its inputs", () => {
   beforeEach(() => {
@@ -11,30 +24,21 @@ describe("to render login form and check its inputs", () => {
   });
 
   it("renders login inputs and button when authType is login", () => {
-    render(
-      <MemoryRouter>
-        <ToastsProvider>
-          <AuthForm authType="login" />
-        </ToastsProvider>
-      </MemoryRouter>
-    );
+    renderLogin();
+    const emailInput = screen.getByLabelText(/^Email$/);
+    const passwordInput = screen.getByLabelText(/^Password$/);
+    const loginBtn = screen.getByRole("button", { name: /^Login$/ });
 
-    expect(screen.getByLabelText(/^Email$/))
+    expect(emailInput)
       .toBeInTheDocument();
-    expect(screen.getByLabelText(/^Password$/))
+    expect(passwordInput)
       .toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /^Login$/ }))
+    expect(loginBtn)
       .toBeInTheDocument();
   });
 
   it("typing in the inputs in the form", async () => {
-    render(
-      <MemoryRouter>
-        <ToastsProvider>
-          <AuthForm authType="login" />
-        </ToastsProvider>
-      </MemoryRouter>
-    );
+    renderLogin();
 
     const emailInput = screen.getByLabelText(/^Email$/);
     const passwordInput = screen.getByLabelText(/^Password$/);
