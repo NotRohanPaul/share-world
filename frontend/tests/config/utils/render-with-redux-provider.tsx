@@ -8,7 +8,7 @@ interface ExtendedRenderOptions {
     store?: AppStoreStateType;
 }
 
-export function renderWithProviders(
+export function renderWithReduxProviders(
     ui: React.ReactElement,
     {
         preloadedState = {},

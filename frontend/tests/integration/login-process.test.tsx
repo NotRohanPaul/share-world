@@ -7,7 +7,7 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { TEST_ORIGIN } from "tests/config/constants/common";
-import { renderWithProviders } from "tests/config/utils/render-with-redux-provider";
+import { renderWithReduxProviders } from "tests/config/utils/render-with-redux-provider";
 import {
     afterAll,
     afterEach,
@@ -25,7 +25,7 @@ const sampleInputs = {
     password: "Test@123"
 };
 
-const renderLoginForm = () => renderWithProviders(
+const renderLoginForm = () => renderWithReduxProviders(
     <QueryProvider>
         <ToastsProvider>
             <MemoryRouter initialEntries={["/login"]}>
@@ -45,8 +45,10 @@ const fillLoginForm = async () => {
 
     await userEvent.type(emailInputElm, sampleInputs.email);
     await userEvent.type(passwordInputElm, sampleInputs.password);
+
     expect(emailInputElm).toHaveValue(sampleInputs.email);
     expect(passwordInputElm).toHaveValue(sampleInputs.password);
+
     await userEvent.click(loginBtnElm);
 };
 

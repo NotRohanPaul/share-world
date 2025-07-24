@@ -4,10 +4,10 @@ import { QueryProvider } from "@src/providers/library/query-provider";
 import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
-import { renderWithProviders } from "tests/config/utils/render-with-redux-provider";
+import { renderWithReduxProviders } from "tests/config/utils/render-with-redux-provider";
 import { beforeEach, describe, expect, it } from "vitest";
 
-const renderLogin = () => renderWithProviders(
+const renderLogin = () => renderWithReduxProviders(
   <QueryProvider>
     <ToastsProvider>
       <MemoryRouter>
