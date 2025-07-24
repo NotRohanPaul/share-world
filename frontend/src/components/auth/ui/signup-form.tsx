@@ -1,11 +1,28 @@
 import { AppIcons } from "@src/assets/icons";
 import { useSignup } from "../hooks/useSignup";
+import { AnimatePresence, motion } from "motion/react";
 
+const AnimatedErrorParagarph = ({ text, type }: { text: string, type: "name" | "email" | "password" | "confirmPassword"; }) => {
+    return <AnimatePresence mode="wait">
+        {text !== '' && (
+            <motion.p
+                key={type}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.15 }}
+                className="input-error"
+            >
+                {text}
+            </motion.p>
+        )}
+    </AnimatePresence>;
+};
 
 export const SignupForm = () => {
     const {
         isLoading,
-         name,
+        name,
         email,
         password,
         confirmPassword,
@@ -36,7 +53,7 @@ export const SignupForm = () => {
                 onKeyDown={handleEnter}
                 ref={(elem) => { inputRefs.current.nameRef = elem; }}
             />
-            {inputErrors.name !== '' ? <p className="input-error">{inputErrors.name}</p> : null}
+            <AnimatedErrorParagarph text={inputErrors.name} type="name" />
 
             <label htmlFor="signup-email">
                 Email
@@ -52,7 +69,7 @@ export const SignupForm = () => {
                 onKeyDown={handleEnter}
                 ref={(elem) => { inputRefs.current.emailRef = elem; }}
             />
-            {inputErrors.email !== '' ? <p className="input-error">{inputErrors.email}</p> : null}
+            <AnimatedErrorParagarph text={inputErrors.email} type="email" />
 
             <label htmlFor="signup-password">
                 Password
@@ -85,7 +102,7 @@ export const SignupForm = () => {
                     }
                 </button>
             </div>
-            {inputErrors.password !== '' ? <p className="input-error">{inputErrors.password}</p> : null}
+            <AnimatedErrorParagarph text={inputErrors.password} type="password" />
 
             <label htmlFor="signup-confirm-password">
                 Confirm Password
@@ -117,7 +134,7 @@ export const SignupForm = () => {
                     }
                 </button>
             </div>
-            {inputErrors.confirmPassword !== '' ? <p className="input-error">{inputErrors.confirmPassword}</p> : null}
+            <AnimatedErrorParagarph text={inputErrors.confirmPassword} type="confirmPassword" />
 
             <button
                 type="button"

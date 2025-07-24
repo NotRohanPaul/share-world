@@ -1,4 +1,5 @@
 import { loginHandler } from "@src/axios/handlers/auth-handler";
+import { useDebounce } from "@src/components/common/hooks/useDebounce";
 import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { useAppDispatch, useAppSelector } from "@src/redux/hook";
 import { loginStateActions, selectLoginState } from "@src/redux/slices/auth/login-slice";
@@ -44,6 +45,14 @@ export const useLogin = () => {
         };
     }, []);
 
+    useDebounce(() => {
+        if (email === "") {
+            return void dispatch(loginStateActions.setEmailError(''));
+        }
+        const result = loginSchema.shape.email.safeParse(email);
+        dispatch(loginStateActions.setEmailError(result.success === true ? '' : result.error.issues[0].message));
+    }, [email], 600);
+
 
     const { mutate: login, isPending: isLoading } = useMutation({
         mutationFn: loginHandler,
@@ -82,11 +91,6 @@ export const useLogin = () => {
         const { name, value } = e.target;
         if (name === "email") {
             dispatch(loginStateActions.setEmail(value));
-
-            const emailSchema = loginSchema.shape.email;
-            const result = emailSchema.safeParse(value);
-
-            dispatch(loginStateActions.setEmailError(result.success === true ? "" : result.error.issues[0].message));
         }
 
         if (name === "password") {

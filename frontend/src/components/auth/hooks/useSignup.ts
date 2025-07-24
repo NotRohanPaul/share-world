@@ -1,15 +1,17 @@
 import { signupHandler } from "@src/axios/handlers/auth-handler";
+import { useDebounce } from "@src/components/common/hooks/useDebounce";
 import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { useAppDispatch } from "@src/redux/hook";
 import { selectSignupState, signupStateActions } from "@src/redux/slices/auth/signup-slice";
 import { userStateActions } from "@src/redux/slices/auth/user-slice";
 import { appRoutes } from "@src/routes/app-routes";
-import { signupInputSchema, userDataSchema } from "@src/schemas/auth-schemas";
+import { signupInputSchema, signupSchema, userDataSchema } from "@src/schemas/auth-schemas";
 import { isTrusted } from "@src/utils/common";
 import { useMutation } from "@tanstack/react-query";
 import {
     useEffect,
     useRef,
+    useState,
     type ChangeEvent,
     type KeyboardEventHandler,
     type MouseEventHandler,
@@ -22,6 +24,8 @@ export const useSignup = () => {
     const navigate = useNavigate();
     const showToast = useToastContext();
     const dispatch = useAppDispatch();
+
+    const [debouncedField, setDebouncedField] = useState<{ name: string, value: string; } | null>(null);
 
     const {
         name,
@@ -51,7 +55,23 @@ export const useSignup = () => {
         };
     }, []);
 
+    useDebounce(() => {
+        if (debouncedField === null) return;
+        const inputSchema = signupInputSchema.shape[debouncedField.name as keyof typeof signupInputSchema.shape];
+        const parsedValueResult = inputSchema.safeParse(debouncedField.value);
+        const newErrors = {
+            ...inputErrors,
+            [debouncedField.name]: debouncedField.value === '' ?
+                '' :
+                (
+                    parsedValueResult.success === true ?
+                        '' :
+                        parsedValueResult.error.issues[0].message
+                )
+        };
 
+        dispatch(signupStateActions.setInputErrors(newErrors));
+    }, [debouncedField], 600);
 
     const { mutate: signup, isPending: isLoading } = useMutation({
         mutationFn: signupHandler,
@@ -79,7 +99,14 @@ export const useSignup = () => {
     });
 
     const formSignupHandler = () => {
-        signup({ name, email, password, confirmPassword });
+        const data = { name, email, password, confirmPassword };
+        const result = signupSchema.safeParse(data);
+        if (result.success === true) {
+            signup(result.data);
+        }
+        else {
+            showToast({ text: result.error.issues[0].message });
+        }
     };
 
     const handleInputChange = (
@@ -102,23 +129,7 @@ export const useSignup = () => {
         if (Object.keys(actionMap).includes(name) === false) return;
 
         dispatch(actionMap[name as keyof typeof actionMap](value));
-
-        const inputSchema = signupInputSchema.shape[name as keyof typeof actionMap];
-        const parsedValueResult = inputSchema.safeParse(value);
-
-        const newErrors = {
-            ...inputErrors,
-            [name]:
-                value === "" ?
-                    "" :
-                    (
-                        parsedValueResult.success === true ?
-                            "" :
-                            parsedValueResult.error.issues[0].message
-                    )
-        };
-
-        dispatch(signupStateActions.setInputErrors(newErrors));
+        setDebouncedField({ name, value });
     };
 
     const handleSignupClick: MouseEventHandler<HTMLButtonElement> = (e) => {

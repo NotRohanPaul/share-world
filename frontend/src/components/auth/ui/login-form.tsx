@@ -1,5 +1,6 @@
 import { AppIcons } from "@src/assets/icons";
 import { useLogin } from "../hooks/useLogin";
+import { AnimatePresence, motion } from "motion/react";
 
 
 export const LoginForm = () => {
@@ -31,7 +32,21 @@ export const LoginForm = () => {
                 onKeyDown={handleEnter}
                 ref={(elem) => { inputRefs.current.emailRef = elem; }}
             />
-            {emailError !== '' ? <p className="input-error">{emailError}</p> : null}
+            <AnimatePresence mode="wait">
+                {emailError !== '' && (
+                    <motion.p
+                        key="email-error"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.15 }}
+                        className="input-error"
+                    >
+                        {emailError}
+                    </motion.p>
+                )}
+            </AnimatePresence>
+
 
             <label htmlFor="login-password">Password</label>
             <div className="relative">
