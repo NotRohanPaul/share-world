@@ -1,6 +1,6 @@
 import { AuthForm } from "@src/components/auth/layout/auth-form";
 import { ToastsProvider } from "@src/components/common/ui/toast/context/toasts-provider";
-import { QueryProvider } from "@src/providers/query-provider";
+import { QueryProvider } from "@src/providers/library/query-provider";
 import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";

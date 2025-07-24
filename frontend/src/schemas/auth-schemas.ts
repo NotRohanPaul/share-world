@@ -51,3 +51,8 @@ export const signupSchema = signupInputSchema
         path: ["confirmPassword"],
         message: "Passwords do not match.",
     });
+
+export const userDataSchema = z.strictObject({
+    name: nameSchema,
+    email: emailSchema
+});

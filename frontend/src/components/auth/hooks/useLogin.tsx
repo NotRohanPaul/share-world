@@ -1,19 +1,14 @@
 import { loginHandler } from "@src/axios/handlers/auth-handler";
 import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { useAppDispatch, useAppSelector } from "@src/redux/hook";
-import {
-    resetForm,
-    selectLoginState,
-    setEmail,
-    setEmailError,
-    setPassword,
-    togglePasswordVisible
-} from "@src/redux/slices/auth/login-slice";
+import { loginStateActions, selectLoginState } from "@src/redux/slices/auth/login-slice";
+import { userStateActions } from "@src/redux/slices/auth/user-slice";
 import { appRoutes } from "@src/routes/app-routes";
-import { loginSchema } from "@src/schemas/auth-schemas";
+import { loginSchema, userDataSchema } from "@src/schemas/auth-schemas";
 import { isTrusted } from "@src/utils/common";
 import { useMutation } from "@tanstack/react-query";
 import {
+    useEffect,
     useRef,
     type ChangeEvent,
     type KeyboardEventHandler,
@@ -43,21 +38,35 @@ export const useLogin = () => {
         passwordRef: null,
     });
 
+    useEffect(() => {
+        return () => {
+            dispatch(loginStateActions.resetForm());
+        };
+    }, []);
+
 
     const { mutate: login, isPending: isLoading } = useMutation({
         mutationFn: loginHandler,
         onSuccess: async (res) => {
             if (res.status === 200) {
-                dispatch(resetForm());
-                await navigate(appRoutes.user.absolute);
+                console.log(res.data);
+                const result = userDataSchema.safeParse(res.data);
+                console.log(result.error);
+                if (result.success === true) {
+                    dispatch(userStateActions.setNameAndEmail(result.data));
+                    await navigate(appRoutes.user.absolute);
+                }
+                else {
+                    showToast({ text: "Server returned invalid data." });
+                }
             } else if (res.status === 400) {
-                showToast({ text: "Invalid Email or Password." });
+                showToast({ text: "Invalid email or password." });
             } else {
-                showToast({ text: "Server Error." });
+                showToast({ text: "Server error." });
             }
         },
         onError: () => {
-            showToast({ text: "Network Error." });
+            showToast({ text: "Network error." });
         },
     });
 
@@ -72,16 +81,16 @@ export const useLogin = () => {
 
         const { name, value } = e.target;
         if (name === "email") {
-            dispatch(setEmail(value));
+            dispatch(loginStateActions.setEmail(value));
 
             const emailSchema = loginSchema.shape.email;
             const result = emailSchema.safeParse(value);
 
-            dispatch(setEmailError(result.success === true ? "" : result.error.issues[0].message));
+            dispatch(loginStateActions.setEmailError(result.success === true ? "" : result.error.issues[0].message));
         }
 
         if (name === "password") {
-            dispatch(setPassword(value));
+            dispatch(loginStateActions.setPassword(value));
         }
     };
 
@@ -110,7 +119,7 @@ export const useLogin = () => {
     const handleEyeClick: PointerEventHandler<HTMLButtonElement> = (e) => {
         if (isTrusted(e) === false || e.currentTarget.tagName !== "BUTTON") return;
         e.stopPropagation();
-        dispatch(togglePasswordVisible());
+        dispatch(loginStateActions.setIsPasswordVisible());
 
         if (e.pointerType === "touch") return;
 
