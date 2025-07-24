@@ -57,6 +57,7 @@ const signupSlice = createSlice({
         setInputErrors: (state, action: PayloadAction<typeof initialState.inputErrors>) => {
             state.inputErrors = action.payload;
         },
+        resetForm: () => initialState,
     }
 });
 

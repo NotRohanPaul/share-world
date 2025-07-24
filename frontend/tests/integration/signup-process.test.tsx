@@ -1,10 +1,13 @@
 import { AuthForm } from "@src/components/auth/layout/auth-form";
 import { ToastsProvider } from "@src/components/common/ui/toast/context/toasts-provider";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { QueryProvider } from "@src/providers/library/query-provider";
+import { cleanup, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { MemoryRouter, Route, Routes } from "react-router";
+import { TEST_ORIGIN } from "tests/config/constants/common";
+import { renderWithReduxProviders } from "tests/config/utils/render-with-redux-provider";
 import {
     afterAll,
     afterEach,
@@ -15,31 +18,27 @@ import {
     it
 } from "vitest";
 
+const HTTP_ENDPOINT = TEST_ORIGIN + "/api/v1/auth/signup";
+
 const sampleInputs = {
-    name: "Test Test",
+    name: "Test",
     email: "test@test.com",
     password: "Test@123",
     confirmPassword: "Test@123"
 };
 
-const renderSignupForm = () => {
-    return render(
-        <MemoryRouter initialEntries={["/signup"]}>
-            <ToastsProvider>
+const renderSignupForm = () => renderWithReduxProviders(
+    <QueryProvider>
+        <ToastsProvider>
+            <MemoryRouter initialEntries={["/signup"]}>
                 <Routes>
-                    <Route
-                        path="/signup"
-                        element={<AuthForm authType="signup" />}
-                    />
-                    <Route
-                        path="/user"
-                        element={<h1>User Page</h1>}
-                    />
+                    <Route path="/signup" element={<AuthForm authType="signup" />} />
+                    <Route path="/user" element={<h1>User Page</h1>} />
                 </Routes>
-            </ToastsProvider>
-        </MemoryRouter>
-    );
-};
+            </MemoryRouter >
+        </ToastsProvider>
+    </QueryProvider>
+);
 
 const fillSignupForm = async () => {
     const nameInput = screen.getByLabelText(/^Name$/);
@@ -72,9 +71,9 @@ describe("SignupForm Integration with API", () => {
 
     it("navigates to user page after successful signup", async () => {
         mockServer.use(
-            http.post("http://localhost:5173/api/v1/auth/signup", () => {
+            http.post(HTTP_ENDPOINT, () => {
                 return HttpResponse.json({
-                    name: "Test Test",
+                    name: "Test",
                     email: "test@test.com"
                 }, { status: 201 });
             }),
@@ -85,9 +84,9 @@ describe("SignupForm Integration with API", () => {
         expect(await screen.findByText(/User Page/i)).toBeInTheDocument();
     });
 
-    it("shows toast for email already registered", async () => {
+    it("shows toasts for invalid email or password", async () => {
         mockServer.use(
-            http.post("http://localhost:5173/api/v1/auth/signup", () => {
+            http.post(HTTP_ENDPOINT, () => {
                 return new HttpResponse(null, { status: 400 });
             }),
         );
@@ -100,7 +99,7 @@ describe("SignupForm Integration with API", () => {
 
     it("shows toast for server error", async () => {
         mockServer.use(
-            http.post("http://localhost:5173/api/v1/auth/signup", () => {
+            http.post(HTTP_ENDPOINT, () => {
                 return new HttpResponse(null, { status: 500 });
             }),
         );
@@ -112,6 +111,11 @@ describe("SignupForm Integration with API", () => {
     });
 
     it("shows toast for network error", async () => {
+        mockServer.use(
+            http.post(HTTP_ENDPOINT, () => {
+                return HttpResponse.error();
+            })
+        );
         renderSignupForm();
         await fillSignupForm();
         await waitFor(() =>

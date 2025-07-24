@@ -1,28 +1,38 @@
 import { signupHandler } from "@src/axios/handlers/auth-handler";
 import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
+import { useAppDispatch } from "@src/redux/hook";
+import { selectSignupState, signupStateActions } from "@src/redux/slices/auth/signup-slice";
+import { userStateActions } from "@src/redux/slices/auth/user-slice";
 import { appRoutes } from "@src/routes/app-routes";
-import { signupInputSchema } from "@src/schemas/auth-schemas";
+import { signupInputSchema, userDataSchema } from "@src/schemas/auth-schemas";
 import { isTrusted } from "@src/utils/common";
-import { useRef, useState, type ChangeEvent, type KeyboardEventHandler, type MouseEventHandler, type PointerEventHandler } from "react";
+import { useMutation } from "@tanstack/react-query";
+import {
+    useEffect,
+    useRef,
+    type ChangeEvent,
+    type KeyboardEventHandler,
+    type MouseEventHandler,
+    type PointerEventHandler
+} from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 export const useSignup = () => {
     const navigate = useNavigate();
-    const [signupFormData, setSignupFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-    });
-    const [inputErrors, setInputErrors] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-    });
-    const [isLoading, setIsLoading] = useState(false);
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+    const showToast = useToastContext();
+    const dispatch = useAppDispatch();
+
+    const {
+        name,
+        email,
+        password,
+        confirmPassword,
+        isPasswordVisible,
+        isConfirmPasswordVisible,
+        inputErrors,
+    } = useSelector(selectSignupState);
+
     const inputRefs = useRef<{
         nameRef: HTMLInputElement | null,
         emailRef: HTMLInputElement | null,
@@ -35,28 +45,41 @@ export const useSignup = () => {
         confirmPasswordRef: null,
     });
 
-    const showToast = useToastContext();
+    useEffect(() => {
+        return () => {
+            dispatch(signupStateActions.resetForm());
+        };
+    }, []);
 
 
-    const formSignupHandler = async () => {
-        try {
-            setIsLoading(true);
-            const response = await signupHandler(signupFormData);
-            console.log(response);
-            if (response.status === 201) {
-                void navigate(appRoutes.user.absolute);
-            } else if (response.status === 400) {
+
+    const { mutate: signup, isPending: isLoading } = useMutation({
+        mutationFn: signupHandler,
+        onSuccess: async (res) => {
+            if (res.status === 201) {
+                console.log(res.data);
+                const result = userDataSchema.safeParse(res.data);
+                console.log(result.error);
+                if (result.success === true) {
+                    dispatch(userStateActions.setNameAndEmail(result.data));
+                    await navigate(appRoutes.user.absolute);
+                }
+                else {
+                    showToast({ text: "Server returned invalid data." });
+                }
+            } else if (res.status === 400) {
                 showToast({ text: "Invalid Inputs." });
             } else {
                 showToast({ text: "Server Error." });
             }
-        }
-        catch {
+        },
+        onError: () => {
             showToast({ text: "Network Error." });
         }
-        finally {
-            setIsLoading(false);
-        }
+    });
+
+    const formSignupHandler = () => {
+        signup({ name, email, password, confirmPassword });
     };
 
     const handleInputChange = (
@@ -70,48 +93,42 @@ export const useSignup = () => {
         if (name === "confirm-password")
             name = "confirmPassword";
 
-        if (Object.keys(signupFormData).includes(name) === false) return;
+        const actionMap = {
+            name: signupStateActions.setName,
+            email: signupStateActions.setEmail,
+            password: signupStateActions.setPassword,
+            confirmPassword: signupStateActions.setConfirmPassword
+        };
+        if (Object.keys(actionMap).includes(name) === false) return;
 
-        e.preventDefault();
+        dispatch(actionMap[name as keyof typeof actionMap](value));
 
-        setSignupFormData(prev => (
-            {
-                ...prev,
-                [name]: value
-            }
-        ));
-
-        const inputSchema = signupInputSchema.shape[name as keyof typeof signupFormData];
+        const inputSchema = signupInputSchema.shape[name as keyof typeof actionMap];
         const parsedValueResult = inputSchema.safeParse(value);
 
-        setInputErrors((prev) => {
-            if (value === "") return {
-                ...prev,
-                [name]: ""
-            };
+        const newErrors = {
+            ...inputErrors,
+            [name]:
+                value === "" ?
+                    "" :
+                    (
+                        parsedValueResult.success === true ?
+                            "" :
+                            parsedValueResult.error.issues[0].message
+                    )
+        };
 
-            if (parsedValueResult.success === false) {
-                return {
-                    ...prev,
-                    [name]: parsedValueResult.error.issues[0].message
-                };
-            }
-
-            return {
-                ...prev,
-                [name]: ''
-            };
-        });
+        dispatch(signupStateActions.setInputErrors(newErrors));
     };
 
     const handleSignupClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         const target = e.target as HTMLButtonElement;
         if (isLoading === true) return;
         if (isTrusted(e) === false || target.tagName !== "BUTTON") return;
-        const isEveryFieldNotEmpty = [signupFormData.name, signupFormData.email, signupFormData.password, signupFormData.confirmPassword].every((item) => item !== "");
+        const isEveryFieldNotEmpty = [name, email, password, confirmPassword].every((item) => item !== "");
         if (isEveryFieldNotEmpty === false) return;
 
-        void formSignupHandler();
+        formSignupHandler();
     };
 
     const handleEnter: KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -121,12 +138,10 @@ export const useSignup = () => {
         if (target.value === "") return;
         switch (target.name) {
             case "name": {
-                console.log(target.name);
                 inputRefs.current.emailRef?.focus();
                 return;
             }
             case "email": {
-                console.log(target.name);
                 inputRefs.current.passwordRef?.focus();
                 return;
             }
@@ -136,7 +151,7 @@ export const useSignup = () => {
             }
             case "confirm-password": {
                 if (isLoading === true) return;
-                void formSignupHandler();
+                formSignupHandler();
                 return;
             }
 
@@ -144,17 +159,16 @@ export const useSignup = () => {
     };
 
     const handleEyeClick: PointerEventHandler<HTMLButtonElement> = (e) => {
-        console.log("hello");
         if (isTrusted(e) === false || e.currentTarget.tagName !== "BUTTON") return;
         e.stopPropagation();
         const btnName = e.currentTarget.name;
         let input: HTMLInputElement | null = null;
         if (btnName === "password-eye-btn") {
-            setIsPasswordVisible(prev => !prev);
+            dispatch(signupStateActions.setIsPasswordVisible());
             input = inputRefs.current.passwordRef;
         }
         if (btnName === "confirm-password-eye-btn") {
-            setIsConfirmPasswordVisible(prev => !prev);
+            dispatch(signupStateActions.setIsConfirmPasswordVisible());
             input = inputRefs.current.confirmPasswordRef;
         }
         if (input === null) return;
@@ -169,7 +183,10 @@ export const useSignup = () => {
 
     return {
         isLoading,
-        signupFormData,
+        name,
+        email,
+        password,
+        confirmPassword,
         inputErrors,
         isPasswordVisible,
         isConfirmPasswordVisible,

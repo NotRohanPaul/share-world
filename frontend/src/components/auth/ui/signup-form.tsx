@@ -5,7 +5,10 @@ import { useSignup } from "../hooks/useSignup";
 export const SignupForm = () => {
     const {
         isLoading,
-        signupFormData,
+         name,
+        email,
+        password,
+        confirmPassword,
         inputErrors,
         isPasswordVisible,
         isConfirmPasswordVisible,
@@ -28,7 +31,7 @@ export const SignupForm = () => {
                 id="signup-name"
                 autoComplete="off"
                 placeholder="John Doe"
-                value={signupFormData.name}
+                value={name}
                 onChange={handleInputChange}
                 onKeyDown={handleEnter}
                 ref={(elem) => { inputRefs.current.nameRef = elem; }}
@@ -44,7 +47,7 @@ export const SignupForm = () => {
                 id="signup-email"
                 autoComplete="off"
                 placeholder="hello@example.com"
-                value={signupFormData.email}
+                value={email}
                 onChange={handleInputChange}
                 onKeyDown={handleEnter}
                 ref={(elem) => { inputRefs.current.emailRef = elem; }}
@@ -61,7 +64,7 @@ export const SignupForm = () => {
                     name="password"
                     id="signup-password"
                     autoComplete="off"
-                    value={signupFormData.password}
+                    value={password}
                     onChange={handleInputChange}
                     onKeyDown={handleEnter}
                     ref={(elem) => { inputRefs.current.passwordRef = elem; }}
@@ -94,7 +97,7 @@ export const SignupForm = () => {
                     name="confirm-password"
                     id="signup-confirm-password"
                     autoComplete="off"
-                    value={signupFormData.confirmPassword}
+                    value={confirmPassword}
                     onChange={handleInputChange}
                     onKeyDown={handleEnter}
                     ref={(elem) => { inputRefs.current.confirmPasswordRef = elem; }}

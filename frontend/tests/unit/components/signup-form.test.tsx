@@ -1,9 +1,24 @@
 import { AuthForm } from "@src/components/auth/layout/auth-form";
-import { cleanup, render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router";
-import { beforeEach, describe, expect, it } from "vitest";
 import { ToastsProvider } from "@src/components/common/ui/toast/context/toasts-provider";
+import { QueryProvider } from "@src/providers/library/query-provider";
+import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router";
+import { renderWithReduxProviders } from "tests/config/utils/render-with-redux-provider";
+import { beforeEach, describe, expect, it } from "vitest";
+
+
+const renderSignup = () => renderWithReduxProviders(
+  <QueryProvider>
+    <ToastsProvider>
+      <MemoryRouter>
+        <AuthForm authType="signup" />
+      </MemoryRouter>
+    </ToastsProvider>
+  </QueryProvider>
+);
+
+
 
 describe("to render signup form and test its input", () => {
   beforeEach(() => {
@@ -11,34 +26,27 @@ describe("to render signup form and test its input", () => {
   });
 
   it("renders signup inputs and button in the form", () => {
-    render(
-      <MemoryRouter>
-        <ToastsProvider>
-          <AuthForm authType="signup" />
-        </ToastsProvider>
-      </MemoryRouter>
-    );
+    renderSignup();
+    const nameInput = screen.getByLabelText(/^Name$/);
+    const emailInput = screen.getByLabelText(/^Email$/);
+    const passwordInput = screen.getByLabelText(/^Password$/);
+    const confirmPasswordInput = screen.getByLabelText(/^Confirm Password$/);
+    const signupButton = screen.getByRole("button", { name: /^Signup$/ });
 
-    expect(screen.getByLabelText(/^Name$/))
+    expect(nameInput)
       .toBeInTheDocument();
-    expect(screen.getByLabelText(/^Email$/))
+    expect(emailInput)
       .toBeInTheDocument();
-    expect(screen.getByLabelText(/^Password$/))
+    expect(passwordInput)
       .toBeInTheDocument();
-    expect(screen.getByLabelText(/^Confirm Password$/))
+    expect(confirmPasswordInput)
       .toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /^Signup$/ }))
+    expect(signupButton)
       .toBeInTheDocument();
   });
 
   it("typing in the inputs in the form", async () => {
-    render(
-      <MemoryRouter>
-        <ToastsProvider>
-          <AuthForm authType="signup" />
-        </ToastsProvider>
-      </MemoryRouter>
-    );
+    renderSignup();
     const nameInput = screen.getByLabelText(/^Name$/);
     const emailInput = screen.getByLabelText(/^Email$/);
     const passwordInput = screen.getByLabelText(/^Password$/);

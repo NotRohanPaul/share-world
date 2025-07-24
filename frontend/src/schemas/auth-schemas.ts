@@ -46,6 +46,8 @@ export const signupInputSchema = z
         confirmPassword: z.string(),
     });
 
+export type signupSchemaType = z.infer<typeof signupInputSchema>;
+
 export const signupSchema = signupInputSchema
     .refine((data) => data.password === data.confirmPassword, {
         path: ["confirmPassword"],
