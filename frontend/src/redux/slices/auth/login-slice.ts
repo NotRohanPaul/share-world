@@ -16,7 +16,7 @@ const initialState: LoginFormStateType = {
 };
 
 const loginSlice = createSlice({
-    name: "authForm",
+    name: "loginForm",
     initialState,
     reducers: {
         setEmail: (state, action: PayloadAction<string>) => {
@@ -28,21 +28,15 @@ const loginSlice = createSlice({
         setEmailError: (state, action: PayloadAction<string>) => {
             state.emailError = action.payload;
         },
-        togglePasswordVisible: (state) => {
-            state.isPasswordVisible = !state.isPasswordVisible;
+        setIsPasswordVisible: (state, action: PayloadAction<boolean | undefined>) => {
+            state.isPasswordVisible = action.payload ?? !state.isPasswordVisible;
         },
         resetForm: () => initialState,
-    },
+    }
 });
 
-export const selectLoginState = (state: AppRootReducersType): LoginFormStateType => state.login;
-
-export const {
-    setEmail,
-    setPassword,
-    setEmailError,
-    togglePasswordVisible,
-    resetForm
-} = loginSlice.actions;
-
 export const loginReducer = loginSlice.reducer;
+
+export const selectLoginState = (state: AppRootReducersType): LoginFormStateType => state.login;
+export const loginStateActions = loginSlice.actions;
+
