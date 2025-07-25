@@ -13,7 +13,6 @@
   "scripts": {
     "clean": "[ ! -d dist ] || rm -rf dist",
     "cpy-pkg": "[ -d dist ] && cp package.json dist",
-
     "lint": "eslint .",
     "test": "vitest run",
     "tsc": "tsc -b --verbose",
@@ -52,7 +51,7 @@
     "@types/jsonwebtoken": "9.0.9",
     "@types/node": "22.14.1",
     "@types/supertest": "6.0.3",
-    "eslint": "9.24.0",
+    "eslint": "9.31.0",
     "mongodb-memory-server": "10.1.4",
     "nodemon": "3.1.9",
     "pino-pretty": "13.0.0",
