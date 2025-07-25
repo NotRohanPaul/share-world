@@ -2,11 +2,13 @@
 
 :root {
     --app-color-primary: hsl(217, 100%, 50%);
+    --app-color-secondary: hsl(210, 100%, 85%);
+    
     --app-color-white: hsl(210 100% 98%);
     --app-color-black: hsl(240, 100%, 6%);
 
-    --app-scroll--thumb-color: rgb(24, 147, 241);
-    --app-scroll--track-color: rgb(128, 225, 255);
+    --app-scroll--thumb-color: hsl(206, 89%, 52%);
+    --app-scroll--track-color: hsl(194, 100%, 75%);
 }
 
 
@@ -14,6 +16,7 @@
     --color-primary: var(--app-color-primary);
     --color-white: var(--app-color-white);
     --color-black: var(--app-color-black);
+    --color-secondary: var(--app-color-secondary);
     /* equals 480px  */
     --breakpoint-xs: 30rem;
 }

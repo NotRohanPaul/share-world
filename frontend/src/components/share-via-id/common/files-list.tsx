@@ -30,7 +30,7 @@ export const FileList = ({ fileList }: { fileList: FileListType; }) => {
 
     return (
         <section className="w-fit max-md:w-full h-fit flex flex-col gap-2 text-base max-md:text-sm border-4 border-primary p-2 rounded-sm ">
-            <header className="flex gap-2 rounded-sm bg-primary/80 text-white p-2">
+            <header className="flex gap-2 rounded-sm bg-primary text-white p-2">
                 <p>
                     Files: {fileList.length}
                 </p>
@@ -74,7 +74,7 @@ export const FileList = ({ fileList }: { fileList: FileListType; }) => {
                                     </div>
                                 </div>
                                 {file.state === "processing" && <div className="flex items-center gap-2 px-2">
-                                    <p className="flex w-full h-[0.5rem] bg-primary/10 rounded-full overflow-hidden">
+                                    <p className="flex w-full h-[0.5rem] bg-primary rounded-full overflow-hidden">
                                         <motion.div
                                             className="h-full bg-primary"
                                             initial={{ width: 0 }}

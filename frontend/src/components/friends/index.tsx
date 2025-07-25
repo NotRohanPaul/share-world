@@ -43,7 +43,7 @@ export const FriendsMain = () => {
                 <main className="w-[50%] flex flex-col gap-2 outline-2 outline-primary shadow-2xl p-2">
                     {Array.from({ length: 20 }, (_, i) => i + 1).map((name) => {
                         return (
-                            <div key={name} className="flex gap-2 p-2 bg-primary/50">
+                            <div key={name} className="flex gap-2 p-2 bg-secondary">
                                 <AppIcons.Avatar className="text-white" />
                                 <p className="w-full">
                                     Name

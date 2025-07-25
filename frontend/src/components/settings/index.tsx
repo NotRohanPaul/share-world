@@ -25,7 +25,7 @@ export const SettingsMain = () => {
                 Settings
             </header>
             <main className="w-[700px] max-md:w-full h-full flex gap-3 text-2xl max-xs:text-base outline-2 outline-primary p-2">
-                <aside className="w-[40%] flex flex-col items-start gap-2 text-white bg-primary/50 p-2">
+                <aside className="w-[40%] flex flex-col items-start gap-2 text-white bg-secondary p-2">
                     {settingsOptions.map(({ name }) => {
                         return (
                             <button

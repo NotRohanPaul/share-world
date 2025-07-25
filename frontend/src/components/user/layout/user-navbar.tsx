@@ -17,14 +17,16 @@ const menuOptions = [{
     Icon: AppIcons.Settings
 }, {
     name: "Logout",
-    to: appRoutes.logout.absolute,
+    to: null,
     Icon: AppIcons.Logout
 }];
 
 
 export const UserNavBar = () => {
     const location = useLocation();
+
     const [isAccountMenuVisible, setIsAccountMenuVisible] = useState<boolean>(false);
+
     const buttonRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -75,13 +77,22 @@ export const UserNavBar = () => {
                                 exit={{
                                     y: -100, opacity: 0
                                 }}
-                                className=" flex flex-col text-center p-1 bg-primary/80 [&>a]:p-2 [&>a:hover]:bg-white [&>a:hover]:text-primary"
+                                className="flex flex-col text-center p-1 bg-primary [&>*]:p-2 [&>*:hover]:bg-white [&>*:hover]:text-primary"
                                 onClick={() => setIsAccountMenuVisible(false)}
                                 ref={menuRef}
                             >
                                 {menuOptions.map(({ name, to, Icon }) => {
                                     if (location.pathname === to)
                                         return null;
+                                    if (to === null) {
+                                        return (
+                                            <button key={name} className="flex items-center gap-1 max-xs:text-sm">
+                                                <Icon className="w-[1.5rem] h-[1.5rem] max-xs:w-[1.25rem] max-xs:h-[1.25rem]" />
+                                                {name}
+                                            </button>
+                                        );
+                                    }
+
                                     return (
                                         <Link key={name} to={to} className="flex items-center gap-1 max-xs:text-sm">
                                             <Icon className="w-[1.5rem] h-[1.5rem] max-xs:w-[1.25rem] max-xs:h-[1.25rem]" />
