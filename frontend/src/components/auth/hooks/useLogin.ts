@@ -1,6 +1,6 @@
 import { loginHandler } from "@src/axios/handlers/auth-handler";
 import { useDebounce } from "@src/components/common/hooks/useDebounce";
-import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
+import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { useAppDispatch, useAppSelector } from "@src/redux/hook";
 import { loginStateActions, selectLoginState } from "@src/redux/slices/auth/login-slice";
 import { userStateActions } from "@src/redux/slices/auth/user-slice";
@@ -21,7 +21,7 @@ import { useNavigate } from "react-router";
 
 export const useLogin = () => {
     const navigate = useNavigate();
-    const showToast = useToastContext();
+    const showToast = useToastConsumer();
     const dispatch = useAppDispatch();
 
     const {

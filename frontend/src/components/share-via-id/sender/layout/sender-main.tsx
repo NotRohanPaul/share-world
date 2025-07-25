@@ -5,7 +5,7 @@ import { FilesInput } from "../ui/files-input";
 import { ReceiverIdInput } from "../ui/receiver-id-input";
 import { FileList } from "../../common/files-list";
 import { UserHeader, UserMain, UserSection } from "../../common/layout/user-layouts";
-import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
+import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { useEffect } from "react";
 
 export const SenderViaIdMain = () => {
@@ -23,7 +23,7 @@ export const SenderViaIdMain = () => {
         handleConnectClick
     } = useSender();
 
-    const showToast = useToastContext();
+    const showToast = useToastConsumer();
 
     useEffect(() => {
         if (error === null || error.trim() === "") return;

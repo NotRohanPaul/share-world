@@ -1,6 +1,6 @@
 import { signupHandler } from "@src/axios/handlers/auth-handler";
 import { useDebounce } from "@src/components/common/hooks/useDebounce";
-import { useToastContext } from "@src/components/common/ui/toast/context/toasts-consumer";
+import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { useAppDispatch } from "@src/redux/hook";
 import { selectSignupState, signupStateActions } from "@src/redux/slices/auth/signup-slice";
 import { userStateActions } from "@src/redux/slices/auth/user-slice";
@@ -22,7 +22,7 @@ import { useNavigate } from "react-router";
 
 export const useSignup = () => {
     const navigate = useNavigate();
-    const showToast = useToastContext();
+    const showToast = useToastConsumer();
     const dispatch = useAppDispatch();
 
     const [debouncedField, setDebouncedField] = useState<{ name: string, value: string; } | null>(null);
