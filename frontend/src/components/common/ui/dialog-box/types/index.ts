@@ -1,6 +1,26 @@
+import type { MouseEvent, ReactNode } from "react";
 
-export type DialogBoxOptionsType = {
-    text: string,
+type DialogBoxTextOption = {
+    type: "text";
+    text: string;
+    buttons?: {
+        value: string;
+        onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+    }[];
 };
 
-export type DialogBoxContextType = (options: DialogBoxOptionsType) => void;
+type DialogBoxComponentOption = {
+    type: "component";
+    children: ReactNode;
+    buttons?: {
+        value: string;
+        onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+    }[];
+};
+
+export type DialogBoxOptionsType = DialogBoxTextOption | DialogBoxComponentOption;
+
+export type DialogBoxContextType = {
+    showDialogBox: (options: DialogBoxOptionsType) => void,
+    hideDialogBox: () => void,
+};

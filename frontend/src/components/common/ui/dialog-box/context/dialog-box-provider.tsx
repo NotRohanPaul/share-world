@@ -4,9 +4,6 @@ import type { DialogBoxOptionsType } from "../types";
 import { DialogBox } from "../ui/dialog-box";
 import { DialogBoxContext } from "./dialog-box-context";
 
-
-
-
 export const DialogBoxProvider = ({ children }: PropsWithChildren) => {
     const [dialogBoxOptions, setDialogBoxOptions] = useState<DialogBoxOptionsType | undefined>(undefined);
     const [isDialogBoxVisible, setIsDialogBoxVisible] = useState<boolean>(false);
@@ -16,10 +13,15 @@ export const DialogBoxProvider = ({ children }: PropsWithChildren) => {
         setDialogBoxOptions(options);
     };
 
+    const hideDialogBox = () => {
+        setIsDialogBoxVisible(false);
+        setDialogBoxOptions(undefined);
+    };
+
     useEffect(() => {
         const rootElm = document.getElementById("root");
-
         if (rootElm === null) return;
+
         rootElm.inert = isDialogBoxVisible;
 
         return () => {
@@ -29,8 +31,8 @@ export const DialogBoxProvider = ({ children }: PropsWithChildren) => {
 
     return (
         <>
-            <DialogBoxContext.Provider value={showDialogBox} children={children} />
-            <AnimatePresence>
+            <DialogBoxContext.Provider value={{ showDialogBox, hideDialogBox }} children={children} />
+            <AnimatePresence mode="wait">
                 {
                     isDialogBoxVisible === true &&
                     dialogBoxOptions !== undefined &&
