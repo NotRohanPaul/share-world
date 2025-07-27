@@ -1,5 +1,5 @@
 import { appLogger } from "@src/configs/app-logger";
-import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
+import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import type { RequestHandler } from "express";
 
 

@@ -1,6 +1,6 @@
 import { appLogger } from "@src/configs/app-logger";
 import { JWT_SECRET } from "@src/constants/env";
-import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
+import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import { cookiesSchema, jwtPayloadLooseTransformSchema } from "@src/schemas/auth-schemas";
 import type { RequestHandler } from "express";
 import jwt from "jsonwebtoken";

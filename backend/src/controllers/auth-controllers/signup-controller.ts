@@ -1,5 +1,5 @@
 import { appLogger } from "@src/configs/app-logger";
-import { HTTP_STATUS_CODES } from "@src/constants/error-codes";
+import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import { UserModel } from "@src/models/users.model";
 import { jwtPayloadStrictSchema, userSchema } from "@src/schemas/auth-schemas";
 import { attachAccessAndRefreshTokenCookie } from "@src/utils/jwt-utils";

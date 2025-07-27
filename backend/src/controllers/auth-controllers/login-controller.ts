@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODES } from "@constants/error-codes";
+import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import { UserModel } from "@models/users.model";
 import { jwtPayloadStrictSchema, userSchema } from "@schemas/auth-schemas";
 import { appLogger } from "@src/configs/app-logger";

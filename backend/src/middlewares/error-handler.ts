@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODES } from "@constants/error-codes";
+import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import { appLogger } from "@src/configs/app-logger";
 import type { ErrorRequestHandler } from "express";
 
