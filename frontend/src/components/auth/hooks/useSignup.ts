@@ -1,6 +1,7 @@
 import { signupHandler } from "@src/axios/handlers/auth-handler";
 import { useDebounce } from "@src/components/common/hooks/useDebounce";
 import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
+import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import { useAppDispatch } from "@src/redux/hook";
 import { selectSignupState, signupStateActions } from "@src/redux/slices/auth/signup-slice";
 import { userStateActions } from "@src/redux/slices/auth/user-slice";
@@ -76,7 +77,7 @@ export const useSignup = () => {
     const { mutate: signup, isPending: isLoading } = useMutation({
         mutationFn: signupHandler,
         onSuccess: async (res) => {
-            if (res.status === 201) {
+            if (res.status === HTTP_STATUS_CODES.CREATED) {
                 console.log(res.data);
                 const result = userDataSchema.safeParse(res.data);
                 console.log(result.error);
@@ -87,7 +88,7 @@ export const useSignup = () => {
                 else {
                     showToast({ text: "Server returned invalid data." });
                 }
-            } else if (res.status === 400) {
+            } else if (res.status === HTTP_STATUS_CODES.BAD_REQUEST) {
                 showToast({ text: "Invalid Inputs." });
             } else {
                 showToast({ text: "Server Error." });
