@@ -25,12 +25,12 @@ export const SettingsMain = () => {
                 Settings
             </header>
             <main className="w-[700px] max-md:w-full h-full flex gap-3 text-2xl max-xs:text-base outline-2 outline-primary p-2">
-                <aside className="w-[40%] flex flex-col items-start gap-2 text-white bg-secondary p-2">
+                <aside className="w-[40%] flex flex-col items-start gap-2 text-white border-r-2 border-primary pr-2">
                     {settingsOptions.map(({ name }) => {
                         return (
                             <button
                                 key={name}
-                                className={`w-full text-left ${activeSettingsOption === name ? "shadow-[inset_0_0_3px_5px_white] bg-white text-primary cursor-default" : "hover:bg-primary"} p-2 transition-colors`}
+                                className={`w-full text-left text-primary ${activeSettingsOption === name ? "bg-primary text-white cursor-default" : "hover:bg-primary hover:text-white"} p-2 transition-colors`}
                                 onClick={() => setActiveSettingsOption(name)}
                             >
                                 {name}
