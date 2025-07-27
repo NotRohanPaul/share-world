@@ -1,24 +1,40 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { AppRootReducersType } from "@src/redux/store";
-
-export type UserStateType = {
-    name: string | null;
-    email: string | null;
+type GuestUserStateType = {
+    type: "guest",
+};
+type AuthUserStateType = {
+    type: "auth-user",
+    name: string | null,
+    email: string | null,
 };
 
-const initialState: UserStateType = {
-    name: null,
-    email: null,
-};
+export type UserStateType = GuestUserStateType | AuthUserStateType | null;
+
+const initialState = null as UserStateType;;
 
 const userSlice = createSlice({
     name: "user",
-    initialState,
+    initialState: initialState,
     reducers: {
-        setNameAndEmail: (_state, action: PayloadAction<{ name: string, email: string; }>) => {
-            return action.payload;
-        }
+        setNameAndEmail: (_state, action: PayloadAction<{ name: string; email: string; }>): AuthUserStateType => {
+            return {
+                type: "auth-user",
+                name: action.payload.name,
+                email: action.payload.email,
+            };
+
+        },
+        setGuestUser: (): GuestUserStateType => {
+            return {
+                type: "guest",
+            };
+        },
+        resetUserSliceToNull: () => {
+            return null;
+        },
     }
+
 });
 
 export const userReducer = userSlice.reducer;
