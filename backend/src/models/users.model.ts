@@ -22,6 +22,30 @@ const UserDBSchema = new mongoose.Schema({
         required: true,
         minLength: 8
     },
+    friendsEmailList: {
+        type: [String],
+        required: true,
+        unique: true,
+        default: [],
+        validate: {
+            validator: (val: string[]): boolean => {
+                return val.length <= 50;
+            },
+            message: "A user can have at most 50 friends."
+        }
+    },
+    blockedEmailList: {
+        type: [String],
+        required: true,
+        unique: true,
+        default: [],
+        validate: {
+            validator: (val: string[]): boolean => {
+                return val.length <= 50;
+            },
+            message: "A user can have at most 50 blocked emails."
+        }
+    },
 }, { strict: true, timestamps: true, });
 
 UserDBSchema.pre("save", async function (next) {
