@@ -1,8 +1,5 @@
 @host = localhost:5000
 
-### Root route
-GET http://{{host}}/api/v1/
-
 ### Signup
 POST http://{{host}}/api/v1/auth/signup
 Content-Type: application/json
@@ -26,5 +23,6 @@ Content-Type: application/json
 ### Logout
 GET http://{{host}}/api/v1/auth/logout
 
-### Socket.IO connection check
-GET http://localhost:5000/socket/v1/socket.io/?EIO=4&transport=polling
+### Logout
+GET http://{{host}}/api/v1/auth/refresh-token
+Cookie: refreshToken:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODI0YzE4NjExNTAzNjNiNTI4Nzk2ODUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE3NTM5NDcwMDcsImV4cCI6MTc1NDU1MTgwN30.jYmzk2Ed5YPvKP9c-IRESUYpu9157hccFQ2-NuiBDy4

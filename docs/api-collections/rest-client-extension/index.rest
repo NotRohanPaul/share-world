@@ -1,0 +1,8 @@
+@host = localhost:5000
+
+### Root route
+GET http://{{host}}/api/v1/
+
+
+### Socket.IO connection check
+GET http://localhost:5000/socket/v1/socket.io/?EIO=4&transport=polling

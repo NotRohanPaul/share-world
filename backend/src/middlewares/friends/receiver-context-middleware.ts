@@ -26,7 +26,7 @@ export const receiverContextMiddleware: AuthContextHandlerType<{
 
     }
     catch (e) {
-        appLogger.error(e);
+        appLogger.error({ e });
         if (e instanceof ZodError) {
             return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
         }

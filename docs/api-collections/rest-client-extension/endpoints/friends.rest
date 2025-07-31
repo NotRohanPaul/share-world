@@ -1,0 +1,10 @@
+@host = localhost:5000
+
+### Send
+POST http://{{host}}/api/v1/friend/request/send
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODI0YzE4NjExNTAzNjNiNTI4Nzk2ODUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE3NTM5NDk2NTIsImV4cCI6MTc1Mzk1MDU1Mn0.lQCPfyyT60LyJMsfJqyN6IfMn9U691qVzVtO6XfWAQw
+
+{
+  "receiverEmail": "test1@test.com"
+}
