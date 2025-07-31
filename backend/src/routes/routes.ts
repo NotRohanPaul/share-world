@@ -1,17 +1,19 @@
+import { authMiddleware } from "@src/middlewares/common/auth-middleware";
 import { Router } from "express";
-import { authRouteHandler } from "./auth-route-handler";
-import { friendRouteHandler } from "./friend-route-handler";
-import { authHandler } from "@src/middlewares/auth-handler";
+import { authRouter } from "./auth-router";
+import { friendRouter } from "./friend-router";
 
-const routesHandler = Router();
-
-routesHandler.get("/", (_req, res) => {
+const publicRouter = Router();
+publicRouter.get("/", (_req, res) => {
     res.send("Welcome to Share World");
 });
+publicRouter.use("/auth", authRouter);
 
-routesHandler.use("/auth", authRouteHandler);
+const protectedRouter = Router();
+protectedRouter.use("/friend", friendRouter);
 
-routesHandler.use("/friend", authHandler, friendRouteHandler);
+const mainRouter = Router();
+mainRouter.use(publicRouter);
+mainRouter.use(authMiddleware, protectedRouter);
 
-
-export { routesHandler };
+export { mainRouter };

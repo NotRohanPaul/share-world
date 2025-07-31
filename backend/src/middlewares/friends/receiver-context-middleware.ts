@@ -5,7 +5,7 @@ import { userSchema } from "@src/schemas/auth-schemas";
 import type { AuthContextHandlerType } from "@src/types/context";
 import { ZodError } from "zod";
 
-export const receiverContextHandler: AuthContextHandlerType<{
+export const receiverContextMiddleware: AuthContextHandlerType<{
     context: { receiverEmail?: string; },
     reqBody: { receiverEmail?: string; },
 }> = async (req, res, next) => {

@@ -2,7 +2,7 @@ import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import { appLogger } from "@src/configs/app-logger";
 import type { ErrorRequestHandler } from "express";
 
-export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+export const errorMiddleware: ErrorRequestHandler = (err, _req, res, _next) => {
     if (res.headersSent) {
         return;
     }

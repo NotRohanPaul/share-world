@@ -5,7 +5,7 @@ import { cookiesSchema, jwtPayloadLooseTransformSchema } from "@src/schemas/auth
 import type { AuthContextHandlerType } from "@src/types/context";
 import jwt from "jsonwebtoken";
 
-export const authHandler: AuthContextHandlerType = async (req, res, next) => {
+export const authMiddleware: AuthContextHandlerType = async (req, res, next) => {
     try {
         const cookies = req.cookies as Record<"accessToken", string> | undefined;
         if (cookies === undefined) {

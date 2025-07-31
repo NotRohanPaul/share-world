@@ -1,7 +1,7 @@
-import { errorHandler } from "@middlewares/error-handler";
-import { unknownHandler } from "@middlewares/unknown-handler";
-import { routesHandler } from "@routes/routes";
 import { API_ORIGIN, APP_ORIGIN, IS_SECURE_ENV, WS_API_ORIGIN } from "@src/constants/env";
+import { errorMiddleware } from "@src/middlewares/common/error-middleware";
+import { mainRouter } from "@src/routes/routes";
+import { unknownHandler } from "@src/utils/handlers";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
@@ -36,12 +36,12 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static("public"));
 
-app.use("/api/v1", routesHandler);
+app.use("/api/v1", mainRouter);
 app.get("*public", (_req, res) => {
     res.set("Cache-Control", "no-store");
     res.sendFile(path.resolve("public/index.html"));
 });
-app.use(errorHandler);
+app.use(errorMiddleware);
 app.use(unknownHandler);
 
 

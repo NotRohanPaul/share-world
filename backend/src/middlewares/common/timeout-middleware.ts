@@ -3,7 +3,7 @@ import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import type { RequestHandler } from "express";
 
 
-export const timeoutHandler = (duration: number): RequestHandler => {
+export const timeoutMiddleware = (duration: number): RequestHandler => {
     if (typeof duration !== "number" || duration < 1_000 || duration > 100_000) {
         const handler: RequestHandler = (_req, _res, next) => {
             next(new Error("Duration is not between [1e3,1e5] miliseconds"));
