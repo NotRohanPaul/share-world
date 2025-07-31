@@ -2,10 +2,10 @@ import { appLogger } from "@src/configs/app-logger";
 import { JWT_SECRET } from "@src/constants/env";
 import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import { cookiesSchema, jwtPayloadLooseTransformSchema } from "@src/schemas/auth-schemas";
-import type { RequestHandler } from "express";
+import type { AuthContextHandlerType } from "@src/types/context";
 import jwt from "jsonwebtoken";
 
-export const authHandler: RequestHandler = async (req, res, next) => {
+export const authHandler: AuthContextHandlerType = async (req, res, next) => {
     try {
         const cookies = req.cookies as Record<"accessToken", string> | undefined;
         if (cookies === undefined) {
@@ -29,8 +29,9 @@ export const authHandler: RequestHandler = async (req, res, next) => {
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
         }
 
-        if (req.context === undefined) req.context = {};
-        req.context.auth = payloadParsedResult.data;
+        if (res.locals.context === undefined) res.locals.context = {};
+        res.locals.context.auth = payloadParsedResult.data;
+
         next();
 
     }

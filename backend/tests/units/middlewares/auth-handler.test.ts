@@ -44,11 +44,13 @@ describe("To check auth middleware", () => {
 
         const mockNext = vi.fn();
 
-        const mockResponse = {} as express.Response;
+        const mockResponse = {
+            locals: {}
+        } as express.Response;
         await authHandler(mockRequest, mockResponse, mockNext);
         expect(mockNext).toHaveBeenCalledTimes(1);
-        const requestWithContext = (mockRequest as { context?: { auth: unknown; }; }); 
-        expect(requestWithContext.context?.auth).toEqual(
+        const responseWithContext = (mockResponse.locals as { context?: { auth: unknown; }; });
+        expect(responseWithContext.context?.auth).toEqual(
             expect.objectContaining({
                 userId: "f".padStart(24, "0"),
                 email: "test@test.com",
