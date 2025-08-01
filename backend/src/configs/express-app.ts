@@ -1,7 +1,12 @@
-import { API_ORIGIN, APP_ORIGIN, IS_SECURE_ENV, WS_API_ORIGIN } from "@src/constants/env";
-import { errorMiddleware } from "@src/middlewares/common/error-middleware";
+import {
+    API_ORIGIN,
+    APP_ORIGIN,
+    IS_SECURE_ENV,
+    WS_API_ORIGIN
+} from "@src/constants/env";
+import { logRequestsInfoMiddleware } from "@src/middlewares/common/log-requests-info-middleware";
 import { mainRouter } from "@src/routes/routes";
-import { unknownHandler } from "@src/utils/handlers";
+import { errorHandler, unknownHandler } from "@src/utils/handlers";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
@@ -11,7 +16,6 @@ import path from "node:path";
 const app = express();
 
 app.disable("x-powered-by");
-app.use(cookieParser());
 app.use(helmet({
     xPoweredBy: false,
     frameguard: { action: "sameorigin" },
@@ -33,15 +37,18 @@ app.use(cors({
     credentials: true,
 }));
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
+app.use(logRequestsInfoMiddleware);
 
 app.use("/api/v1", mainRouter);
 app.get("*public", (_req, res) => {
     res.set("Cache-Control", "no-store");
     res.sendFile(path.resolve("public/index.html"));
 });
-app.use(errorMiddleware);
+
+app.use(errorHandler);
 app.use(unknownHandler);
 
 
