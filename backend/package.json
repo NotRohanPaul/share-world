@@ -21,7 +21,7 @@
     "bundle": "npm run clean && rollup -c",
     "build:ts": "npm run lint && npm run test && npm run tsc:src",
     "build:prod": "npm run lint && npm run tsc && node ./scripts/downlaod-mongodb-binary.mjs && npm run test && npm run bundle",
-    "start:dev": "nodemon --exec tsx --tsconfig ./tsconfig.app.json  --env-file=.env.development ./src/index.ts",
+    "start:dev": "nodemon --watch src --ext ts,json --exec tsx --tsconfig ./tsconfig.app.json  --env-file=.env.development ./src/index.ts",
     "start:stage": "node --env-file=.env.staging ./dist/index.js",
     "render:build": "npm ci --include=dev && npm run bundle",
     "render:start": "node ./dist/index.js"
