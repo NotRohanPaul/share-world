@@ -6,6 +6,17 @@ import { motion } from "motion/react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router";
 
+
+const introLine = "Share Files directly using Peer to Peer tech without sending it to the server.";
+
+const features = [
+    "No file size limit",
+    "No RAM limit",
+    "Resume support",
+    "Share via ID",
+    "Share via Friends",
+];
+
 export const LandingPage = () => {
     return (
         <>
@@ -36,55 +47,26 @@ export const LandingPage = () => {
                     </div>
                     <div className="flex flex-col items-center">
                         <motion.h1
-                            initial={{ y: -500, opacity: 0 }}
+                            initial={{ y: -200, opacity: 0 }}
                             animate={{ y: 0, opacity: 100 }}
                             transition={{ type: "spring", stiffness: 80 }}
                             className="w-[80%] max-md:w-full text-4xl text-center font-bold max-sm:text-2xl text-pretty max-xs:text-xl p-2">
-                            Share Files directly using Peer to Peer tech without sending it to the server.
+                            {introLine}
                         </motion.h1>
                     </div>
                     <div className="features-container">
                         <h2>Features</h2>
                         <div>
-                            <motion.p
-                                initial={{ x: -100, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                No file size limit
-                            </motion.p>
-
-                            <motion.p
-                                initial={{ x: 100, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                No ram limit
-                            </motion.p>
-
-                            <motion.p
-                                initial={{ x: -100, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                Resume support
-                            </motion.p>
-
-                            <motion.p
-                                initial={{ x: 100, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                Share via ID
-                            </motion.p>
-
-                            <motion.p
-                                initial={{ x: -100, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                Share via Friends
-                            </motion.p>
+                            {features.map((feature, index) => (
+                                <motion.p
+                                    key={feature + index}
+                                    initial={{ x: index % 2 === 0 ? -50 : 50, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ duration: 0.8, delay: index * 0.1 }}
+                                >
+                                    {feature}
+                                </motion.p>
+                            ))}
                         </div>
                     </div>
                 </main>
