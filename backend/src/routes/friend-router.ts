@@ -11,6 +11,7 @@ import {
     sendController
 } from "@src/controllers/friend-controllers/request";
 import { receiverContextMiddleware } from "@src/middlewares/friends/receiver-context-middleware";
+import { senderReceiverChecksMiddleware } from "@src/middlewares/friends/sender-receiver-checks-middleware";
 import { Router } from "express";
 
 const requestRouter = Router();
@@ -26,7 +27,7 @@ listRouter.get("/requests", listFriendRequestsController);
 listRouter.get("/blocks", listBlockedUsersController);
 
 const friendRouter = Router();
-friendRouter.use("/request", receiverContextMiddleware, requestRouter);
+friendRouter.use("/request", receiverContextMiddleware, senderReceiverChecksMiddleware, requestRouter);
 friendRouter.use("/list", listRouter);
 
 export { friendRouter };
