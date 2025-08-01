@@ -51,9 +51,10 @@ export const signupController: RequestHandler = async (req, res) => {
             });
     }
     catch (err) {
-        appLogger.info(err);
         if (err instanceof ZodError)
             return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
+
+        appLogger.info(err);
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };

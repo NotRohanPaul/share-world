@@ -1,10 +1,10 @@
 import express, { type Express } from "express";
 import { JWT_SECRET } from "@src/constants/env";
-import { authHandler } from "@src/middlewares/auth-handler";
 import jwt from "jsonwebtoken";
 import request from "supertest";
 import { describe, expect, it, vi } from "vitest";
 import cookieParser from "cookie-parser";
+import { authMiddleware } from "@src/middlewares/common/auth-middleware";
 
 const createTestApp = (): Express => {
     const app = express();
@@ -15,7 +15,7 @@ const createTestApp = (): Express => {
             console.log(req.cookies);
             next();
         },
-        authHandler,
+        authMiddleware,
         (_, res) => {
             res.status(200).send("Authorized");
         }
@@ -47,7 +47,7 @@ describe("To check auth middleware", () => {
         const mockResponse = {
             locals: {}
         } as express.Response;
-        await authHandler(mockRequest, mockResponse, mockNext);
+        await authMiddleware(mockRequest, mockResponse, mockNext);
         expect(mockNext).toHaveBeenCalledTimes(1);
         const responseWithContext = (mockResponse.locals as { context?: { auth: unknown; }; });
         expect(responseWithContext.context?.auth).toEqual(

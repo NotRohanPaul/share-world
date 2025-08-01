@@ -21,7 +21,7 @@ export const loginController: RequestHandler = async (req, res) => {
 
         const isSame = await comparePasswordHash(parsedPassword, userDoc.password);
         if (isSame === false) {
-            appLogger.info({ parsedPassword, test: userDoc.password }, "Password Mismatch",);
+            appLogger.info({ isSame, test: userDoc.password }, "Password Mismatch",);
             return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
         }
 
@@ -42,7 +42,6 @@ export const loginController: RequestHandler = async (req, res) => {
 
     } catch (err) {
         if (err instanceof ZodError) {
-            appLogger.info(err, "Zod Error: ");
             return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
         }
 
