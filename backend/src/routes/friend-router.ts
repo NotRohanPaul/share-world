@@ -6,6 +6,7 @@ import {
 import {
     acceptController,
     blockController,
+    deleteController,
     rejectController,
     sendController
 } from "@src/controllers/friend-controllers/request";
@@ -14,6 +15,7 @@ import { Router } from "express";
 
 const requestRouter = Router();
 requestRouter.post("/send", sendController);
+requestRouter.post("/delete", deleteController);
 requestRouter.post("/reject", rejectController);
 requestRouter.post("/accept", acceptController);
 requestRouter.post("/block", blockController);
