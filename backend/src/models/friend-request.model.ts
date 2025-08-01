@@ -16,4 +16,4 @@ const FriendRequestDBSchema = new Schema({
 
 FriendRequestDBSchema.index({ sender: 1, receiver: 1 }, { unique: true });
 
-export const FriendRequestModel = model("friend-requests", FriendRequestDBSchema);
+export const FriendRequestModel = model("friend-requests-v1", FriendRequestDBSchema);
