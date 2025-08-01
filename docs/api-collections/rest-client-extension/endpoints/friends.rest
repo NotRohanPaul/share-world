@@ -1,8 +1,18 @@
 @host = localhost:5000
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODI0YzE4NjExNTAzNjNiNTI4Nzk2ODUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE3NTQwNDIyMjUsImV4cCI6MTc1NDA0MzEyNX0.zbrLffW8B9teGybqaalq72jD21a_Htcich1hnBi8lz4
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODI0YzE4NjExNTAzNjNiNTI4Nzk2ODUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE3NTQwNDM4MjYsImV4cCI6MTc4NTE0NzgyNn0.eR8JsL6Ipb8bGxh51guZLOw6pr_iOs6CEJiggPv9tYI
 
-### Send
+### Send Request
 POST http://{{host}}/api/v1/friend/request/send
+Content-Type: application/json
+Cookie: accessToken={{accessToken}}
+
+{
+  "receiverEmail": "test1@test.com"
+}
+
+
+### Delete Request
+POST http://{{host}}/api/v1/friend/request/delete
 Content-Type: application/json
 Cookie: accessToken={{accessToken}}
 
