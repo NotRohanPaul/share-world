@@ -3,7 +3,6 @@ import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import type { SenderReceiverContextHandlerType } from "@src/middlewares/friends/sender-receiver-checks-middleware";
 import { FriendRequestModel } from "@src/models/friend-request.model";
 import { UserModel } from "@src/models/users.model";
-import { ZodError } from "zod";
 
 export const sendController: SenderReceiverContextHandlerType = async (_req, res) => {
     try {
@@ -39,9 +38,6 @@ export const sendController: SenderReceiverContextHandlerType = async (_req, res
     }
     catch (e) {
         appLogger.error({ e });
-        if (e instanceof ZodError) {
-            return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
-        }
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };

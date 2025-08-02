@@ -1,53 +1,31 @@
+import { appLogger } from "@src/configs/app-logger";
 import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
+import type { SenderReceiverContextHandlerType } from "@src/middlewares/friends/sender-receiver-checks-middleware";
 import { FriendRequestModel } from "@src/models/friend-request.model";
-import { UserModel } from "@src/models/users.model";
-import { userSchema } from "@src/schemas/auth-schemas";
-import type { RequestHandler } from "express";
-import { ZodError } from "zod";
 
-export const rejectController: RequestHandler = async (req, res) => {
+export const rejectController: SenderReceiverContextHandlerType  = async (_req, res) => {
     try {
-        const receiverEmail = (req.body as { receiverEmail: string; }).receiverEmail;
-        const parsedReceiverEmail = userSchema.shape.email.parseAsync(receiverEmail);
+        const senderId = res.locals.context?.senderId;
+        const receiverId = res.locals.context?.receiverId;
 
-        const isRequestEmailValidUser = await UserModel.exists({
-            email: req.context?.auth?.email,
-            friends: parsedReceiverEmail
+        const isRequestAlreadyExists = await FriendRequestModel.exists({
+            sender: senderId,
+            receiver: receiverId,
         });
 
-        if (isRequestAlreadyExits !== null) {
-            return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("No request exists");
+        if (isRequestAlreadyExists === null) {
+            return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("No request to reject");
         }
 
-        const isRequestAlreadyExits = await FriendRequestModel.exists({
-            userEmail: req.context?.auth?.email,
-            receiverEmail: parsedReceiverEmail
-        });
-
-        if (isRequestAlreadyExits === null) {
-            return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("No request exists");
-        }
-
-        const isAlreadyFriends = await UserModel.exists({
-            email: req.context?.auth?.email,
-            friends: parsedReceiverEmail
-        });
-
-        if (isAlreadyFriends !== null) {
-            return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("Already both are friends");
-        }
-
-        await FriendRequestModel.create({
-            userEmail: req.context?.auth?.email,
-            receiverEmail: parsedReceiverEmail
+        await FriendRequestModel.deleteOne({
+            sender: senderId,
+            receiver: receiverId,
         });
 
         return void res.sendStatus(HTTP_STATUS_CODES.OK);
     }
     catch (e) {
-        if (e instanceof ZodError) {
-            return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("Incorrect Email");
-        }
+        appLogger.error({ e });
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };

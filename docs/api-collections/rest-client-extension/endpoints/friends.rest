@@ -19,3 +19,21 @@ Cookie: accessToken={{accessToken}}
 {
   "receiverEmail": "test1@test.com"
 }
+
+### Reject Request
+POST http://{{host}}/api/v1/friend/request/reject
+Content-Type: application/json
+Cookie: accessToken={{accessToken}}
+
+{
+  "receiverEmail": "test1@test.com"
+}
+
+### Accept Request
+POST http://{{host}}/api/v1/friend/request/accept
+Content-Type: application/json
+Cookie: accessToken={{accessToken}}
+
+{
+  "receiverEmail": "test1@test.com"
+}
