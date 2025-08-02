@@ -2,6 +2,10 @@ import { appLogger } from "@src/configs/app-logger";
 import { createPasswordHash } from "@src/utils/bcrypt-utils";
 import mongoose from "mongoose";
 
+const checkForListSize = (val: string[]): boolean => {
+    return val.length <= 50;
+};
+
 const UserDBSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -24,25 +28,17 @@ const UserDBSchema = new mongoose.Schema({
     },
     friendsEmailList: {
         type: [String],
-        required: true,
-        unique: true,
         default: [],
         validate: {
-            validator: (val: string[]): boolean => {
-                return val.length <= 50;
-            },
+            validator: checkForListSize,
             message: "A user can have at most 50 friends."
         }
     },
     blockedEmailList: {
         type: [String],
-        required: true,
-        unique: true,
         default: [],
         validate: {
-            validator: (val: string[]): boolean => {
-                return val.length <= 50;
-            },
+            validator: checkForListSize,
             message: "A user can have at most 50 blocked emails."
         }
     },
