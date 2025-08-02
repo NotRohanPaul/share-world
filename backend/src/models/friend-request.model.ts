@@ -15,5 +15,6 @@ const FriendRequestDBSchema = new Schema({
 }, { timestamps: true, strict: true, });
 
 FriendRequestDBSchema.index({ sender: 1, receiver: 1 }, { unique: true });
+FriendRequestDBSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 * 60 * 24 });
 
 export const FriendRequestModel = model("friend-requests-v1", FriendRequestDBSchema);
