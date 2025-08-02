@@ -74,7 +74,7 @@ export const FileList = ({ fileList }: { fileList: FileListType; }) => {
                                     </div>
                                 </div>
                                 {file.state === "processing" && <div className="flex items-center gap-2 px-2">
-                                    <p className="flex w-full h-[0.5rem] bg-primary rounded-full overflow-hidden">
+                                    <p className="flex w-full h-[0.5rem] bg-secondary rounded-full overflow-hidden">
                                         <motion.div
                                             className="h-full bg-primary"
                                             initial={{ width: 0 }}

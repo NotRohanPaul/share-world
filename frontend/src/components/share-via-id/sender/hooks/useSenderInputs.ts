@@ -78,27 +78,43 @@ export const useSenderInputs = (
             console.log("No file or DataChannel is not open", { fileList }, dataChannel?.readyState);
             return;
         }
+        const waitForBufferSpace = (): Promise<void> => new Promise((resolve) => {
+            const threshold = 65536;
+            if (dataChannel.bufferedAmount < threshold) {
+                return void resolve();
+            }
 
-        const metadataList: MetadataType = [];
-        for (let i = 0; i < fileList.length; i++) {
-            const file = fileList[i];
-            metadataList.push({ id: file.id, ...file.metadata });
-        }
-        const metadataStr = JSON.stringify(metadataList);
-        const encoder = new TextEncoder();
-        console.log({ encoder });
-        const encodedMetadata = encoder.encode(metadataStr);
-        console.log({ encodedMetadata });
+            const onLowBuffer = () => {
+                dataChannel.removeEventListener("bufferedamountlow", onLowBuffer);
+                resolve();
+            };
 
-        const chunkSize = 8000;
-        for (let offset = 0; offset < encodedMetadata.length; offset += chunkSize) {
-            const chunk = encodedMetadata.slice(offset, offset + chunkSize);
-            console.log({ chunk });
-            dataChannel.send(chunk);
-        }
+            dataChannel.addEventListener("bufferedamountlow", onLowBuffer);
+        });
 
-        dataChannel.send("_METADATA_END_");
-        console.log("📤 Metadata sent");
+        const sendMetadata = async () => {
+            const metadataList: MetadataType = [];
+            for (let i = 0; i < fileList.length; i++) {
+                const file = fileList[i];
+                metadataList.push({ id: file.id, ...file.metadata });
+            }
+            const metadataStr = JSON.stringify(metadataList);
+            const encoder = new TextEncoder();
+            console.log({ encoder });
+            const encodedMetadata = encoder.encode(metadataStr);
+            console.log({ encodedMetadata });
+
+            const chunkSize = 8000;
+            for (let offset = 0; offset < encodedMetadata.length; offset += chunkSize) {
+                const chunk = encodedMetadata.slice(offset, offset + chunkSize);
+                console.log({ chunk });
+                dataChannel.send(chunk);
+                await waitForBufferSpace();
+            }
+            dataChannel.send("_METADATA_END_");
+            console.log("📤 Metadata sent");
+        };
+
 
         const sendFileChunks = async (file: FileListType[number]) => {
             const chunkSize = 16000;
@@ -117,6 +133,7 @@ export const useSenderInputs = (
                 const precent = ((sentChunksSize / file.metadata.size) * 100).toFixed(1);
                 console.log({ precent });
                 setFileList((prev) => prev.map(f => f.id === file.id ? { ...f, percentage: precent } : f));
+                await waitForBufferSpace();
             }
 
             dataChannel.send("_FILE_END_");
@@ -125,6 +142,8 @@ export const useSenderInputs = (
         };
 
         void (async () => {
+            await sendMetadata();
+
             for (let i = 0; i < fileList.length; i++) {
                 const file = fileList[i];
                 dataChannel.send(`_FILE_ID_${file.id}`);
