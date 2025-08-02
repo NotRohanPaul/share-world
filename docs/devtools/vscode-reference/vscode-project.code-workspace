@@ -1,9 +1,12 @@
-// Just a copy of my vscode workspace
 {
     "folders": [
         {
             "name": "share-world",
             "path": ".."
+        },
+        {
+            "name": "rest-client-extension",
+            "path": "../docs/api-collections/rest-client-extension"
         },
         {
             "name": "backend",

@@ -1,27 +1,27 @@
-// Copy this to your tasks.json file or .code-workspace file 
+/*  
+    Copy this to your tasks.json file or .code-workspace file 
+*/
 {
     "version": "2.0.0",
     "tasks": [
         // === BACKEND TASKS ===
         {
             "label": "MongoDB Windows",
-            "command": "powershell -ExecutionPolicy Bypass -File ./scripts/start-mongodb-server.ps1",
             "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-File",
+                "./scripts/start-mongodb-server.ps1"
+            ],
             "group": "build",
             "presentation": {
                 "reveal": "always",
                 "panel": "new",
-                "close": true
             },
             "icon": {
                 "id": "database",
                 "color": "terminal.ansiBlue"
             },
-            "runOptions": {
-                "instanceLimit": 1
-            },
-            "isBackground": true,
-            "problemMatcher": []
         },
         {
             "label": "MongoDB Docker",
@@ -36,11 +36,6 @@
                 "id": "database",
                 "color": "terminal.ansiBlue"
             },
-            "runOptions": {
-                "instanceLimit": 1
-            },
-            "isBackground": true,
-            "problemMatcher": []
         },
         {
             "label": "Backend",
@@ -58,8 +53,6 @@
             "runOptions": {
                 "instanceLimit": 1
             },
-            "isBackground": true,
-            "problemMatcher": []
         },
         {
             "label": "Frontend",
@@ -74,11 +67,6 @@
                 "id": "device-desktop",
                 "color": "terminal.ansiGreen"
             },
-            "runOptions": {
-                "instanceLimit": 1
-            },
-            "isBackground": true,
-            "problemMatcher": []
         },
         {
             "label": "Start All",
@@ -95,36 +83,27 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "problemMatcher": []
         },
         // === MobileTASKS ===
         {
             "label": "Start Emulator",
             "type": "shell",
             "command": "emulator -avd \"$(emulator -list-avds | head -n 1)\"",
-            "isBackground": true,
+            "isBackground": false,
             "presentation": {
                 "reveal": "always",
                 "panel": "new"
             },
-            "runOptions": {
-                "instanceLimit": 1
-            }
         },
         {
             "label": "Open URL in Emulator",
             "type": "shell",
-            "command": "adb wait-for-device && adb shell am start -a android.intent.action.VIEW -d \"https://10.0.2.2\"",
+            "command": "adb wait-for-device && adb shell am start -a android.intent.action.VIEW -d \"https://10.0.2.2:5173\"",
             "presentation": {
                 "reveal": "always",
                 "panel": "new",
                 "close": true
             },
-            "isBackground": true,
-            "runOptions": {
-                "runOn": "default",
-                "instanceLimit": 1
-            }
         },
         {
             "label": "Mobile",
@@ -141,7 +120,6 @@
                 "id": "device-mobile",
                 "color": "terminal.ansiRed"
             },
-            "problemMatcher": []
         }
     ]
 }
