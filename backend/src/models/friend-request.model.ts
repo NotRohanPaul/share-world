@@ -12,9 +12,13 @@ const FriendRequestDBSchema = new Schema({
         ref: "users",
         required: true,
     },
+    expiresAt: {
+        type: Date,
+        default: (): Date => new Date(Date.now() + 24 * 60 * 60 * 1000)
+    }
 }, { timestamps: true, strict: true, });
 
 FriendRequestDBSchema.index({ sender: 1, receiver: 1 }, { unique: true });
-FriendRequestDBSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 * 60 * 24 });
+FriendRequestDBSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 export const FriendRequestModel = model("friend-requests-v1", FriendRequestDBSchema);
