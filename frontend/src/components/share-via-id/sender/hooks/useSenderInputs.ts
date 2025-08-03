@@ -78,18 +78,21 @@ export const useSenderInputs = (
             console.log("No file or DataChannel is not open", { fileList }, dataChannel?.readyState);
             return;
         }
+
         const waitForBufferSpace = (): Promise<void> => new Promise((resolve) => {
-            const threshold = 65536;
+            dataChannel.bufferedAmountLowThreshold = 1 * 1024 * 1024;
+            const threshold = 2 * 1024 * 1024;;
             if (dataChannel.bufferedAmount < threshold) {
                 return void resolve();
+            } else {
+                console.warn("Buffer is full, wait for low event...");
             }
 
             const onLowBuffer = () => {
-                dataChannel.removeEventListener("bufferedamountlow", onLowBuffer);
                 resolve();
             };
 
-            dataChannel.addEventListener("bufferedamountlow", onLowBuffer);
+            dataChannel.addEventListener("bufferedamountlow", onLowBuffer, { once: true });
         });
 
         const sendMetadata = async () => {
@@ -104,7 +107,7 @@ export const useSenderInputs = (
             const encodedMetadata = encoder.encode(metadataStr);
             console.log({ encodedMetadata });
 
-            const chunkSize = 8000;
+            const chunkSize = 256000;
             for (let offset = 0; offset < encodedMetadata.length; offset += chunkSize) {
                 const chunk = encodedMetadata.slice(offset, offset + chunkSize);
                 console.log({ chunk });
@@ -117,8 +120,9 @@ export const useSenderInputs = (
 
 
         const sendFileChunks = async (file: FileListType[number]) => {
-            const chunkSize = 16000;
+            const chunkSize = 262144;
             let sentChunksSize = 0;
+            const initalTime = Date.now();
             for (let offset = 0; offset < file.metadata.size; offset += chunkSize) {
                 console.log(offset, file.metadata.size);
                 if (file.data === undefined) {
@@ -134,6 +138,7 @@ export const useSenderInputs = (
                 console.log({ precent });
                 setFileList((prev) => prev.map(f => f.id === file.id ? { ...f, percentage: precent } : f));
                 await waitForBufferSpace();
+                console.log("Speed: ", ((sentChunksSize) / 1024 / 1024) / ((Date.now() - initalTime) / 1000));
             }
 
             dataChannel.send("_FILE_END_");
