@@ -1,14 +1,14 @@
-import { model, Schema, Types } from "mongoose";
+import { model, Schema } from "mongoose";
 
 
 const FriendRequestDBSchema = new Schema({
     sender: {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "users",
         required: true,
     },
     receiver: {
-        type: Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "users",
         required: true,
     },

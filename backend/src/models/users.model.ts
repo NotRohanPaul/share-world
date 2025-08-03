@@ -1,12 +1,12 @@
 import { appLogger } from "@src/configs/app-logger";
 import { createPasswordHash } from "@src/utils/bcrypt-utils";
-import mongoose from "mongoose";
+import { Schema, model, type CallbackError } from "mongoose";
 
 const checkForListSize = (val: string[]): boolean => {
     return val.length <= 50;
 };
 
-const UserDBSchema = new mongoose.Schema({
+const UserDBSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -55,13 +55,13 @@ UserDBSchema.pre("save", async function (next) {
             }
         } catch (error) {
             appLogger.error("Error during password hashing:", error);
-            return void next(error as mongoose.CallbackError);
+            return void next(error as CallbackError);
         }
     }
     next();
 });
 
-export const UserModel = mongoose.model(
+export const UserModel = model(
     "users-v1",
     UserDBSchema
 );
