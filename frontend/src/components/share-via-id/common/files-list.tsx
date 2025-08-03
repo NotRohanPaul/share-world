@@ -74,14 +74,14 @@ export const FileList = ({ fileList }: { fileList: FileListType; }) => {
                                     </div>
                                 </div>
                                 {file.state === "processing" && <div className="flex items-center gap-2 px-2">
-                                    <p className="flex w-full h-[0.5rem] bg-secondary rounded-full overflow-hidden">
-                                        <motion.div
+                                    <div className="flex w-full h-[0.5rem] bg-secondary rounded-full overflow-hidden">
+                                        <motion.p
                                             className="h-full bg-primary"
                                             initial={{ width: 0 }}
                                             animate={{ width: `${file.percentage ?? 0}%` }}
                                             transition={{ duration: 0.5 }}
                                         />
-                                    </p>
+                                    </div>
                                     <p>{file.percentage}%</p>
                                 </div>}
                             </section>
