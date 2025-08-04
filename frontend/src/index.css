@@ -3,7 +3,7 @@
 :root {
     --app-color-primary: hsl(217, 100%, 50%);
     --app-color-secondary: hsl(210, 100%, 85%);
-    
+
     --app-color-white: hsl(210 100% 98%);
     --app-color-black: hsl(240, 100%, 6%);
 
@@ -29,7 +29,8 @@
 
 @layer base {
     body {
-        @apply bg-white font-[Times_new_Roman] text-black overflow-hidden;
+        @apply bg-white text-black overflow-hidden;
+        font-family: "Times New Roman", serif;
     }
 
     button {

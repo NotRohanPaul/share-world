@@ -23,7 +23,9 @@ export const useReceiver = () => {
         let isMetadataReceived = false;
         let currentFileSize = 0;
 
+        dataChannel.binaryType = "arraybuffer";
         dataChannel.onmessage = (event): void => {
+            console.log({ event });
             if (!isMetadataReceived) {
                 if (typeof event.data === "string" && event.data === "_METADATA_END_") {
                     const totalLength = receivedChunks.reduce((acc, chunk) => acc + chunk.length, 0);
@@ -33,10 +35,13 @@ export const useReceiver = () => {
                         combined.set(chunk, offset);
                         offset += chunk.length;
                     }
-
+                    console.log({ combined });
                     const decoder = new TextDecoder();
                     const metadataJSON = decoder.decode(combined);
 
+                    console.log("Chunks count:", receivedChunks.length);
+                    console.log("Combined length:", totalLength);
+                    console.log("Decoded metadata:", metadataJSON);
                     try {
                         parsedMetadata = JSON.parse(metadataJSON);
                         console.log("📥 Metadata parsed:", parsedMetadata);
@@ -61,6 +66,7 @@ export const useReceiver = () => {
                 }
 
                 if (event.data instanceof ArrayBuffer) {
+                    console.log(event.data);
                     receivedChunks.push(new Uint8Array(event.data));
                 }
 

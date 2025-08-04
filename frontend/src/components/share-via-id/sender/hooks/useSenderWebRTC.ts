@@ -18,7 +18,7 @@ export function useSenderWebRTC(receiverId: string | null) {
         pc.onconnectionstatechange = () => console.log("Connection state:", pc.connectionState);
 
 
-        const dataChannel = pc.createDataChannel("fileTransfer");
+        const dataChannel = pc.createDataChannel("fileTransfer", { ordered: true });
         setDataChannelInstance(dataChannel);
 
         dataChannel.onopen = () => console.log("📤 Data channel open (sender)");
