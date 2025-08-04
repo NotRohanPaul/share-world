@@ -24,7 +24,14 @@ export const UserId = ({
     return (
         <p className="flex gap-2 font-bold max-xs:text-xl">
             <span>Your ID:</span>
-            <span className="text-primary tracking-widest">{userId}</span>
+            {
+                userId === null ?
+                    <AppIcons.Loader className="text-primary" />
+                    :
+                    <span className="text-primary tracking-widest">
+                        {userId}
+                    </span>
+            }
             {
                 navigator.clipboard !== undefined
                 &&

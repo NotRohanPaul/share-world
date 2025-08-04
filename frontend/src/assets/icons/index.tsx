@@ -34,7 +34,7 @@ export const AppIcons = {
     Copy: ClipboardCopy,
     CopyCheck: Check,
     Loader: forwardRef<SVGSVGElement, LucideProps>((props, ref) => (
-        <LoaderCircle className="animate-spin" ref={ref} {...props} />
+        <LoaderCircle {...props} className={"animate-spin " + props.className} ref={ref} />
     )),
     FileIcons: {
         txt: FileText,
