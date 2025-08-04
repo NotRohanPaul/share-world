@@ -1,4 +1,4 @@
-import strip from "@rollup/plugin-strip";
+// import strip from "@rollup/plugin-strip";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import fs from "node:fs";
@@ -61,9 +61,9 @@ export default defineConfig({
     outDir: outDirName,
     rollupOptions: {
       plugins: [
-        strip({
-          include: "**/*.(ts|tsx|js|jsx|ejs|mjs)"
-        })
+        // strip({
+        //   include: "**/*.(ts|tsx|js|jsx|ejs|mjs)",
+        // })
       ]
     }
   },
