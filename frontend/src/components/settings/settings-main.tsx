@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { AccountSettings } from "./account";
 import { AppearanceSettings } from "./appearance";
+import { StorageSettings } from "./storage";
+import { AboutSettings } from "./about";
 
 const settingsOptions = [{
     name: "Account",
@@ -8,11 +10,12 @@ const settingsOptions = [{
 }, {
     name: "Appearance",
     component: AppearanceSettings,
-
 }, {
     name: "Storage",
-    component: null,
-
+    component: StorageSettings,
+}, {
+    name: "About",
+    component: AboutSettings,
 }] as const;
 
 export const SettingsMain = () => {
@@ -24,13 +27,13 @@ export const SettingsMain = () => {
             <header className="text-5xl max-xs:text-4xl font-semibold">
                 Settings
             </header>
-            <main className="w-[700px] max-md:w-full h-full flex gap-3 text-2xl max-xs:text-base outline-2 outline-primary p-2">
-                <aside className="w-[40%] flex flex-col items-start gap-2 text-white border-r-2 border-primary pr-2">
+            <main className="w-[700px] max-md:w-full h-full flex gap-3 text-2xl max-xs:text-base outline-2 outline-primary p-2 max-xs:p-1">
+                <aside className="w-[30%] flex flex-col items-start gap-2 text-white border-r-2 border-primary pr-2 max-xs:pr-1">
                     {settingsOptions.map(({ name }) => {
                         return (
                             <button
                                 key={name}
-                                className={`w-full text-left text-primary ${activeSettingsOption === name ? "bg-primary text-white cursor-default" : "hover:bg-primary hover:text-white"} p-2 transition-colors`}
+                                className={`w-full text-left text-primary ${activeSettingsOption === name ? "bg-primary text-white cursor-default" : "hover:bg-primary hover:text-white"} p-2 max-xs:p-1 transition-colors`}
                                 onClick={() => setActiveSettingsOption(name)}
                             >
                                 {name}

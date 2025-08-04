@@ -22,7 +22,7 @@ const metaGeneratorPlugin: Plugin = {
 
     fs.writeFileSync(
       path.resolve(outputDir, "meta-frontend.json"),
-      JSON.stringify({ version, buildNumber, timestamp: new Date().toISOString() }, null, 2)
+      JSON.stringify({ version, buildNumber, timestamp: new Date().toUTCString() }, null, 2)
     );
     console.log("meta-frontend.json created:", version);
   }
