@@ -1,9 +1,9 @@
-import { ShareViaFriends } from "@src/components/share-via-friends";
+import { ShareToFriend } from "@src/components/share-to-friend";
 import { ShareViaId } from "@src/components/share-via-id";
 import { ReceiverViaIdMain } from "@src/components/share-via-id/receiver/layout/receiver-main";
 import { SenderViaIdMain } from "@src/components/share-via-id/sender/layout/sender-main";
-import { SenderViaFriendsMain } from "@src/components/share-via-friends/sender/layout/sender-main";
-import { ReceiverViaFriendsMain } from "@src/components/share-via-friends/receiver/layout/receiver-main";
+import { SenderToFriendMain } from "@src/components/share-to-friend/sender/layout/sender-main";
+import { ReceiverToFriendMain } from "@src/components/share-to-friend/receiver/layout/receiver-main";
 import { appRoutes } from "@src/routes/app-routes";
 import { FriendsMain } from "@src/components/friends";
 
@@ -22,18 +22,18 @@ export const viaIdRoutes = [
     },
 ];
 
-export const viaFriendsRoutes = [
+export const toFriendsRoutes = [
     {
-        path: appRoutes["via-friends"].relative,
-        element: <ShareViaFriends />,
+        path: appRoutes["to-friend"].relative,
+        element: <ShareToFriend />,
     },
     {
-        path: appRoutes["via-friends"].send.relative,
-        element: <SenderViaFriendsMain />
+        path: appRoutes["to-friend"].send.relative,
+        element: <SenderToFriendMain />
     },
     {
-        path: appRoutes["via-friends"].receive.relative,
-        element: <ReceiverViaFriendsMain />
+        path: appRoutes["to-friend"].receive.relative,
+        element: <ReceiverToFriendMain />
     },
 ];
 

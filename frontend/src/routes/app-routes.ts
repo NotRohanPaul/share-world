@@ -35,16 +35,16 @@ export const appRoutes = {
             absolute: "/user/via-id/receive"
         }
     },
-    "via-friends": {
-        relative: "via-friends",
-        absolute: "/user/via-friends",
+    "to-friend": {
+        relative: "to-friend",
+        absolute: "/user/to-friend",
         send: {
-            relative: "via-friends/send",
-            absolute: "/user/via-friends/send"
+            relative: "to-friend/send",
+            absolute: "/user/to-friend/send"
         },
         receive: {
-            relative: "via-friends/receive",
-            absolute: "/user/via-friends/receive"
+            relative: "to-friend/receive",
+            absolute: "/user/to-friend/receive"
         }
     }
 };

@@ -10,4 +10,4 @@ export const sharedSocketOptions = {
 };
 
 export const shareViaIdSocketInstance = io(API_ORIGIN + "/share-via-id", sharedSocketOptions);
-export const shareViaFriendsSocketInstance = io(API_ORIGIN + "/share-via-friend", sharedSocketOptions);
+export const shareToFriendSocketInstance = io(API_ORIGIN + "/share-to-friend", sharedSocketOptions);

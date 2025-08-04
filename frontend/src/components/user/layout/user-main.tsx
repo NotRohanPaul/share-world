@@ -23,11 +23,11 @@ export const UserMain = () => {
                         </button>
                         <button
                             className="w-full flex flex-col items-center justify-center font-bold border-5 border-primary p-2 rounded-md bg-white text-primary transition-colors hover:bg-primary hover:text-white overflow-hidden"
-                            onClick={() => void navigate(appRoutes["via-friends"].absolute)}
+                            onClick={() => void navigate(appRoutes["to-friend"].absolute)}
 
                         >
                             <AppIcons.Users className="w-[3.5rem] h-full max-xs:w-[3rem]" />
-                            <p>Share via Friends</p>
+                            <p>Share to Friends</p>
                         </button>
                     </div>
                     <div className="">

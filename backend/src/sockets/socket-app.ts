@@ -3,7 +3,7 @@ import { APP_TIMEOUTS } from "@src/constants/timeouts";
 import type { Server as ServerType } from "node:http";
 import { Server } from "socket.io";
 import {
-    shareViaFriendNamespace,
+    shareToFriendNamespace,
     shareViaIdNamespace
 } from "./namespaces";
 
@@ -20,5 +20,5 @@ export function initializeSocket(server: ServerType): void {
     });
 
     shareViaIdNamespace(io);
-    shareViaFriendNamespace(io);
+    shareToFriendNamespace(io);
 }

@@ -6,7 +6,7 @@ import { SettingsPage } from "@src/pages/settings-page";
 import { UserPage } from "@src/pages/user-page";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { appRoutes } from "./app-routes";
-import { friendsRoutes, viaFriendsRoutes, viaIdRoutes } from "./routers/user";
+import { friendsRoutes, toFriendsRoutes, viaIdRoutes } from "./routers/user";
 
 const router = createBrowserRouter([
     {
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
             {
                 path: appRoutes.user.absolute,
                 element: <UserPage />,
-                children: [...friendsRoutes, ...viaIdRoutes, ...viaFriendsRoutes]
+                children: [...friendsRoutes, ...viaIdRoutes, ...toFriendsRoutes]
             },
             {
                 path: "*",
