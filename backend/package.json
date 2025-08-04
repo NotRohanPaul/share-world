@@ -12,7 +12,7 @@
   },
   "scripts": {
     "clean": "[ ! -d dist ] || rm -rf dist",
-    "cpy-pkg": "[ -d dist ] && cp package.json dist",
+    "cpy-pkg": "[ -d dist ] && cp package.json package-lock.json dist",
     "lint": "eslint .",
     "test": "vitest run",
     "tsc": "tsc -b --verbose",
