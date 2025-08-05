@@ -10,8 +10,8 @@ export const loginHandler = async (data: LoginSchemaType): Promise<AxiosResponse
 };
 
 
-export const logoutHandler = async (): Promise<AxiosResponse> => {
-  const res = await axiosInstance.get(authEndpoints.logout);
+export const logoutHandler = async (signal?: AbortSignal): Promise<AxiosResponse> => {
+  const res = await axiosInstance.get(authEndpoints.logout, { signal });
   return res;
 };
 
