@@ -2,8 +2,10 @@ import { appLogger } from "@src/configs/app-logger";
 import { createPasswordHash } from "@src/utils/bcrypt-utils";
 import { Schema, model, type CallbackError } from "mongoose";
 
+const LIMIT_FOR_LISTS = 50;
+
 const checkForListSize = (val: string[]): boolean => {
-    return val.length <= 50;
+    return val.length <= LIMIT_FOR_LISTS;
 };
 
 const UserDBSchema = new Schema({
@@ -31,7 +33,7 @@ const UserDBSchema = new Schema({
         default: [],
         validate: {
             validator: checkForListSize,
-            message: "A user can have at most 50 friends."
+            message: `A user can have at most ${LIMIT_FOR_LISTS} friends.`
         }
     },
     blockedEmailList: {
@@ -39,7 +41,7 @@ const UserDBSchema = new Schema({
         default: [],
         validate: {
             validator: checkForListSize,
-            message: "A user can have at most 50 blocked emails."
+            message: `A user can have at most ${LIMIT_FOR_LISTS} blocked emails.`
         }
     },
 }, { strict: true, timestamps: true, });
