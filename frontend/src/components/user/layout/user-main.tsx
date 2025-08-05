@@ -27,7 +27,7 @@ export const UserMain = () => {
 
                         >
                             <AppIcons.Users className="w-[3.5rem] h-full max-xs:w-[3rem]" />
-                            <p>Share to Friends</p>
+                            <p>Share to Friend</p>
                         </button>
                     </div>
                     <div className="">
