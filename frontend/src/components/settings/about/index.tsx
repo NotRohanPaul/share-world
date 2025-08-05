@@ -1,4 +1,5 @@
 import { AppImages } from "@src/assets/images";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const MetaInfoPara = ({ title, value }: { title: string, value: string | undefined; }) => {
@@ -6,11 +7,11 @@ const MetaInfoPara = ({ title, value }: { title: string, value: string | undefin
         <>
             {
                 value !== undefined &&
-                <p className="flex whitespace-nowrap flex-nowrap gap-1">
+                <p className="flex whitespace-nowrap gap-1">
                     <span className="font-bold">
                         {title}:
                     </span>
-                    <span className="text-wrap break-words">
+                    <span className="text-wrap break-all">
                         {value}
                     </span>
                 </p>
@@ -23,13 +24,12 @@ export const AboutSettings = () => {
     const [metaInfo, setMetaInfo] = useState<Record<string, string | undefined> | null>(null);
 
     useEffect(() => {
-        void fetch('/meta-frontend.json')
-            .then((res) => res.json())
-            .then((data) => setMetaInfo(data));
+        void axios.get('/meta-frontend.json')
+            .then((res) => setMetaInfo(res.data));
     }, []);
 
     return (
-        <div className="flex flex-col items-center gap-2">
+        <div className="w-full flex flex-col items-center gap-2">
             <div className="flex flex-col items-center">
                 <AppImages.ShareWorldFade className={"w-[5rem] h-[5rem] max-xs:w-[3rem] max-xs:h-[3rem] aspect-square object-center object-contain p-1 bg-white rounded-full outline-2 outline-primary"}
                 />
