@@ -50,6 +50,7 @@ export const DialogBox = ({
                     <div className="self-end flex gap-2 pt-2">
                         {options.buttons.map(({ value, onClick }) => {
                             return <button
+                                key={value}
                                 className="px-4 py-2 max-xs:px-3 max-xs:py-0 bg-primary text-white rounded-sm"
                                 value={value}
                                 onClick={onClick}
