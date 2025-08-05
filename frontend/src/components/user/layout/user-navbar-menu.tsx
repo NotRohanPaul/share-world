@@ -26,7 +26,7 @@ const LogginOutDialog = () => {
     return (
         <div className="flex items-center gap-2 text-2xl">
             <AppIcons.Loader />
-            LoggingOut
+            Logging Out
         </div>
     );
 };
