@@ -49,7 +49,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["src/**/*.tsx", "tests/**/*.tsx", "**/hooks/**/*.ts"],
+    files: ["src/**/*.tsx", "tests/**/*.tsx", "**/hooks/**/*.{ts,tsx}"],
     rules: {
       "@typescript-eslint/explicit-function-return-type": "off",
     },
