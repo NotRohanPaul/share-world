@@ -13,21 +13,12 @@ export const acceptController: SenderReceiverContextHandlerType = async (_req, r
         const receiverId = res.locals.context?.receiverId;
 
         const isRequestAlreadyExists = await FriendRequestModel.exists({
-            sender: senderId,
-            receiver: receiverId,
+            sender: receiverId,
+            receiver: senderId,
         });
 
         if (isRequestAlreadyExists === null) {
             return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("Request does not exist");
-        }
-
-        const isAlreadyFriends = await UserModel.exists({
-            email: senderEmail,
-            friendsEmailList: receiverEmail
-        });
-
-        if (isAlreadyFriends !== null) {
-            return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("Already both are friends");
         }
 
         const session = await mongoose.startSession();
