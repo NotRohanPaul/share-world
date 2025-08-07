@@ -3,14 +3,14 @@ import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import type { SenderReceiverContextHandlerType } from "@src/middlewares/friends/sender-receiver-checks-middleware";
 import { FriendRequestModel } from "@src/models/friend-request.model";
 
-export const rejectController: SenderReceiverContextHandlerType  = async (_req, res) => {
+export const rejectController: SenderReceiverContextHandlerType = async (_req, res) => {
     try {
         const senderId = res.locals.context?.senderId;
         const receiverId = res.locals.context?.receiverId;
 
         const isRequestAlreadyExists = await FriendRequestModel.exists({
-            sender: senderId,
-            receiver: receiverId,
+            sender: receiverId,
+            receiver: senderId,
         });
 
         if (isRequestAlreadyExists === null) {
@@ -18,8 +18,8 @@ export const rejectController: SenderReceiverContextHandlerType  = async (_req, 
         }
 
         await FriendRequestModel.deleteOne({
-            sender: senderId,
-            receiver: receiverId,
+            sender: receiverId,
+            receiver: senderId,
         });
 
         return void res.sendStatus(HTTP_STATUS_CODES.OK);
