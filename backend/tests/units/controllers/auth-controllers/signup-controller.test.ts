@@ -47,7 +47,6 @@ describe("to test signupController", () => {
                 confirmPassword: testInputs.password
             }
         } as express.Request;
-
         const mockResponse = {
             cookie: vi.fn().mockReturnThis(),
             status: vi.fn().mockReturnThis(),
@@ -60,19 +59,15 @@ describe("to test signupController", () => {
         const userDoc = await UserModel.find({ email: testInputs.email });
         const isSame = await comparePasswordHash(testInputs.password, userDoc[0].password);
 
-
         expect(userDoc.length).toBe(1);
         expect(userDoc[0].name).toBe(testInputs.name);
         expect(userDoc[0].email).toBe(testInputs.email);
-
         expect(isSame).toBe(true);
         expect(mockResponse.send).toBeCalledWith({
             name: userDoc[0].name,
             email: userDoc[0].email
         });
-
         expect(mockResponse.status).toHaveBeenCalledWith(201);
-
         expect(mockResponse.cookie).toHaveBeenCalledWith(
             "accessToken",
             expect.any(String),
@@ -83,7 +78,6 @@ describe("to test signupController", () => {
                 maxAge: 15 * 60 * 1000
             })
         );
-
         expect(mockResponse.cookie).toHaveBeenCalledWith(
             "refreshToken",
             expect.any(String),
@@ -122,6 +116,7 @@ describe("to test signupController", () => {
         await signupController(mockRequest, mockResponse, vi.fn());
 
         const userDoc = await UserModel.find({ email: testInputs.email });
+
         expect(userDoc.length).toBe(0);
         expect(mockResponse.sendStatus).toBeCalledWith(400);
         expect(mockResponse.cookie).toBeCalledTimes(0);
@@ -143,7 +138,6 @@ describe("to test signupController", () => {
                 confirmPassword: testInputs.password
             }
         } as express.Request;
-
         const mockResponse = {
             cookie: vi.fn().mockReturnThis(),
             status: vi.fn().mockReturnThis(),
@@ -154,6 +148,7 @@ describe("to test signupController", () => {
         await signupController(mockRequest, mockResponse, vi.fn());
 
         const userDoc = await UserModel.find({ email: testInputs.email });
+
         expect(userDoc.length).toBe(0);
         expect(mockResponse.sendStatus).toBeCalledWith(400);
         expect(mockResponse.cookie).toBeCalledTimes(0);

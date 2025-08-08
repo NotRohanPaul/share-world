@@ -6,7 +6,6 @@ import { JWT_SECRET } from "@src/constants/env";
 
 describe("tests for refresh controller", () => {
 
-
     it("response 200 if the tokens are valid", async () => {
         const validResponseToken = jwt.sign(
             {
@@ -14,10 +13,7 @@ describe("tests for refresh controller", () => {
                 email: "test@test.com"
             },
             JWT_SECRET,
-            {
-                expiresIn: 7 * 24 * 60 * 60 * 1000,
-            }
-
+            { expiresIn: 7 * 24 * 60 * 60 * 1000, }
         );
 
         const mockRequest = {
@@ -25,7 +21,6 @@ describe("tests for refresh controller", () => {
                 refreshToken: validResponseToken
             }
         } as unknown as express.Request;
-
         const mockResponse = {
             cookie: vi.fn().mockReturnThis(),
             sendStatus: vi.fn().mockReturnThis()
@@ -55,7 +50,6 @@ describe("tests for refresh controller", () => {
                 refreshToken: inValidResponseToken
             }
         } as unknown as express.Request;
-
         const mockResponse = {
             cookie: vi.fn().mockReturnThis(),
             sendStatus: vi.fn().mockReturnThis()
@@ -69,14 +63,20 @@ describe("tests for refresh controller", () => {
     });
 
     it("response 401 for users with expired tokens", async () => {
-        const validButExpiredRefreshToken = jwt.sign({ userId: "f".padStart(24, '0'), email: "test@test.com" }, JWT_SECRET, { expiresIn: '0' });
+        const validButExpiredRefreshToken = jwt.sign(
+            {
+                userId: "f".padStart(24, '0'),
+                email: "test@test.com"
+            },
+            JWT_SECRET,
+            { expiresIn: '0' }
+        );
 
         const mockRequest = {
             cookies: {
                 refreshToken: validButExpiredRefreshToken
             }
         } as unknown as express.Request;
-
         const mockResponse = {
             cookie: vi.fn().mockReturnThis(),
             sendStatus: vi.fn().mockReturnThis()
@@ -93,14 +93,13 @@ describe("tests for refresh controller", () => {
         const mockRequest = {
             cookies: {}
         } as unknown as express.Request;
-
         const mockResponse = {
             cookie: vi.fn().mockReturnThis(),
             sendStatus: vi.fn().mockReturnThis()
         } as unknown as express.Response;
 
-
         await refreshController(mockRequest, mockResponse, vi.fn());
+
         expect(mockResponse.sendStatus).toBeCalledWith(401);
         expect(mockResponse.cookie).toBeCalledTimes(0);
     });

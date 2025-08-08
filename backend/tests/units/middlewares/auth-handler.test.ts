@@ -31,9 +31,7 @@ describe("To check auth middleware", () => {
                 email: "test@test.com"
             },
             JWT_SECRET,
-            {
-                expiresIn: '15m'
-            }
+            { expiresIn: '15m' }
         );
 
         const mockRequest = {
@@ -41,15 +39,15 @@ describe("To check auth middleware", () => {
                 accessToken: validAccessToken,
             },
         } as unknown as express.Request;
-
-        const mockNext = vi.fn();
-
         const mockResponse = {
             locals: {}
         } as express.Response;
+        const mockNext = vi.fn();
+
         await authMiddleware(mockRequest, mockResponse, mockNext);
-        expect(mockNext).toHaveBeenCalledTimes(1);
         const responseWithContext = (mockResponse.locals as { context?: { auth: unknown; }; });
+
+        expect(mockNext).toHaveBeenCalledTimes(1);
         expect(responseWithContext.context?.auth).toEqual(
             expect.objectContaining({
                 userId: "f".padStart(24, "0"),
@@ -70,7 +68,6 @@ describe("To check auth middleware", () => {
 
         expect(res.status).toBe(200);
         expect(res.text).toBe("Authorized");
-
     });
 
     it("response 401 for users with invalid tokens", async () => {
@@ -101,7 +98,9 @@ describe("To check auth middleware", () => {
 
     it("responds 401 when token is missing", async () => {
         const app = createTestApp();
+
         const res = await request(app).get("/test-auth");
+
         expect(res.status).toBe(401);
     });
 
