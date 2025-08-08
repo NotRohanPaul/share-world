@@ -1,6 +1,9 @@
 import { acceptController } from "@src/controllers/friend-controllers/request";
 import { FriendRequestModel } from "@src/models/friend-request.model";
+import { UserModel } from "@src/models/users.model";
+import { setupMongoReplicaServer } from "tests/configs/helpers/common";
 import {
+    afterEach,
     describe,
     expect,
     it
@@ -8,12 +11,16 @@ import {
 import {
     createUsers,
     provideMockRequestHandlerArguments,
-    setupMongoReplicaServer
 } from "./helpers/common";
 
 
 describe("test for friend request accept controller", () => {
     setupMongoReplicaServer();
+
+    afterEach(async () => {
+        await UserModel.deleteMany({});
+        await FriendRequestModel.deleteMany({});
+    });
 
     it("response 200 if the request is already present to accept", async () => {
         const { user1, user2 } = await createUsers();

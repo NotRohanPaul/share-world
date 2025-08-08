@@ -1,13 +1,6 @@
-import { FriendRequestModel } from "@src/models/friend-request.model";
 import { UserModel } from "@src/models/users.model";
 import express from "express";
-import { MongoMemoryReplSet } from "mongodb-memory-server";
-import mongoose from "mongoose";
-import { MongodbMemoryOptions } from "tests/configs/memory-db-options";
 import {
-    afterAll,
-    afterEach,
-    beforeAll,
     vi,
     type Mock,
     type Mocked
@@ -56,25 +49,3 @@ export const provideMockRequestHandlerArguments = (user1: CreatedUserType, user2
     return { mockRequest, mockResponse, mockNext };
 };
 
-export const setupMongoReplicaServer = (): void => {
-    let mongoServer: MongoMemoryReplSet;
-    beforeAll(async () => {
-        mongoServer = await MongoMemoryReplSet.create({
-            replSet: {
-                count: 1
-            },
-            ...MongodbMemoryOptions
-        });
-        await mongoose.connect(mongoServer.getUri());
-    });
-
-    afterEach(async () => {
-        await UserModel.deleteMany({});
-        await FriendRequestModel.deleteMany({});
-    });
-
-    afterAll(async () => {
-        await mongoose.disconnect();
-        await mongoServer.stop();
-    });
-};
