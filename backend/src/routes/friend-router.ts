@@ -1,7 +1,8 @@
 import {
     listBlockedUsersController,
-    listFriendRequestsController,
-    listFriendsController
+    listFriendsController,
+    listReceivedRequestsController,
+    listSentRequestsController
 } from "@src/controllers/friend-controllers/list";
 import {
     acceptController,
@@ -23,7 +24,8 @@ requestRouter.post("/block", blockController);
 
 const listRouter = Router();
 listRouter.get("/friends", listFriendsController);
-listRouter.get("/requests", listFriendRequestsController);
+listRouter.get("/received-requests", listReceivedRequestsController);
+listRouter.get("/received-requests", listSentRequestsController);
 listRouter.get("/blocks", listBlockedUsersController);
 
 const friendRouter = Router();
