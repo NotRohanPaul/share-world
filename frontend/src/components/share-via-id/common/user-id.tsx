@@ -22,7 +22,7 @@ export const UserId = ({
     };
 
     return (
-        <p className="flex gap-2 font-bold max-xs:text-xl">
+        <p className="flex items-center gap-2 font-bold max-xs:text-xl">
             <span>Your ID:</span>
             {
                 userId === null ?
