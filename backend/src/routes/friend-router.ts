@@ -25,7 +25,7 @@ requestRouter.post("/block", blockController);
 const listRouter = Router();
 listRouter.get("/friends", listFriendsController);
 listRouter.get("/received-requests", listReceivedRequestsController);
-listRouter.get("/received-requests", listSentRequestsController);
+listRouter.get("/sent-requests", listSentRequestsController);
 listRouter.get("/blocks", listBlockedUsersController);
 
 const friendRouter = Router();
