@@ -20,6 +20,7 @@ describe("test for list controller to return blocked users list with info", () =
     });
 
     it("response 200 with the list of blocked users", async () => {
+        const testUserEmail = "test1@test.com";
         const usersList = Array.from({ length: 10 }).map((_, i) => {
             return {
                 name: "test",
@@ -28,14 +29,13 @@ describe("test for list controller to return blocked users list with info", () =
             };
         });
 
-        const usersDocArr = await UserModel.insertMany(usersList);
-
-        const allEmailListExceptFirst = usersList.slice(1).map(({ email }) => {
+        await UserModel.insertMany(usersList);
+        const allEmailListExceptFirst = usersList.filter(({ email }) => email !== testUserEmail).map(({ email }) => {
             return email;
         });
         await UserModel.updateOne(
             {
-                email: usersDocArr[0].email,
+                email: testUserEmail,
             },
             {
                 blockedEmailList: allEmailListExceptFirst
@@ -43,13 +43,12 @@ describe("test for list controller to return blocked users list with info", () =
         );
 
         const mockRequest = {
-            query: { limit: 50 }
         } as unknown as express.Request;
         const mockResponse = {
             locals: {
                 context: {
                     auth: {
-                        email: "test1@test.com"
+                        email: testUserEmail
                     }
                 }
             },
@@ -61,15 +60,16 @@ describe("test for list controller to return blocked users list with info", () =
 
         await listBlockedUsersController(mockRequest, mockResponse, mockNext);
 
-        const expectedResponseBody = usersList.slice(1).map(({ email, name }) => {
+        const expectedResponseBody = usersList.filter(({ email }) => email !== testUserEmail).map(({ email, name }) => {
             return {
                 email,
                 name
             };
         }).sort((a, b) => a.email.localeCompare(b.email));
-        expect(mockResponse.status).toHaveBeenCalledWith(200);
         const params = mockResponse.send.mock.calls[0][0] as typeof expectedResponseBody;
         const actualValueSendCalledWith = params.sort((a, b) => a.email.localeCompare(b.email));
+
+        expect(mockResponse.status).toHaveBeenCalledWith(200);
         expect(actualValueSendCalledWith).toMatchObject(expectedResponseBody);
         console.log({
             expected: expectedResponseBody,

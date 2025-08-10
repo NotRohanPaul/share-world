@@ -14,7 +14,7 @@ export const listBlockedUsersController: AuthContextHandlerType<{
         if (userEmail === undefined) {
             return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("No user mail in context");
         }
-        let limit = Number(req.query.limit);
+        let limit = Number(req.query?.limit);
         if (isNaN(limit) || limit <= 0 || limit > 50) {
             limit = 50;
         }
