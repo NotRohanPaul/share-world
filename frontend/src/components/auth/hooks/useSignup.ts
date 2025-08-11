@@ -2,9 +2,8 @@ import { signupHandler } from "@src/axios/handlers/auth-handler";
 import { useDebounce } from "@src/components/common/hooks/useDebounce";
 import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
-import { useAppDispatch } from "@src/redux/hook";
-import { selectSignupState, signupStateActions } from "@src/redux/slices/auth/signup-slice";
-import { userStateActions } from "@src/redux/slices/auth/user-slice";
+import { useAppDispatch } from "@src/redux/hooks";
+import { authActions, authSelectors } from "@src/redux/slices/auth";
 import { appRoutes } from "@src/routes/app-routes";
 import { signupInputSchema, signupSchema, userDataSchema } from "@src/schemas/auth-schemas";
 import { isTrusted } from "@src/utils/common";
@@ -36,7 +35,7 @@ export const useSignup = () => {
         isPasswordVisible,
         isConfirmPasswordVisible,
         inputErrors,
-    } = useSelector(selectSignupState);
+    } = useSelector(authSelectors.signup);
 
     const inputRefs = useRef<{
         nameRef: HTMLInputElement | null,
@@ -52,7 +51,7 @@ export const useSignup = () => {
 
     useEffect(() => {
         return () => {
-            dispatch(signupStateActions.resetForm());
+            dispatch(authActions.signup.resetForm());
         };
     }, []);
 
@@ -71,7 +70,7 @@ export const useSignup = () => {
                 )
         };
 
-        dispatch(signupStateActions.setInputErrors(newErrors));
+        dispatch(authActions.signup.setInputErrors(newErrors));
     }, [debouncedField], 600);
 
     const { mutate: signup, isPending: isLoading } = useMutation({
@@ -82,7 +81,7 @@ export const useSignup = () => {
                 const result = userDataSchema.safeParse(res.data);
                 console.log(result.error);
                 if (result.success === true) {
-                    dispatch(userStateActions.setNameAndEmail(result.data));
+                    dispatch(authActions.user.setNameAndEmail(result.data));
                     await navigate(appRoutes.user.absolute);
                 }
                 else {
@@ -122,10 +121,10 @@ export const useSignup = () => {
             name = "confirmPassword";
 
         const actionMap = {
-            name: signupStateActions.setName,
-            email: signupStateActions.setEmail,
-            password: signupStateActions.setPassword,
-            confirmPassword: signupStateActions.setConfirmPassword
+            name: authActions.signup.setName,
+            email: authActions.signup.setEmail,
+            password: authActions.signup.setPassword,
+            confirmPassword: authActions.signup.setConfirmPassword
         };
         if (Object.keys(actionMap).includes(name) === false) return;
 
@@ -176,11 +175,11 @@ export const useSignup = () => {
         const btnName = e.currentTarget.name;
         let input: HTMLInputElement | null = null;
         if (btnName === "password-eye-btn") {
-            dispatch(signupStateActions.setIsPasswordVisible());
+            dispatch(authActions.signup.setIsPasswordVisible());
             input = inputRefs.current.passwordRef;
         }
         if (btnName === "confirm-password-eye-btn") {
-            dispatch(signupStateActions.setIsConfirmPasswordVisible());
+            dispatch(authActions.signup.setIsConfirmPasswordVisible());
             input = inputRefs.current.confirmPasswordRef;
         }
         if (input === null) return;

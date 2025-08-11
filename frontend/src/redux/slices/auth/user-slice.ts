@@ -1,5 +1,4 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { AppRootReducersType } from "@src/redux/store";
 type GuestUserStateType = {
     type: "guest",
 };
@@ -13,7 +12,7 @@ export type UserStateType = GuestUserStateType | AuthUserStateType | null;
 
 const initialState = null as UserStateType;;
 
-const userSlice = createSlice({
+export const userSlice = createSlice({
     name: "user",
     initialState: initialState,
     reducers: {
@@ -37,7 +36,3 @@ const userSlice = createSlice({
 
 });
 
-export const userReducer = userSlice.reducer;
-
-export const selectUserState = (state: AppRootReducersType): UserStateType => state.user;
-export const userStateActions = userSlice.actions;

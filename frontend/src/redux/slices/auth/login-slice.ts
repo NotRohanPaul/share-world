@@ -1,5 +1,4 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { AppRootReducersType } from "@src/redux/store";
 
 export type LoginFormStateType = {
     email: string;
@@ -15,7 +14,7 @@ const initialState: LoginFormStateType = {
     isPasswordVisible: false,
 };
 
-const loginSlice = createSlice({
+export const loginSlice = createSlice({
     name: "loginForm",
     initialState,
     reducers: {
@@ -34,9 +33,3 @@ const loginSlice = createSlice({
         resetForm: () => initialState,
     }
 });
-
-export const loginReducer = loginSlice.reducer;
-
-export const selectLoginState = (state: AppRootReducersType): LoginFormStateType => state.login;
-export const loginStateActions = loginSlice.actions;
-

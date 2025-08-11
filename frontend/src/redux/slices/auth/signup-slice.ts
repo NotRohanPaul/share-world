@@ -1,5 +1,4 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { AppRootReducersType } from "@src/redux/store";
 
 export type SignupFromStateType = {
     name: string,
@@ -31,8 +30,7 @@ const initialState: SignupFromStateType = {
     },
 };
 
-
-const signupSlice = createSlice({
+export const signupSlice = createSlice({
     name: "signupForm",
     initialState,
     reducers: {
@@ -61,7 +59,3 @@ const signupSlice = createSlice({
     }
 });
 
-export const signupReducer = signupSlice.reducer;
-
-export const selectSignupState = (state: AppRootReducersType): SignupFromStateType => state.signup;
-export const signupStateActions = signupSlice.actions;

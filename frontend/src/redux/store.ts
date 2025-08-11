@@ -1,14 +1,9 @@
-import { combineReducers, configureStore, type EnhancedStore } from "@reduxjs/toolkit";
-import { loginReducer } from "./slices";
+import {
+    configureStore,
+    type EnhancedStore
+} from "@reduxjs/toolkit";
 import { IS_SECURE_ENV } from "@src/constants/env";
-import { userReducer } from "./slices/auth/user-slice";
-import { signupReducer } from "./slices/auth/signup-slice";
-
-const rootReducer = combineReducers({
-    user: userReducer,
-    signup: signupReducer,
-    login: loginReducer,
-});
+import { rootReducer, type AppRootReducersType } from "./root-reducer";
 
 export const setupStore = (preloadedState?: Partial<AppRootReducersType>): EnhancedStore => {
     return configureStore({
@@ -20,6 +15,5 @@ export const setupStore = (preloadedState?: Partial<AppRootReducersType>): Enhan
 
 export const store = setupStore();
 
-export type AppRootReducersType = ReturnType<typeof rootReducer>;
 export type AppStoreStateType = ReturnType<typeof setupStore>;
 export type AppStoreDispatchType = AppStoreStateType["dispatch"];
