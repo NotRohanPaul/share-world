@@ -1,20 +1,21 @@
+
 export const authEndpoints = {
-    signup: "/auth/signup",
-    login: "/auth/login",
-    logout: "/auth/logout",
-};
+    signup: { method: "post", url: "/auth/signup" },
+    login: { method: "post", url: "/auth/login" },
+    logout: { method: "get", url: "/auth/logout" },
+} as const;
 
 export const friendListEndpoints = {
-    sentRequests: "/friend/list/sent-requests",
-    receivedRequests: "/friend/list/received-requests",
-    blocks: "/friend/list/blocks",
-    friends: "/friend/list/friends",
-};
+    sentRequests: { method: "get", url: "/friend/list/sent-requests" },
+    receivedRequests: { method: "get", url: "/friend/list/received-requests" },
+    blocks: { method: "get", url: "/friend/list/blocks" },
+    friends: { method: "get", url: "/friend/list/friends" },
+} as const;
 
 export const friendRequestEndpoints = {
-    send: "/friend/request/send",
-    delete: "/friend/request/delete",
-    reject: "/friend/request/reject",
-    accept: "/friend/request/accept",
-    block: "/friend/request/block",
-};
+    send: { method: "post", url: "/friend/request/send" },
+    delete: { method: "delete", url: "/friend/request/delete" },
+    reject: { method: "post", url: "/friend/request/reject" },
+    accept: { method: "post", url: "/friend/request/accept" },
+    block: { method: "post", url: "/friend/request/block" },
+} as const;

@@ -1,4 +1,4 @@
-import { signupHandler } from "@src/axios/handlers/auth-handler";
+import { apiHandlers } from "@src/axios/handlers/api-handlers";
 import { useDebounce } from "@src/components/common/hooks/useDebounce";
 import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
@@ -74,7 +74,7 @@ export const useSignup = () => {
     }, [debouncedField], 600);
 
     const { mutate: signup, isPending: isLoading } = useMutation({
-        mutationFn: signupHandler,
+        mutationFn: apiHandlers.auth.signup,
         onSuccess: async (res) => {
             if (res.status === HTTP_STATUS_CODES.CREATED) {
                 console.log(res.data);

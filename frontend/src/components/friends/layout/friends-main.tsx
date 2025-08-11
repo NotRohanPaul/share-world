@@ -1,13 +1,8 @@
-import {
-    listBlocksHandler,
-    listFriendsHandler,
-    listReceivedRequestsHandler,
-    listSentRequestsHandler
-} from "@src/axios/handlers/friend-list-handlers";
 import { useState, type MouseEvent } from "react";
 import { UserInfo } from "../ui/user-info";
 import { useQueries } from "@tanstack/react-query";
 import type { AxiosResponse } from "axios";
+import { apiHandlers } from "@src/axios/handlers/api-handlers";
 
 const menuButtons = ["friends", "requests", "blocks"] as const;
 type menuButtonType = typeof menuButtons[number];
@@ -26,22 +21,22 @@ export const FriendsMain = () => {
         queries: [
             {
                 queryKey: ["friends"],
-                queryFn: safeQuery(listFriendsHandler),
+                queryFn: safeQuery(apiHandlers.friendList.friends),
                 enabled: activeMenuType === "friends"
             },
             {
                 queryKey: ["blocks"],
-                queryFn: safeQuery(listBlocksHandler),
+                queryFn: safeQuery(apiHandlers.friendList.blocks),
                 enabled: activeMenuType === "blocks"
             },
             {
                 queryKey: ["requests", "received"],
-                queryFn: safeQuery(listReceivedRequestsHandler),
+                queryFn: safeQuery(apiHandlers.friendList.receivedRequests),
                 enabled: activeMenuType === "requests"
             },
             {
                 queryKey: ["requests", "sent"],
-                queryFn: safeQuery(listSentRequestsHandler),
+                queryFn: safeQuery(apiHandlers.friendList.sentRequests),
                 enabled: activeMenuType === "requests"
             }
         ]

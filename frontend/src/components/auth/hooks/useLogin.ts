@@ -1,4 +1,4 @@
-import { loginHandler } from "@src/axios/handlers/auth-handler";
+import { apiHandlers } from "@src/axios/handlers/api-handlers";
 import { useDebounce } from "@src/components/common/hooks/useDebounce";
 import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
@@ -55,7 +55,7 @@ export const useLogin = () => {
 
 
     const { mutate: login, isPending: isLoading } = useMutation({
-        mutationFn: loginHandler,
+        mutationFn: apiHandlers.auth.login,
         onSuccess: async (res) => {
             if (res.status === HTTP_STATUS_CODES.OK) {
                 console.log(res.data);
