@@ -1,4 +1,5 @@
-import { setupStore, type AppRootReducersType, type AppStoreStateType } from "@src/redux/store";
+import type { AppRootReducersType } from "@src/redux/root-reducer";
+import { setupStore, type AppStoreStateType } from "@src/redux/store";
 import { render } from '@testing-library/react';
 import type { PropsWithChildren } from "react";
 import { Provider } from 'react-redux';
