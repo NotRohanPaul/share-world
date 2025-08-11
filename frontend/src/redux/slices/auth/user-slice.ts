@@ -1,20 +1,23 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
 type GuestUserStateType = {
     type: "guest",
 };
 type AuthUserStateType = {
     type: "auth-user",
-    name: string | null,
-    email: string | null,
+    name: string,
+    email: string,
 };
 
-export type UserStateType = GuestUserStateType | AuthUserStateType | null;
+export type UserStateType = GuestUserStateType | AuthUserStateType;
 
-const initialState = null as UserStateType;;
+const initialState = {
+    type: "guest",
+} as UserStateType;
 
 export const userSlice = createSlice({
     name: "user",
-    initialState: initialState,
+    initialState,
     reducers: {
         setNameAndEmail: (_state, action: PayloadAction<{ name: string; email: string; }>): AuthUserStateType => {
             return {
@@ -28,9 +31,6 @@ export const userSlice = createSlice({
             return {
                 type: "guest",
             };
-        },
-        resetUserSliceToNull: () => {
-            return null;
         },
     }
 
