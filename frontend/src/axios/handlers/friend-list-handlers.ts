@@ -12,10 +12,12 @@ export const listBlocksHandler = (): Promise<AxiosResponse> => {
     const res = axiosInstance.get(friendListEndpoints.blocks);
     return res;
 };
+
 export const listSentRequestsHandler = (): Promise<AxiosResponse> => {
     const res = axiosInstance.get(friendListEndpoints.sentRequests);
     return res;
 };
+
 export const listReceivedRequestsHandler = (): Promise<AxiosResponse> => {
     const res = axiosInstance.get(friendListEndpoints.receivedRequests);
     return res;
