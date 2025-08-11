@@ -1,7 +1,7 @@
 import { AuthForm } from "@src/components/auth/layout/auth-form";
 import { ToastsProvider } from "@src/components/common/ui/toast/context/toasts-provider";
 import { QueryProvider } from "@src/providers/library/query-provider";
-import { cleanup, screen, waitFor } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
@@ -33,7 +33,7 @@ const renderLoginForm = () => renderWithReduxProviders(
                     <Route path="/login" element={<AuthForm authType="login" />} />
                     <Route path="/user" element={<h1>User Page</h1>} />
                 </Routes>
-            </MemoryRouter >
+            </MemoryRouter>
         </ToastsProvider>
     </QueryProvider>
 );
@@ -84,9 +84,7 @@ describe("LoginForm Integration with API", () => {
         );
         renderLoginForm();
         await fillLoginForm();
-        await waitFor(() =>
-            expect(screen.getByText(/invalid email or password/i)).toBeInTheDocument()
-        );
+        expect(await screen.findByText(/invalid email or password/i)).toBeInTheDocument();
     });
 
     it("shows toasts for server error", async () => {
@@ -97,9 +95,7 @@ describe("LoginForm Integration with API", () => {
         );
         renderLoginForm();
         await fillLoginForm();
-        await waitFor(() =>
-            expect(screen.getByText(/server error/i)).toBeInTheDocument()
-        );
+        expect(await screen.findByText(/server error/i)).toBeInTheDocument();
     });
 
     it("shows toasts for network error", async () => {
@@ -111,8 +107,6 @@ describe("LoginForm Integration with API", () => {
 
         renderLoginForm();
         await fillLoginForm();
-        await waitFor(() =>
-            expect(screen.getByText(/network error/i)).toBeInTheDocument()
-        );
+        expect(await screen.findByText(/network error/i)).toBeInTheDocument();
     });
 });
