@@ -5,7 +5,7 @@ import { SenderViaIdMain } from "@src/components/share-via-id/sender/layout/send
 import { SenderToFriendMain } from "@src/components/share-to-friend/sender/layout/sender-main";
 import { ReceiverToFriendMain } from "@src/components/share-to-friend/receiver/layout/receiver-main";
 import { appRoutes } from "@src/routes/app-routes";
-import { FriendsMain } from "@src/components/friends";
+import { FriendsMain } from "@src/components/friends/layout";
 
 export const viaIdRoutes = [
     {
