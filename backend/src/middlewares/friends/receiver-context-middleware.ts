@@ -6,11 +6,11 @@ import type { AuthContextHandlerType } from "@src/types/context";
 import { ZodError } from "zod";
 
 export const receiverContextMiddleware: AuthContextHandlerType<{
-    context: { receiverEmail?: string; },
-    reqBody: { receiverEmail?: string; },
+    context?: { receiverEmail?: string; },
+    reqBody?: { receiverEmail?: string; },
 }> = async (req, res, next) => {
     try {
-        const receiverEmail = req.body.receiverEmail;
+        const receiverEmail = req.body?.receiverEmail;
         const parsedReceiverEmail = await userSchema.shape.email.parseAsync(receiverEmail);
 
         const result = await UserModel.exists({ email: parsedReceiverEmail });
@@ -25,9 +25,9 @@ export const receiverContextMiddleware: AuthContextHandlerType<{
         next();
 
     }
-    catch (e) {
-        appLogger.error({ e });
-        if (e instanceof ZodError) {
+    catch (err) {
+        appLogger.error(err);
+        if (err instanceof ZodError) {
             return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
         }
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
