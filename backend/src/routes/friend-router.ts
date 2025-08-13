@@ -17,7 +17,7 @@ import { Router } from "express";
 
 const requestRouter = Router();
 requestRouter.post("/send", sendController);
-requestRouter.post("/delete", deleteController);
+requestRouter.delete("/delete", deleteController);
 requestRouter.post("/reject", rejectController);
 requestRouter.post("/accept", acceptController);
 requestRouter.post("/block", blockController);
