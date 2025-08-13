@@ -1,8 +1,9 @@
 # MongoDB base directory inside user's temp folder
-$mongoBasePath = Join-Path ([System.IO.Path]::GetTempPath()) "mongodb\mongodb-windows"
+$mongoBasePath = "C:\Users\ROHAN\mongodb-windows"
 $dataPath = Join-Path $mongoBasePath "data"
 $logPath = Join-Path $mongoBasePath "logs"
-$logFile = Join-Path $logPath "mongod.log"
+$timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+$logFile = Join-Path $logPath "mongod_$timestamp.log"
 
 # Ensure directories exist
 foreach ($path in @($dataPath, $logPath)) {
@@ -59,7 +60,6 @@ $mongodCommand = @(
 # Start mongod in same terminal and log to file
 Write-Host "Starting mongod..."
 Start-Process mongod -ArgumentList $mongodCommand -NoNewWindow
-
 
 # Wait for MongoDB to be ready
 Write-Host "Waiting for MongoDB to start..."
