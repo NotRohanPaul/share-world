@@ -55,9 +55,9 @@ UserDBSchema.pre("save", async function (next) {
             } else {
                 throw new Error("Password hashing failed");
             }
-        } catch (error) {
-            appLogger.error("Error during password hashing:", error);
-            return void next(error as CallbackError);
+        } catch (err) {
+            appLogger.error(err,"Error during password hashing:");
+            return void next(err as CallbackError);
         }
     }
     next();

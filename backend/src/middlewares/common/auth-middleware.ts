@@ -36,7 +36,7 @@ export const authMiddleware: AuthContextHandlerType = async (req, res, next) => 
 
     }
     catch (err) {
-        appLogger.error({ err });
+        appLogger.error(err);
         return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
     }
 };

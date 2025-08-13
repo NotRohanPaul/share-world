@@ -45,7 +45,7 @@ export const listReceivedRequestsController: AuthContextHandlerType = async (_re
         return void res.status(HTTP_STATUS_CODES.OK).send(users);
     }
     catch (err) {
-        appLogger.error({ err });
+        appLogger.error(err);
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 

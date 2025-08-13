@@ -45,8 +45,8 @@ export const sendController: SenderReceiverContextHandlerType = async (_req, res
 
         return void res.sendStatus(HTTP_STATUS_CODES.OK);
     }
-    catch (e) {
-        appLogger.error({ e });
+    catch (err) {
+        appLogger.error(err);
         return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };

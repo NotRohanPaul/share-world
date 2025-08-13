@@ -11,7 +11,7 @@ const server = http.createServer(app as RequestListener);
 server.keepAliveTimeout = APP_TIMEOUTS.keepAliveTimeout;
 server.headersTimeout = APP_TIMEOUTS.headersTimeout;
 server.on("error", (err) => {
-    appLogger.error({ err }, "Server error: \n");
+    appLogger.error(err, "Server error: \n");
     process.exit(1);
 });
 
@@ -24,7 +24,7 @@ try {
         appLogger.info(`Enviroment: ${NODE_ENV} and IS_SECURE_ENV value is ${IS_SECURE_ENV}`);
     });
 } catch (err) {
-    appLogger.error({ err }, "Failed to start server \n");
+    appLogger.error(err, "Failed to start server \n");
     process.exit(1);
 }
 
