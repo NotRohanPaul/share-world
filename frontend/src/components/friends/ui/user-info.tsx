@@ -14,7 +14,7 @@ export const UserInfo = ({
                         <div key={name} className="flex gap-2 p-2 bg-secondary">
                             <AppIcons.Avatar className="text-white" />
                             <p className="w-full">
-                                name
+                                {name}
                             </p>
                             ...
                         </div>
