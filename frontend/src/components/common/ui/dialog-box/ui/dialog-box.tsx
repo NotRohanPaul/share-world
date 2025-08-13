@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import type { Dispatch, SetStateAction } from "react";
 import { createPortal } from "react-dom";
 import type { DialogBoxOptionsType } from "../types";
+import { DialogButton } from "./dialog-btn";
 
 export const DialogBox = ({
     options,
@@ -22,12 +23,20 @@ export const DialogBox = ({
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.75, opacity: 0 }}
                 transition={{ duration: 0.15, ease: "easeInOut" }}
-                className="relative w-[22rem] min-h-[10rem] flex flex-col justify-between p-2 outline-2 outline-primary bg-white rounded-lg">
-                <div className="flex justify-between break-all pt-6 px-4">
+                className="relative w-[22rem] h-auto max-h-[50%] p-2 outline-2 outline-primary bg-white rounded-lg overflow-auto"
+            >
+                <button
+                    className="absolute top-2 right-2"
+                    aria-label="Close"
+                    onClick={() => setIsDialogBoxVisible(false)}
+                >
+                    <AppIcons.Close />
+                </button>
+                <section className="h-full flex flex-col justify-between pt-7 pb-2 px-4">
                     {
                         options.type === "text"
                         &&
-                        <p className="text-xl max-xs:text-base font-semibold">
+                        <p className="break-all text-xl max-xs:text-base font-semibold">
                             {options.text}
                         </p>
                     }
@@ -36,30 +45,22 @@ export const DialogBox = ({
                         &&
                         options.children
                     }
-                </div>
-                <button
-                    className="absolute top-2 right-2"
-                    aria-label="Close"
-                    onClick={() => setIsDialogBoxVisible(false)}
-                >
-                    <AppIcons.Close />
-                </button>
-                {
-                    options.buttons !== undefined &&
-                    options.buttons.length > 0 &&
-                    <div className="self-end flex gap-2 pt-2">
-                        {options.buttons.map(({ value, onClick }) => {
-                            return <button
-                                key={value}
-                                className="px-4 py-2 max-xs:px-3 max-xs:py-0 bg-primary text-white rounded-sm"
-                                value={value}
-                                onClick={onClick}
-                            >
-                                {value}
-                            </button>;
-                        })}
-                    </div>
-                }
+                    {
+                        options.buttons !== undefined &&
+                        options.buttons.length > 0 &&
+                        <div className="self-end flex gap-2 pt-2">
+                            {options.buttons.map(({ value, onClick }) => {
+                                return <DialogButton
+                                    key={value}
+                                    value={value}
+                                    onClick={onClick}
+                                >
+                                    {value}
+                                </DialogButton>;
+                            })}
+                        </div>
+                    }
+                </section>
             </motion.main>
         </section>
     ), document.body);
