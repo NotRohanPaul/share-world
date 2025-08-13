@@ -18,13 +18,19 @@ export const useLogout = () => {
         mutationFn: () => {
             return apiHandlers.auth.logout(controllerRef.current.signal);
         },
-        onSuccess: async () => {
-            await navigate(appRoutes.login.absolute);
-            hideDialogBox();
+        onSuccess: async (res) => {
+            if (res.status === 200 || res.status === 304) {
+                await navigate(appRoutes.login.absolute);
+                hideDialogBox();
+            }
+            else {
+                hideDialogBox();
+                showToast({ text: "Server error" });
+            }
         },
         onError: () => {
             hideDialogBox();
-            showToast({ text: "Network error." });
+            showToast({ text: "Network error" });
         },
     });
 
