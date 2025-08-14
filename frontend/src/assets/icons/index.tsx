@@ -3,6 +3,7 @@ import {
     CircleUser,
     ClipboardCopy,
     ClockFading,
+    Ellipsis,
     EyeIcon,
     EyeOff,
     File,
@@ -51,5 +52,6 @@ export const AppIcons = {
     Home: House,
     Settings,
     Logout: LogOut,
-    Close: X
+    Close: X,
+    Ellipsis,
 };
