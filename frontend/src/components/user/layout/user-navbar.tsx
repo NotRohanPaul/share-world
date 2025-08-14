@@ -1,38 +1,18 @@
 import { AppIcons } from "@src/assets/icons";
+import { useMenuOutsideClick } from "@src/components/common/hooks/useMenuOutsideClick";
 import { Navbar } from "@src/components/common/layout/navbar";
 import { ShareWorldImgLink } from "@src/components/common/ui/share-world-img-link";
 import { AnimatePresence } from "motion/react";
-import { useEffect, useRef, useState } from "react";
 import { UserNavbarMenu } from "./user-navbar-menu";
 
 
 export const UserNavBar = () => {
-    const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
-
-    const buttonRef = useRef<HTMLButtonElement>(null);
-    const menuRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (isMenuVisible === false) return;
-
-        const handleOutsideClick = (e: globalThis.MouseEvent) => {
-            if (
-                menuRef.current === null ||
-                buttonRef.current === null
-            ) return;
-
-            if (buttonRef.current.contains(e.target as Node)) return;
-
-            if (menuRef.current.contains(e.target as Node) === false) {
-                setIsMenuVisible(false);
-            }
-        };
-
-        document.addEventListener("click", handleOutsideClick);
-        return () => {
-            document.removeEventListener("click", handleOutsideClick);
-        };
-    }, [isMenuVisible]);
+    const {
+        isMenuVisible,
+        setIsMenuVisible,
+        buttonRef,
+        menuRef
+    } = useMenuOutsideClick();
 
 
     return (
