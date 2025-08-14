@@ -17,11 +17,23 @@ export const FriendsMenu = () => {
     };
 
     return (
-        <div onClick={handleMenuClick}>
+        <div
+            onClick={handleMenuClick}
+            className="flex text-xl p-0.5 rounded-full border-2 border-gray-500 overflow-hidden max-sm:text-xl [&>button]:w-[100px] [&>button]:p-2 max-sm:[&>button]:w-[80px] max-sm:[&>button]:text-base">
             {
                 friendsMenuButtons.map((menuName, i) => {
                     return (
-                        <button key={i} className={`${menuName === activeMenuState ? "text-black cursor-auto" : "text-primary outline-2 outline-primary"} p-2 text-xl font-semibold`}
+                        <button
+                            key={i}
+                            className={`font-semibold ${menuName === activeMenuState ?
+                                "cursor-auto bg-primary text-white" :
+                                "text-primary hover:bg-blue-200"
+                                } ${i === 0 ?
+                                    "rounded-l-full" :
+                                    i === friendsMenuButtons.length - 1 ?
+                                        "rounded-r-full" :
+                                        ''
+                                }`}
                             value={menuName}
                         >
                             {

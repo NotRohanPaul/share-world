@@ -1,6 +1,5 @@
 import { apiHandlers } from "@src/axios/handlers/api-handlers";
 import { useDebounce } from "@src/components/common/hooks/useDebounce";
-import { useDialogBoxConsumer } from "@src/components/common/ui/dialog-box/context/dialog-box-consumer";
 import { DialogButton } from "@src/components/common/ui/dialog-box/ui/dialog-btn";
 import { loginSchema } from "@src/schemas/auth-schemas";
 import { useMutation } from "@tanstack/react-query";
@@ -11,7 +10,8 @@ import {
     type KeyboardEvent,
 } from "react";
 
-const SendRequestDialog = () => {
+
+export const SendRequestDialog = () => {
     const [receiverEmail, setReceiverEmail] = useState<string>('');
     const [emailError, setEmailError] = useState<string>('');
     const [serverResponse, setServerResponse] = useState<string>('');
@@ -112,25 +112,5 @@ const SendRequestDialog = () => {
                 </DialogButton>
             </div>
         </section>
-    );
-};
-
-export const SendRequestBtn = () => {
-    const { showDialogBox } = useDialogBoxConsumer();
-
-    const handleSendRequest = () => {
-        showDialogBox({
-            type: "component",
-            children: <SendRequestDialog />,
-        });
-    };
-
-    return (
-        <button
-            className="primary-btn p-2 rounded-sm"
-            onClick={handleSendRequest}
-        >
-            Send Request
-        </button >
     );
 };
