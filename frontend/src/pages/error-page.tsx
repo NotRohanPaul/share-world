@@ -10,19 +10,19 @@ export const ErrorPage = () => {
                 <title>Error</title>
             </Helmet>
             <main className="h-[100dvh] grid place-content-center gap-3">
-                <h1 className="text-5xl font-bold">
+                <h1 className="text-5xl max-sm:text-2xl font-bold">
                     Something went wrong!
                 </h1>
                 <div className="justify-self-center flex gap-2">
                     <Link
                         to={appRoutes.home.absolute}
-                        className="primary-btn justify-self-center text-xl p-2"
+                        className="primary-btn w-[100px] max-sm:w-[70px] flex items-center justify-center text-xl px-4 py-3 max-sm:text-base max-sm:p-2"
                     >
                         Home
                     </Link>
                     <button
                         onClick={() => window.location.reload()}
-                        className="primary-btn justify-self-center text-xl p-2"
+                        className="primary-btn w-[100px] max-sm:w-[70px] flex items-center justify-center text-xl px-4 py-3 max-sm:text-base max-sm:p-2"
                     >
                         Reload
                     </button>
