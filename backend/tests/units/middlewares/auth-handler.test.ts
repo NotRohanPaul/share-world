@@ -1,10 +1,10 @@
-import express, { type Express } from "express";
 import { JWT_SECRET } from "@src/constants/env";
+import { authMiddleware } from "@src/middlewares/auth/auth-middleware";
+import cookieParser from "cookie-parser";
+import express, { type Express } from "express";
 import jwt from "jsonwebtoken";
 import request from "supertest";
 import { describe, expect, it, vi } from "vitest";
-import cookieParser from "cookie-parser";
-import { authMiddleware } from "@src/middlewares/common/auth-middleware";
 
 const createTestApp = (): Express => {
     const app = express();

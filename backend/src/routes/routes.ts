@@ -1,4 +1,4 @@
-import { authMiddleware } from "@src/middlewares/common/auth-middleware";
+import { authMiddleware } from "@src/middlewares/auth/auth-middleware";
 import { Router } from "express";
 import { authRouter } from "./auth-router";
 import { friendRouter } from "./friend-router";

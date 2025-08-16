@@ -16,7 +16,6 @@ export const refreshController: RequestHandler = async (req, res) => {
         }
         const parsedRefreshToken = await cookiesSchema.shape.refreshToken.parseAsync(cookies.refreshToken);
         if (parsedRefreshToken === undefined || parsedRefreshToken === '') {
-
             appLogger.info("Parsed Refresh Token is invalid");
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
         }

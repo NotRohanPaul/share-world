@@ -14,8 +14,8 @@ export const authMiddleware: AuthContextHandlerType = async (req, res, next) => 
         }
 
         const prasedCookieAccessToken = await cookiesSchema.shape.accessToken.safeParseAsync(cookies.accessToken);
-        if (prasedCookieAccessToken.success === false || prasedCookieAccessToken.data === undefined) {
-            appLogger.error("Cookie Prasing Error");
+        if (prasedCookieAccessToken.success === false) {
+            appLogger.error(prasedCookieAccessToken.error, "Cookie Prasing Error");
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
         }
 
@@ -24,8 +24,8 @@ export const authMiddleware: AuthContextHandlerType = async (req, res, next) => 
 
         const payloadParsedResult = await jwtPayloadLooseTransformSchema.safeParseAsync(jwtPayload);
 
-        if (payloadParsedResult.success === false || payloadParsedResult.data === undefined) {
-            appLogger.error("JWT Payload Parsing Error");
+        if (payloadParsedResult.success === false) {
+            appLogger.error(payloadParsedResult.error, "JWT Payload Parsing Error");
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);
         }
 
