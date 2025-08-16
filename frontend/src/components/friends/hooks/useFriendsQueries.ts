@@ -2,7 +2,7 @@ import { apiHandlers } from "@src/axios/handlers/api-handlers";
 import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { useAppSelector } from "@src/redux/hooks";
 import { friendsSelectors } from "@src/redux/slices/friends";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, type QueryFunctionContext } from "@tanstack/react-query";
 import { AxiosError, type AxiosResponse } from "axios";
 import { useEffect } from "react";
 import type { UserInfoListType } from "../ui/users/user-info";
@@ -13,20 +13,29 @@ export const useFriendsQueries = () => {
 
     const safeQuery =
         (fn: () => Promise<AxiosResponse>) =>
-            async (): Promise<AxiosResponse<UserInfoListType>> => {
+            async (
+                ctx: QueryFunctionContext
+            ): Promise<{ key?: string; response: AxiosResponse<UserInfoListType>; }> => {
                 const res = await fn();
                 const status = res.status;
+
                 if (status === 200 || status === 304) {
-                    return res;
+                    let queryKey: string | undefined = undefined;
+                    if (typeof ctx.queryKey === "string") {
+                        queryKey = ctx.queryKey;
+                    }
+                    else if (Array.isArray(ctx.queryKey) === true) {
+                        const isAllString = ctx.queryKey.some((ele) => typeof ele !== "string") === false;
+                        if (isAllString === true) {
+                            queryKey = ctx.queryKey.join('-');
+                        }
+                    }
+                    return { key: queryKey, response: res };
                 }
                 if (status === 401) {
-                    showToast({
-                        text: "Session expired",
-                    });
+                    showToast({ text: "Session expired" });
                 } else {
-                    showToast({
-                        text: "Server Error",
-                    });
+                    showToast({ text: "Server Error" });
                 }
                 throw new AxiosError(`Unexpected status: ${res.status}`);
             };

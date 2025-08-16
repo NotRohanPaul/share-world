@@ -4,12 +4,18 @@ import type { AxiosResponse } from "axios";
 import { motion } from "motion/react";
 import { UserInfo, type UserInfoListType } from "../users/user-info";
 
+
 export const FriendPaneQueryResult = ({
-    queryResult
+    queryResult,
 }: {
-    queryResult: UseQueryResult<AxiosResponse<UserInfoListType>>;
+    queryResult: UseQueryResult<{
+        key?: string;
+        response: AxiosResponse<UserInfoListType>;
+    }>,
 }) => {
-    const { data: queryData, isLoading, error } = queryResult;
+    const { data, isLoading, error } = queryResult;
+    const queryData = data?.response?.data;
+    const queryKey = queryResult.data?.key;
 
     return (
         <section className="h-full flex flex-col overflow-auto p-1">
@@ -28,10 +34,13 @@ export const FriendPaneQueryResult = ({
                 >
                     {
                         (
-                            Array.isArray(queryData.data) === true &&
-                            queryData.data.length > 0
+                            Array.isArray(queryData) === true &&
+                            queryData.length > 0
                         ) ?
-                            <UserInfo userInfoList={queryData.data} /> :
+                            <UserInfo
+                                userInfoList={queryData}
+                                queryKey={queryKey}
+                            /> :
                             <p className="text-xl text-center">
                                 Not Found
                             </p>
