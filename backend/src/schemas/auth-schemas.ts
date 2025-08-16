@@ -33,30 +33,29 @@ const passwordSchema = z
 
 
 
-export const userSchema = z.strictObject({
+export const userSchema = z.object({
     email: emailSchema,
     password: passwordSchema,
     name: nameSchema,
-    emailVerified: z.boolean().optional()
 });
 
 
-export const cookiesSchema = z.strictObject({
+export const cookiesSchema = z.object({
     refreshToken: z.string(),
     accessToken: z.string(),
 });
 
 
 export const jwtPayloadLooseTransformSchema = z
-  .object({
-    userId: z.string().regex(/^[a-f0-9]{24}$/, "Must be a 24-character hexadecimal string"),
-    email: emailSchema,
-  })
-  .passthrough()
-  .transform(({ userId, email }) => ({
-    userId,
-    email,
-  }));
+    .object({
+        userId: z.string().regex(/^[a-f0-9]{24}$/, "Must be a 24-character hexadecimal string"),
+        email: emailSchema,
+    })
+    .passthrough()
+    .transform(({ userId, email }) => ({
+        userId,
+        email,
+    }));
 
 export const jwtPayloadStrictSchema = z
     .strictObject({
