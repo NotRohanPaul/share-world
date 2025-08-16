@@ -10,8 +10,12 @@ export const receiverContextMiddleware: AuthContextHandlerType<{
     reqBody?: { receiverEmail?: string; },
 }> = async (req, res, next) => {
     try {
+        const senderEmail = res.locals.context?.auth?.email;
         const receiverEmail = req.body?.receiverEmail;
         const parsedReceiverEmail = await userSchema.shape.email.parseAsync(receiverEmail);
+        if (senderEmail === parsedReceiverEmail) {
+            return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("Receiver email can't be same as sender");
+        }
 
         const result = await UserModel.exists({ email: parsedReceiverEmail });
         if (result === null) {
