@@ -66,18 +66,18 @@
     }
 
     .features-container {
-        @apply flex flex-col gap-5;
+        @apply flex flex-col items-center gap-5;
 
         &>h2 {
-            @apply self-center text-4xl max-sm:text-2xl max-xs:text-xl font-bold;
+            @apply text-4xl max-sm:text-2xl max-xs:text-xl font-bold;
         }
 
         &>div {
-            @apply self-center grid auto-rows-auto grid-cols-2 gap-4 gap-x-10 font-semibold;
+            @apply grid auto-rows-auto grid-cols-2 max-xs:grid-cols-1 gap-4 gap-x-10 font-semibold text-primary text-left text-3xl max-md:text-2xl max-sm:text-base max-xs:text-sm;
         }
 
         div p {
-            @apply flex items-center gap-2 text-primary text-left text-3xl max-md:text-2xl max-sm:text-base max-xs:text-sm;
+            @apply flex items-center gap-2;
         }
 
         div p::before {
