@@ -15,7 +15,7 @@ export const createUsers = async (): Promise<Record<string, CreatedUserType>> =>
         password: "Test@123"
     });
     const user2 = await UserModel.create({
-        name: "test",
+        name: "test one",
         email: "test1@example.com",
         password: "Test@123"
     });
@@ -33,9 +33,9 @@ export const provideMockRequestHandlerArguments = (user1: CreatedUserType, user2
         locals: {
             context: {
                 auth: {
-                    email: "test@example.com"
+                    email: user1.email,
                 },
-                receiverEmail: "test1@example.com",
+                receiverEmail: user2.email,
                 senderId: user1._id.toHexString(),
                 receiverId: user2._id.toHexString(),
             }
