@@ -1,4 +1,4 @@
-import { AuthForm } from "@src/components/auth/layout/auth-form";
+import { AuthForm } from "@src/components/auth/auth-form";
 import { ToastsProvider } from "@src/components/common/ui/toast/context/toasts-provider";
 import { QueryProvider } from "@src/providers/library/query-provider";
 import { cleanup, screen } from "@testing-library/react";
