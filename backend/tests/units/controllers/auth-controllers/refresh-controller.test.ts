@@ -37,6 +37,8 @@ describe("tests for refresh controller", () => {
                 httpOnly: true,
                 secure: false,
                 sameSite: "strict",
+                domain: undefined,
+                path: "/",
                 maxAge: 15 * 60 * 1000,
             }
         );
