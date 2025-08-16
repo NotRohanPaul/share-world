@@ -16,7 +16,7 @@ export const useLogout = () => {
 
     const { mutate: logout, } = useMutation({
         mutationFn: () => {
-            return apiHandlers.auth.logout(controllerRef.current.signal);
+            return apiHandlers.auth.logout({ signal: controllerRef.current.signal });
         },
         onSuccess: async (res) => {
             if (res.status === 200 || res.status === 304) {
