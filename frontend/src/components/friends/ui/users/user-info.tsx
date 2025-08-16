@@ -1,6 +1,7 @@
 import { AppIcons } from "@src/assets/icons";
 import { useMenuOutsideClick } from "@src/components/common/hooks/useMenuOutsideClick";
 import { UserMenu } from "./user-menu";
+import { AnimatePresence } from "motion/react";
 
 export type UserInfoListType = {
     name: string,
@@ -8,9 +9,11 @@ export type UserInfoListType = {
 }[];
 
 export const UserInfo = ({
-    userInfoList
+    userInfoList,
+    queryKey,
 }: {
     userInfoList: UserInfoListType;
+    queryKey?: string;
 }) => {
     const {
         isMenuVisible,
@@ -19,12 +22,13 @@ export const UserInfo = ({
         menuRef
     } = useMenuOutsideClick();
 
+
     return (
         <>
             {
-                userInfoList.map(({ name }, i) => {
+                userInfoList.map(({ name, email }, i) => {
                     return (
-                        <div key={`${name} ${i}`} className="flex items-center gap-2 p-2 outline outline-primary">
+                        <div key={`${name} ${i}`} className="flex items-center gap-2 p-2 outline outline-primary rounded-sm">
                             <AppIcons.Avatar className="text-primary" />
                             <p className="w-full">
                                 {name}
@@ -36,11 +40,19 @@ export const UserInfo = ({
                                 >
                                     <AppIcons.Ellipsis className="text-primary" />
                                 </button>
-                                {
-                                    isMenuVisible === true
-                                    &&
-                                    <UserMenu menuRef={menuRef} setIsMenuVisible={setIsMenuVisible} />
-                                }
+                                <AnimatePresence>
+                                    {
+                                        isMenuVisible === true
+                                        &&
+                                        <UserMenu
+                                            menuRef={menuRef}
+                                            setIsMenuVisible={setIsMenuVisible}
+                                            receiverEmail={email}
+                                            menuType={queryKey}
+
+                                        />
+                                    }
+                                </AnimatePresence>
                             </div>
                         </div>
                     );
