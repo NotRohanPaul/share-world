@@ -1,5 +1,5 @@
-import { FriendsMenu } from "./friends-menu";
-import { FriendsPane } from "./friends-pane";
+import { FriendsMenu } from "./layout/friends-menu";
+import { FriendsPane } from "./layout/friends-pane";
 
 export const FriendsMain = () => {
     return (

@@ -1,6 +1,6 @@
-import { LoginForm } from "../ui/login-form";
-import { SignupForm } from "../ui/signup-form";
-import type { AuthVariantType } from "../types";
+import { LoginForm } from "./ui/login-form";
+import { SignupForm } from "./ui/signup-form";
+import type { AuthVariantType } from "./types";
 
 
 export const AuthForm = ({ authType }: { authType: AuthVariantType; }) => {

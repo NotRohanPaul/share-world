@@ -6,7 +6,7 @@ import { SettingsPage } from "@src/pages/settings-page";
 import { UserPage } from "@src/pages/user-page";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { appRoutes } from "./app-routes";
-import { friendsRoutes, toFriendsRoutes, viaIdRoutes } from "./routers/user";
+import { friendsRoutes, toFriendsRoutes, viaIdRoutes } from "./routers/user/user-routes";
 
 const router = createBrowserRouter([
     {
