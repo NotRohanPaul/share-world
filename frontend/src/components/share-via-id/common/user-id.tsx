@@ -45,7 +45,7 @@ export const UserId = ({
                 >
                     {isCopyClicked === false ?
                         <AppIcons.Copy className="w-[2rem] h-[2rem] max-xs:w-[1.5rem] max-xs:h-[1.5rem]" /> :
-                        <AppIcons.CopyCheck className="w-[2rem] h-[2rem] max-xs:w-[1.5rem] max-xs:h-[1.5rem]" />
+                        <AppIcons.Check className="w-[2rem] h-[2rem] max-xs:w-[1.5rem] max-xs:h-[1.5rem]" />
                     }
                 </button>
             }

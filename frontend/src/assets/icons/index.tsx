@@ -33,7 +33,7 @@ export const AppIcons = {
         <Send transform="rotate(180)" ref={ref} {...props} />
     )),
     Copy: ClipboardCopy,
-    CopyCheck: Check,
+    Check,
     Loader: forwardRef<SVGSVGElement, LucideProps>((props, ref) => (
         <LoaderCircle {...props} className={"animate-spin " + props.className} ref={ref} />
     )),
