@@ -9,6 +9,8 @@ export const blockRequestController: SenderReceiverContextHandlerType = async (_
     try {
         const requestReceiverId = res.locals.context?.senderId;
         const requestSenderId = res.locals.context?.receiverId;
+        const requestReceiverEmail = res.locals.context?.auth?.email;
+        const requestSenderEmail = res.locals.context?.receiverEmail;
 
         const isRequestAlreadyExists = await FriendRequestModel.exists({
             sender: requestSenderId,
@@ -27,10 +29,14 @@ export const blockRequestController: SenderReceiverContextHandlerType = async (_
                 { sender: requestSenderId, receiver: requestReceiverId },
                 { session }
             );
+            await FriendRequestModel.deleteOne(
+                { sender: requestReceiverId, receiver: requestSenderId },
+                { session }
+            );
 
             await UserModel.updateOne(
-                { _id: requestReceiverId },
-                { $addToSet: { blockedEmailList: requestSenderId } },
+                { email: requestReceiverEmail },
+                { $addToSet: { blockedEmailList: requestSenderEmail } },
                 { session }
             );
 
