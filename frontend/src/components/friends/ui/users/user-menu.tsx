@@ -17,10 +17,6 @@ const menuOptions = {
         name: "Delete",
         Icon: AppIcons.Delete,
         handler: apiHandlers.friendRequest.delete
-    }, {
-        name: "Block",
-        Icon: AppIcons.Block,
-        handler: apiHandlers.friendRequest.block
     }],
     "requests-received": [{
         name: "Accept",
