@@ -6,8 +6,8 @@ import { useRef, type MouseEvent } from "react";
 import { useNavigate } from "react-router";
 import { LogoutDialog } from "../ui/logout-dialog";
 import { apiHandlers } from "@src/axios/handlers/api-handlers";
-import { useAppDispatch } from "@src/redux/hooks";
-import { authActions } from "@src/redux/slices/auth";
+import { useAppDispatch, useAppSelector } from "@src/redux/utils/hooks";
+import { authActions, authSelectors } from "@src/redux/slices/auth";
 
 
 export const useLogout = () => {
@@ -15,6 +15,7 @@ export const useLogout = () => {
     const showToast = useToastConsumer();
     const { showDialogBox, hideDialogBox } = useDialogBoxConsumer();
     const dispatch = useAppDispatch();
+    const userState = useAppSelector(authSelectors.user);
     const controllerRef = useRef<AbortController>(new AbortController());
 
     const { mutate: logout, } = useMutation({
@@ -44,19 +45,23 @@ export const useLogout = () => {
 
     const handleMenuButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
         const target = e.target as HTMLButtonElement;
-        if (target.name === "Logout") {
-            showDialogBox({
-                type: "component",
-                children: <LogoutDialog />,
-                buttons: [
-                    {
-                        value: "Abort",
-                        onClick: handleAbortButtonClick
-                    }
-                ]
-            });
-            logout();
-        }
+        if (target.name !== "Logout")
+            return;
+
+        if (userState.type === "guest")
+            return void navigate(appRoutes.login.absolute);;
+
+        showDialogBox({
+            type: "component",
+            children: <LogoutDialog />,
+            buttons: [
+                {
+                    value: "Abort",
+                    onClick: handleAbortButtonClick
+                }
+            ]
+        });
+        logout();
     };
     return {
         handleMenuButtonClick,

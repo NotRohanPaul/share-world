@@ -2,6 +2,7 @@ import { DialogBoxProvider } from "@src/components/common/ui/dialog-box/context/
 import { ToastsProvider } from "@src/components/common/ui/toast/context/toasts-provider";
 import { UserNavbarMenu } from "@src/components/user/layout/user-navbar-menu";
 import { QueryProvider } from "@src/providers/library/query-provider";
+import { authActions } from "@src/redux/slices/auth";
 import { cleanup, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { delay, http, HttpResponse } from "msw";
@@ -55,7 +56,11 @@ const setupLogoutHandler = (statusCode: number, responseDelayMs = 500) => {
 const runLogoutTest = async (statusCode: number) => {
     setupLogoutHandler(statusCode);
 
-    renderMenu();
+    const { store } = renderMenu();
+    store.dispatch(authActions.user.setNameAndEmail({
+        name: "Test",
+        email: "test@test.com"
+    }));
 
     const logoutBtn = screen.getByRole("button", { name: /^Logout$/ });
     expect(logoutBtn).toBeInTheDocument();
@@ -78,6 +83,16 @@ describe("Logout button behavior", () => {
         cleanup();
     });
     afterAll(() => mockServer.close());
+
+    it("renders logout button and navigates to login page direcly if the user is guest", async () => {
+        renderMenu();
+
+        const logoutBtn = screen.getByRole("button", { name: /^Logout$/ });
+        expect(logoutBtn).toBeInTheDocument();
+
+        await userEvent.click(logoutBtn);
+        expect(await screen.findByText(/login page/i)).toBeInTheDocument();
+    });
 
     it("renders logout button and handles 200 response correctly", async () => {
         await runLogoutTest(200);
