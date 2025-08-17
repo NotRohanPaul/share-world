@@ -4,6 +4,8 @@ import { Navbar } from "@src/components/common/layout/navbar";
 import { ShareWorldImgLink } from "@src/components/common/ui/share-world-img-link";
 import { AnimatePresence } from "motion/react";
 import { UserNavbarMenu } from "./user-navbar-menu";
+import { useAppSelector } from "@src/redux/hooks";
+import { authSelectors } from "@src/redux/slices/auth";
 
 
 export const UserNavBar = () => {
@@ -14,11 +16,19 @@ export const UserNavBar = () => {
         menuRef
     } = useMenuOutsideClick();
 
+    const userState = useAppSelector(authSelectors.user);
 
     return (
         <Navbar>
             <ShareWorldImgLink />
-            <nav className="relative flex items-center font-semibold text-white">
+            <nav className="relative flex items-center font-semibold text-black">
+                <h2 className="w-[6rem] text-right text-xl max-xs:text-base text-ellipsis pr-2 overflow-hidden">
+                    {
+                        userState.type === "auth-user" ?
+                            userState.name.split("-")[0] :
+                            "Guest"
+                    }
+                </h2>
                 <button
                     onClick={() => setIsMenuVisible(prev => !prev)}
                     aria-label="account avatar"

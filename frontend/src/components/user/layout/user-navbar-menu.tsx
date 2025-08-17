@@ -31,7 +31,7 @@ export const UserNavbarMenu = ({
     const { handleMenuButtonClick } = useLogout();
 
     return (
-        <div className="absolute -right-1 max-xs:-right-[1px] top-12 max-xs:top-10 z-10 min-w-[8rem] max-xs:min-w-[6rem] overflow-hidden">
+        <div className="absolute -right-1 max-xs:-right-[1px] top-12 max-xs:top-10 z-10 min-w-[8rem] max-xs:min-w-[6rem] text-white overflow-hidden">
             <motion.div
                 layout
                 initial={{ y: -100, opacity: 0 }}
