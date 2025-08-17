@@ -4,7 +4,7 @@ import { comparePasswordHash } from "@src/utils/bcrypt-utils";
 import express from "express";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
-import { MongodbMemoryOptions } from "tests/configs/memory-db-options";
+import { MongodbMemoryOptions } from "tests/configs/helpers/common";
 import {
     afterAll,
     afterEach,

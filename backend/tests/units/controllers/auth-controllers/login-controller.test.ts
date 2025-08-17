@@ -4,8 +4,16 @@ import { createPasswordHash } from "@utils/bcrypt-utils";
 import express from "express";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
-import { MongodbMemoryOptions } from "tests/configs/memory-db-options";
-import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { MongodbMemoryOptions } from "tests/configs/helpers/common";
+import {
+    afterAll,
+    afterEach,
+    beforeAll,
+    describe,
+    expect,
+    it,
+    vi
+} from "vitest";
 
 
 describe("test loginController", () => {
@@ -81,7 +89,7 @@ describe("test loginController", () => {
 
     it("responds with 400 if password is incorrect", async () => {
         const hashedPassword = await createPasswordHash("Test@123");
-        
+
         await UserModel.create({
             name: "test",
             email: "wrongpass@example.com",
