@@ -19,20 +19,20 @@ export const FriendsMenu = () => {
     return (
         <div
             onClick={handleMenuClick}
-            className="flex text-xl p-0.5 rounded-full border-2 border-gray-500 overflow-hidden max-sm:text-xl [&>button]:w-[100px] [&>button]:p-2 max-sm:[&>button]:w-[80px] max-sm:[&>button]:text-base">
+            className="flex p-0.5 rounded-full border-2 border-gray-500 overflow-hidden">
             {
                 friendsMenuButtons.map((menuName, i) => {
                     return (
                         <button
                             key={i}
-                            className={`font-semibold ${menuName === activeMenuState ?
+                            className={`min-w-[100px] h-[40px] max-sm:w-[80px] flex items-center justify-center font-semibold text-xl max-sm:text-base ${menuName === activeMenuState ?
                                 "cursor-auto bg-primary text-white" :
                                 "text-primary hover:bg-blue-200"
                                 } ${i === 0 ?
                                     "rounded-l-full" :
                                     i === friendsMenuButtons.length - 1 ?
                                         "rounded-r-full" :
-                                        ''
+                                        "px-5"
                                 }`}
                             value={menuName}
                         >

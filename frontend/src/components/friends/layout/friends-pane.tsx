@@ -12,7 +12,7 @@ export const FriendsPane = () => {
     } = useFriendsQueries();
 
     return (
-        <section className="h-[75vh] flex flex-col gap-2 outline-2 outline-primary p-2 pb-4">
+        <section className="h-[75dvh] max-xs:h-[70dvh] flex flex-col gap-2 outline-2 outline-primary p-2 pb-4">
             {activeMenuState === "friends" && (
                 <FriendPaneQueryResult queryResult={friendsQuery} />
             )}
@@ -24,14 +24,14 @@ export const FriendsPane = () => {
             {activeMenuState === "requests" && (
                 <div className="h-full flex flex-col gap-2">
                     <div className="h-[50%] flex flex-col gap-2">
-                        <h2 className="text-2xl font-semibold text-primary ">
+                        <h2 className="text-2xl max-xs:text-xl font-semibold text-primary ">
                             Received Requests
                         </h2>
                         <FriendPaneQueryResult queryResult={receivedQuery} />
                     </div>
                     <div className="h-[50%] flex flex-col gap-2">
                         <div className="flex justify-between items-center">
-                            <h2 className="text-2xl font-semibold text-primary ">
+                            <h2 className="text-2xl max-xs:text-xl font-semibold text-primary ">
                                 Sent Requests
                             </h2>
                             <SendRequestBtn className="self-end" />

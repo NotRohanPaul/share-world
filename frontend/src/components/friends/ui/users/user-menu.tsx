@@ -57,7 +57,7 @@ export const UserMenu = ({
     };
 
     return (
-        <div className="absolute top-[2.25rem] -right-2  z-10 overflow-hidden">
+        <div className="absolute top-[2.25rem] -right-2 z-10 overflow-hidden">
             <motion.aside
                 layout
                 initial={{ y: -100, opacity: 0 }}

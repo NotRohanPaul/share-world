@@ -41,7 +41,7 @@ export const FriendPaneQueryResult = ({
                                 userInfoList={queryData}
                                 queryKey={queryKey}
                             /> :
-                            <p className="text-xl text-center">
+                            <p className="text-xl max-xs:text-base text-center">
                                 Not Found
                             </p>
                     }
@@ -50,7 +50,7 @@ export const FriendPaneQueryResult = ({
             {
                 error !== null
                 &&
-                <p className="text-xl text-center">
+                <p className="text-xl max-xs:text-base text-center">
                     Something went wrong
                 </p>
             }

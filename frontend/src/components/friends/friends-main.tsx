@@ -4,7 +4,7 @@ import { FriendsPane } from "./layout/friends-pane";
 export const FriendsMain = () => {
     return (
         <section className="w-full h-full grid grid-rows-[auto_1fr] place-items-center gap-5">
-            <header className="text-4xl font-semibold p-2">
+            <header className="text-5xl max-xs:text-4xl font-semibold">
                 Friends
             </header>
             <main className="w-full h-full flex flex-col items-center gap-2">
