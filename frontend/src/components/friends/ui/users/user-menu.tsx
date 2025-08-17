@@ -7,11 +7,11 @@ const menuOptions = {
     "friends": [{
         name: "Unfriend",
         Icon: AppIcons.UnFriend,
-        handler: undefined
+        handler: apiHandlers.friendActions.unfriend
     }, {
         name: "Block",
         Icon: AppIcons.Block,
-        handler: undefined
+        handler: apiHandlers.friendActions.blockFriend
     }],
     "requests-sent": [{
         name: "Delete",
@@ -38,7 +38,7 @@ const menuOptions = {
     "blocks": [{
         name: "Unblock",
         Icon: AppIcons.UnBlock,
-        handler: undefined
+        handler: apiHandlers.friendActions.unblockUser
     }]
 };
 
