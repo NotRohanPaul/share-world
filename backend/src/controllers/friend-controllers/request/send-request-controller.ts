@@ -38,6 +38,15 @@ export const sendRequestController: SenderReceiverContextHandlerType = async (_r
             return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
         }
 
+        const isReceiverBlockedbySender = await UserModel.exists({
+            email: senderEmail,
+            blockedEmailList: receiverEmail
+        });
+
+        if (isReceiverBlockedbySender !== null) {
+            return void res.sendStatus(HTTP_STATUS_CODES.BAD_REQUEST);
+        }
+
         await FriendRequestModel.create({
             sender: senderId,
             receiver: receiverId,

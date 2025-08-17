@@ -67,4 +67,15 @@ describe("test for friend request send controller", () => {
 
         expect(mockResponse.sendStatus).toHaveBeenCalledWith(400);
     });
+
+    it("response 400 if the receiver is blocked by sender", async () => {
+        const { user1, user2 } = await createUsers();
+        await UserModel.updateOne({ _id: user1.id }, { blockedEmailList: user2.email });
+
+        const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
+
+        await sendRequestController(mockRequest, mockResponse, mockNext);
+
+        expect(mockResponse.sendStatus).toHaveBeenCalledWith(400);
+    });
 });
