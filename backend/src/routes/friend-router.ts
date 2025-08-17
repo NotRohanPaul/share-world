@@ -1,4 +1,9 @@
 import {
+    blockFriendController,
+    unblockUserController,
+    unfriendController
+} from "@src/controllers/friend-controllers/actions";
+import {
     listBlockedUsersController,
     listFriendsController,
     listReceivedRequestsController,
@@ -28,9 +33,15 @@ listRouter.get("/received-requests", listReceivedRequestsController);
 listRouter.get("/sent-requests", listSentRequestsController);
 listRouter.get("/blocks", listBlockedUsersController);
 
+const actionsRouter = Router();
+listRouter.get("/unfriend", unfriendController);
+listRouter.get("/block-friend", blockFriendController);
+listRouter.get("/unblock-user", unblockUserController);
+
 const friendRouter = Router();
 friendRouter.use("/request", receiverContextMiddleware, senderReceiverChecksMiddleware, requestRouter);
 friendRouter.use("/list", listRouter);
+friendRouter.use("/actions", actionsRouter);
 
 export { friendRouter };
 
