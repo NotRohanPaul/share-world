@@ -6,7 +6,7 @@ import {
     type Mocked
 } from "vitest";
 
-type CreatedUserType = Awaited<ReturnType<typeof UserModel.create>>[number];
+export type CreatedUserType = Awaited<ReturnType<typeof UserModel.create>>[number];
 
 export const createUsers = async (): Promise<Record<string, CreatedUserType>> => {
     const user1 = await UserModel.create({
