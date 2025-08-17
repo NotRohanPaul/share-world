@@ -19,3 +19,9 @@ export const friendRequestEndpoints = {
     accept: { method: "post", url: "/friend/request/accept" },
     block: { method: "post", url: "/friend/request/block" },
 } as const;
+
+export const friendActionsEndpoints = {
+    unfriend: { method: "post", url: "/friend/actions/unfriend" },
+    blockFriend: { method: "post", url: "/friend/actions/block-friend" },
+    unblockUser: { method: "post", url: "/friend/actions/unblock-user" },
+} as const;
