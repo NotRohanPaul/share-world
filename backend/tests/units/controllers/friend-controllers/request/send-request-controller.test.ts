@@ -1,4 +1,4 @@
-import { sendController } from "@src/controllers/friend-controllers/request";
+import { sendRequestController } from "@src/controllers/friend-controllers/request";
 import { FriendRequestModel } from "@src/models/friend-request.model";
 import { UserModel } from "@src/models/users.model";
 import { setupMongoReplicaServer } from "tests/configs/helpers/common";
@@ -26,7 +26,7 @@ describe("test for friend request send controller", () => {
 
         const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
 
-        await sendController(mockRequest, mockResponse, mockNext);
+        await sendRequestController(mockRequest, mockResponse, mockNext);
 
         expect(mockResponse.sendStatus).toHaveBeenCalledWith(200);
     });
@@ -40,7 +40,7 @@ describe("test for friend request send controller", () => {
 
         const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
 
-        await sendController(mockRequest, mockResponse, mockNext);
+        await sendRequestController(mockRequest, mockResponse, mockNext);
 
         expect(mockResponse.status).toHaveBeenCalledWith(400);
         expect(mockResponse.send).toHaveBeenCalledWith("Request already sent");
@@ -52,7 +52,7 @@ describe("test for friend request send controller", () => {
 
         const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
 
-        await sendController(mockRequest, mockResponse, mockNext);
+        await sendRequestController(mockRequest, mockResponse, mockNext);
         expect(mockResponse.status).toHaveBeenCalledWith(400);
         expect(mockResponse.send).toHaveBeenCalledWith("Already both are friends");
     });
@@ -63,7 +63,7 @@ describe("test for friend request send controller", () => {
 
         const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
 
-        await sendController(mockRequest, mockResponse, mockNext);
+        await sendRequestController(mockRequest, mockResponse, mockNext);
 
         expect(mockResponse.sendStatus).toHaveBeenCalledWith(400);
     });

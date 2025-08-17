@@ -1,4 +1,4 @@
-import { blockController } from "@src/controllers/friend-controllers/request";
+import { blockRequestController } from "@src/controllers/friend-controllers/request";
 import { FriendRequestModel } from "@src/models/friend-request.model";
 import { UserModel } from "@src/models/users.model";
 import { setupMongoReplicaServer } from "tests/configs/helpers/common";
@@ -25,7 +25,7 @@ describe("test friend request block controller", () => {
 
         const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
 
-        await blockController(mockRequest, mockResponse, mockNext);
+        await blockRequestController(mockRequest, mockResponse, mockNext);
 
         expect(mockResponse.sendStatus).toHaveBeenCalledWith(200);
 
@@ -36,7 +36,7 @@ describe("test friend request block controller", () => {
 
         const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
 
-        await blockController(mockRequest, mockResponse, mockNext);
+        await blockRequestController(mockRequest, mockResponse, mockNext);
 
         expect(mockResponse.status).toHaveBeenCalledWith(400);
         expect(mockResponse.send).toHaveBeenCalledWith("Request does not exist");

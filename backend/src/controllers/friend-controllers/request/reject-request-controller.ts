@@ -3,23 +3,23 @@ import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import type { SenderReceiverContextHandlerType } from "@src/middlewares/friends/sender-receiver-checks-middleware";
 import { FriendRequestModel } from "@src/models/friend-request.model";
 
-export const deleteController: SenderReceiverContextHandlerType = async (_req, res) => {
+export const rejectRequestController: SenderReceiverContextHandlerType = async (_req, res) => {
     try {
         const senderId = res.locals.context?.senderId;
         const receiverId = res.locals.context?.receiverId;
 
         const isRequestAlreadyExists = await FriendRequestModel.exists({
-            sender: senderId,
-            receiver: receiverId,
+            sender: receiverId,
+            receiver: senderId,
         });
 
         if (isRequestAlreadyExists === null) {
-            return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("No request to delete");
+            return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("No request to reject");
         }
 
         await FriendRequestModel.deleteOne({
-            sender: senderId,
-            receiver: receiverId,
+            sender: receiverId,
+            receiver: senderId,
         });
 
         return void res.sendStatus(HTTP_STATUS_CODES.OK);

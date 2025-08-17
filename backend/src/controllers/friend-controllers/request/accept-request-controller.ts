@@ -5,7 +5,7 @@ import { FriendRequestModel } from "@src/models/friend-request.model";
 import { UserModel } from "@src/models/users.model";
 import mongoose from "mongoose";
 
-export const acceptController: SenderReceiverContextHandlerType = async (_req, res) => {
+export const acceptRequestController: SenderReceiverContextHandlerType = async (_req, res) => {
     try {
         const senderEmail = res.locals.context?.auth?.email;
         const receiverEmail = res.locals.context?.receiverEmail;

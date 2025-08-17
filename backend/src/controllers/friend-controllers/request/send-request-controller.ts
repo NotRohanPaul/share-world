@@ -4,7 +4,7 @@ import type { SenderReceiverContextHandlerType } from "@src/middlewares/friends/
 import { FriendRequestModel } from "@src/models/friend-request.model";
 import { UserModel } from "@src/models/users.model";
 
-export const sendController: SenderReceiverContextHandlerType = async (_req, res) => {
+export const sendRequestController: SenderReceiverContextHandlerType = async (_req, res) => {
     try {
         const senderEmail = res.locals.context?.auth?.email;
         const receiverEmail = res.locals.context?.receiverEmail;

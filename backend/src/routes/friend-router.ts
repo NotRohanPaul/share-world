@@ -5,22 +5,22 @@ import {
     listSentRequestsController
 } from "@src/controllers/friend-controllers/list";
 import {
-    acceptController,
-    blockController,
-    deleteController,
-    rejectController,
-    sendController
+    acceptRequestController,
+    blockRequestController,
+    deleteRequestController,
+    rejectRequestController,
+    sendRequestController
 } from "@src/controllers/friend-controllers/request";
 import { receiverContextMiddleware } from "@src/middlewares/friends/receiver-context-middleware";
 import { senderReceiverChecksMiddleware } from "@src/middlewares/friends/sender-receiver-checks-middleware";
 import { Router } from "express";
 
 const requestRouter = Router();
-requestRouter.post("/send", sendController);
-requestRouter.delete("/delete", deleteController);
-requestRouter.post("/reject", rejectController);
-requestRouter.post("/accept", acceptController);
-requestRouter.post("/block", blockController);
+requestRouter.post("/send", sendRequestController);
+requestRouter.delete("/delete", deleteRequestController);
+requestRouter.post("/reject", rejectRequestController);
+requestRouter.post("/accept", acceptRequestController);
+requestRouter.post("/block", blockRequestController);
 
 const listRouter = Router();
 listRouter.get("/friends", listFriendsController);

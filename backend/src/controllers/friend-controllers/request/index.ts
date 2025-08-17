@@ -1,13 +1,13 @@
-import { acceptController } from "./accept-controller";
-import { blockController } from "./block-controller";
-import { deleteController } from "./delete-controller";
-import { rejectController } from "./reject-controller";
-import { sendController } from "./send-controller";
+import { acceptRequestController } from "./accept-request-controller";
+import { blockRequestController } from "./block-request-controller";
+import { deleteRequestController } from "./delete-request-controller";
+import { rejectRequestController } from "./reject-request-controller";
+import { sendRequestController } from "./send-request-controller";
 
 export {
-    sendController,
-    deleteController,
-    rejectController,
-    acceptController,
-    blockController
+    acceptRequestController,
+    blockRequestController,
+    deleteRequestController,
+    sendRequestController,
+    rejectRequestController,
 };
