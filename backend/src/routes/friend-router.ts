@@ -41,7 +41,7 @@ actionsRouter.post("/unblock-user", unblockUserController);
 const friendRouter = Router();
 friendRouter.use("/request", receiverContextMiddleware, senderReceiverChecksMiddleware, requestRouter);
 friendRouter.use("/list", listRouter);
-friendRouter.use("/actions", actionsRouter);
+friendRouter.use("/actions", receiverContextMiddleware, senderReceiverChecksMiddleware,actionsRouter);
 
 export { friendRouter };
 
