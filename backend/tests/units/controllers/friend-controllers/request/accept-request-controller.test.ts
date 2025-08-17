@@ -11,7 +11,7 @@ import {
 import {
     createUsers,
     provideMockRequestHandlerArguments,
-} from "./helpers/common";
+} from "../helpers/common";
 
 
 describe("test for friend request accept controller", () => {

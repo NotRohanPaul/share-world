@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
     createUsers,
     provideMockRequestHandlerArguments,
-} from "./helpers/common";
+} from "../helpers/common";
 
 describe("test friend request block controller", () => {
     setupMongoReplicaServer();
