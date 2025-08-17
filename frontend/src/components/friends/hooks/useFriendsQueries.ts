@@ -1,6 +1,6 @@
 import { apiHandlers } from "@src/axios/handlers/api-handlers";
 import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
-import { useAppSelector } from "@src/redux/hooks";
+import { useAppSelector } from "@src/redux/utils/hooks";
 import { friendsSelectors } from "@src/redux/slices/friends";
 import { useQuery, type QueryFunctionContext } from "@tanstack/react-query";
 import { AxiosError, type AxiosResponse } from "axios";

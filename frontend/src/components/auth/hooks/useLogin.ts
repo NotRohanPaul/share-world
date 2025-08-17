@@ -2,7 +2,7 @@ import { apiHandlers } from "@src/axios/handlers/api-handlers";
 import { useDebounce } from "@src/components/common/hooks/useDebounce";
 import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
-import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@src/redux/utils/hooks";
 import { authActions, authSelectors } from "@src/redux/slices/auth";
 import { appRoutes } from "@src/routes/app-routes";
 import { loginSchema, userDataSchema } from "@src/schemas/auth-schemas";

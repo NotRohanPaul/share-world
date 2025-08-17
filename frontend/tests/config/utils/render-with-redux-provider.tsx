@@ -1,21 +1,25 @@
-import type { AppRootReducersType } from "@src/redux/root-reducer";
-import { setupStore, type AppStoreStateType } from "@src/redux/store";
-import { render } from '@testing-library/react';
+import {
+    setupStore,
+    type AppStoreStateType,
+    type PreloadedStateType
+} from "@src/redux/utils/setupStore";
+import { render, type RenderOptions } from '@testing-library/react';
 import type { PropsWithChildren } from "react";
 import { Provider } from 'react-redux';
 
-interface ExtendedRenderOptions {
-    preloadedState?: Partial<AppRootReducersType>;
+type ExtendedRenderOptionsType = {
+    preloadedState?: PreloadedStateType;
     store?: AppStoreStateType;
-}
+
+} & RenderOptions;
 
 export function renderWithReduxProviders(
     ui: React.ReactElement,
     {
-        preloadedState = {},
+        preloadedState,
         store = setupStore(preloadedState),
         ...options
-    }: ExtendedRenderOptions = {}
+    }: ExtendedRenderOptionsType = {}
 ) {
     function Wrapper({ children }: PropsWithChildren) {
         return (

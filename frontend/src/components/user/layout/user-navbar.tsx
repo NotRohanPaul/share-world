@@ -4,7 +4,7 @@ import { Navbar } from "@src/components/common/layout/navbar";
 import { ShareWorldImgLink } from "@src/components/common/ui/share-world-img-link";
 import { AnimatePresence } from "motion/react";
 import { UserNavbarMenu } from "./user-navbar-menu";
-import { useAppSelector } from "@src/redux/hooks";
+import { useAppSelector } from "@src/redux/utils/hooks";
 import { authSelectors } from "@src/redux/slices/auth";
 
 

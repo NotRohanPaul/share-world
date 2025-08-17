@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "@src/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@src/redux/utils/hooks";
 import { friendsActions, friendsSelectors } from "@src/redux/slices/friends";
 import type { MenuButtonType } from "@src/redux/slices/friends/friends-menu-slice";
 import type { MouseEvent } from "react";

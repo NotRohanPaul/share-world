@@ -1,19 +1,13 @@
-import {
-    configureStore,
-    type EnhancedStore
-} from "@reduxjs/toolkit";
-import { IS_SECURE_ENV } from "@src/constants/env";
-import { rootReducer, type AppRootReducersType } from "./root-reducer";
+import { setupStore } from "./utils/setupStore";
+import { loadStateFromLS, saveStateToLS } from "./utils/state-local-storage";
 
-export const setupStore = (preloadedState?: Partial<AppRootReducersType>): EnhancedStore => {
-    return configureStore({
-        reducer: rootReducer,
-        devTools: IS_SECURE_ENV === false,
-        preloadedState,
+export const store = setupStore(loadStateFromLS());
+
+store.subscribe(() => {
+    const state = store.getState();
+    saveStateToLS({
+        auth: {
+            user: state.auth.user
+        }
     });
-};
-
-export const store = setupStore();
-
-export type AppStoreStateType = ReturnType<typeof setupStore>;
-export type AppStoreDispatchType = AppStoreStateType["dispatch"];
+});

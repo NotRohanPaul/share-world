@@ -1,6 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { friendsMenuSlice, type MenuButtonType } from "./friends-menu-slice";
-import type { AppRootReducersType } from "@src/redux/root-reducer";
+import type { AppRootReducersType } from "@src/redux/slices/root-reducer";
 
 
 export const friendsReducer = combineReducers({

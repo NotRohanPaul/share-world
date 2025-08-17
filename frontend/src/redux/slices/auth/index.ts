@@ -2,7 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { loginSlice, type LoginFormStateType } from "./login-slice";
 import { signupSlice, type SignupFromStateType } from "./signup-slice";
 import { userSlice, type UserStateType } from "./user-slice";
-import type { AppRootReducersType } from "@src/redux/root-reducer";
+import type { AppRootReducersType } from "@src/redux/slices/root-reducer";
 
 export const authReducer = combineReducers({
     login: loginSlice.reducer,
