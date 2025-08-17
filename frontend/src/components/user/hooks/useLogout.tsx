@@ -6,12 +6,15 @@ import { useRef, type MouseEvent } from "react";
 import { useNavigate } from "react-router";
 import { LogoutDialog } from "../ui/logout-dialog";
 import { apiHandlers } from "@src/axios/handlers/api-handlers";
+import { useAppDispatch } from "@src/redux/hooks";
+import { authActions } from "@src/redux/slices/auth";
 
 
 export const useLogout = () => {
     const navigate = useNavigate();
     const showToast = useToastConsumer();
     const { showDialogBox, hideDialogBox } = useDialogBoxConsumer();
+    const dispatch = useAppDispatch();
     const controllerRef = useRef<AbortController>(new AbortController());
 
     const { mutate: logout, } = useMutation({
@@ -21,6 +24,7 @@ export const useLogout = () => {
         onSuccess: async (res) => {
             if (res.status === 200 || res.status === 304) {
                 await navigate(appRoutes.login.absolute);
+                dispatch(authActions.user.setGuestUser());
                 hideDialogBox();
             }
             else {
