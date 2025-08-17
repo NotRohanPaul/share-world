@@ -34,9 +34,9 @@ listRouter.get("/sent-requests", listSentRequestsController);
 listRouter.get("/blocks", listBlockedUsersController);
 
 const actionsRouter = Router();
-listRouter.post("/unfriend", unfriendController);
-listRouter.post("/block-friend", blockFriendController);
-listRouter.post("/unblock-user", unblockUserController);
+actionsRouter.post("/unfriend", unfriendController);
+actionsRouter.post("/block-friend", blockFriendController);
+actionsRouter.post("/unblock-user", unblockUserController);
 
 const friendRouter = Router();
 friendRouter.use("/request", receiverContextMiddleware, senderReceiverChecksMiddleware, requestRouter);
