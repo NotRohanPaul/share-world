@@ -82,7 +82,7 @@ export const useSignup = () => {
                 console.log(result.error);
                 if (result.success === true) {
                     dispatch(authActions.user.setNameAndEmail(result.data));
-                    await navigate(appRoutes.user.absolute);
+                    await navigate(appRoutes.user.absolute, { replace: true });
                 }
                 else {
                     showToast({ text: "Server returned invalid data." });
