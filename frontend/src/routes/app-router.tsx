@@ -6,7 +6,12 @@ import { SettingsPage } from "@src/pages/settings-page";
 import { UserPage } from "@src/pages/user-page";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { appRoutes } from "./app-routes";
-import { friendsRoutes, toFriendsRoutes, viaIdRoutes } from "./routers/user/user-routes";
+import { ProtectedRoute } from "./containers/protected-route";
+import {
+    friendsRoutes,
+    toFriendsRoutes,
+    viaIdRoutes
+} from "./routers/user/user-routes";
 
 const router = createBrowserRouter([
     {
@@ -21,17 +26,25 @@ const router = createBrowserRouter([
                 element: <SettingsPage />,
             },
             {
-                path: appRoutes.login.absolute,
+                path: appRoutes.signup.absolute,
                 element: <AuthPage />
             },
             {
-                path: appRoutes.logout.absolute,
+                path: appRoutes.login.absolute,
                 element: <AuthPage />
             },
             {
                 path: appRoutes.user.absolute,
                 element: <UserPage />,
-                children: [...friendsRoutes, ...viaIdRoutes, ...toFriendsRoutes]
+                children: [
+                    ...viaIdRoutes,
+                    {
+                        element: <ProtectedRoute />,
+                        children: [
+                            ...friendsRoutes,
+                            ...toFriendsRoutes,
+                        ]
+                    }]
             },
             {
                 path: "*",
