@@ -11,9 +11,9 @@ export const appRoutes = {
         relative: "login",
         absolute: "/login"
     },
-    logout: {
-        relative: "logout",
-        absolute: "/logout"
+    signup: {
+        relative: "signup",
+        absolute: "/signup"
     },
     user: {
         relative: "user",
@@ -47,4 +47,4 @@ export const appRoutes = {
             absolute: "/user/to-friend/receive"
         }
     }
-};
+} as const;
