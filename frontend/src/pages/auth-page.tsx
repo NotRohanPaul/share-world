@@ -1,16 +1,27 @@
 import { AppImages } from "@src/assets/images";
 import { AuthForm } from "@src/components/auth/auth-form";
 import type { AuthVariantType } from "@src/components/auth/types";
+import { authSelectors } from "@src/redux/slices/auth";
+import { useAppSelector } from "@src/redux/utils/hooks";
 import { appRoutes } from "@src/routes/app-routes";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 
 export const AuthPage = () => {
-    const [authType, setAuthType] = useState<AuthVariantType>("login");
+    const location = useLocation();
     const navigate = useNavigate();
+    const userState = useAppSelector(authSelectors.user);
+
+    const authType = location.pathname.slice(1) as AuthVariantType;
+
+    useEffect(() => {
+        if (userState.type === "auth-user") {
+            void navigate(appRoutes.user.absolute);
+        }
+    }, [userState]);
 
     return (
         <>
@@ -29,12 +40,12 @@ export const AuthPage = () => {
                     <header className="self-center flex text-xl p-0.5 rounded-full border-2 border-gray-500 overflow-hidden max-sm:text-xl [&>button]:w-[100px] [&>button]:p-2 max-sm:[&>button]:p-1 max-sm:[&>button]:w-[80px] max-sm:[&>button]:text-base">
                         <button
                             className={`rounded-l-full ${authType === "login" ? "bg-primary text-white" : "hover:bg-blue-200"}`}
-                            onClick={() => setAuthType("login")}
+                            onClick={() => void navigate(appRoutes.login.absolute)}
                             children="Login"
                         />
                         <button
                             className={`rounded-r-full ${authType === "signup" ? "bg-primary text-white" : "hover:bg-blue-200"}`}
-                            onClick={() => setAuthType("signup")}
+                            onClick={() => void navigate(appRoutes.signup.absolute)}
                             children="Signup"
                         />
                     </header>
