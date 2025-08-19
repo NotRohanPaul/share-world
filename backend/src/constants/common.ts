@@ -1,6 +1,7 @@
+import type { CookieOptions } from "express";
 import { API_ORIGIN, IS_SECURE_ENV } from "./env";
 
-export const COMMON_COOKIE_OPTIONS = {
+export const COMMON_COOKIE_OPTIONS: CookieOptions = {
     httpOnly: true,
     secure: IS_SECURE_ENV,
     sameSite: IS_SECURE_ENV ? "none" as const : "strict" as const,
