@@ -3,7 +3,7 @@ import { useReceiver } from "../hooks/useReceiver";
 import { UserId } from "../../common/user-id";
 import { SenderId } from "../ui/sender-id";
 import { FileList } from "../../common/files-list";
-import { UserHeader, UserMain, UserSection } from "../../common/layout/user-layouts";
+import { UserHeader, UserMain, UserSection } from "../../../common/layout/user-layout/user-layouts";
 import { useEffect } from "react";
 import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 

@@ -4,7 +4,7 @@ import { useSender } from "../hooks/useSender";
 import { FilesInput } from "../ui/files-input";
 import { ReceiverIdInput } from "../ui/receiver-id-input";
 import { FileList } from "../../common/files-list";
-import { UserHeader, UserMain, UserSection } from "../../common/layout/user-layouts";
+import { UserHeader, UserMain, UserSection } from "../../../common/layout/user-layout/user-layouts";
 import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { useEffect } from "react";
 
