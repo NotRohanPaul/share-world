@@ -1,42 +1,12 @@
-import { AppIcons } from "@src/assets/icons";
-import { apiHandlers, type WithBodyHandlerType } from "@src/axios/handlers/api-handlers";
+import { type WithBodyHandlerType } from "@src/axios/handlers/api-handlers";
 import { motion } from "motion/react";
-import type { Dispatch, RefObject, SetStateAction } from "react";
+import type {
+    Dispatch,
+    RefObject,
+    SetStateAction
+} from "react";
+import { userMenuOptions } from "../../constants/menu-options";
 
-const menuOptions = {
-    "friends": [{
-        name: "Unfriend",
-        Icon: AppIcons.UnFriend,
-        handler: apiHandlers.friendActions.unfriend
-    }, {
-        name: "Block",
-        Icon: AppIcons.Block,
-        handler: apiHandlers.friendActions.blockFriend
-    }],
-    "requests-sent": [{
-        name: "Delete",
-        Icon: AppIcons.Delete,
-        handler: apiHandlers.friendRequest.delete
-    }],
-    "requests-received": [{
-        name: "Accept",
-        Icon: AppIcons.Check,
-        handler: apiHandlers.friendRequest.accept
-    }, {
-        name: "Reject",
-        Icon: AppIcons.Reject,
-        handler: apiHandlers.friendRequest.reject
-    }, {
-        name: "Block",
-        Icon: AppIcons.Block,
-        handler: apiHandlers.friendRequest.block
-    }],
-    "blocks": [{
-        name: "Unblock",
-        Icon: AppIcons.UnBlock,
-        handler: apiHandlers.friendActions.unblockUser
-    }]
-};
 
 export const UserMenu = ({
     menuRef,
@@ -69,7 +39,7 @@ export const UserMenu = ({
                 onClick={() => setIsMenuVisible(false)}
                 ref={menuRef}
             >
-                {menuType !== undefined && menuOptions[menuType as keyof typeof menuOptions].map(({ name, Icon, handler }) => {
+                {menuType !== undefined && userMenuOptions[menuType as keyof typeof userMenuOptions].map(({ name, Icon, handler }) => {
                     return (
                         <button
                             key={name}

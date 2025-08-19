@@ -49,7 +49,6 @@ export const UserInfo = ({
                                             setIsMenuVisible={setIsMenuVisible}
                                             receiverEmail={email}
                                             menuType={queryKey}
-
                                         />
                                     }
                                 </AnimatePresence>
