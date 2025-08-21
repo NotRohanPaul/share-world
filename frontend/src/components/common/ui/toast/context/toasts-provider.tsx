@@ -18,7 +18,6 @@ export const ToastsProvider = ({ children }: PropsWithChildren) => {
             ]);
 
         setTimeout(() => {
-            console.log(toastsList, toastId);
             setToastsList((prev) => prev.filter((options) => options.id !== toastId));
         }, options.exitDelay ?? 3e3);
     }, []);
