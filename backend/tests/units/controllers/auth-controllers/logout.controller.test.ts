@@ -1,3 +1,4 @@
+import { COMMON_COOKIE_OPTIONS } from "@src/constants/common";
 import { logoutController } from "@src/controllers/auth-controllers";
 import express from "express";
 import { describe, expect, it, vi } from "vitest";
@@ -16,20 +17,8 @@ describe("test for logout controller", () => {
         expect(mockResponse.send).toBeCalledWith("Logout successful");
         expect(mockResponse.status).toBeCalledWith(200);
         expect(mockResponse.clearCookie).toBeCalledTimes(2);
-        expect(mockResponse.clearCookie).toHaveBeenNthCalledWith(1, "accessToken", {
-            httpOnly: true,
-            secure: false,
-            sameSite: "strict",
-            domain: undefined,
-            path: "/",
-        });
-        expect(mockResponse.clearCookie).toHaveBeenNthCalledWith(2, "refreshToken", {
-            httpOnly: true,
-            secure: false,
-            sameSite: "strict",
-            domain: undefined,
-            path: "/",
-        });
+        expect(mockResponse.clearCookie).toHaveBeenNthCalledWith(1, "accessToken", COMMON_COOKIE_OPTIONS);
+        expect(mockResponse.clearCookie).toHaveBeenNthCalledWith(2, "refreshToken", COMMON_COOKIE_OPTIONS);
 
     });
 

@@ -1,17 +1,21 @@
 import {
     API_ORIGIN,
     APP_ORIGIN,
+    COOKIE_CRYPTO_SECRET,
+    COOKIE_SIGN_SECRET,
     IS_SECURE_ENV,
     WS_API_ORIGIN
 } from "@src/constants/env";
 import { logRequestsInfoMiddleware } from "@src/middlewares/common/log-requests-info.middleware";
 import { mainRouter } from "@src/routes/routes";
+import { decrypt } from "@src/utils/crypto-utils";
 import { errorHandler, unknownHandler } from "@src/utils/handlers";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import path from "node:path";
+import { appLogger } from "./app-logger";
 
 const app = express();
 
@@ -37,7 +41,17 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use(cookieParser());
+app.use(cookieParser(COOKIE_SIGN_SECRET, {
+    decode: (val) => {
+        try {
+            return decrypt(decodeURIComponent(val), COOKIE_CRYPTO_SECRET);
+        } catch (err) {
+            appLogger.error(err, "Failed to decrypt cookie: ");
+            return "__INVALID__";
+        }
+    }
+}));
+
 app.use(express.json());
 app.use(express.static("public"));
 app.use(logRequestsInfoMiddleware);

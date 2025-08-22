@@ -3,6 +3,7 @@ import express from "express";
 import { refreshController } from "@src/controllers/auth-controllers/refresh.controller";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "@src/constants/env";
+import { COMMON_COOKIE_OPTIONS } from "@src/constants/common";
 
 describe("tests for refresh controller", () => {
 
@@ -17,7 +18,7 @@ describe("tests for refresh controller", () => {
         );
 
         const mockRequest = {
-            cookies: {
+            signedCookies: {
                 refreshToken: validResponseToken
             }
         } as unknown as express.Request;
@@ -34,11 +35,7 @@ describe("tests for refresh controller", () => {
             "accessToken",
             expect.any(String),
             {
-                httpOnly: true,
-                secure: false,
-                sameSite: "strict",
-                domain: undefined,
-                path: "/",
+                ...COMMON_COOKIE_OPTIONS,
                 maxAge: 15 * 60 * 1000,
             }
         );

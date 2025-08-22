@@ -9,7 +9,7 @@ import { ZodError } from "zod";
 
 export const refreshController: RequestHandler = async (req, res) => {
     try {
-        const cookies = req.cookies as Record<"refreshToken", string> | undefined;
+        const cookies = req.signedCookies as Record<"refreshToken", string> | undefined;
         if (cookies === undefined) {
             appLogger.info("No Cookies");
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);

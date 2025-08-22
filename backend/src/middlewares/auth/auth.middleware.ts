@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 
 export const authMiddleware: AuthContextHandlerType = async (req, res, next) => {
     try {
-        const cookies = req.cookies as Record<"accessToken", string> | undefined;
+        const cookies = req.signedCookies as Record<"accessToken", string> | undefined;
         if (cookies === undefined) {
             appLogger.error("No Cookies");
             return void res.sendStatus(HTTP_STATUS_CODES.UNAUTHORIZED);

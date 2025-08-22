@@ -1,18 +1,19 @@
 import { JWT_SECRET } from "@src/constants/env";
 import { authMiddleware } from "@src/middlewares/auth/auth.middleware";
-import cookieParser from "cookie-parser";
 import express, { type Express } from "express";
 import jwt from "jsonwebtoken";
 import request from "supertest";
 import { describe, expect, it, vi } from "vitest";
 
-const createTestApp = (): Express => {
+const createTestApp = (accessToken?: string): Express => {
     const app = express();
-    app.use(cookieParser());
     app.get(
         "/test-auth",
         (req, _, next) => {
-            console.log(req.cookies);
+            req.signedCookies = {
+                accessToken
+            };
+            console.log(req.signedCookies);
             next();
         },
         authMiddleware,
@@ -35,7 +36,7 @@ describe("To check auth middleware", () => {
         );
 
         const mockRequest = {
-            cookies: {
+            signedCookies: {
                 accessToken: validAccessToken,
             },
         } as unknown as express.Request;
@@ -57,22 +58,19 @@ describe("To check auth middleware", () => {
     });
 
     it("response 200 for users with correct tokens", async () => {
-        const app = createTestApp();
         const validAccessToken = jwt.sign({ userId: "f".padStart(24, '0'), email: "test@test.com" }, JWT_SECRET, { expiresIn: '15m' });
+        const app = createTestApp(validAccessToken);
 
         const res = await request(app)
-            .get("/test-auth")
-            .set("Cookie", [
-                `accessToken=${validAccessToken}`,
-            ]);
+            .get("/test-auth");
 
         expect(res.status).toBe(200);
         expect(res.text).toBe("Authorized");
     });
 
     it("response 401 for users with invalid tokens", async () => {
-        const app = createTestApp();
         const inValidAccessToken = "123";
+        const app = createTestApp(inValidAccessToken);
 
         const res = await request(app)
             .get("/test-auth")
@@ -84,8 +82,8 @@ describe("To check auth middleware", () => {
     });
 
     it("response 401 for users with expired tokens", async () => {
-        const app = createTestApp();
         const validButExpiredAccessToken = jwt.sign({ userId: "f".padStart(24, '0'), email: "test@test.com" }, JWT_SECRET, { expiresIn: '0' });
+        const app = createTestApp(validButExpiredAccessToken);
 
         const res = await request(app)
             .get("/test-auth")
