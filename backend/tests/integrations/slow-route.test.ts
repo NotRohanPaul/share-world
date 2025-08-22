@@ -2,7 +2,7 @@ import express, { type Express, type ErrorRequestHandler } from "express";
 import request from "supertest";
 import { describe, it } from "vitest";
 import * as timers from "node:timers";
-import { timeoutMiddleware } from "@src/middlewares/common/timeout-middleware";
+import { timeoutMiddleware } from "@src/middlewares/common/timeout.middleware";
 export const appWithTimeout = (setupRoutes: (app: express.Express) => void): Express => {
     const app = express();
 

@@ -4,7 +4,7 @@ import {
     IS_SECURE_ENV,
     WS_API_ORIGIN
 } from "@src/constants/env";
-import { logRequestsInfoMiddleware } from "@src/middlewares/common/log-requests-info-middleware";
+import { logRequestsInfoMiddleware } from "@src/middlewares/common/log-requests-info.middleware";
 import { mainRouter } from "@src/routes/routes";
 import { errorHandler, unknownHandler } from "@src/utils/handlers";
 import cookieParser from "cookie-parser";

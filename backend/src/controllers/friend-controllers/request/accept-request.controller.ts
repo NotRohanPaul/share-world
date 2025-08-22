@@ -1,0 +1,64 @@
+import { appLogger } from "@src/configs/app-logger";
+import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
+import type { SenderReceiverContextHandlerType } from "@src/middlewares/friends/sender-receiver-checks.middleware";
+import { FriendRequestsModel } from "@src/models/non-core-models";
+import { UsersModel } from "@src/models/core-models";
+import mongoose from "mongoose";
+
+export const acceptRequestController: SenderReceiverContextHandlerType = async (_req, res) => {
+    try {
+        const senderEmail = res.locals.context?.auth?.email;
+        const receiverEmail = res.locals.context?.receiverEmail;
+        const senderId = res.locals.context?.senderId;
+        const receiverId = res.locals.context?.receiverId;
+
+        const isRequestAlreadyExists = await FriendRequestsModel.exists({
+            sender: receiverId,
+            receiver: senderId,
+        });
+
+        if (isRequestAlreadyExists === null) {
+            return void res.status(HTTP_STATUS_CODES.BAD_REQUEST).send("Request does not exist");
+        }
+
+        const session = await mongoose.startSession();
+        try {
+            session.startTransaction();
+
+            await FriendRequestsModel.deleteOne(
+                { sender: senderId, receiver: receiverId },
+                { session }
+            );
+
+            await FriendRequestsModel.deleteOne(
+                { sender: receiverId, receiver: senderId },
+                { session }
+            );
+
+            await UsersModel.updateOne(
+                { _id: senderId },
+                { $addToSet: { friendsEmailList: receiverEmail } },
+                { session }
+            );
+
+            await UsersModel.updateOne(
+                { _id: receiverId },
+                { $addToSet: { friendsEmailList: senderEmail } },
+                { session }
+            );
+
+            await session.commitTransaction();
+        } catch (e) {
+            await session.abortTransaction();
+            throw e;
+        } finally {
+            await session.endSession();
+        }
+
+        return void res.sendStatus(HTTP_STATUS_CODES.OK);
+    }
+    catch (err) {
+        appLogger.error(err);
+        return void res.sendStatus(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+    }
+};

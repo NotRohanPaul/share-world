@@ -1,7 +1,7 @@
-import { authMiddleware } from "@src/middlewares/auth/auth-middleware";
+import { authMiddleware } from "@src/middlewares/auth/auth.middleware";
 import { Router } from "express";
-import { authRouter } from "./auth-router";
-import { friendRouter } from "./friend-router";
+import { authRouter } from "./auth.router";
+import { friendRouter } from "./friend.router";
 
 const publicRouter = Router();
 publicRouter.get("/", (_req, res) => {

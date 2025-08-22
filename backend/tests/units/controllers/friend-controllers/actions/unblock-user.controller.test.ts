@@ -1,0 +1,76 @@
+import { unblockUserController } from "@src/controllers/friend-controllers/actions";
+import { UsersModel } from "@src/models/core-models";
+import { setupMongoReplicaServer } from "tests/configs/helpers/common";
+import { afterEach, describe, expect, it } from "vitest";
+import { createUsers, provideMockRequestHandlerArguments } from "../helpers/common";
+
+
+describe("test for unblock user controller", () => {
+    setupMongoReplicaServer();
+
+    afterEach(async () => {
+        await UsersModel.deleteMany({});
+    });
+
+    it("respose 200 if sender blocked the receiver before now its unblocked", async () => {
+        const { user1, user2 } = await createUsers();
+        await UsersModel.updateOne(
+            { email: user1.email },
+            {
+                $addToSet: { blockedEmailList: user2.email }
+            }
+        );
+
+        const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
+
+        await unblockUserController(mockRequest, mockResponse, mockNext);
+
+        expect(mockResponse.sendStatus).toHaveBeenCalledWith(200);
+    });
+
+    it("respose 400 if receiver is not already blocked", async () => {
+        const { user1, user2 } = await createUsers();
+
+        const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
+
+        await unblockUserController(mockRequest, mockResponse, mockNext);
+
+        expect(mockResponse.sendStatus).toHaveBeenCalledWith(400);
+    });
+
+    it("respose 400 if both are sender and receiver is same email", async () => {
+        const { user1 } = await createUsers();
+
+        const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user1);
+
+        await unblockUserController(mockRequest, mockResponse, mockNext);
+
+        expect(mockResponse.status).toHaveBeenCalledWith(400);
+        expect(mockResponse.send).toHaveBeenCalledWith("Receiver can't be same as sender");
+    });
+
+    it("respose 400 if sender email is undefined", async () => {
+        const { user1, user2 } = await createUsers();
+        user1.email = undefined as unknown as string;
+
+        const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
+
+        await unblockUserController(mockRequest, mockResponse, mockNext);
+
+        expect(mockResponse.status).toHaveBeenCalledWith(400);
+        expect(mockResponse.send).toHaveBeenCalledWith("Sender and/or receiver are missing");
+    });
+
+    it("respose 400 if receiver email is undefined", async () => {
+
+        const { user1, user2 } = await createUsers();
+
+        user2.email = undefined as unknown as string;
+        const { mockRequest, mockResponse, mockNext } = provideMockRequestHandlerArguments(user1, user2);
+
+        await unblockUserController(mockRequest, mockResponse, mockNext);
+
+        expect(mockResponse.status).toHaveBeenCalledWith(400);
+        expect(mockResponse.send).toHaveBeenCalledWith("Sender and/or receiver are missing");
+    });
+});

@@ -1,4 +1,4 @@
-import { UserModel } from "@src/models/users.model";
+import { UsersModel } from "@src/models/core-models";
 import express from "express";
 import {
     vi,
@@ -6,15 +6,15 @@ import {
     type Mocked
 } from "vitest";
 
-export type CreatedUserType = Awaited<ReturnType<typeof UserModel.create>>[number];
+export type CreatedUserType = Awaited<ReturnType<typeof UsersModel.create>>[number];
 
 export const createUsers = async (): Promise<Record<string, CreatedUserType>> => {
-    const user1 = await UserModel.create({
+    const user1 = await UsersModel.create({
         name: "test",
         email: "test@example.com",
         password: "Test@123"
     });
-    const user2 = await UserModel.create({
+    const user2 = await UsersModel.create({
         name: "test one",
         email: "test1@example.com",
         password: "Test@123"
