@@ -8,7 +8,7 @@ const checkForListSize = (val: string[]): boolean => {
     return val.length <= LIMIT_FOR_LISTS;
 };
 
-const UserDBSchema = new Schema({
+const UsersDBSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -46,7 +46,7 @@ const UserDBSchema = new Schema({
     },
 }, { strict: true, timestamps: true, });
 
-UserDBSchema.pre("save", async function (next) {
+UsersDBSchema.pre("save", async function (next) {
     if (this.isModified("password")) {
         try {
             const hash = await createPasswordHash(this.password);
@@ -63,7 +63,7 @@ UserDBSchema.pre("save", async function (next) {
     next();
 });
 
-export const UserModel = model(
+export const UsersModel = model(
     "users-v1",
-    UserDBSchema
+    UsersDBSchema
 );

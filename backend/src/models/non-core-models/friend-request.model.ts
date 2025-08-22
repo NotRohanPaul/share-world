@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 
 
-const FriendRequestDBSchema = new Schema({
+const FriendRequestsDBSchema = new Schema({
     sender: {
         type: Schema.Types.ObjectId,
         ref: "users",
@@ -18,7 +18,7 @@ const FriendRequestDBSchema = new Schema({
     }
 }, { timestamps: true, strict: true, });
 
-FriendRequestDBSchema.index({ sender: 1, receiver: 1 }, { unique: true });
-FriendRequestDBSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+FriendRequestsDBSchema.index({ sender: 1, receiver: 1 }, { unique: true });
+FriendRequestsDBSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
-export const FriendRequestModel = model("friend-requests-v1", FriendRequestDBSchema);
+export const FriendRequestsModel = model("friend-requests-v1", FriendRequestsDBSchema);
