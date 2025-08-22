@@ -1,7 +1,8 @@
+import { useSenderFriendSocket } from "./useSenderFriendSocket";
 
 
-export const useSenderFriend = () => {
-    
+export const useSenderFriendMain = () => {
+  useSenderFriendSocket();
 
     return {
 

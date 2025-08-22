@@ -13,6 +13,10 @@ export const useSenderFriendSocket = () => {
         const io = shareToFriendSocketInstance.connect();
         socketRef.current = io;
 
+        io.on("connect", () => {
+            console.log("coonected");
+        });
+
         io.on("online-friends-list-client", ({
             onlineFriendsEmailList
         }: {

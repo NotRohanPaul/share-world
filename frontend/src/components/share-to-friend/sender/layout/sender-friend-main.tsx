@@ -1,7 +1,10 @@
 import { AppIcons } from "@src/assets/icons";
 import { UserHeader, UserMain, UserSection } from "@src/components/common/layout/user-layout/user-layouts";
+import { useSenderFriendMain } from "../hooks/useSenderFriendMain";
 
 export const SenderToFriendMain = () => {
+    useSenderFriendMain();
+
     return (
         <UserSection>
             <UserHeader>
@@ -15,7 +18,7 @@ export const SenderToFriendMain = () => {
                     Online Friends
                 </h2>
                 <div>
-                
+
                 </div>
             </UserMain>
         </UserSection>
