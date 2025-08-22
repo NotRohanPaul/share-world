@@ -8,8 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  all-ci:
-    if: github.ref == 'refs/heads/deploy'
+  all-ci-cd:
     name: Lint, Tests, Build any Deploy
     runs-on: ubuntu-24.04
     timeout-minutes: 3
@@ -46,6 +45,7 @@ jobs:
           npm run build:prod
 
       - name: Deploy to Render
+        if: github.ref == 'refs/heads/deploy'
         run: |
           curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}
           curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}
