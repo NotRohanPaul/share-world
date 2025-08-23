@@ -2,7 +2,7 @@ import type { RequestHandler } from "express";
 import type { z } from "zod";
 import type { jwtPayloadStrictSchema } from "@src/schemas/auth-schemas";
 
-export type HandlerGenerics = Partial<{
+export type HandlerGenericsType = Partial<{
     context: Record<string, unknown>;
     params: unknown;
     resBody: unknown;
@@ -12,7 +12,7 @@ export type HandlerGenerics = Partial<{
 }>;
 
 export type BaseHandlerType<
-    G extends HandlerGenerics,
+    G extends HandlerGenericsType,
     ContextExtension
 > = RequestHandler<
     G["params"] extends undefined ? unknown : G["params"],
@@ -26,11 +26,11 @@ export type BaseHandlerType<
 
 
 export type ContextHandlerType<
-    G extends HandlerGenerics = HandlerGenerics
+    G extends HandlerGenericsType = HandlerGenericsType
 > = BaseHandlerType<G, Record<string, unknown>>;
 
 export type AuthContextHandlerType<
-    G extends HandlerGenerics = HandlerGenerics
+    G extends HandlerGenericsType = HandlerGenericsType
 > = BaseHandlerType<
     G,
     { auth?: z.infer<typeof jwtPayloadStrictSchema>; }
