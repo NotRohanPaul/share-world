@@ -42,11 +42,6 @@ export const socketAuthMiddleware: SocketMiddlewareType<{
     }
     catch (err) {
         appLogger.error(err);
-        if (err instanceof Error) {
-            return void next(err);
-        }
-        else {
-            return void next(new Error("Somthing went wrong with socket auth middleware"));
-        };
+        return void next(new Error("Somthing went wrong with socket auth middleware"));
     }
 };

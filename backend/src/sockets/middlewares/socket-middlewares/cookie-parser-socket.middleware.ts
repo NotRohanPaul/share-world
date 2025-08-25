@@ -16,12 +16,8 @@ export const socketCookieMiddleware: SocketMiddlewareType<{
 
         void cookiePraserWithEncryptionMiddleware(req, res, (err?: unknown) => {
             if (err !== undefined) {
-                if (err instanceof Error) {
-                    return void next(err);
-                }
-                else {
-                    return void next(new Error("Somthing went wrong with socket cookie praser"));
-                };
+                appLogger.error(err);
+                return void next(new Error("Somthing went wrong with socket cookie praser"));
             }
             socket.data.cookies = req.cookies || undefined;
             socket.data.signedCookies = req.signedCookies || undefined;
@@ -30,11 +26,6 @@ export const socketCookieMiddleware: SocketMiddlewareType<{
     }
     catch (err) {
         appLogger.error(err);
-        if (err instanceof Error) {
-            return void next(err);
-        }
-        else {
-            return void next(new Error("Somthing went wrong with socket cookie praser"));
-        };
+        return void next(new Error("Somthing went wrong with socket cookie praser"));
     }
 };
