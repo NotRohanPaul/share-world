@@ -1,7 +1,7 @@
 import { appLogger } from "@src/configs/app-logger";
 import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import { UsersModel } from "@src/models/core-models";
-import type { AuthContextHandlerType } from "@src/types/context";
+import type { AuthContextHandlerType } from "@src/types/express-types";
 
 
 export const listBlockedUsersController: AuthContextHandlerType<{

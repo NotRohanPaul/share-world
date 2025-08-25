@@ -2,7 +2,7 @@ import { appLogger } from "@src/configs/app-logger";
 import { JWT_SECRET } from "@src/constants/env";
 import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 import { cookiesSchema, jwtPayloadLooseTransformSchema } from "@src/schemas/auth-schemas";
-import type { AuthContextHandlerType } from "@src/types/context";
+import type { AuthContextHandlerType } from "@src/types/express-types";
 import jwt from "jsonwebtoken";
 
 export const authMiddleware: AuthContextHandlerType = async (req, res, next) => {

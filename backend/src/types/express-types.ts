@@ -24,11 +24,6 @@ export type BaseHandlerType<
     }
 >;
 
-
-export type ContextHandlerType<
-    G extends HandlerGenericsType = HandlerGenericsType
-> = BaseHandlerType<G, Record<string, unknown>>;
-
 export type AuthContextHandlerType<
     G extends HandlerGenericsType = HandlerGenericsType
 > = BaseHandlerType<
