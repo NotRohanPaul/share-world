@@ -1,14 +1,15 @@
-import type { Socket } from "socket.io";
-import type { SocketWithUserIdType } from "../types";
+import { appLogger } from "@src/configs/app-logger";
+import type { PairSocketType } from "../types/share-via-id-namespace-types";
+
 
 export const pairEventsHandler = (
-    socket: SocketWithUserIdType,
-    userMap: Map<string, Socket>,
+    socket: PairSocketType,
+    userMap: Map<string, PairSocketType>
 ): void => {
-    socket.on("pair-request-server", ({ to }: { to: string; }) => {
-        console.log({ to });
-        console.log(userMap.keys());
+    socket.on("pair-request-server", ({ to }) => {
+        appLogger.info(userMap.keys());
         const peer = userMap.get(to);
+
         if (peer) {
             socket.emit("paired-sender-client", { to });
             peer.emit("paired-receiver-client", { from: socket.data.userId });
