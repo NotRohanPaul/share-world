@@ -1,33 +1,45 @@
+import { authSelectors } from "@src/redux/slices/auth";
+import { useAppSelector } from "@src/redux/utils/hooks";
+
+const LabelAndValue = ({
+    labelText,
+    valueText
+}: {
+    labelText: string,
+    valueText: string;
+}) => {
+    return (
+        <div className="flex gap-2">
+            <p className="font-semibold">
+                {labelText}:
+            </p>
+            <p className="break-all">
+                {valueText}
+            </p>
+        </div>
+    );
+};
+
 export const AccountSettings = () => {
+    const userState = useAppSelector(authSelectors.user);
+
     return (
         <>
-            <div className="flex gap-2">
-                <label
-                    htmlFor="user-name"
-                >
-                    Name:
-                </label>
-                <input
-                    className="w-full"
-                    type="text"
-                    name="name"
-                    defaultValue={"John Doe"}
-                    id="user-name"
+            <LabelAndValue
+                labelText="Name"
+                valueText={
+                    userState.type === "auth-user" ?
+                        userState.name :
+                        "Guest"
+                }
+            />
+            {
+                userState.type === "auth-user" &&
+                <LabelAndValue
+                    labelText="Email"
+                    valueText={userState.email}
                 />
-            </div>
-            <div className="flex gap-2">
-                <label
-                    htmlFor="user-email"
-                >
-                    Email:
-                </label>
-                <input
-                    className="w-full"
-                    type="text"
-                    name="name"
-                    defaultValue={"test@test.com"} id="user-email"
-                />
-            </div>
+            }
         </>
     );
 };
