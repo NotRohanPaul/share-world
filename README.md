@@ -7,16 +7,18 @@
 
 
 ## Main Features
-1. Authentication feature where you can sign up or login to use but also added a button to login as guest to use the site.
-2. Online File Sharing but directly send to the receiver no server in between.
-3. Made to use less RAM and send in chunks so the files sending does not require to be under the RAM limit.
-4. PWA and installable service worker is not used currently for caching
-5. Responsive design works in both desktop and mobile also you can use it in split view with other apps
+1. Authentication feature where you can sign up or login to use but also added a button to login as guest to share via id.
+2. Made sure after logout the refresh token is blacklisted.
+3. Online File Sharing but directly send to the receiver no server in between.
+4. Made to use less RAM and send in chunks so the files sending does not require to be under the RAM limit.
+5. Its also a PWA mean you can install or add as a shortcut in devices
+6. Have a Responsive design which works in both desktop and mobile devices also you can use it in split view with other apps in mobile devices.
 
 ## Work in Progress
 1. Option to add peer or friend using email or id and the share without id.
-2. The receiver is currently receiving files in memory so once refresh the already received files is gone need to add storage feature to store the file in indexdb untill the users downlaod or clear it from the db.
-3. Common logic for both backend and frontend like zod schemas to be moved in a common pakage folder in the root.  
+2. The receiver is currently receiving files in memory so once refresh the already received files is gone. Need to add storage feature to store the file in indexdb until the users download or clear it from the db.
+3. Common logic for both backend and frontend like zod schemas to be moved in a common pakage folder in the root.
+4. Use of redis instead on own memory.
 
 ## Technologies Used
 ### Common
