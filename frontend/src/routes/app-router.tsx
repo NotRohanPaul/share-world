@@ -1,9 +1,9 @@
-import { AuthPage } from "@src/pages/auth-page";
-import { ErrorPage } from "@src/pages/error-page";
-import { LandingPage } from "@src/pages/landing-page";
-import { NotFoundPage } from "@src/pages/not-found";
-import { SettingsPage } from "@src/pages/settings-page";
-import { UserPage } from "@src/pages/user-page";
+import { AuthPage } from "@src/pages/core-pages/auth-page";
+import { ErrorPage } from "@src/pages/non-core-pages/error-page";
+import { LandingPage } from "@src/pages/core-pages/landing-page";
+import { NotFoundPage } from "@src/pages/non-core-pages/not-found";
+import { SettingsPage } from "@src/pages/core-pages/settings-page";
+import { UserPage } from "@src/pages/core-pages/user-page";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { appRoutes } from "./app-routes";
 import { ProtectedRoute } from "./containers/protected-route";

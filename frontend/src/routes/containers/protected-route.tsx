@@ -1,4 +1,4 @@
-import { UnauthorizedPage } from "@src/pages/unauthorized-page";
+import { UnauthorizedPage } from "@src/pages/non-core-pages/unauthorized-page";
 import { authSelectors } from "@src/redux/slices/auth";
 import { useAppSelector } from "@src/redux/utils/hooks";
 import { Outlet } from "react-router";

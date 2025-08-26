@@ -19,8 +19,16 @@ const settingsOptions = [{
 }] as const;
 
 export const SettingsMain = () => {
-    const [activeSettingsOption, setActiveSettingsOption] = useState<typeof settingsOptions[number]["name"]>("Account");
-    const SettingsComponent = settingsOptions.find(({ name }) => name === activeSettingsOption)?.component ?? (() => null);
+    const [
+        activeSettingsOption,
+        setActiveSettingsOption
+    ] = useState<
+        typeof settingsOptions[number]["name"]
+    >("Account");
+
+    const SettingsComponent = settingsOptions.find(
+        ({ name }) => name === activeSettingsOption
+    )?.component ?? (() => null);
 
     return (
         <main className="w-full h-full flex flex-col items-center gap-5 p-2">
@@ -33,7 +41,9 @@ export const SettingsMain = () => {
                         return (
                             <button
                                 key={name}
-                                className={`w-full text-left text-primary ${activeSettingsOption === name ? "bg-primary text-white cursor-default" : "hover:bg-primary hover:text-white"} p-2 max-xs:p-1 transition-colors`}
+                                className={`w-full text-left text-primary ${activeSettingsOption === name ?
+                                        "bg-primary text-white cursor-default" :
+                                        "hover:bg-primary hover:text-white"} p-2 max-xs:p-1 transition-colors`}
                                 onClick={() => setActiveSettingsOption(name)}
                             >
                                 {name}
