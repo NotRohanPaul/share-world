@@ -7,7 +7,10 @@ store.subscribe(() => {
     const state = store.getState();
     saveStateToLS({
         auth: {
-            user: state.auth.user
+            user: state.auth.user,
+        },
+        settings: {
+            appearance: state.settings.appearance
         }
     });
 });
