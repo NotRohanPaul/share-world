@@ -18,7 +18,7 @@ export const UserNavBar = () => {
 
     return (
         <section className="relative flex items-center font-semibold text-black">
-            <h2 className="w-[6rem] text-right text-xl max-xs:text-base text-ellipsis pr-2 overflow-hidden">
+            <h2 className="w-[6rem] dark:text-white text-right text-xl max-xs:text-base text-ellipsis pr-2 overflow-hidden">
                 {
                     userState.type === "auth-user" ?
                         userState.name.split("-")[0] :
@@ -33,7 +33,7 @@ export const UserNavBar = () => {
                 ref={buttonRef}
             >
                 <AppIcons.Avatar
-                    className="w-full h-full text-primary"
+                    className="w-full h-full text-primary dark:text-secondary"
                 />
             </button>
             <AnimatePresence>

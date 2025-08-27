@@ -9,7 +9,7 @@ export const SenderId = ({ senderId }: { senderId: string | null; }) => {
                     :
                     <p className="flex gap-2 font-bold max-xs:text-xl">
                         <span>Sender User ID:</span>
-                        <span className="text-primary tracking-widest">{senderId}</span>
+                        <span className="text-primary dark:text-secondary tracking-widest">{senderId}</span>
                         <span></span>
                     </p>
             }

@@ -5,7 +5,7 @@ import { Link } from "react-router";
 export const ShareWorldImgLink = ({ className }: { className?: string; }) => {
     return (
         <Link to={appRoutes.home.absolute}>
-            <AppImages.ShareWorldFade className={className === undefined ? "w-10 h-10 max-xs:w-8 max-xs:h-8 aspect-square object-center object-contain p-1 bg-white rounded-full outline-2 outline-primary" : className}
+            <AppImages.ShareWorldFade className={className === undefined ? "w-10 h-10 max-xs:w-8 max-xs:h-8 aspect-square object-center object-contain p-1 bg-white dark:bg-black rounded-full outline-2 outline-primary dark:outline-secondary dark:outline-3" : className}
             />
         </Link>
     );

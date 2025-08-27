@@ -56,7 +56,7 @@ export const SenderViaIdMain = () => {
                             <span>
                                 Receiver's ID:
                             </span>
-                            <span className="text-primary tracking-widest">{receiverId}</span>
+                            <span className="text-primary dark:text-secondary tracking-widest">{receiverId}</span>
                         </p>
                         <div
                             className="flex flex-col items-center gap-6"

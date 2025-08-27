@@ -20,7 +20,7 @@ export const RoundedToggleButton = forwardRef<
             className={`w-[40px] h-[20px] flex ${isSelected === true ?
                 "justify-end" :
                 "justify-start"
-                } outline-2 outline-primary cursor-pointer rounded-full p-0.5 focus:outline-3 ${props.className ?? ''}`}
+                } outline-2 outline-primary dark:outline-secondary cursor-pointer rounded-full p-0.5 focus:outline-3 ${props.className ?? ''}`}
             onClick={(e) => {
                 onToggle();
                 props.onClick?.(e);
@@ -40,7 +40,7 @@ export const RoundedToggleButton = forwardRef<
                 transition={{
                     duration: 0.15
                 }}
-                className={`w-[50%] h-full rounded-full ${isSelected === true ? "bg-primary" : "bg-primary/40"}`} />
+                className={`w-[50%] h-full rounded-full ${isSelected === true ? "bg-primary" : "bg-primary/40 dark:bg-secondary"}`} />
         </div>
     );
 });

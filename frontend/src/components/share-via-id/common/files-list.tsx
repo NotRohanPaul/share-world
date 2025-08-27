@@ -29,7 +29,7 @@ export const FileList = ({ fileList }: { fileList: FileListType; }) => {
     };
 
     return (
-        <section className="w-fit max-md:w-full h-fit flex flex-col gap-2 text-base max-md:text-sm border-4 border-primary p-2 rounded-sm ">
+        <section className="w-fit max-md:w-full h-fit flex flex-col gap-2 text-base max-md:text-sm border-4 border-primary dark:border-secondary p-2 rounded-sm ">
             <header className="flex gap-2 rounded-sm bg-primary text-white p-2">
                 <p>
                     Files: {fileList.length}
@@ -44,11 +44,11 @@ export const FileList = ({ fileList }: { fileList: FileListType; }) => {
                         const Icon = fileIconsProvider(file.metadata.name);
                         const sizeInUnits = convertBytesToUnits(file.metadata.size);
                         return (
-                            <section key={file.id} className="flex flex-col rounded-sm text-primary outline-2">
+                            <section key={file.id} className="flex flex-col rounded-sm text-primary dark:text-white outline-2">
                                 <div className="flex items-center justify-between gap-2 px-2 p-2">
                                     <div className="flex">
                                         <div className="w-[4rem] h-[4rem] max-md:w-[3rem] max-md:h-[3rem] p-1.5">
-                                            <Icon className="w-full h-full text-primary" />
+                                            <Icon className="w-full h-full text-primary dark:text-secondary" />
                                         </div>
                                         <div className="flex flex-col overflow-ellipsis">
                                             <p>{file.metadata.name}</p>
@@ -64,12 +64,12 @@ export const FileList = ({ fileList }: { fileList: FileListType; }) => {
                                                 className="w-full h-full"
 
                                             >
-                                                <AppIcons.SaveToDisk className="w-full h-full text-primary" />
+                                                <AppIcons.SaveToDisk className="w-full h-full text-primary dark:text-secondary" />
                                             </button>
                                         }
                                         {
                                             file.state === "pending" &&
-                                            <AppIcons.Pending className="w-full h-full text-primary" />
+                                            <AppIcons.Pending className="w-full h-full text-primary dark:text-secondary" />
                                         }
                                     </div>
                                 </div>

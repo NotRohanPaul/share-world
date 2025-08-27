@@ -9,8 +9,26 @@
 
     --app-scroll--thumb-color: hsl(206, 89%, 52%);
     --app-scroll--track-color: hsl(194, 100%, 75%);
+
+    background-color: var(--app-color-white);
+    color: var(--app-color-black);
 }
 
+html.dark {
+    --app-color-primary: hsl(217, 100%, 50%);
+    --app-color-secondary: hsl(210, 100%, 85%);
+
+    --app-color-white: hsl(210 100% 98%);
+    --app-color-black: hsl(246, 91%, 4%);
+
+    --app-scroll--thumb-color: hsl(206, 89%, 52%);
+    --app-scroll--track-color: hsl(246, 91%, 4%);
+
+    background-color: var(--app-color-black);
+    color: var(--app-color-white);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
     --color-primary: var(--app-color-primary);
@@ -29,7 +47,7 @@
 
 @layer base {
     body {
-        @apply bg-white text-black overflow-hidden;
+        @apply overflow-hidden;
         font-family: "Times New Roman", serif;
     }
 
@@ -73,7 +91,7 @@
         }
 
         &>div {
-            @apply grid auto-rows-auto grid-cols-2 max-xs:grid-cols-1 gap-4 gap-x-10 font-semibold text-primary text-left text-3xl max-md:text-2xl max-sm:text-base max-xs:text-sm;
+            @apply grid auto-rows-auto grid-cols-2 max-xs:grid-cols-1 gap-4 gap-x-10 font-semibold text-primary dark:text-secondary text-left text-3xl max-md:text-2xl max-sm:text-base max-xs:text-sm;
         }
 
         div p {
@@ -82,7 +100,7 @@
 
         div p::before {
             content: "";
-            @apply w-[.5rem] h-[.5rem] bg-white rounded-full outline-3 outline-primary;
+            @apply w-[.5rem] h-[.5rem] bg-white dark:bg-primary rounded-full outline-3 outline-primary dark:outline-secondary;
         }
     }
 

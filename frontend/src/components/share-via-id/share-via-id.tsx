@@ -1,28 +1,27 @@
 import { AppIcons } from "@src/assets/icons";
 import { appRoutes } from "@src/routes/app-routes";
 import { useNavigate } from "react-router";
+import { BoxButton } from "../common/ui/inputs/buttons/box-button";
 
 
 export const ShareViaId = () => {
     const navigate = useNavigate();
 
     return (
-        <section className="flex gap-2">
-            <button
-                className="w-[10rem] h-[10rem] max-xs:w-[7rem] max-xs:h-[7rem] flex flex-col items-center justify-center text-2xl font-bold border-5 border-primary p-2 rounded-md bg-white text-primary max-xs:text-base transition-colors hover:bg-primary hover:text-white overflow-hidden"
+        <section className="w-[20rem] h-[10rem] max-xs:w-[15rem] max-xs:h-[7rem] flex gap-2 text-2xl max-xs:text-base">
+            <BoxButton
                 onClick={() => void navigate(appRoutes["via-id"].send.absolute)}
             >
                 <AppIcons.Send className="w-[3rem] h-[3rem] max-xs:w-[2rem] max-xs:h-[2rem]" />
                 Send
-            </button>
-            <button
-                className="w-[10rem] h-[10rem] max-xs:w-[7rem] max-xs:h-[7rem] flex flex-col items-center justify-center text-2xl font-bold border-5 border-primary p-2 rounded-md bg-white text-primary max-xs:text-base transition-colors hover:bg-primary hover:text-white overflow-hidden"
+            </BoxButton>
+            <BoxButton
                 onClick={() => void navigate(appRoutes["via-id"].receive.absolute)}
 
             >
                 <AppIcons.Receive className="w-[3rem] h-[3rem] max-xs:w-[2rem] max-xs:h-[2rem]" />
                 Receive
-            </button>
+            </BoxButton>
         </section>
     );
 };

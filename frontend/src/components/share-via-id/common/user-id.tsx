@@ -26,9 +26,9 @@ export const UserId = ({
             <span>Your ID:</span>
             {
                 userId === null ?
-                    <AppIcons.Loader className="text-primary" />
+                    <AppIcons.Loader className="text-primary dark:text-secondary" />
                     :
-                    <span className="text-primary tracking-widest">
+                    <span className="text-primary dark:text-secondary tracking-widest">
                         {userId}
                     </span>
             }
@@ -40,7 +40,7 @@ export const UserId = ({
                 userId !== null
                 &&
                 <button
-                    className={`text-primary ${isCopyClicked === true ? "cursor-default" : ""}`}
+                    className={`text-primary dark:text-secondary ${isCopyClicked === true ? "cursor-default" : ""}`}
                     onClick={() => void handleCopy()}
                 >
                     {isCopyClicked === false ?

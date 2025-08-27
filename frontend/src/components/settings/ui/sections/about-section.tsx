@@ -31,7 +31,7 @@ export const AboutSection = () => {
     return (
         <div className="w-full flex flex-col items-center gap-2">
             <div className="flex flex-col items-center">
-                <AppImages.ShareWorldFade className={"w-[5rem] h-[5rem] max-xs:w-[3rem] max-xs:h-[3rem] aspect-square object-center object-contain p-1 bg-white rounded-full outline-2 outline-primary"}
+                <AppImages.ShareWorldFade className={"w-[5rem] h-[5rem] max-xs:w-[3rem] max-xs:h-[3rem] aspect-square object-center object-contain p-1 bg-white dark:bg-black rounded-full outline-2 outline-primary"}
                 />
                 <p className="text-3xl max-xs:text-xl font-semibold">Share World</p>
             </div>

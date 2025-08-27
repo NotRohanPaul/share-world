@@ -1,6 +1,6 @@
 import { Footer } from "@src/components/common/layout/footer";
 import { Navbar } from "@src/components/common/layout/navbar";
-import { ShareWorldImgLink } from "@src/components/common/ui/share-world-img-link";
+import { ShareWorldImgLink } from "@src/components/common/ui/links/share-world-img-link";
 import { UserNavBar } from "@src/components/user/layout/user-navbar";
 import { authSelectors } from "@src/redux/slices/auth";
 import { useAppSelector } from "@src/redux/utils/hooks";
