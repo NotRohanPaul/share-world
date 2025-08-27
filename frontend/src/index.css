@@ -79,7 +79,7 @@ html.dark {
         }
 
         .input-error {
-            @apply text-base text-orange-700
+            @apply text-base text-orange-700 dark:text-orange-500
         }
     }
 

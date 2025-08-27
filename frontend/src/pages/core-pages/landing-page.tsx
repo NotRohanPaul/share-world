@@ -13,7 +13,7 @@ import { Link } from "react-router";
 const introLine = "Share Files directly using Peer to Peer tech without sending it to the server.";
 
 const features = [
-    "No file size limit (WIP)",
+    "No file size limit",
     "No RAM limit (WIP)",
     "Resume support (WIP)",
     "Share via ID",
@@ -32,7 +32,7 @@ export const LandingPage = () => {
                 <Navbar>
                     {
                         userState.type === "guest" ?
-                            <nav className="font-semibold">
+                            <nav className="font-semibold dark:text-white">
                                 <div className="flex gap-2 max-xs:text-sm">
                                     <Link
                                         to={appRoutes.login.absolute}

@@ -10,7 +10,7 @@ const LabelAndValue = ({
 }) => {
     return (
         <div className="flex gap-2">
-            <p className="font-semibold">
+            <p className="font-semibold dark:text-secondary">
                 {labelText}:
             </p>
             <p className="break-all">

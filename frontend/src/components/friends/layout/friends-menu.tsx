@@ -27,7 +27,7 @@ export const FriendsMenu = () => {
                             key={i}
                             className={`min-w-[100px] h-[40px] max-sm:w-[80px] flex items-center justify-center font-semibold text-xl max-sm:text-base ${menuName === activeMenuState ?
                                 "cursor-auto bg-primary text-white" :
-                                "text-primary hover:bg-blue-200"
+                                "text-primary dark:text-white hover:bg-secondary hover:dark:text-primary"
                                 } ${i === 0 ?
                                     "rounded-l-full" :
                                     i === friendsMenuButtons.length - 1 ?

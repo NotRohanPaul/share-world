@@ -8,7 +8,7 @@ const MetaInfoPara = ({ title, value }: { title: string, value: string | undefin
             {
                 value !== undefined &&
                 <p className="flex whitespace-nowrap gap-1">
-                    <span className="font-bold">
+                    <span className="font-semibold dark:text-secondary">
                         {title}:
                     </span>
                     <span className="text-wrap break-all">

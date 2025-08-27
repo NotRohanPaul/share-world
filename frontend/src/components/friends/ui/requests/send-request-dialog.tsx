@@ -67,7 +67,7 @@ export const SendRequestDialog = () => {
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.15 }}
-                            className="text-base text-orange-700"
+                            className="text-base text-orange-700 dark:text-orange-500"
                         >
                             {serverResponse}
                         </motion.p>
@@ -97,7 +97,7 @@ export const SendRequestDialog = () => {
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.15 }}
-                            className="text-base text-orange-700"
+                            className="text-base text-orange-700 dark:text-orange-500"
                         >
                             {emailError}
                         </motion.p>

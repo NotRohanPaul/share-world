@@ -15,7 +15,7 @@ export const DialogBox = ({
 
     return createPortal((
         <section
-            className="absolute z-[100] inset-0 w-full h-full flex justify-center items-center bg-black/60"
+            className="absolute z-[100] inset-0 w-full h-full flex justify-center items-center bg-black/60 dark:bg-white/10"
         >
             <motion.main
                 layout
@@ -23,7 +23,7 @@ export const DialogBox = ({
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.75, opacity: 0 }}
                 transition={{ duration: 0.15, ease: "easeInOut" }}
-                className="relative w-[22rem] h-auto max-h-[50%] p-2 outline-2 outline-primary bg-white rounded-lg overflow-auto"
+                className="relative w-[22rem] h-auto max-h-[50%] p-2 outline-2 outline-primary bg-white dark:bg-black rounded-lg overflow-auto"
             >
                 <button
                     className="absolute top-2 right-2"

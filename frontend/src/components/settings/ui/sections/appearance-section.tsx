@@ -7,7 +7,7 @@ import type { MouseEvent, PropsWithChildren } from "react";
 const LabelAndValues = ({ labelText, children }: PropsWithChildren<{ labelText: string; }>) => {
     return (
         <div className="flex justify-between items-center gap-2">
-            <p className="font-semibold">{labelText}: </p>
+            <p className="font-semibold dark:text-secondary">{labelText}: </p>
             {children}
         </div>
     );

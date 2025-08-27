@@ -28,8 +28,8 @@ export const UserInfo = ({
             {
                 userInfoList.map(({ name, email }, i) => {
                     return (
-                        <div key={`${name} ${i}`} className="flex items-center gap-2 p-2 outline outline-primary rounded-sm">
-                            <AppIcons.Avatar className="text-primary" />
+                        <div key={`${name} ${i}`} className="flex items-center gap-2 p-2 outline outline-primary dark:outline-secondary rounded-sm">
+                            <AppIcons.Avatar className="text-primary dark:text-secondary" />
                             <p className="w-full">
                                 {name}
                             </p>
@@ -38,7 +38,7 @@ export const UserInfo = ({
                                     onClick={() => setIsMenuVisible(prev => !prev)}
                                     ref={buttonRef}
                                 >
-                                    <AppIcons.Ellipsis className="text-primary" />
+                                    <AppIcons.Ellipsis className="text-primary dark:text-secondary" />
                                 </button>
                                 <AnimatePresence>
                                     {
