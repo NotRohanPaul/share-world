@@ -16,10 +16,7 @@ export const AppAppearanceProvider = ({ children }: PropsWithChildren) => {
         }
     }, [theme]);
 
-
-    useEffect(() => {
-        MotionGlobalConfig.skipAnimations = disableAnimations;
-    }, [disableAnimations]);
+    MotionGlobalConfig.skipAnimations = disableAnimations;
 
     return (
         <>
