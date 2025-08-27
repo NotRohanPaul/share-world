@@ -32,6 +32,8 @@ export const RoundedToggleButton = forwardRef<
                 props.onKeyDown?.(e);
             }}
             ref={ref}
+            role="button"
+            aria-label={isSelected === true ? "selected" : "not selected"}
         >
             <motion.span
                 layout
