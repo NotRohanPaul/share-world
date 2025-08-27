@@ -20,7 +20,7 @@ const LabelAndValue = ({
     );
 };
 
-export const AccountSettings = () => {
+export const AccountSection = () => {
     const userState = useAppSelector(authSelectors.user);
 
     return (

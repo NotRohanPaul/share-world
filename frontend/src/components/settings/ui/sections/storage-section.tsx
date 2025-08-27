@@ -1,4 +1,4 @@
-export const StorageSettings = () => {
+export const StorageSection = () => {
     return (
         <>
             Storage Settings

@@ -20,7 +20,7 @@ const MetaInfoPara = ({ title, value }: { title: string, value: string | undefin
     );
 };
 
-export const AboutSettings = () => {
+export const AboutSection = () => {
     const [metaInfo, setMetaInfo] = useState<Record<string, string | undefined> | null>(null);
 
     useEffect(() => {

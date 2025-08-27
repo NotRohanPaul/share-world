@@ -1,21 +1,23 @@
 import { useState } from "react";
-import { AccountSettings } from "./account";
-import { AppearanceSettings } from "./appearance";
-import { StorageSettings } from "./storage";
-import { AboutSettings } from "./about";
+import {
+    AboutSection,
+    AccountSection,
+    AppearanceSection,
+    StorageSection
+} from "./ui/sections";
 
 const settingsOptions = [{
     name: "Account",
-    component: AccountSettings,
+    component: AccountSection,
 }, {
     name: "Appearance",
-    component: AppearanceSettings,
+    component: AppearanceSection,
 }, {
     name: "Storage",
-    component: StorageSettings,
+    component: StorageSection,
 }, {
     name: "About",
-    component: AboutSettings,
+    component: AboutSection,
 }] as const;
 
 export const SettingsMain = () => {
@@ -42,8 +44,8 @@ export const SettingsMain = () => {
                             <button
                                 key={name}
                                 className={`w-full text-left text-primary ${activeSettingsOption === name ?
-                                        "bg-primary text-white cursor-default" :
-                                        "hover:bg-primary hover:text-white"} p-2 max-xs:p-1 transition-colors`}
+                                    "bg-primary text-white cursor-default" :
+                                    "hover:bg-secondary/50"} p-2 max-xs:p-1 transition-colors`}
                                 onClick={() => setActiveSettingsOption(name)}
                             >
                                 {name}
