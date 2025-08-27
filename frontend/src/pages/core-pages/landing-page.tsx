@@ -1,6 +1,9 @@
 import { Footer } from "@src/components/common/layout/footer";
 import { Navbar } from "@src/components/common/layout/navbar";
 import { ShareWorldImgLink } from "@src/components/common/ui/share-world-img-link";
+import { UserNavBar } from "@src/components/user/layout/user-navbar";
+import { authSelectors } from "@src/redux/slices/auth";
+import { useAppSelector } from "@src/redux/utils/hooks";
 import { appRoutes } from "@src/routes/app-routes";
 import { motion } from "motion/react";
 import { Helmet } from "react-helmet-async";
@@ -18,6 +21,8 @@ const features = [
 ];
 
 export const LandingPage = () => {
+    const userState = useAppSelector(authSelectors.user);
+
     return (
         <>
             <Helmet prioritizeSeoTags={true}>
@@ -25,15 +30,19 @@ export const LandingPage = () => {
             </Helmet>
             <article className="h-[100dvh] grid grid-rows-[auto_1fr_auto] overflow-auto">
                 <Navbar>
-                    <ShareWorldImgLink />
-                    <nav className="font-semibold">
-                        <div className="flex gap-2 max-xs:text-sm">
-                            <Link
-                                to={appRoutes.login.absolute}
-                                children={"Login/Signup"}
-                            />
-                        </div>
-                    </nav>
+                    {
+                        userState.type === "guest" ?
+                            <nav className="font-semibold">
+                                <div className="flex gap-2 max-xs:text-sm">
+                                    <Link
+                                        to={appRoutes.login.absolute}
+                                        children={"Login/Signup"}
+                                    />
+                                </div>
+                            </nav> :
+                            <UserNavBar />
+
+                    }
                 </Navbar>
                 <main className="h-full grid grid-rows-[25%_auto_auto_1fr] gap-5 p-2 overflow-auto [@media(max-height:40rem)]:grid-rows-none ">
                     <div className="flex flex-col items-center justify-center p-2">
