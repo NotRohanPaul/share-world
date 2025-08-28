@@ -42,7 +42,7 @@ export const FriendPaneQueryResult = ({
                                 queryKey={queryKey}
                             /> :
                             <p className="text-xl max-xs:text-base text-center">
-                                Not Found
+                                Not Present
                             </p>
                     }
                 </motion.div>
