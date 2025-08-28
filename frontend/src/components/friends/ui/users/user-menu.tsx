@@ -6,6 +6,8 @@ import type {
     SetStateAction
 } from "react";
 import { userMenuOptions } from "../../constants/menu-options";
+import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
+import { queryClient } from "@src/providers/library/query-client";
 
 
 export const UserMenu = ({
@@ -23,7 +25,17 @@ export const UserMenu = ({
         if (handler !== undefined) {
             const response = await handler({ receiverEmail });
             console.log(response);
+            if ((
+                response.status === HTTP_STATUS_CODES.OK ||
+                response.status === HTTP_STATUS_CODES.NOT_MODIFIED
+            ) && menuType !== undefined
+            ) {
+                await queryClient.invalidateQueries({
+                    predicate: query => query.queryKey.join('-') === menuType,
+                });
+            }
         }
+
     };
 
     return (
