@@ -50,7 +50,7 @@ const createHandler = <
             dataOrConfig?: AxiosRequestConfig | TRequest,
             maybeConfig?: AxiosRequestConfig
         ): Promise<AxiosResponse<TResponse>> => {
-            if (["get", "delete", "head", "options"].includes(method.toLowerCase())) {
+            if (["get", "head", "options"].includes(method.toLowerCase())) {
                 return axiosInstance.request({
                     method,
                     url,
