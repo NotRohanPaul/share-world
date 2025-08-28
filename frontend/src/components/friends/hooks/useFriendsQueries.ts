@@ -1,15 +1,14 @@
 import { apiHandlers } from "@src/axios/handlers/api-handlers";
-import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
 import { useAppSelector } from "@src/redux/utils/hooks";
 import { friendsSelectors } from "@src/redux/slices/friends";
 import { useQuery, type QueryFunctionContext } from "@tanstack/react-query";
 import { AxiosError, type AxiosResponse } from "axios";
 import { useEffect } from "react";
 import type { UserInfoListType } from "../ui/users/user-info";
+import { HTTP_STATUS_CODES } from "@src/constants/http-status-codes";
 
 export const useFriendsQueries = () => {
     const activeMenuState = useAppSelector(friendsSelectors.friendsMenu);
-    const showToast = useToastConsumer();
 
     const safeQuery =
         (fn: () => Promise<AxiosResponse>) =>
@@ -19,7 +18,10 @@ export const useFriendsQueries = () => {
                 const res = await fn();
                 const status = res.status;
 
-                if (status === 200 || status === 304) {
+                if (
+                    status === HTTP_STATUS_CODES.OK ||
+                    status === HTTP_STATUS_CODES.NOT_MODIFIED
+                ) {
                     let queryKey: string | undefined = undefined;
                     if (typeof ctx.queryKey === "string") {
                         queryKey = ctx.queryKey;
@@ -32,11 +34,7 @@ export const useFriendsQueries = () => {
                     }
                     return { key: queryKey, response: res };
                 }
-                if (status === 401) {
-                    showToast({ text: "Session expired" });
-                } else {
-                    showToast({ text: "Server Error" });
-                }
+
                 throw new AxiosError(`Unexpected status: ${res.status}`);
             };
 
