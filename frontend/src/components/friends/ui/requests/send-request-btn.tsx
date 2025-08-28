@@ -4,12 +4,12 @@ import type { ButtonHTMLAttributes } from "react";
 
 
 export const SendRequestBtn = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
-    const { showDialogBox } = useDialogBoxConsumer();
+    const { showDialogBox, hideDialogBox } = useDialogBoxConsumer();
 
     const handleSendRequest = () => {
         showDialogBox({
             type: "component",
-            children: <SendRequestDialog />,
+            children: <SendRequestDialog hideDialogBox={hideDialogBox} />,
         });
     };
 

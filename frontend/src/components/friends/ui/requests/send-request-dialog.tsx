@@ -1,6 +1,7 @@
 import { apiHandlers } from "@src/axios/handlers/api-handlers";
 import { useDebounce } from "@src/components/common/hooks/useDebounce";
 import { DialogButton } from "@src/components/common/ui/dialog-box/ui/dialog-btn";
+import { queryClient } from "@src/providers/library/query-client";
 import { loginSchema } from "@src/schemas/auth-schemas";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "motion/react";
@@ -11,7 +12,11 @@ import {
 } from "react";
 
 
-export const SendRequestDialog = () => {
+export const SendRequestDialog = ({
+    hideDialogBox
+}: {
+    hideDialogBox: () => void;
+}) => {
     const [receiverEmail, setReceiverEmail] = useState<string>('');
     const [emailError, setEmailError] = useState<string>('');
     const [serverResponse, setServerResponse] = useState<string>('');
@@ -26,12 +31,20 @@ export const SendRequestDialog = () => {
 
     const { mutate: sendRequest } = useMutation({
         mutationFn: apiHandlers.friendRequest.send,
-        onSuccess: (res) => {
+        onSuccess: async (res) => {
             if (res.status === 200) {
-                setServerResponse("Request Sent Sucessfully");
+                await queryClient.invalidateQueries({
+                    queryKey: ["requests", "sent"]
+                });
+                hideDialogBox();
             }
             else {
-                setServerResponse("Something went wrong");
+                if (typeof res.data === "string") {
+                    setServerResponse(res.data as string);
+                }
+                else {
+                    setServerResponse("Something went wrong");
+                }
             };
         },
         onError: () => {
@@ -59,20 +72,6 @@ export const SendRequestDialog = () => {
     return (
         <section className="h-full flex flex-col justify-between gap-5">
             <div className="flex flex-col gap-2">
-                <AnimatePresence mode="wait">
-                    {serverResponse !== '' && (
-                        <motion.p
-                            key="error"
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.15 }}
-                            className="text-base text-orange-700 dark:text-orange-500"
-                        >
-                            {serverResponse}
-                        </motion.p>
-                    )}
-                </AnimatePresence>
                 <label
                     htmlFor="receiver-email"
                     className="font-semibold"
@@ -89,6 +88,20 @@ export const SendRequestDialog = () => {
                     onKeyDown={handleEnter}
                     className="outline-1 px-2 py-2 outline-gray-500 rounded-sm focus:outline-2 focus:outline-primary placeholder:text-gray-600"
                 />
+                <AnimatePresence mode="wait">
+                    {serverResponse !== '' && (
+                        <motion.p
+                            key="error"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.15 }}
+                            className="text-base text-orange-700 dark:text-orange-500"
+                        >
+                            {serverResponse}
+                        </motion.p>
+                    )}
+                </AnimatePresence>
                 <AnimatePresence mode="wait">
                     {emailError !== '' && (
                         <motion.p
