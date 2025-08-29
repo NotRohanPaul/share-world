@@ -1,11 +1,7 @@
 import type { AxiosRequestConfig, AxiosResponse, Method } from "axios";
 import { axiosInstance } from "../axios-instance";
-import {
-    authEndpoints,
-    friendActionsEndpoints,
-    friendListEndpoints,
-    friendRequestEndpoints
-} from "../endpoints/api-endpoints";
+import { apiEndpoints } from "../endpoints/api-endpoints";
+
 
 type EndpointConfigType = {
     method: Method;
@@ -71,8 +67,8 @@ const createHandler = <
 };
 
 export const apiHandlers = {
-    auth: createHandler(authEndpoints),
-    friendList: createHandler(friendListEndpoints),
-    friendRequest: createHandler(friendRequestEndpoints),
-    friendActions: createHandler(friendActionsEndpoints),
+    auth: createHandler(apiEndpoints.authEndpoints),
+    friendList: createHandler(apiEndpoints.friendListEndpoints),
+    friendRequest: createHandler(apiEndpoints.friendRequestEndpoints),
+    friendActions: createHandler(apiEndpoints.friendActionsEndpoints),
 };
