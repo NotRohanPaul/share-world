@@ -30,12 +30,12 @@ export const FriendPaneQueryResult = ({
                     animate={{
                         opacity: 1
                     }}
-                    className="h-full flex flex-col gap-2"
+                    className="flex flex-col gap-2"
                 >
                     {
                         (
                             Array.isArray(queryData) === true &&
-                            queryData.length > 0
+                                queryData.length > 0
                         ) ?
                             <UserInfo
                                 userInfoList={queryData}
