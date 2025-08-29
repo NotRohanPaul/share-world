@@ -1,5 +1,5 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { shareToFriendSlice } from "./share-to-friend-slice";
+import { shareToFriendSlice, type ShareToFriendStateType } from "./share-to-friend-slice";
 import type { AppRootReducersType } from "../root-reducer";
 
 
@@ -9,7 +9,7 @@ export const shareReducer = combineReducers({
 
 
 export const shareSelectors = {
-    shareToFriend: (state: AppRootReducersType): Record<string, unknown> => state.share.shareToFriend
+    shareToFriend: (state: AppRootReducersType): ShareToFriendStateType => state.share.shareToFriend
 };
 
 export const shareActions = {
