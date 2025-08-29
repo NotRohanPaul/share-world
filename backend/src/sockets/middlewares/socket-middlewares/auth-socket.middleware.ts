@@ -1,6 +1,6 @@
 import { JWT_SECRET } from "@src/constants/env";
 import jwt from "jsonwebtoken";
-import type { SocketMiddlewareType } from "../../types/socket-types";
+import type { SocketMiddlewareType } from "../../types/socket-generic-types";
 import { appLogger } from "@src/configs/app-logger";
 import { cookiesSchema, jwtPayloadLooseTransformSchema } from "@src/schemas/auth-schemas";
 

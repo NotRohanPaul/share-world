@@ -1,6 +1,6 @@
 import { cookiePraserWithEncryptionMiddleware } from "@src/middlewares/common/cookie-parser-with-encryption.middleware";
 import express from "express";
-import type { SocketMiddlewareType } from "../../types/socket-types";
+import type { SocketMiddlewareType } from "../../types/socket-generic-types";
 import { appLogger } from "@src/configs/app-logger";
 
 

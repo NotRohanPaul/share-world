@@ -1,4 +1,4 @@
-import type { SocketNamespaceType, SocketType } from "@src/sockets/types/socket-types";
+import type { SocketNamespaceType, SocketType } from "@src/sockets/types/socket-generic-types";
 
 type PairEventsType = {
     listenEvents: {
