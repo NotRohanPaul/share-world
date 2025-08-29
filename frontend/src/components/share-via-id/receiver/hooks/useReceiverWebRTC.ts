@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { shareViaIdSocketInstance } from "@src/sockets/socket-instance";
+import { shareViaIdSocketInstance } from "@src/sockets/socket-instances";
 
 export function useReceiverWebRTC(peerId: string | null) {
     const pcRef = useRef<RTCPeerConnection | null>(null);

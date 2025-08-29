@@ -1,4 +1,4 @@
-import { shareViaIdSocketInstance } from "@src/sockets/socket-instance";
+import { shareViaIdSocketInstance } from "@src/sockets/socket-instances";
 import { useEffect, useState } from "react";
 
 

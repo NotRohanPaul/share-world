@@ -1,6 +1,6 @@
-import { shareViaIdSocketInstance } from "@src/sockets/socket-instance";
+import { shareViaIdSocketInstance } from "@src/sockets/socket-instances";
+import type { ShareViaIDEventsType } from "@src/sockets/types/namespace/share-via-id-types";
 import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
-import type { Socket } from "socket.io-client";
 
 
 export const useSenderSocket = (
@@ -10,7 +10,7 @@ export const useSenderSocket = (
     const [userId, setUserId] = useState<string | null>(null);
     const [receiverId, setReceiverId] = useState<string | null>(null);
 
-    const socketRef = useRef<Socket | null>(null);
+    const socketRef = useRef<ShareViaIDEventsType | null>(null);
 
     useEffect(() => {
         const socket = shareViaIdSocketInstance.connect();

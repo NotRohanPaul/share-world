@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { shareViaIdSocketInstance } from "@src/sockets/socket-instance";
+import { shareViaIdSocketInstance } from "@src/sockets/socket-instances";
 
 export function useSenderWebRTC(receiverId: string | null) {
     const pcRef = useRef<RTCPeerConnection | null>(null);
@@ -69,7 +69,7 @@ export function useSenderWebRTC(receiverId: string | null) {
             }
         })();
 
-        shareViaIdSocketInstance.on("webrtc-answer-client", async ({ answer }: { answer: RTCSessionDescriptionInit; }) => {
+        shareViaIdSocketInstance.on("webrtc-answer-client", async ({ answer }) => {
             try {
                 await pc.setRemoteDescription(new RTCSessionDescription(answer));
                 remoteDescriptionSet.current = true;
@@ -84,7 +84,7 @@ export function useSenderWebRTC(receiverId: string | null) {
             }
         });
 
-        shareViaIdSocketInstance.on("webrtc-ice-candidate-client", async ({ candidate }: { candidate: RTCIceCandidateInit; }) => {
+        shareViaIdSocketInstance.on("webrtc-ice-candidate-client", async ({ candidate }) => {
             try {
                 console.log({ "webrtc-ice-candidate-client": candidate });
                 if (remoteDescriptionSet.current === false) {
