@@ -15,6 +15,7 @@ import {
     House,
     LoaderCircle,
     LogOut,
+    RotateCw,
     Send,
     Settings,
     ShieldAlert,
@@ -63,4 +64,5 @@ export const AppIcons = {
     UnFriend: HeartCrack,
     Delete: Trash,
     Reject: X,
+    Refresh: RotateCw,
 };
