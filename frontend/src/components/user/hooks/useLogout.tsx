@@ -1,13 +1,13 @@
+import { apiHandlers } from "@src/axios/handlers/api-handlers";
 import { useDialogBoxConsumer } from "@src/components/common/ui/dialog-box/context/dialog-box-consumer";
 import { useToastConsumer } from "@src/components/common/ui/toast/context/toasts-consumer";
+import { authActions, authSelectors } from "@src/redux/slices/auth";
+import { useAppDispatch, useAppSelector } from "@src/redux/utils/hooks";
 import { appRoutes } from "@src/routes/app-routes";
 import { useMutation } from "@tanstack/react-query";
-import { useRef, type MouseEvent } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router";
 import { LogoutDialog } from "../ui/logout-dialog";
-import { apiHandlers } from "@src/axios/handlers/api-handlers";
-import { useAppDispatch, useAppSelector } from "@src/redux/utils/hooks";
-import { authActions, authSelectors } from "@src/redux/slices/auth";
 
 
 export const useLogout = () => {
@@ -43,11 +43,7 @@ export const useLogout = () => {
         controllerRef.current?.abort("Logout dialog abort is clicked");
     };
 
-    const handleMenuButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-        const target = e.target as HTMLButtonElement;
-        if (target.name !== "Logout")
-            return;
-
+    const handleLogoutButtonClick = () => {
         if (userState.type === "guest")
             return void navigate(appRoutes.login.absolute);;
 
@@ -64,6 +60,6 @@ export const useLogout = () => {
         logout();
     };
     return {
-        handleMenuButtonClick,
+        handleLogoutButtonClick,
     };
 };
