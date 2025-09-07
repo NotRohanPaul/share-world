@@ -3,5 +3,9 @@
     "private": true,
     "author": "RP",
     "license": "MIT",
-    "scripts": {}
+    "scripts": {
+        "docker:up": "docker compose -p share-world -f docker-compose.stage.yml up --build -d",
+        "docker:down": "docker compose -p share-world down --rmi local -v",
+        "docker:logs": "docker compose -f docker-compose.stage.yml logs"
+    }
 }

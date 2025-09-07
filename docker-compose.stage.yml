@@ -1,0 +1,58 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile.stage
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile.stage
+    ports: []
+    env_file:
+      - ./backend/.env.staging  
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/dev-file-share-v1"
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:8.0.4
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    ports: []
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+
+  mongo-init:
+    image: mongo:8.0.4
+    depends_on:
+      - mongo
+    restart: "no"
+    networks:
+      - app-network
+    command: >
+      bash -c "
+        sleep 5 &&
+        mongosh --host mongo:27017 --eval '
+          rs.initiate({
+            _id: \"rs0\",
+            members: [{ _id: 0, host: \"mongo:27017\" }]
+          })
+        '
+      "
+
+volumes:
+  mongo_data:
+
+networks:
+  app-network:
