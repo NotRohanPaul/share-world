@@ -1,0 +1,21 @@
+FROM node:22.14 AS builder
+
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install -g npm@11.6.0
+RUN npm ci
+COPY scripts ./scripts
+RUN node ./scripts/downlaod-mongodb-binary.mjs
+COPY . .
+RUN npm run lint
+RUN npm run tsc 
+RUN npm run test 
+RUN npm run bundle
+
+FROM node:22.14
+
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/.env.staging ./
+EXPOSE 5000
+CMD ["node", "./dist/index.js"]
