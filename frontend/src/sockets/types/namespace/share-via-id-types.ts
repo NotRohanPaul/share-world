@@ -1,6 +1,6 @@
 import type { SocketType } from "../socket-generic-types";
 
-type PairEventsType = {
+type IdPairEventsType = {
     listenEvents: {
         "paired-sender-client": [{ to: string, }],
         "paired-receiver-client": [{ from: string, }],
@@ -11,7 +11,7 @@ type PairEventsType = {
     },
 };
 
-type WebRTCEventsType = {
+type IdWebRTCEventsType = {
     listenEvents: {
         "webrtc-offer-client": [{
             offer: RTCSessionDescriptionInit,
@@ -45,9 +45,9 @@ type WebRTCEventsType = {
 };
 
 export type ShareViaIDEventsType = SocketType<{
-    listenEvents: PairEventsType["listenEvents"] & WebRTCEventsType["listenEvents"] & {
+    listenEvents: IdPairEventsType["listenEvents"] & IdWebRTCEventsType["listenEvents"] & {
         "user-id-client": [{ userId: string, }],
         "error": [{ message: string, }],
     },
-    emitEvents: PairEventsType["emitEvents"] & WebRTCEventsType["emitEvents"],
+    emitEvents: IdPairEventsType["emitEvents"] & IdWebRTCEventsType["emitEvents"],
 }>;
