@@ -1,8 +1,8 @@
 import { appLogger } from "@src/configs/app-logger";
 import { logEventInfoSocketEventMiddleware } from "@src/sockets/middlewares/event-middlewares/log-event-info-socket-event.middleware";
 import type { Server } from "socket.io";
-import { pairEventsHandler } from "./handlers/pair-events.handler";
-import { webrtcEventsHandler } from "./handlers/webrtc-events.handler";
+import { idPairEventsHandler } from "./handlers/id-pair-events.handler";
+import { idWebrtcEventsHandler } from "./handlers/id-webrtc-events.handler";
 import { userIdSocketMiddleware, } from "./middlewares/user-id-socket.middleware";
 import type { ShareViaIdNamespaceType, ShareViaIdSocketType } from "./types/share-via-id-namespace-types";
 
@@ -32,8 +32,8 @@ export const shareViaIdNamespace = (io: Server): void => {
             userMap.delete(userId);
         });
 
-        pairEventsHandler(socket, userMap);
-        webrtcEventsHandler(socket, userMap);
+        idPairEventsHandler(socket, userMap);
+        idWebrtcEventsHandler(socket, userMap);
     });
 
 };

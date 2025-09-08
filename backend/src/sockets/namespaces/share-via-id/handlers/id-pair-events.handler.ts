@@ -2,7 +2,7 @@ import { appLogger } from "@src/configs/app-logger";
 import type { IdPairSocketType } from "../types/share-via-id-namespace-types";
 
 
-export const pairEventsHandler = (
+export const idPairEventsHandler = (
     socket: IdPairSocketType,
     userMap: Map<string, IdPairSocketType>
 ): void => {

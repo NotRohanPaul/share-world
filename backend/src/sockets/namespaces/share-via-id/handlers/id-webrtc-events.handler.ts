@@ -1,7 +1,7 @@
 import { appLogger } from "@src/configs/app-logger";
 import type { IdWebRTCSocketType } from "../types/share-via-id-namespace-types";
 
-export const webrtcEventsHandler = (
+export const idWebrtcEventsHandler = (
     socket: IdWebRTCSocketType,
     userMap: Map<string, IdWebRTCSocketType>
 ): void => {
