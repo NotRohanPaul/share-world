@@ -1,10 +1,10 @@
 import { appLogger } from "@src/configs/app-logger";
-import type { PairSocketType } from "../types/share-via-id-namespace-types";
+import type { IdPairSocketType } from "../types/share-via-id-namespace-types";
 
 
 export const pairEventsHandler = (
-    socket: PairSocketType,
-    userMap: Map<string, PairSocketType>
+    socket: IdPairSocketType,
+    userMap: Map<string, IdPairSocketType>
 ): void => {
     socket.on("pair-request-server", ({ to }) => {
         appLogger.info(userMap.keys());

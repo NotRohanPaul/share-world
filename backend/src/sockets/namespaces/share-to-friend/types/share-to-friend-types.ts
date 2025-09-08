@@ -12,7 +12,7 @@ type FriendPairEventsType = {
     },
 };
 
-type WebRTCEventsType = {
+type FriendWebRTCEventsType = {
     listenEvents: {
         "webrtc-offer-server": [{
             to: string,
@@ -46,8 +46,8 @@ type WebRTCEventsType = {
 };
 
 type ShareEventsType = {
-    listenEvents: FriendPairEventsType["listenEvents"] & WebRTCEventsType["listenEvents"],
-    emitEvents: FriendPairEventsType["emitEvents"] & WebRTCEventsType["emitEvents"] & {
+    listenEvents: FriendPairEventsType["listenEvents"] & FriendWebRTCEventsType["listenEvents"],
+    emitEvents: FriendPairEventsType["emitEvents"] & FriendWebRTCEventsType["emitEvents"] & {
         "error": [{ message: string, }],
     },
     context: { auth: { email: string; }, },
@@ -73,7 +73,7 @@ export type FriendPairSocketType = SocketType<{
 }>;
 
 export type WebRTCSocketType = SocketType<{
-    listenEvents: WebRTCEventsType["listenEvents"],
-    emitEvents: WebRTCEventsType["emitEvents"],
+    listenEvents: FriendWebRTCEventsType["listenEvents"],
+    emitEvents: FriendWebRTCEventsType["emitEvents"],
     context: ShareEventsType["context"],
 }>;

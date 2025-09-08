@@ -1,9 +1,9 @@
 import { appLogger } from "@src/configs/app-logger";
-import type { WebRTCSocketType } from "../types/share-via-id-namespace-types";
+import type { IdWebRTCSocketType } from "../types/share-via-id-namespace-types";
 
 export const webrtcEventsHandler = (
-    socket: WebRTCSocketType,
-    userMap: Map<string, WebRTCSocketType>
+    socket: IdWebRTCSocketType,
+    userMap: Map<string, IdWebRTCSocketType>
 ): void => {
     socket.on("webrtc-offer-server", ({ to, offer }) => {
         appLogger.info({ to, offer });

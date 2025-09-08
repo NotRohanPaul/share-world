@@ -1,6 +1,6 @@
 import type { SocketNamespaceType, SocketType } from "@src/sockets/types/socket-generic-types";
 
-type PairEventsType = {
+type IdPairEventsType = {
     listenEvents: {
         "pair-request-server": [{ to: string, }],
     },
@@ -11,7 +11,7 @@ type PairEventsType = {
     },
 };
 
-type WebRTCEventsType = {
+type IdWebRTCEventsType = {
     listenEvents: {
         "webrtc-offer-server": [{
             to: string,
@@ -45,8 +45,8 @@ type WebRTCEventsType = {
 };
 
 type ShareEventsType = {
-    listenEvents: PairEventsType["listenEvents"] & WebRTCEventsType["listenEvents"],
-    emitEvents: PairEventsType["emitEvents"] & WebRTCEventsType["emitEvents"] & {
+    listenEvents: IdPairEventsType["listenEvents"] & IdWebRTCEventsType["listenEvents"],
+    emitEvents: IdPairEventsType["emitEvents"] & IdWebRTCEventsType["emitEvents"] & {
         "user-id-client": [{ userId: string, }],
         "error": [{ message: string, }],
     },
@@ -66,14 +66,14 @@ export type ShareViaIdSocketType = SocketType<{
     socketData: ShareEventsType["socketData"],
 }>;
 
-export type PairSocketType = SocketType<{
-    listenEvents: PairEventsType["listenEvents"],
-    emitEvents: PairEventsType["emitEvents"],
+export type IdPairSocketType = SocketType<{
+    listenEvents: IdPairEventsType["listenEvents"],
+    emitEvents: IdPairEventsType["emitEvents"],
     socketData: ShareEventsType["socketData"],
 }>;
 
-export type WebRTCSocketType = SocketType<{
-    listenEvents: WebRTCEventsType["listenEvents"],
-    emitEvents: WebRTCEventsType["emitEvents"],
+export type IdWebRTCSocketType = SocketType<{
+    listenEvents: IdWebRTCEventsType["listenEvents"],
+    emitEvents: IdWebRTCEventsType["emitEvents"],
     socketData: ShareEventsType["socketData"],
 }>;
