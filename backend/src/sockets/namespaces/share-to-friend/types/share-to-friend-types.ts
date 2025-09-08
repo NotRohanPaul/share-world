@@ -1,15 +1,20 @@
 import type { SocketNamespaceType, SocketType } from "@src/sockets/types/socket-generic-types";
 
+type CommonEventsType = {
+    "error": [{ message: string; }];
+};
+
 type FriendPairEventsType = {
     listenEvents: {
         "online-friends-list-server": [],
-        "receiver-friend-info-server": [{ receiver: Record<string, string>, }],
-        "receiver-friend-accept-request-server": [{ sender: string, }],
+        "send-pair-request-server": [{ receiverEmail: string; }],
+        "accept-pair-request-server": [{ senderEmail: string, }],
+        "reject-pair-request-server": [{ senderEmail: string, }],
     },
     emitEvents: {
         "online-friends-list-client": [{ onlineFriendsList: { name: string, email: string; }[], }],
-        "receiver-friend-connection-request-client": [{ sender: Record<string, string>, }],
-    },
+        "pair-request-client": [{ senderEmail: string, }],
+    } & CommonEventsType,
 };
 
 type FriendWebRTCEventsType = {
@@ -42,14 +47,12 @@ type FriendWebRTCEventsType = {
         "webrtc-ice-candidate-client": [{
             candidate: Record<string, unknown>,
         }],
-    },
+    } & CommonEventsType,
 };
 
 type ShareEventsType = {
     listenEvents: FriendPairEventsType["listenEvents"] & FriendWebRTCEventsType["listenEvents"],
-    emitEvents: FriendPairEventsType["emitEvents"] & FriendWebRTCEventsType["emitEvents"] & {
-        "error": [{ message: string, }],
-    },
+    emitEvents: FriendPairEventsType["emitEvents"] & FriendWebRTCEventsType["emitEvents"],
     context: { auth: { email: string; }, },
 };
 
