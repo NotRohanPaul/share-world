@@ -17,7 +17,10 @@ export const IS_SECURE_ENV = ((): boolean => {
 
 export const PORT = Number(getEnv("PORT", "5000"));
 export const HOST = getEnv("HOST", "localhost");
+
 export const MONGO_URI = getEnv("MONGO_URI");
+export const REDIS_URI = getEnv("REDIS_URI");
+
 export const JWT_SECRET = getEnv("JWT_SECRET");
 export const COOKIE_SIGN_SECRET = getEnv("COOKIE_SIGN_SECRET");
 export const COOKIE_CRYPTO_SECRET = getEnv("COOKIE_CRYPTO_SECRET");

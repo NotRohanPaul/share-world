@@ -1,3 +1,5 @@
+import { createAdapter } from "@socket.io/redis-adapter";
+import { pubClient, subClient } from "@src/configs/redis-client";
 import { APP_ORIGIN, IS_SECURE_ENV } from "@src/constants/env";
 import { APP_TIMEOUTS } from "@src/constants/timeouts";
 import type { Server as ServerType } from "node:http";
@@ -17,6 +19,7 @@ export function initializeSocket(server: ServerType): void {
             methods: ["GET", "POST"],
             credentials: true,
         },
+        adapter: createAdapter(pubClient, subClient)
     });
 
     shareViaIdNamespace(io);
